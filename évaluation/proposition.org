@@ -1,42 +1,58 @@
 * Proposition de projet
 
+
 Proposition de projet de développement dans le cadre du cours 420-G55.
 
 La proposition doit être approuvée par l'enseignant. Par contre, les détails (sauf les membres de l'équipe) sont sujets à changement selon les circonstances au cours du développement avec l'accord de l'enseignant.
 
+Proposition: Un jeu d'apprentissage inspiré de Kahoot
+
 ** Équipe
 
 - Nom des coéquipiers (3 ou 4 personnes) :
-  - 1 :
-  - 2 :
-  - 3 :
-  - 4 :
+  - 1 : Hountondji Montel
+  - 2 : Nihal Rahman 
+  - 3 : Aratus Thamidson
+  - 4 : Allan Joseph 
   
-- Horaire de rencontre hebdomadaire (1h) : 
+- Horaire de rencontre hebdomadaire (1h) : Vendredi 18h/18h30 à 19h30 
 
 ** Projet
 
-- Thématique (quel est le domaine d'application de votre travail) :
+- Thématique (quel est le domaine d'application de votre travail) : Jeu d'apprentissage
   
-- Problème à résoudre (du point de vue de l'utilisateur, quel sera la plus-value de votre app) :
+- Problème à résoudre (du point de vue de l'utilisateur, quel sera la plus-value de votre app) : Notre application aura les fonctionnalités d'apprentissage de Kahoot, mais est mis à disposition aux utilisateurs gratuitement.
   
 - Analyse comparative (nommez au moins deux applications (Android ou non) déjà existantes qui font plus ou moins la même chose) :
+  1. Kahoot
+  2. Alloprof
 
   
 ** Fonctionnalités minimales :
+  - Répondre à des questions
+  - Se connecter
+  - Sauvegarde d'apprentissage
+  - Système de pointage
+  - La difficulté d'un quiz
+  - Des quiz de type différents (Type de question différente)
 
 *** Sauvegarde locale d'informations utilisateurs
 Quelles données comptez-vous stoquer localement sur l'appareil? :
+  - Les utilisateurs
+  - Les notes des quiz
+  - Tous les quiz fini par l'utilisateur
+  - Historique des quiz
 
 *** Échange de données avec un service extérieur
 Quelles données comptez-vous échanger avec un service extérieur? :
+  - Questions/Reponses/Solutions
 
 
-L'API existe-t-il déjà? :
- - Si oui, est-il accessible librement? gratuitement? devez-vous l'héberger vous-même? : 
+L'API existe-t-il déjà? : Oui
+ - Si oui, est-il accessible librement? gratuitement? devez-vous l'héberger vous-même? : Elle est gratuite
  - Si non, sera-t-il développé et par qui? ou simulé? : 
  - Si déjà connu, de quel type d'API s'agit-il?
-  - REST
+  - REST <--
   - OpenAPI
   - GraphQL
   - RPC
@@ -44,7 +60,7 @@ L'API existe-t-il déjà? :
 
 *** Interaction avec d'autres applications du système Android
 Quelle(s) fonctionnalité(s] fer(a|ont) appel à une autre application du système?
-(ex.: prise de photo/vidéo, envoie de courriel, ajout de rendez-vous au calendrier, etc.) :
+(ex.: prise de photo/vidéo, envoie de courriel, ajout de rendez-vous au calendrier, etc.) : Prise de photo
 
 
 *** Licence choisie :
