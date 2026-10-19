@@ -1,4 +1,1 @@
----
-marp: true
-theme: default
----
+# Présentation du sprint 1
