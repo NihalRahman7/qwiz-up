@@ -1,0 +1,15 @@
+stages:
+  - build
+  - deploy
+
+pages:
+  stage: deploy
+  image: marpteam/marp-cli:latest
+  script:
+    - mkdir public
+    - marp --html README.md -o public/index.html
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
