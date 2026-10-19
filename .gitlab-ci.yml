@@ -1,13 +1,10 @@
-stages:
-  - build
-  - deploy
+image: python:latest
 
 pages:
   stage: deploy
-  image: marpteam/marp-cli:latest
   script:
-    - mkdir public
-    - marp --html README.md -o public/index.html
+    - pip install mkdocs
+    - mkdocs build -d public
   artifacts:
     paths:
       - public
