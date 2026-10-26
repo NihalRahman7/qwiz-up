@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">QwizUp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="nav_home">Accueil</string>
+    <string name="nav_discover">Découvrir</string>
+    <string name="nav_create">Créer</string>
+    <string name="nav_library">Librairie</string>
 </resources>
