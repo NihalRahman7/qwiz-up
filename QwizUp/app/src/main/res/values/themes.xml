@@ -1,8 +1,32 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.QwizUp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
+    <style name="Base.Theme.QwizUp" parent="Theme.Material3.Light.NoActionBar">
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Couleur principale : boutons, éléments actifs -->
+        <item name="colorPrimary">@color/primary_green</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/light_green</item>
+        <item name="colorOnPrimaryContainer">@color/primary_green</item>
+
+        <!-- Barre de navigation du bas : pastille derrière l'onglet actif -->
+        <item name="colorSecondaryContainer">@color/light_green</item>
+        <item name="colorOnSecondaryContainer">@color/primary_green</item>
+
+        <!-- Fonds et cartes -->
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="colorOutline">@color/border</item>
+
+        <!-- Police utilisée dans toute l'application -->
+<!--        <item name="android:fontFamily">@font/figtree</item>-->
+<!--        <item name="fontFamily">@font/figtree</item>-->
+
+        <!-- Icônes foncées dans la barre d'état, car le fond est clair -->
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Customize your light theme here. -->
     </style>
 
     <style name="Theme.QwizUp" parent="Base.Theme.QwizUp" />

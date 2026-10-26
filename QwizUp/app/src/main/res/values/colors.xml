@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Couleurs de la marque -->
+    <color name="primary_green">#1E4D45</color>
+    <color name="light_green">#E4EEEB</color>
+
+    <!-- Fonds et contours -->
+    <color name="background">#F6F7F5</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="border">#E3E7E4</color>
+
+    <!-- Texte -->
+    <color name="text_primary">#16201E</color>
+    <color name="text_secondary">#5A6662</color>
+
+    <!-- Accents : série, favoris, mauvaise réponse, badge « Brouillon » -->
+    <color name="accent_orange">#B4501C</color>
+    <color name="light_orange">#FBE9E2</color>
+    <color name="red_text">#8A3214</color>
+
+    <!-- Badge « Nouveau » et pastilles des classes -->
+    <color name="light_blue">#E3E9F7</color>
+    <color name="blue_text">#22397A</color>
+
+    <!-- Couleurs par défaut, gardées au cas où le thème les utilise -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
