@@ -26,9 +26,11 @@
         android:id="@+id/bottom_nav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/surface"
-        app:menu="@menu/bottom_nav_menu"
+        app:backgroundTint="@color/surface"
+        app:elevation="0dp"
+        app:itemPaddingTop="12dp"
         app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

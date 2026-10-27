@@ -5,4 +5,29 @@
     <string name="nav_discover">Découvrir</string>
     <string name="nav_create">Créer</string>
     <string name="nav_library">Librairie</string>
+
+    <!--  Les String de la Navigation de la page d'Accueil   -->
+    <string name="home_greeting">Bonjour</string>
+    <string name="home_join_code">Code</string>
+    <string name="home_streak">Série</string>
+    <string name="home_completed">Quiz complétés </string>
+    <string name="home_correct">Réussite</string>
+    <string name="home_continue">Continuer</string>
+    <string name="home_suggestions">Suggestions</string>
+
+    <string name="home_see_all">Tout voir</string>
+    <string name="home_resume_quiz">Continuer le quiz</string>
+
+    <!-- Exemples temporaires, remplacés plus tard par les données du Modèle -->
+    <string name="sample_quiz_1_title">Le système solaire</string>
+    <string name="sample_quiz_1_meta">2 / 5 questions · Sciences</string>
+    <string name="sample_quiz_2_title">Bases de Kotlin</string>
+    <string name="sample_quiz_2_meta">3 / 5 questions · Informatique</string>
+    <string name="sample_suggestion_title">Capitales d\'Europe</string>
+    <string name="sample_suggestion_meta">12 questions · 6 min · Géographie</string>
+
+    <!--  Les String de la Navigation de la page Découvrir   -->
+    <!--  Les String de la Navigation de la page Créer   -->
+    <!--  Les String de la Navigation de la page Librairie   -->
+
 </resources>
