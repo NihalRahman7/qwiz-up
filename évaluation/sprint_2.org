@@ -19,4 +19,4 @@ Vous devrez présenter, en équipe complète, votre application «fonctionnelle�
 Vous n'avez pas à présenter le code, mais il devra être accessible sur Gitlab
 
 - Durée : max 10 min.
-- Date : 4/5 novembre
+- Date : 3/4 novembre

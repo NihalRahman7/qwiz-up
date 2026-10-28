@@ -1,6 +1,6 @@
 * Remise et Présentation
 
-** Date : 21/22 octobre
+** Date : 21/23 octobre
 
 ** Ébauche de l'interface principale
 - Au moins deux fenêtres utiles (pas de fenêtre d'authentification, de paramètres ou de déconnexion)
