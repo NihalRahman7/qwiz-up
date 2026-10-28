@@ -27,6 +27,28 @@
     <string name="sample_suggestion_meta">12 questions · 6 min · Géographie</string>
 
     <!--  Les String de la Navigation de la page Découvrir   -->
+    <string name="discover_search_hint">Rechercher un quiz</string>
+    <string name="discover_play">Jouer</string>
+    <string name="discover_add_favorite">Ajouter aux favoris</string>
+    <string name="discover_remove_favorite">Retirer des favoris</string>
+    <string name="category_all">Tous</string>
+    <string name="category_sciences">Sciences</string>
+    <string name="category_history">Histoire</string>
+    <string name="category_languages">Langues</string>
+    <string name="category_geography">Géographie</string>
+    <!-- Exemples temporaires, remplacés plus tard par les données du Modèle -->
+    <string name="sample_discover_1_title">Capitales d’Europe</string>
+    <string name="sample_discover_1_description">Associe chaque pays à sa capitale, de Lisbonne à Helsinki.</string>
+    <string name="sample_discover_1_details">12 questions · 6 min</string>
+    <string name="sample_discover_2_title">Le système solaire</string>
+    <string name="sample_discover_2_description">Planètes, lunes et distances : teste tes connaissances.</string>
+    <string name="sample_discover_2_details">10 questions · 5 min</string>
+    <string name="sample_discover_3_title">La Révolution tranquille</string>
+    <string name="sample_discover_3_description">Les grands changements du Québec des années 1960.</string>
+    <string name="sample_discover_3_details">8 questions · 4 min</string>
+    <string name="sample_discover_4_title">Verbes irréguliers anglais</string>
+    <string name="sample_discover_4_description">Be, go, take… retrouve le passé des verbes les plus utilisés.</string>
+    <string name="sample_discover_4_details">15 questions · 7 min</string>
     <!--  Les String de la Navigation de la page Créer   -->
     <!--  Les String de la Navigation de la page Librairie   -->
 
