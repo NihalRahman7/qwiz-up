@@ -25,4 +25,16 @@
     <!-- Couleurs par défaut, gardées au cas où le thème les utilise -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Couleurs pour la page librairie -->
+    <color name="library_bg">#F8F8F5</color>
+    <color name="library_text_secondary">#5F6B66</color>
+    <color name="library_card_stroke">#E3E5E1</color>
+    <color name="tab_container">#EDEEEA</color>
+    <color name="badge_green_bg">#E1EEE6</color>
+    <color name="badge_green_text">#1F5A3E</color>
+    <color name="badge_blue_bg">#E2E7F8</color>
+    <color name="badge_blue_text">#2B3A9B</color>
+    <color name="badge_gray_bg">#EDEDED</color>
+    <color name="badge_gray_text">#2E2E2E</color>
 </resources>
