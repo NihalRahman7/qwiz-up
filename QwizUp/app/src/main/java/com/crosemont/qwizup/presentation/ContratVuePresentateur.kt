@@ -16,7 +16,23 @@ interface ContratVuePresentateur {
     // TODO: Faire le contrat qui gère le DiscoverFragment
 
     // Create
-    // TODO: Faire le contrat qui gère le CreateFragment
+    enum class SectionCreer { BROUILLONS, PUBLIES }
+
+    interface VueCreate : Vue {
+        fun viderSection(section: SectionCreer)
+        fun ajouterCarteQuiz(section: SectionCreer, id: Int, titre: String)
+        fun afficherMessageVide(section: SectionCreer, message: String)
+        fun basculerSection(section: SectionCreer, ouverte: Boolean)
+        fun ouvrirEditeur(quizId: Int?)   // null = nouveau quiz
+        fun ouvrirTousMesQuiz()
+    }
+
+    interface PresentateurCreate : Presentateur<VueCreate> {
+        fun surNouveauQuizClique()
+        fun surContinuerClique(quizId: Int)
+        fun surDeroulerClique(section: SectionCreer)
+        fun surVoirToutClique()
+    }
 
     // Library
     enum class OngletLibrairie { FAVORIS, COMPLETES, CREES }
