@@ -13,7 +13,30 @@ interface ContratVuePresentateur {
     // TODO: Faire le contrat qui gère le HomeFragment
 
     // Discover
-    // TODO: Faire le contrat qui gère le DiscoverFragment
+    enum class CategorieQuiz { SCIENCES, HISTOIRE, LANGUES, GEOGRAPHIE }
+
+    interface IVueDiscover : Vue {
+        fun viderCartes()
+        fun ajouterCarteQuiz(
+            id: Int,
+            categorie: CategorieQuiz,
+            titre: String,
+            description: String,
+            nbQuestions: Int,
+            dureeMinutes: Int,
+            estFavori: Boolean
+        )
+        fun afficherAucunResultat()
+        fun afficherCategorieChoisie(categorie: CategorieQuiz?)   // null = « Tous »
+        fun ouvrirQuiz(quizId: Int, titre: String)
+    }
+
+    interface IPresentateurDiscover : Presentateur<IVueDiscover> {
+        fun surRechercheModifiee(texte: String)
+        fun surCategorieCliquee(categorie: CategorieQuiz?)   // null = « Tous »
+        fun surFavoriClique(quizId: Int)
+        fun surJouerClique(quizId: Int)
+    }
 
     // Create
     enum class SectionCreer { BROUILLONS, PUBLIES }
