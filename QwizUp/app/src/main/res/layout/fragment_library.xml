@@ -6,7 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/background"
+    tools:context=".LibraryFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,7 +41,8 @@
                 android:padding="4dp"
                 app:checkedButton="@id/btnFavoris"
                 app:selectionRequired="true"
-                app:singleSelection="true">
+                app:singleSelection="true"
+                app:spacing="4dp">
 
                 <Button
                     android:id="@+id/btnFavoris"
@@ -110,7 +112,6 @@
 
                     <!-- Carte 1 : Le système solaire -->
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/carte1"
                         style="@style/Widget.Material3.CardView.Outlined"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -135,7 +136,6 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/titre1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Le système solaire"
@@ -144,7 +144,6 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/soustitre1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="2dp"
@@ -154,7 +153,6 @@
                             </LinearLayout>
 
                             <com.google.android.material.card.MaterialCardView
-                                android:id="@+id/badge1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:cardBackgroundColor="@color/light_green"
@@ -163,7 +161,6 @@
                                 app:strokeWidth="0dp">
 
                                 <TextView
-                                    android:id="@+id/txtBadge1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingHorizontal="12dp"
@@ -187,7 +184,6 @@
 
                     <!-- Carte 2 : Capitales d'Europe -->
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/carte2"
                         style="@style/Widget.Material3.CardView.Outlined"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -212,7 +208,6 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/titre2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Capitales d’Europe"
@@ -221,7 +216,6 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/soustitre2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="2dp"
@@ -231,7 +225,6 @@
                             </LinearLayout>
 
                             <com.google.android.material.card.MaterialCardView
-                                android:id="@+id/badge2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:cardBackgroundColor="@color/light_blue"
@@ -240,7 +233,6 @@
                                 app:strokeWidth="0dp">
 
                                 <TextView
-                                    android:id="@+id/txtBadge2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingHorizontal="12dp"
@@ -264,7 +256,6 @@
 
                     <!-- Carte 3 : Verbes irréguliers anglais -->
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/carte3"
                         style="@style/Widget.Material3.CardView.Outlined"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -289,7 +280,6 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/titre3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Verbes irréguliers anglais"
@@ -298,7 +288,6 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/soustitre3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="2dp"
@@ -308,7 +297,6 @@
                             </LinearLayout>
 
                             <com.google.android.material.card.MaterialCardView
-                                android:id="@+id/badge3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:cardBackgroundColor="@color/border"
@@ -317,7 +305,6 @@
                                 app:strokeWidth="0dp">
 
                                 <TextView
-                                    android:id="@+id/txtBadge3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingHorizontal="12dp"
@@ -338,16 +325,6 @@
                                 android:textSize="28sp" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
-
-                    <!-- Carte message vide -->
-                    <TextView
-                        android:id="@+id/messageVide"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone">
-
-                    </TextView>
-
 
                 </LinearLayout>
             </LinearLayout>
