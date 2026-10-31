@@ -10,14 +10,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.PresentateurCreate
+import com.crosemont.qwizup.presentation.ContratVuePresentateur.IPresentateurCreate
+import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueCreate
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.SectionCreer
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.VueCreate
 import com.google.android.material.button.MaterialButton
 
-class CreateFragment : Fragment(R.layout.fragment_create), VueCreate {
+class CreateFragment : Fragment(R.layout.fragment_create), IVueCreate {
 
-    private val presentateur: PresentateurCreate = CreatePresentateur()
+    private val presentateur: IPresentateurCreate = PresentateurCreate()
 
     private lateinit var listeBrouillons: LinearLayout
     private lateinit var listePublies: LinearLayout
@@ -57,7 +57,7 @@ class CreateFragment : Fragment(R.layout.fragment_create), VueCreate {
         SectionCreer.PUBLIES -> flechePublies
     }
 
-    // ----- VueCreate -----
+    // ----- IVueCreate -----
 
     override fun viderSection(section: SectionCreer) {
         liste(section).removeAllViews()

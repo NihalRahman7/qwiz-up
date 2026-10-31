@@ -27,6 +27,18 @@
     <string name="sample_suggestion_meta">12 questions · 6 min · Géographie</string>
 
     <!--  Les String de la Navigation de la page Découvrir   -->
+    <string name="discover_search_hint">Rechercher un quiz</string>
+    <string name="discover_play">Jouer</string>
+    <string name="discover_add_favorite">Ajouter aux favoris</string>
+    <string name="discover_remove_favorite">Retirer des favoris</string>
+    <string name="discover_quiz_details">%1$d questions · %2$d min</string>
+    <string name="discover_no_quiz">Aucun quiz trouvé. Essaie un autre mot ou une autre catégorie.</string>
+    <string name="discover_play_soon">Le quiz « %1$s » arrive bientôt!</string>
+    <string name="category_all">Tous</string>
+    <string name="category_sciences">Sciences</string>
+    <string name="category_history">Histoire</string>
+    <string name="category_languages">Langues</string>
+    <string name="category_geography">Géographie</string>
     <!--  Les String de la Navigation de la page Créer   -->
     <string name="creer_nouveau_quiz">Nouveau quiz</string>
     <string name="creer_mes_brouillons">Mes brouillons</string>
