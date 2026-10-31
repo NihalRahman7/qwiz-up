@@ -61,7 +61,7 @@ interface ContratVuePresentateur {
     enum class OngletLibrairie { FAVORIS, COMPLETES, CREES }
     enum class TypeBadge { PROGRESSION, NOUVEAU, SCORE }
 
-    interface VueLibrary: Vue {
+    interface IVueLibrary: Vue {
         fun viderCartes()
         fun ajouterCarteQuiz(
             id: Int,
@@ -74,7 +74,7 @@ interface ContratVuePresentateur {
         fun ouvrirDetails(quizId: Int)
     }
 
-    interface PresentateurLibrary: Presentateur<VueLibrary>{
+    interface IPresentateurLibrary: Presentateur<IVueLibrary>{
         fun surOngletClique(onglet: OngletLibrairie)
         fun surQuizClique(quizId: Int)
     }
