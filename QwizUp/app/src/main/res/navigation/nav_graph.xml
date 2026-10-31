@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.crosemont.qwizup.HomeFragment"
+        android:name="com.crosemont.qwizup.presentation.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/createFragment"
-        android:name="com.crosemont.qwizup.CreateFragment"
+        android:name="com.crosemont.qwizup.presentation.create.CreateFragment"
         android:label="fragment_create"
         tools:layout="@layout/fragment_create" />
     <fragment
         android:id="@+id/discoverFragment"
-        android:name="com.crosemont.qwizup.DiscoverFragment"
+        android:name="com.crosemont.qwizup.presentation.discover.DiscoverFragment"
         android:label="fragment_discover"
         tools:layout="@layout/fragment_discover" />
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="com.crosemont.qwizup.LibraryFragment"
+        android:name="com.crosemont.qwizup.presentation.library.LibraryFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" />
 </navigation>
