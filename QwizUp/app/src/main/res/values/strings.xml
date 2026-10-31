@@ -40,6 +40,15 @@
     <string name="category_languages">Langues</string>
     <string name="category_geography">Géographie</string>
     <!--  Les String de la Navigation de la page Créer   -->
+    <string name="creer_nouveau_quiz">Nouveau quiz</string>
+    <string name="creer_mes_brouillons">Mes brouillons</string>
+    <string name="creer_mes_publies">Mes quiz publiés</string>
+    <string name="creer_continuer">Continuer</string>
+    <string name="creer_voir_tout">Voir tout</string>
+    <string name="creer_derouler">Dérouler la liste</string>
+    <string name="creer_editeur_nouveau">Création d\'un nouveau quiz (bientôt)</string>
+    <string name="creer_editeur_existant">Modification du quiz #%1$d (bientôt)</string>
+    <string name="creer_tous_mes_quiz">Tous mes quiz (bientôt)</string>
     <!--  Les String de la Navigation de la page Librairie   -->
 
 </resources>

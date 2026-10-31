@@ -41,7 +41,7 @@ interface ContratVuePresentateur {
     // Create
     enum class SectionCreer { BROUILLONS, PUBLIES }
 
-    interface VueCreate : Vue {
+    interface IVueCreate : Vue {
         fun viderSection(section: SectionCreer)
         fun ajouterCarteQuiz(section: SectionCreer, id: Int, titre: String)
         fun afficherMessageVide(section: SectionCreer, message: String)
@@ -50,7 +50,7 @@ interface ContratVuePresentateur {
         fun ouvrirTousMesQuiz()
     }
 
-    interface PresentateurCreate : Presentateur<VueCreate> {
+    interface IPresentateurCreate : Presentateur<IVueCreate> {
         fun surNouveauQuizClique()
         fun surContinuerClique(quizId: Int)
         fun surDeroulerClique(section: SectionCreer)

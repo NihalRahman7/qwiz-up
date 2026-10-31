@@ -73,7 +73,21 @@ class ModeleQuiz {
             .lowercase()
 
     // Create
-    // TODO: Faire le modèle avec des données codées en dur pour le fragment Create
+    data class CarteCreate(
+        val id: Int,
+        val titre: String,
+        val estPublie: Boolean   // false = brouillon, true = publié
+    )
+
+    // Données codées en dur
+    private val quizCreer = mutableListOf(
+        CarteCreate(1, "Le système solaire", estPublie = false),
+        CarteCreate(2, "Bases de Kotlin", estPublie = false),
+        CarteCreate(3, "Capitales d'Europe", estPublie = true)
+    )
+
+    fun obtenirBrouillons(): List<CarteCreate> = quizCreer.filter { !it.estPublie }
+    fun obtenirPublies(): List<CarteCreate> = quizCreer.filter { it.estPublie }
 
     // Library
     data class CarteLibrary(
