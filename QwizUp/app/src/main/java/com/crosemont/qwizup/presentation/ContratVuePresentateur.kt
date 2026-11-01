@@ -39,22 +39,57 @@ interface ContratVuePresentateur {
     }
 
     // Create
-    enum class SectionCreer { BROUILLONS, PUBLIES }
+    enum class OngletCreer { BROUILLONS, PUBLIES }
 
     interface IVueCreate : Vue {
-        fun viderSection(section: SectionCreer)
-        fun ajouterCarteQuiz(section: SectionCreer, id: Int, titre: String)
-        fun afficherMessageVide(section: SectionCreer, message: String)
-        fun basculerSection(section: SectionCreer, ouverte: Boolean)
+        fun afficherCompteurs(nbBrouillons: Int, nbPublies: Int)
+        fun afficherOngletChoisi(onglet: OngletCreer)
+        fun viderCartes()
+        fun ajouterCarteQuiz(id: Int, titre: String, nbQuestions: Int, estPublie: Boolean)
+        fun afficherMessageVide(message: String)
         fun ouvrirEditeur(quizId: Int?)   // null = nouveau quiz
-        fun ouvrirTousMesQuiz()
     }
 
     interface IPresentateurCreate : Presentateur<IVueCreate> {
         fun surNouveauQuizClique()
-        fun surContinuerClique(quizId: Int)
-        fun surDeroulerClique(section: SectionCreer)
-        fun surVoirToutClique()
+        fun surOngletClique(onglet: OngletCreer)
+        fun surQuizClique(quizId: Int)   // « Continuer » ou « Modifier »
+    }
+
+    // Éditeur de quiz (s'ouvre depuis Create avec « Nouveau quiz » ou « Continuer »)
+    enum class Difficulte { FACILE, MOYEN, DIFFICILE }
+    enum class ErreurEditeur { TITRE_VIDE, AUCUNE_QUESTION }
+
+    interface IVueEditeur : Vue {
+        fun afficherEnTete(nouveauQuiz: Boolean, estPublie: Boolean)
+        fun afficherInfosQuiz(titre: String, description: String)
+        fun afficherCategorieChoisie(categorie: CategorieQuiz)
+        fun afficherDifficulteChoisie(difficulte: Difficulte)
+        fun viderQuestions()
+        fun ajouterQuestion(numero: Int, texte: String, estVraiFaux: Boolean, secondes: Int, doublePoints: Boolean)
+        fun afficherAucuneQuestion()
+        fun afficherNombreQuestions(nombre: Int)
+        fun afficherErreur(erreur: ErreurEditeur)
+        fun effacerErreurs()
+        fun ouvrirAppareilPhoto()
+        fun ouvrirGalerie()
+        fun ouvrirEditeurQuestion(numero: Int?)   // null = nouvelle question
+        fun confirmerSauvegarde()
+        fun confirmerPublication(titre: String)
+    }
+
+    interface IPresentateurEditeur : Presentateur<IVueEditeur> {
+        fun chargerQuiz(quizId: Int?)   // null = nouveau quiz
+        fun surTitreModifie(titre: String)
+        fun surDescriptionModifiee(description: String)
+        fun surCategorieCliquee(categorie: CategorieQuiz)
+        fun surDifficulteCliquee(difficulte: Difficulte)
+        fun surPrendrePhotoClique()
+        fun surGalerieClique()
+        fun surAjouterQuestionClique()
+        fun surModifierQuestionClique(numero: Int)
+        fun surSauvegarderClique()
+        fun surPublierClique()
     }
 
     // Library

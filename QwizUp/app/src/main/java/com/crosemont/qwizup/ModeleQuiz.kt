@@ -76,18 +76,83 @@ class ModeleQuiz {
     data class CarteCreate(
         val id: Int,
         val titre: String,
-        val estPublie: Boolean   // false = brouillon, true = publié
+        val estPublie: Boolean,  // false = brouillon, true = publié
+        val nbQuestions: Int
     )
 
-    // Données codées en dur
-    private val quizCreer = mutableListOf(
-        CarteCreate(1, "Le système solaire", estPublie = false),
-        CarteCreate(2, "Bases de Kotlin", estPublie = false),
-        CarteCreate(3, "Capitales d'Europe", estPublie = true)
+    data class QuestionCreer(
+        val texte: String,
+        val estVraiFaux: Boolean,      // false = choix multiple
+        val secondes: Int,
+        val doublePoints: Boolean = false
     )
 
-    fun obtenirBrouillons(): List<CarteCreate> = quizCreer.filter { !it.estPublie }
-    fun obtenirPublies(): List<CarteCreate> = quizCreer.filter { it.estPublie }
+    data class QuizCreer(
+        val id: Int,                   // 0 = nouveau quiz pas encore sauvegardé
+        val titre: String,
+        val description: String,
+        val categorie: ContratVuePresentateur.CategorieQuiz,
+        val difficulte: ContratVuePresentateur.Difficulte,
+        val questions: List<QuestionCreer>,
+        val estPublie: Boolean
+    )
+
+    companion object {
+        // Données codées en dur, partagées par tous les ModeleQuiz :
+        // l'écran Créer et l'éditeur voient donc les mêmes quiz
+        private val quizCreer = mutableListOf(
+            QuizCreer(
+                1, "Le système solaire", "Planètes, lunes et distances.",
+                ContratVuePresentateur.CategorieQuiz.SCIENCES, ContratVuePresentateur.Difficulte.MOYEN,
+                listOf(
+                    QuestionCreer("Quelle est la plus grande planète du système solaire?", false, 20),
+                    QuestionCreer("Vrai ou faux : la Lune produit sa propre lumière.", true, 10, doublePoints = true)
+                ),
+                estPublie = false
+            ),
+            QuizCreer(
+                2, "Bases de Kotlin", "Les notions de base du langage Kotlin.",
+                ContratVuePresentateur.CategorieQuiz.SCIENCES, ContratVuePresentateur.Difficulte.FACILE,
+                listOf(
+                    QuestionCreer("Quel mot-clé déclare une variable qu'on ne peut pas réassigner?", false, 20),
+                    QuestionCreer("Vrai ou faux : Kotlin peut utiliser les bibliothèques Java.", true, 10),
+                    QuestionCreer("Quelle fonction affiche du texte dans la console?", false, 20)
+                ),
+                estPublie = false
+            ),
+            QuizCreer(
+                3, "Capitales d'Europe", "Associe chaque pays à sa capitale.",
+                ContratVuePresentateur.CategorieQuiz.GEOGRAPHIE, ContratVuePresentateur.Difficulte.FACILE,
+                listOf(
+                    QuestionCreer("Quelle est la capitale du Portugal?", false, 20),
+                    QuestionCreer("Quelle est la capitale de la Finlande?", false, 20),
+                    QuestionCreer("Vrai ou faux : Genève est la capitale de la Suisse.", true, 10, doublePoints = true)
+                ),
+                estPublie = true
+            )
+        )
+        private var prochainIdCreer = 4
+    }
+
+    fun obtenirBrouillons(): List<CarteCreate> = quizCreer.filter { !it.estPublie }.map { it.enCarte() }
+    fun obtenirPublies(): List<CarteCreate> = quizCreer.filter { it.estPublie }.map { it.enCarte() }
+
+    fun obtenirQuizCreer(quizId: Int): QuizCreer? = quizCreer.find { it.id == quizId }
+
+    /** Ajoute le quiz s'il est nouveau (id = 0), sinon remplace l'ancienne version. Retourne son id. */
+    fun sauvegarderQuizCreer(quiz: QuizCreer): Int {
+        val index = quizCreer.indexOfFirst { it.id == quiz.id }
+        return if (index == -1) {
+            val nouveau = quiz.copy(id = prochainIdCreer++)
+            quizCreer.add(nouveau)
+            nouveau.id
+        } else {
+            quizCreer[index] = quiz
+            quiz.id
+        }
+    }
+
+    private fun QuizCreer.enCarte() = CarteCreate(id, titre, estPublie, questions.size)
 
     // Library
     data class CarteLibrary(

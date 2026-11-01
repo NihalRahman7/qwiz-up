@@ -26,108 +26,61 @@
             app:iconGravity="textEnd"
             app:iconSize="24dp" />
 
-        <!-- Section Mes brouillons -->
+        <!-- Onglets Brouillons / Publiés (même style que la Librairie) -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             app:cardBackgroundColor="@color/light_green"
-            app:cardCornerRadius="18dp"
+            app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
 
-            <LinearLayout
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/groupe_onglets_creer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_height="match_parent"
+                android:padding="4dp"
+                app:checkedButton="@id/button_onglet_brouillons"
+                app:selectionRequired="true"
+                app:singleSelection="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/creer_mes_brouillons"
-                    android:textColor="@color/text_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/liste_brouillons"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/button_derouler_brouillons"
-                    android:layout_width="48dp"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_onglet_brouillons"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="0dp"
                     android:layout_height="48dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/creer_derouler"
-                    android:padding="12dp"
-                    android:rotation="270"
-                    android:src="@drawable/ic_chevron_right" />
-            </LinearLayout>
+                    android:layout_weight="1"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="@string/creer_onglet_brouillons_defaut"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    app:cornerRadius="20dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_onglet_publies"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="@string/creer_onglet_publies_defaut"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    app:cornerRadius="20dp" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Section Mes quiz publiés -->
-        <com.google.android.material.card.MaterialCardView
+        <!-- Liste des quiz de l'onglet choisi (remplie par le présentateur) -->
+        <LinearLayout
+            android:id="@+id/liste_quiz"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:cardBackgroundColor="@color/light_green"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="0dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/creer_mes_publies"
-                    android:textColor="@color/text_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/liste_publies"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/button_derouler_publies"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/creer_derouler"
-                    android:padding="12dp"
-                    android:rotation="270"
-                    android:src="@drawable/ic_chevron_right" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Voir tout -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_voir_tout"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="16dp"
-            android:text="@string/creer_voir_tout"
-            android:textColor="@color/primary_green"
-            android:textStyle="bold"
-            app:icon="@drawable/ic_chevron_right"
-            app:iconGravity="textEnd"
-            app:iconTint="@color/primary_green" />
+            android:layout_marginTop="6dp"
+            android:orientation="vertical" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
