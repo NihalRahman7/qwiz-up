@@ -6,9 +6,10 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     app:cardBackgroundColor="@color/surface"
-    app:cardCornerRadius="14dp"
+    app:cardCornerRadius="16dp"
     app:cardElevation="0dp"
-    app:strokeWidth="0dp">
+    app:strokeColor="@color/border"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,27 +17,44 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="16dp"
-        android:paddingEnd="4dp">
+        android:paddingTop="10dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="10dp">
 
-        <TextView
-            android:id="@+id/text_titre_quiz"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:text="Titre du quiz" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_titre_quiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Le système solaire" />
+
+            <TextView
+                android:id="@+id/text_details_quiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                tools:text="2 questions" />
+        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_continuer"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/creer_continuer"
             android:textColor="@color/primary_green"
             app:icon="@drawable/ic_chevron_right"
             app:iconGravity="textEnd"
-            app:iconTint="@color/primary_green" />
+            app:iconTint="@color/primary_green"
+            tools:text="@string/creer_continuer" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

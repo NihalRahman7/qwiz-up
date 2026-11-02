@@ -14,7 +14,21 @@
         android:id="@+id/createFragment"
         android:name="com.crosemont.qwizup.presentation.create.CreateFragment"
         android:label="fragment_create"
-        tools:layout="@layout/fragment_create" />
+        tools:layout="@layout/fragment_create">
+        <action
+            android:id="@+id/action_creer_vers_editeur"
+            app:destination="@id/editeurQuizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editeurQuizFragment"
+        android:name="com.crosemont.qwizup.presentation.create.EditeurQuizFragment"
+        android:label="fragment_editeur_quiz"
+        tools:layout="@layout/fragment_editeur_quiz">
+        <argument
+            android:name="quizId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
     <fragment
         android:id="@+id/discoverFragment"
         android:name="com.crosemont.qwizup.presentation.discover.DiscoverFragment"
