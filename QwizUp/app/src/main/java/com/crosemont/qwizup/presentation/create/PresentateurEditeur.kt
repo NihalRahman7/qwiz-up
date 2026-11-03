@@ -29,6 +29,7 @@ class PresentateurEditeur(
         vue?.afficherEnTete(nouveauQuiz = quiz.id == 0, estPublie = quiz.estPublie)
         vue?.afficherInfosQuiz(quiz.titre, quiz.description)
         vue?.afficherCategorieChoisie(quiz.categorie)
+        vue?.afficherCouverture(quiz.categorie)
         vue?.afficherDifficulteChoisie(quiz.difficulte)
         afficherQuestions()
     }
@@ -45,6 +46,7 @@ class PresentateurEditeur(
     override fun surCategorieCliquee(categorie: CategorieQuiz) {
         quiz = quiz.copy(categorie = categorie)
         vue?.afficherCategorieChoisie(categorie)
+        vue?.afficherCouverture(categorie)
     }
 
     override fun surDifficulteCliquee(difficulte: Difficulte) {

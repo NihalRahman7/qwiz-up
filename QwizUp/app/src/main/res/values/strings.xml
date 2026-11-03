@@ -54,6 +54,7 @@
     <string name="editeur_badge_brouillon">Brouillon</string>
     <string name="editeur_badge_publie">Publié</string>
     <string name="editeur_couverture">Image de couverture (optionnel)</string>
+    <string name="editeur_couverture_auto">Image choisie selon la catégorie</string>
     <string name="editeur_prendre_photo">Prendre une photo</string>
     <string name="editeur_galerie">Galerie</string>
     <string name="editeur_label_titre">Titre du quiz</string>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Image automatique : catégorie Langues (bulles) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:pathData="M4,5h10a1,1 0,0 1,1 1v6a1,1 0,0 1,-1 1H9l-3,3v-3H4a1,1 0,0 1,-1 -1V6a1,1 0,0 1,1 -1z"
+        android:strokeWidth="1.6"
+        android:strokeColor="@color/primary_green"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M15,9h5a1,1 0,0 1,1 1v6a1,1 0,0 1,-1 1h-1v3l-3,-3h-4a1,1 0,0 1,-1 -1v-2"
+        android:strokeWidth="1.6"
+        android:strokeColor="@color/primary_green"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

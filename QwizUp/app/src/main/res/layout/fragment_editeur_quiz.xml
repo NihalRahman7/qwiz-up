@@ -70,6 +70,7 @@
 
             <!-- Image de couverture -->
             <LinearLayout
+                android:id="@+id/zone_couverture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_couverture"
@@ -78,19 +79,19 @@
                 android:padding="20dp">
 
                 <ImageView
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
+                    android:id="@+id/image_couverture"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:importantForAccessibility="no"
-                    android:src="@drawable/ic_camera" />
+                    android:src="@drawable/ic_couverture_sciences" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/editeur_couverture"
-                    android:textColor="@color/text_primary"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="8dp"
+                    android:text="@string/editeur_couverture_auto"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

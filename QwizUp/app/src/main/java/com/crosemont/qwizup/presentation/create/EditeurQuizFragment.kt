@@ -1,8 +1,10 @@
 package com.crosemont.qwizup.presentation.create
 
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -39,6 +41,8 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
     private lateinit var groupeDifficulte: MaterialButtonToggleGroup
     private lateinit var listeQuestions: LinearLayout
     private lateinit var texteNombreQuestions: TextView
+    private lateinit var zoneCouverture: LinearLayout
+    private lateinit var imageCouverture: ImageView
 
     // Quel élément du XML correspond à quelle valeur
     private val chipsCategories = mapOf(
@@ -65,6 +69,8 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
         groupeDifficulte = view.findViewById(R.id.groupe_difficulte)
         listeQuestions = view.findViewById(R.id.liste_questions)
         texteNombreQuestions = view.findViewById(R.id.text_nombre_questions)
+        zoneCouverture = view.findViewById(R.id.zone_couverture)
+        imageCouverture = view.findViewById(R.id.image_couverture)
 
         view.findViewById<ImageButton>(R.id.button_retour)
             .setOnClickListener { findNavController().popBackStack() }
@@ -132,6 +138,19 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
 
     override fun afficherCategorieChoisie(categorie: CategorieQuiz) {
         groupeCategories.check(chipsCategories.getValue(categorie))
+    }
+
+    override fun afficherCouverture(categorie: CategorieQuiz) {
+        val (image, fond) = when (categorie) {
+            CategorieQuiz.SCIENCES -> R.drawable.ic_couverture_sciences to R.color.light_green
+            CategorieQuiz.HISTOIRE -> R.drawable.ic_couverture_histoire to R.color.light_orange
+            CategorieQuiz.LANGUES -> R.drawable.ic_couverture_langues to R.color.light_blue
+            CategorieQuiz.GEOGRAPHIE -> R.drawable.ic_globe to R.color.badge_green_bg
+        }
+        imageCouverture.setImageResource(image)
+        // Change seulement la couleur de fond : le contour pointillé reste
+        (zoneCouverture.background.mutate() as GradientDrawable)
+            .setColor(ContextCompat.getColor(requireContext(), fond))
     }
 
     override fun afficherDifficulteChoisie(difficulte: Difficulte) {

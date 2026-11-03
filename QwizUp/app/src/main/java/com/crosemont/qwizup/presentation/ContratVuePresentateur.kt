@@ -64,6 +64,7 @@ interface ContratVuePresentateur {
         fun afficherEnTete(nouveauQuiz: Boolean, estPublie: Boolean)
         fun afficherInfosQuiz(titre: String, description: String)
         fun afficherCategorieChoisie(categorie: CategorieQuiz)
+        fun afficherCouverture(categorie: CategorieQuiz)   // image automatique selon la catégorie
         fun afficherDifficulteChoisie(difficulte: Difficulte)
         fun viderQuestions()
         fun ajouterQuestion(numero: Int, texte: String, estVraiFaux: Boolean, secondes: Int, doublePoints: Boolean)
