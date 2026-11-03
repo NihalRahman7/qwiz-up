@@ -123,11 +123,11 @@ interface ContratVuePresentateur {
             typeBadge: TypeBadge
         )
         fun afficherMessageVide(message: String)
-        fun ouvrirDetails(quizId: Int)
+        fun ouvrirDetails(quizId: Int, titre: String)
     }
 
     interface IPresentateurLibrary: Presentateur<IVueLibrary>{
         fun surOngletClique(onglet: OngletLibrairie)
-        fun surQuizClique(quizId: Int)
+        fun surQuizClique(quizId: Int, titre: String)
     }
 }

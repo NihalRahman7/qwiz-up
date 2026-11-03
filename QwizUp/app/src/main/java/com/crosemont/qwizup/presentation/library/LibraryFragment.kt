@@ -67,7 +67,7 @@ class LibraryFragment : Fragment(), ContratVuePresentateur.IVueLibrary {
         presentateur = PresentateurLibrary()
 
         cartes.forEachIndexed { index, carte ->
-            carte.setOnClickListener { presentateur.surQuizClique(quizIds[index]) }
+            carte.setOnClickListener { presentateur.surQuizClique(quizIds[index], titres[index].text.toString()) }
         }
 
         view.findViewById<MaterialButtonToggleGroup>(R.id.tabs)
@@ -132,8 +132,8 @@ class LibraryFragment : Fragment(), ContratVuePresentateur.IVueLibrary {
         messageVide.visibility = View.VISIBLE
     }
 
-    override fun ouvrirDetails(quizId: Int) {
-        Toast.makeText(requireContext(), "Quiz $quizId", Toast.LENGTH_SHORT).show()
+    override fun ouvrirDetails(quizId: Int, titre: String) {
+        Toast.makeText(requireContext(), getString(R.string.librairie_quiz_soon, titre), Toast.LENGTH_SHORT).show()
     }
 
     companion object {
