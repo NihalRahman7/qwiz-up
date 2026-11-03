@@ -82,51 +82,66 @@ class ModeleQuiz {
 
     data class QuestionCreer(
         val texte: String,
-        val estVraiFaux: Boolean,      // false = choix multiple
-        val secondes: Int,
-        val doublePoints: Boolean = false
+        val type: ContratVuePresentateur.TypeQuestion,
+        val reponses: List<String> = listOf("", "", "", ""),   // choix multiple : A, B, C, D
+        val bonneReponse: Int = 0,          // choix multiple : 0 à 3 ; vrai ou faux : 0 = vrai, 1 = faux
+        val reponseAttendue: String = ""    // réponse écrite
     )
 
     data class QuizCreer(
-        val id: Int,                   // 0 = nouveau quiz pas encore sauvegardé
+        val id: Int,                        // 0 = nouveau quiz pas encore sauvegardé
         val titre: String,
         val description: String,
         val categorie: ContratVuePresentateur.CategorieQuiz,
         val difficulte: ContratVuePresentateur.Difficulte,
+        val acces: ContratVuePresentateur.AccesQuiz,
         val questions: List<QuestionCreer>,
         val estPublie: Boolean
     )
 
     companion object {
+        private fun choix(texte: String, reponses: List<String>, bonne: Int) =
+            QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.CHOIX_MULTIPLE, reponses, bonne)
+        private fun vraiFaux(texte: String, vrai: Boolean) =
+            QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.VRAI_FAUX, bonneReponse = if (vrai) 0 else 1)
+        private fun ecrite(texte: String, attendue: String) =
+            QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.REPONSE_ECRITE, reponseAttendue = attendue)
+
         // Données codées en dur, partagées par tous les ModeleQuiz :
         // l'écran Créer et l'éditeur voient donc les mêmes quiz
         private val quizCreer = mutableListOf(
             QuizCreer(
                 1, "Le système solaire", "Planètes, lunes et distances.",
                 ContratVuePresentateur.CategorieQuiz.SCIENCES, ContratVuePresentateur.Difficulte.MOYEN,
+                ContratVuePresentateur.AccesQuiz.AVEC_CODE,
                 listOf(
-                    QuestionCreer("Quelle est la plus grande planète du système solaire?", false, 20),
-                    QuestionCreer("Vrai ou faux : la Lune produit sa propre lumière.", true, 10, doublePoints = true)
+                    choix("Quelle est la plus grande planète du système solaire?",
+                        listOf("Mars", "Jupiter", "Saturne", "Neptune"), 1),
+                    vraiFaux("La Lune produit sa propre lumière.", vrai = false)
                 ),
                 estPublie = false
             ),
             QuizCreer(
                 2, "Bases de Kotlin", "Les notions de base du langage Kotlin.",
-                ContratVuePresentateur.CategorieQuiz.SCIENCES, ContratVuePresentateur.Difficulte.FACILE,
+                ContratVuePresentateur.CategorieQuiz.INFORMATIQUE, ContratVuePresentateur.Difficulte.FACILE,
+                ContratVuePresentateur.AccesQuiz.AVEC_CODE,
                 listOf(
-                    QuestionCreer("Quel mot-clé déclare une variable qu'on ne peut pas réassigner?", false, 20),
-                    QuestionCreer("Vrai ou faux : Kotlin peut utiliser les bibliothèques Java.", true, 10),
-                    QuestionCreer("Quelle fonction affiche du texte dans la console?", false, 20)
+                    choix("Quel mot-clé déclare une variable qu'on ne peut pas réassigner?",
+                        listOf("var", "val", "let", "const"), 1),
+                    vraiFaux("Kotlin peut utiliser les bibliothèques Java.", vrai = true),
+                    ecrite("Explique la différence entre val et var.",
+                        "Une val ne peut pas être réassignée, une var peut l'être.")
                 ),
                 estPublie = false
             ),
             QuizCreer(
                 3, "Capitales d'Europe", "Associe chaque pays à sa capitale.",
                 ContratVuePresentateur.CategorieQuiz.GEOGRAPHIE, ContratVuePresentateur.Difficulte.FACILE,
+                ContratVuePresentateur.AccesQuiz.TOUT_LE_MONDE,
                 listOf(
-                    QuestionCreer("Quelle est la capitale du Portugal?", false, 20),
-                    QuestionCreer("Quelle est la capitale de la Finlande?", false, 20),
-                    QuestionCreer("Vrai ou faux : Genève est la capitale de la Suisse.", true, 10, doublePoints = true)
+                    choix("Quelle est la capitale du Portugal?", listOf("Porto", "Lisbonne", "Madrid", "Faro"), 1),
+                    choix("Quelle est la capitale de la Finlande?", listOf("Oslo", "Stockholm", "Helsinki", "Tallinn"), 2),
+                    vraiFaux("Genève est la capitale de la Suisse.", vrai = false)
                 ),
                 estPublie = true
             )
