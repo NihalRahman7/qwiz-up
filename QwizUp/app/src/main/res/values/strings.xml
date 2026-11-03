@@ -98,5 +98,10 @@
     <string name="editeur_publie_ok">« %1$s » est publié!</string>
     <string name="editeur_photo_bientot">L\'ajout d\'image arrive bientôt</string>
     <!--  Les String de la Navigation de la page Librairie   -->
+    <string name="librairie_titre">Librairie</string>
+    <string name="librairie_btn_favoris">Favoris</string>
+    <string name="librairie_btn_completes">Complétés</string>
+    <string name="librairie_btn_crees">Crées</string>
+    <string name="librairie_quiz_soon">Le quiz « %1$s » arrive bientôt!</string>
 
 </resources>

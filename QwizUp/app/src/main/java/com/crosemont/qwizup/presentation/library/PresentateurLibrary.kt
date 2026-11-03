@@ -27,8 +27,8 @@ class PresentateurLibrary(
             }
         }
 
-        override fun surQuizClique(quizId: Int) {
-            vue?.ouvrirDetails(quizId)
+        override fun surQuizClique(quizId: Int, titre: String) {
+            vue?.ouvrirDetails(quizId, titre)
         }
 
         override fun attacherVue(vue: ContratVuePresentateur.IVueLibrary) {
