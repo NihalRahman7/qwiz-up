@@ -39,6 +39,8 @@
     <string name="category_history">Histoire</string>
     <string name="category_languages">Langues</string>
     <string name="category_geography">Géographie</string>
+    <string name="category_informatique">Informatique</string>
+    <string name="category_autre">Autre</string>
     <!--  Les String de la Navigation de la page Créer   -->
     <string name="creer_nouveau_quiz">Nouveau quiz</string>
     <string name="creer_continuer">Continuer</string>
@@ -50,13 +52,11 @@
     <!--  Les String de l'éditeur de quiz (suite de Créer)   -->
     <string name="editeur_titre_nouveau">Nouveau quiz</string>
     <string name="editeur_titre_modifier">Modifier le quiz</string>
-    <string name="editeur_retour">Retour</string>
-    <string name="editeur_badge_brouillon">Brouillon</string>
-    <string name="editeur_badge_publie">Publié</string>
-    <string name="editeur_couverture">Image de couverture (optionnel)</string>
+    <string name="editeur_fermer">Fermer</string>
+    <string name="editeur_couverture_auto">Image choisie selon la catégorie</string>
     <string name="editeur_prendre_photo">Prendre une photo</string>
     <string name="editeur_galerie">Galerie</string>
-    <string name="editeur_label_titre">Titre du quiz</string>
+    <string name="editeur_label_titre">Titre</string>
     <string name="editeur_titre_placeholder">Ex. : Le système solaire</string>
     <string name="editeur_label_description">Description (optionnel)</string>
     <string name="editeur_description_placeholder">De quoi parle ton quiz?</string>
@@ -65,27 +65,38 @@
     <string name="editeur_facile">Facile</string>
     <string name="editeur_moyen">Moyen</string>
     <string name="editeur_difficile">Difficile</string>
-    <string name="editeur_questions">Questions</string>
+    <string name="editeur_label_acces">Qui peut jouer?</string>
+    <string name="editeur_acces_tous">Tout le monde</string>
+    <string name="editeur_acces_code">Avec un code</string>
+    <string name="editeur_acces_tous_aide">Ton quiz sera visible par tout le monde dans Découvrir.</string>
+    <string name="editeur_acces_code_aide">Un code à 6 chiffres sera créé pour ta classe à la publication.</string>
     <plurals name="editeur_nombre_questions">
         <item quantity="one">%d question</item>
         <item quantity="other">%d questions</item>
     </plurals>
-    <string name="editeur_aucune_question">Aucune question pour l\'instant. Ajoute ta première!</string>
-    <string name="editeur_ajouter_question">Ajouter une question</string>
-    <string name="editeur_modifier_question">Modifier la question %1$d</string>
+    <string name="editeur_question_numero">QUESTION %1$d</string>
+    <string name="editeur_supprimer_question">Supprimer la question %1$d</string>
     <string name="editeur_type_choix_multiple">Choix multiple</string>
     <string name="editeur_type_vrai_faux">Vrai ou faux</string>
-    <string name="editeur_points_standard">Standard</string>
-    <string name="editeur_points_double">Double points</string>
-    <string name="editeur_details_question">%1$s · %2$d s · %3$s</string>
-    <string name="editeur_sauvegarder">Sauvegarder</string>
+    <string name="editeur_type_ecrite">Réponse écrite</string>
+    <string name="editeur_question_placeholder">Écris ta question</string>
+    <string name="editeur_coche_bonne">Coche la bonne réponse</string>
+    <string name="editeur_reponse_lettre">Réponse %1$s</string>
+    <string name="editeur_choisir_bonne">Choisir la réponse %1$d comme bonne réponse</string>
+    <string name="editeur_vrai">Vrai</string>
+    <string name="editeur_faux">Faux</string>
+    <string name="editeur_reponse_attendue">Réponse attendue</string>
+    <string name="editeur_reponse_attendue_placeholder">Ex. : L\'eau s\'évapore, se condense en nuages, puis retombe en pluie.</string>
+    <string name="editeur_reponse_attendue_aide">Le joueur écrit sa réponse en mots. Tu pourras la comparer avec celle-ci.</string>
+    <string name="editeur_ajouter_question">Ajouter une question</string>
+    <string name="editeur_brouillon">Brouillon</string>
     <string name="editeur_publier">Publier</string>
     <string name="editeur_erreur_titre">Donne un titre à ton quiz</string>
     <string name="editeur_erreur_questions">Ajoute au moins une question avant de publier</string>
+    <string name="editeur_erreur_question">La question %1$d n\'est pas complète</string>
     <string name="editeur_sauvegarde_ok">Brouillon sauvegardé</string>
     <string name="editeur_publie_ok">« %1$s » est publié!</string>
     <string name="editeur_photo_bientot">L\'ajout d\'image arrive bientôt</string>
-    <string name="editeur_question_bientot">L\'écran des questions arrive bientôt</string>
     <!--  Les String de la Navigation de la page Librairie   -->
 
 </resources>

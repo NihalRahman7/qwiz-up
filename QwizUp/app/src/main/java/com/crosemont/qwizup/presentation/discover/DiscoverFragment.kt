@@ -161,6 +161,8 @@ class DiscoverFragment : Fragment(), ContratVuePresentateur.IVueDiscover {
         CategorieQuiz.HISTOIRE -> R.string.category_history
         CategorieQuiz.LANGUES -> R.string.category_languages
         CategorieQuiz.GEOGRAPHIE -> R.string.category_geography
+        CategorieQuiz.INFORMATIQUE -> R.string.category_informatique
+        CategorieQuiz.AUTRE -> R.string.category_autre
     }
 
     companion object {
