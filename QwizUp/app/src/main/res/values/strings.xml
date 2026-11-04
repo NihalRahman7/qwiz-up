@@ -49,7 +49,7 @@
     <string name="creer_onglet_publies">Publiés (%1$d)</string>
     <string name="creer_onglet_brouillons_defaut">Brouillons</string>
     <string name="creer_onglet_publies_defaut">Publiés</string>
-    <!--  Les String de l'éditeur de quiz (suite de Créer)   -->
+    <string name="creer_nouveau_sous_titre">Ajoute tes questions et réponses</string>
     <string name="editeur_titre_nouveau">Nouveau quiz</string>
     <string name="editeur_titre_modifier">Modifier le quiz</string>
     <string name="editeur_fermer">Fermer</string>

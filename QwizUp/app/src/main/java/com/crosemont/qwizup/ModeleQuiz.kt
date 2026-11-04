@@ -19,19 +19,19 @@ class ModeleQuiz {
     // Données codées en dur
     private val quizDiscover = mutableListOf(
         CarteDiscover(
-            1, ContratVuePresentateur.CategorieQuiz.GEOGRAPHIE, "Capitales d’Europe",
+            3, ContratVuePresentateur.CategorieQuiz.GEOGRAPHIE, "Capitales d’Europe",
             "Associe chaque pays à sa capitale, de Lisbonne à Helsinki.", 12, 6
         ),
         CarteDiscover(
-            2, ContratVuePresentateur.CategorieQuiz.SCIENCES, "Le système solaire",
+            1, ContratVuePresentateur.CategorieQuiz.SCIENCES, "Le système solaire",
             "Planètes, lunes et distances : teste tes connaissances.", 10, 5, estFavori = true
         ),
         CarteDiscover(
-            3, ContratVuePresentateur.CategorieQuiz.HISTOIRE, "La Révolution tranquille",
+            4, ContratVuePresentateur.CategorieQuiz.HISTOIRE, "La Révolution tranquille",
             "Les grands changements du Québec des années 1960.", 8, 4
         ),
         CarteDiscover(
-            4, ContratVuePresentateur.CategorieQuiz.LANGUES, "Verbes irréguliers anglais",
+            5, ContratVuePresentateur.CategorieQuiz.LANGUES, "Verbes irréguliers anglais",
             "Be, go, take… retrouve le passé des verbes les plus utilisés.", 15, 7
         )
     )

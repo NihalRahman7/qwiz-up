@@ -32,7 +32,7 @@ class CreateFragment : Fragment(R.layout.fragment_create), IVueCreate {
         ongletPublies = view.findViewById(R.id.button_onglet_publies)
         listeQuiz = view.findViewById(R.id.liste_quiz)
 
-        view.findViewById<MaterialButton>(R.id.button_nouveau_quiz)
+        view.findViewById<View>(R.id.button_nouveau_quiz)
             .setOnClickListener { presentateur.surNouveauQuizClique() }
         ongletBrouillons.setOnClickListener { presentateur.surOngletClique(OngletCreer.BROUILLONS) }
         ongletPublies.setOnClickListener { presentateur.surOngletClique(OngletCreer.PUBLIES) }

@@ -1,8 +1,11 @@
 package com.crosemont.qwizup.presentation.create
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -10,6 +13,8 @@ import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -80,6 +85,27 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
     private val radiosReponses = listOf(R.id.radio_reponse_1, R.id.radio_reponse_2, R.id.radio_reponse_3, R.id.radio_reponse_4)
     private val saisiesReponses = listOf(R.id.saisie_reponse_1, R.id.saisie_reponse_2, R.id.saisie_reponse_3, R.id.saisie_reponse_4)
     private val lettres = listOf("A", "B", "C", "D")
+
+    // Vrai quand l'utilisateur a choisi sa propre photo : on ne la remplace plus par l'icône de la catégorie
+    private var photoChoisie = false
+
+    // Galerie : ouvre le sélecteur de photos d'Android (aucune permission nécessaire)
+    private val choisirPhoto =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) afficherPhotoCouverture { it.setImageURI(uri) }
+        }
+
+    // Appareil photo : ouvre l'app Caméra du téléphone et reçoit une petite image
+    private val prendrePhoto =
+        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { image ->
+            if (image != null) afficherPhotoCouverture { it.setImageBitmap(image) }
+        }
+
+    // Permission de la caméra : obligatoire, car la librairie du scan QR déclare la permission CAMERA
+    private val permissionCamera =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { accordee ->
+            if (accordee) prendrePhoto.launch(null)
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -170,7 +196,8 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
             CategorieQuiz.GEOGRAPHIE -> R.drawable.ic_globe to R.color.badge_green_bg
             CategorieQuiz.AUTRE -> R.drawable.ic_couverture_autre to R.color.badge_gray_bg
         }
-        imageCouverture.setImageResource(image)
+        // Si l'utilisateur a choisi sa photo, on la garde ; sinon, l'icône suit la catégorie
+        if (!photoChoisie) imageCouverture.setImageResource(image)
         // Change seulement la couleur de fond : le contour pointillé reste
         (zoneCouverture.background.mutate() as GradientDrawable).setColor(couleur(fond))
     }
@@ -307,13 +334,29 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
     }
 
     override fun ouvrirAppareilPhoto() {
-        // TODO: ouvrir l'appareil photo (Intent vers une autre app)
-        Toast.makeText(requireContext(), R.string.editeur_photo_bientot, Toast.LENGTH_SHORT).show()
+        // Demande la permission de la caméra si elle n'est pas encore accordée, puis ouvre l'app Caméra
+        val dejaAccordee = ContextCompat.checkSelfPermission(
+            requireContext(), Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+
+        if (dejaAccordee) prendrePhoto.launch(null)
+        else permissionCamera.launch(Manifest.permission.CAMERA)
     }
 
     override fun ouvrirGalerie() {
-        // TODO: ouvrir la galerie
-        Toast.makeText(requireContext(), R.string.editeur_photo_bientot, Toast.LENGTH_SHORT).show()
+        // Ouvre le sélecteur de photos d'Android (images seulement)
+        choisirPhoto.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    /** Remplace l'icône de la catégorie par la photo choisie, en grand. */
+    private fun afficherPhotoCouverture(charger: (ImageView) -> Unit) {
+        photoChoisie = true
+        imageCouverture.layoutParams = imageCouverture.layoutParams.apply {
+            width = ViewGroup.LayoutParams.MATCH_PARENT
+            height = (160 * resources.displayMetrics.density).toInt()   // 160dp
+        }
+        imageCouverture.scaleType = ImageView.ScaleType.CENTER_CROP
+        charger(imageCouverture)
     }
 
     override fun confirmerSauvegarde() {

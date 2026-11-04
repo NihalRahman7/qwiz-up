@@ -96,20 +96,28 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_prendre_photo"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="52dp"
+                        android:paddingStart="22dp"
+                        android:paddingEnd="22dp"
                         android:text="@string/editeur_prendre_photo"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
                         app:backgroundTint="@color/primary_green"
-                        app:cornerRadius="22dp" />
+                        app:cornerRadius="26dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_galerie"
                         style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="52dp"
                         android:layout_marginStart="8dp"
+                        android:paddingStart="22dp"
+                        android:paddingEnd="22dp"
                         android:text="@string/editeur_galerie"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
                         android:textColor="@color/primary_green"
-                        app:cornerRadius="22dp"
+                        app:cornerRadius="26dp"
                         app:strokeColor="@color/primary_green" />
                 </LinearLayout>
             </LinearLayout>
@@ -193,6 +201,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                app:chipSpacingHorizontal="8dp"
                 app:selectionRequired="true"
                 app:singleSelection="true">
 
@@ -201,6 +210,14 @@
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/texte_puce"
+                    android:textSize="14sp"
+                    app:checkedIconVisible="false"
+                    app:chipBackgroundColor="@color/fond_puce"
+                    app:chipMinHeight="44dp"
+                    app:chipStrokeColor="@color/contour_puce"
+                    app:chipStrokeWidth="1dp"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
                     android:text="@string/category_sciences" />
 
                 <com.google.android.material.chip.Chip
@@ -208,6 +225,14 @@
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/texte_puce"
+                    android:textSize="14sp"
+                    app:checkedIconVisible="false"
+                    app:chipBackgroundColor="@color/fond_puce"
+                    app:chipMinHeight="44dp"
+                    app:chipStrokeColor="@color/contour_puce"
+                    app:chipStrokeWidth="1dp"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
                     android:text="@string/category_history" />
 
                 <com.google.android.material.chip.Chip
@@ -215,6 +240,14 @@
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/texte_puce"
+                    android:textSize="14sp"
+                    app:checkedIconVisible="false"
+                    app:chipBackgroundColor="@color/fond_puce"
+                    app:chipMinHeight="44dp"
+                    app:chipStrokeColor="@color/contour_puce"
+                    app:chipStrokeWidth="1dp"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
                     android:text="@string/category_languages" />
 
                 <com.google.android.material.chip.Chip
@@ -222,6 +255,14 @@
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/texte_puce"
+                    android:textSize="14sp"
+                    app:checkedIconVisible="false"
+                    app:chipBackgroundColor="@color/fond_puce"
+                    app:chipMinHeight="44dp"
+                    app:chipStrokeColor="@color/contour_puce"
+                    app:chipStrokeWidth="1dp"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
                     android:text="@string/category_informatique" />
 
                 <com.google.android.material.chip.Chip
@@ -229,6 +270,14 @@
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/texte_puce"
+                    android:textSize="14sp"
+                    app:checkedIconVisible="false"
+                    app:chipBackgroundColor="@color/fond_puce"
+                    app:chipMinHeight="44dp"
+                    app:chipStrokeColor="@color/contour_puce"
+                    app:chipStrokeWidth="1dp"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
                     android:text="@string/category_geography" />
 
                 <com.google.android.material.chip.Chip
@@ -236,6 +285,14 @@
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/texte_puce"
+                    android:textSize="14sp"
+                    app:checkedIconVisible="false"
+                    app:chipBackgroundColor="@color/fond_puce"
+                    app:chipMinHeight="44dp"
+                    app:chipStrokeColor="@color/contour_puce"
+                    app:chipStrokeWidth="1dp"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
                     android:text="@string/category_autre" />
 
             </com.google.android.material.chip.ChipGroup>
@@ -253,8 +310,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:cardBackgroundColor="@color/light_green"
-                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/border"
+                app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
 
@@ -270,36 +327,45 @@
                         android:id="@+id/button_facile"
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="44dp"
                         android:layout_weight="1"
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
                         android:text="@string/editeur_facile"
-                        android:textColor="@color/text_primary"
+                        android:stateListAnimator="@animator/elevation_onglet"
+                        android:textColor="@color/texte_onglet"
+                        android:textStyle="bold"
+                        app:backgroundTint="@color/fond_onglet"
                         app:cornerRadius="12dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_moyen"
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="44dp"
                         android:layout_weight="1"
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
                         android:text="@string/editeur_moyen"
-                        android:textColor="@color/text_primary"
+                        android:stateListAnimator="@animator/elevation_onglet"
+                        android:textColor="@color/texte_onglet"
+                        android:textStyle="bold"
+                        app:backgroundTint="@color/fond_onglet"
                         app:cornerRadius="12dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_difficile"
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="44dp"
                         android:layout_weight="1"
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
                         android:text="@string/editeur_difficile"
-                        android:textColor="@color/text_primary"
+                        android:stateListAnimator="@animator/elevation_onglet"
+                        android:textColor="@color/texte_onglet"
+                        android:textStyle="bold"
+                        app:backgroundTint="@color/fond_onglet"
                         app:cornerRadius="12dp" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -318,8 +384,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:cardBackgroundColor="@color/light_green"
-                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/border"
+                app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
 
@@ -335,24 +401,30 @@
                         android:id="@+id/button_acces_tous"
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="44dp"
                         android:layout_weight="1"
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
                         android:text="@string/editeur_acces_tous"
-                        android:textColor="@color/text_primary"
+                        android:stateListAnimator="@animator/elevation_onglet"
+                        android:textColor="@color/texte_onglet"
+                        android:textStyle="bold"
+                        app:backgroundTint="@color/fond_onglet"
                         app:cornerRadius="12dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_acces_code"
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="0dp"
-                        android:layout_height="48dp"
+                        android:layout_height="44dp"
                         android:layout_weight="1"
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
                         android:text="@string/editeur_acces_code"
-                        android:textColor="@color/text_primary"
+                        android:stateListAnimator="@animator/elevation_onglet"
+                        android:textColor="@color/texte_onglet"
+                        android:textStyle="bold"
+                        app:backgroundTint="@color/fond_onglet"
                         app:cornerRadius="12dp" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>

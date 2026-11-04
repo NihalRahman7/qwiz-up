@@ -43,6 +43,7 @@ interface ContratVuePresentateur {
         fun afficherAucunResultat()
         fun afficherCategorieChoisie(categorie: CategorieQuiz?)   // null = « Tous »
         fun ouvrirQuiz(quizId: Int, titre: String)
+        fun afficherQuizBientot(titre: String)   // le quiz n'a pas encore de questions
     }
 
     interface IPresentateurDiscover : Presentateur<IVueDiscover> {

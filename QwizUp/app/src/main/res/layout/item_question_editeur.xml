@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            app:cardBackgroundColor="@color/light_green"
+            app:cardBackgroundColor="@color/border"
             app:cardCornerRadius="14dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
@@ -64,50 +64,59 @@
                 app:selectionRequired="true"
                 app:singleSelection="true">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_type_choix"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
-                android:text="@string/editeur_type_choix_multiple"
-                android:textColor="@color/text_primary"
-                android:textSize="12sp"
-                app:cornerRadius="12dp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_type_choix"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="@string/editeur_type_choix_multiple"
+                    android:stateListAnimator="@animator/elevation_onglet"
+                    android:textColor="@color/texte_onglet"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/fond_onglet"
+                    android:textSize="12sp"
+                    app:cornerRadius="12dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_type_vrai_faux"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
-                android:text="@string/editeur_type_vrai_faux"
-                android:textColor="@color/text_primary"
-                android:textSize="12sp"
-                app:cornerRadius="12dp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_type_vrai_faux"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="@string/editeur_type_vrai_faux"
+                    android:stateListAnimator="@animator/elevation_onglet"
+                    android:textColor="@color/texte_onglet"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/fond_onglet"
+                    android:textSize="12sp"
+                    app:cornerRadius="12dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_type_ecrite"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
-                android:text="@string/editeur_type_ecrite"
-                android:textColor="@color/text_primary"
-                android:textSize="12sp"
-                app:cornerRadius="12dp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_type_ecrite"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="@string/editeur_type_ecrite"
+                    android:stateListAnimator="@animator/elevation_onglet"
+                    android:textColor="@color/texte_onglet"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/fond_onglet"
+                    android:textSize="12sp"
+                    app:cornerRadius="12dp" />
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
         </com.google.android.material.card.MaterialCardView>

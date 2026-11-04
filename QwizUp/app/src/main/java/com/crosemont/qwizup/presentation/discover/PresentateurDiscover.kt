@@ -42,7 +42,13 @@ class PresentateurDiscover(
 
     override fun surJouerClique(quizId: Int) {
         val quiz = modeleQuiz.obtenirQuizDiscoverParId(quizId) ?: return
-        vue?.ouvrirQuiz(quiz.id, quiz.titre)
+
+        // Seuls les quiz qui ont des questions peuvent être joués
+        if (modeleQuiz.obtenirQuizAJouer(quizId) != null) {
+            vue?.ouvrirQuiz(quizId, quiz.titre)
+        } else {
+            vue?.afficherQuizBientot(quiz.titre)
+        }
     }
 
     // Demande au modèle les quiz qui correspondent aux filtres, puis les envoie à la vue

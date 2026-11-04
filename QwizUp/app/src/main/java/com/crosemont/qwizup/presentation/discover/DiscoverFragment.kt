@@ -13,6 +13,7 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
 import com.crosemont.qwizup.presentation.ContratVuePresentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
@@ -70,7 +71,9 @@ class DiscoverFragment : Fragment(), ContratVuePresentateur.IVueDiscover {
             CategorieQuiz.SCIENCES to view.findViewById<Chip>(R.id.chip_sciences),
             CategorieQuiz.HISTOIRE to view.findViewById<Chip>(R.id.chip_history),
             CategorieQuiz.LANGUES to view.findViewById<Chip>(R.id.chip_languages),
+            CategorieQuiz.INFORMATIQUE to view.findViewById<Chip>(R.id.chip_informatique),
             CategorieQuiz.GEOGRAPHIE to view.findViewById<Chip>(R.id.chip_geography)
+
         )
 
         presentateur = PresentateurDiscover()
@@ -151,7 +154,12 @@ class DiscoverFragment : Fragment(), ContratVuePresentateur.IVueDiscover {
     }
 
     override fun ouvrirQuiz(quizId: Int, titre: String) {
-        // L'écran pour jouer n'existe pas encore : on affiche seulement un message
+        // Ouvre l'écran de jeu et lui envoie le numéro du quiz
+        val arguments = Bundle().apply { putInt("quizId", quizId) }
+        findNavController().navigate(R.id.action_decouvrir_vers_question, arguments)
+    }
+
+    override fun afficherQuizBientot(titre: String) {
         Toast.makeText(requireContext(), getString(R.string.discover_play_soon, titre), Toast.LENGTH_SHORT).show()
     }
 
