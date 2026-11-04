@@ -166,12 +166,13 @@
                         tools:text="2 / 5" />
                 </com.google.android.material.card.MaterialCardView>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="8dp"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/ic_chevron_right" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_jouer_1"
+                    style="@style/Widget.Material3.Button.IconButton.Filled"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    app:iconSize="18dp"
+                    app:icon="@drawable/ic_play" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -247,12 +248,13 @@
                         tools:text="Nouveau" />
                 </com.google.android.material.card.MaterialCardView>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="8dp"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/ic_chevron_right" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_jouer_2"
+                    style="@style/Widget.Material3.Button.IconButton.Filled"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    app:iconSize="18dp"
+                    app:icon="@drawable/ic_play" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -328,12 +330,13 @@
                         tools:text="87 %" />
                 </com.google.android.material.card.MaterialCardView>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="8dp"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/ic_chevron_right" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_jouer_3"
+                    style="@style/Widget.Material3.Button.IconButton.Filled"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    app:iconSize="18dp"
+                    app:icon="@drawable/ic_play" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
