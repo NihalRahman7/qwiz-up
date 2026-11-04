@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_accueil_vers_question"
             app:destination="@id/questionFragment" />
+        <action
+            android:id="@+id/action_accueil_vers_rejoindre"
+            app:destination="@id/rejoindreFragment" />
     </fragment>
     <fragment
         android:id="@+id/createFragment"
@@ -55,4 +58,15 @@
             android:defaultValue="1" />
     </fragment>
 
+    <fragment
+        android:id="@+id/rejoindreFragment"
+        android:name="com.crosemont.qwizup.presentation.rejoindre.RejoindreFragment"
+        android:label="fragment_rejoindre"
+        tools:layout="@layout/fragment_rejoindre">
+        <action
+            android:id="@+id/action_rejoindre_vers_question"
+            app:destination="@id/questionFragment"
+            app:popUpTo="@id/rejoindreFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

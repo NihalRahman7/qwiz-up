@@ -43,5 +43,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+    implementation(libs.zxing.android.embedded)
 
 }
