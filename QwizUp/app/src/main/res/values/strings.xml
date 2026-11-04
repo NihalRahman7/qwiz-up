@@ -103,5 +103,25 @@
     <string name="librairie_btn_completes">Complétés</string>
     <string name="librairie_btn_crees">Crées</string>
     <string name="librairie_quiz_soon">Le quiz « %1$s » arrive bientôt!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--  Les String de l'écran Question (jeu)   -->
+    <string name="question_quitter">Quitter le quiz</string>
+    <string name="question_compteur">%1$d / %2$d</string>
+    <string name="question_numero">Question %1$d</string>
+    <string name="question_reponse">%1$s · %2$s</string>
+    <string name="question_vrai">Vrai</string>
+    <string name="question_faux">Faux</string>
+    <string name="question_choisir">Choisis une réponse</string>
+    <string name="question_suivante">Question suivante</string>
+    <string name="question_voir_resultat">Voir mon résultat</string>
+    <string name="question_bonne">Bonne réponse !</string>
+    <string name="question_mauvaise">Pas tout à fait. La bonne réponse est « %1$s ».</string>
+    <string name="resultat_excellent">Excellent travail !</string>
+    <string name="resultat_bien">Bien joué !</string>
+    <string name="resultat_a_pratiquer">Continue de pratiquer !</string>
+    <string name="resultat_detail">Tu as terminé « %1$s ».</string>
+    <string name="resultat_rejouer">Rejouer</string>
+    <string name="resultat_retour">Retour à l\'accueil</string>
 </resources>

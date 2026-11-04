@@ -260,7 +260,9 @@
                             android:textSize="13sp" />
                     </LinearLayout>
 
+                    <!-- Bouton ▶ : ouvre le jeu du quiz 1 -->
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_jouer_1"
                         style="@style/Widget.Material3.Button.IconButton.Filled"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -327,7 +329,9 @@
                             android:textSize="13sp" />
                     </LinearLayout>
 
+                    <!-- Bouton ▶ : ouvre le jeu du quiz 2 -->
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_jouer_2"
                         style="@style/Widget.Material3.Button.IconButton.Filled"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -376,11 +380,14 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Carte de suggestion -->
+        <!-- Carte de suggestion : ouvre le jeu du quiz 3 -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/carte_suggestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:clickable="true"
+            android:focusable="true"
             app:cardBackgroundColor="@color/light_green"
             app:cardCornerRadius="18dp"
             app:cardElevation="0dp"
@@ -441,7 +448,6 @@
                     android:src="@drawable/ic_chevron_right" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

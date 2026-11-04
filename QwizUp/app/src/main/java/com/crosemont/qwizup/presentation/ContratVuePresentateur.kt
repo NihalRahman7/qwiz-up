@@ -10,7 +10,14 @@ interface ContratVuePresentateur {
     }
 
     // Home
-    // TODO: Faire le contrat qui gère le HomeFragment
+    interface IVueHome : Vue {
+        /** Ouvre l'écran de jeu pour le quiz choisi. */
+        fun ouvrirQuiz(quizId: Int)
+    }
+
+    interface IPresentateurHome : Presentateur<IVueHome> {
+        fun surQuizClique(quizId: Int)   // bouton ▶ ou carte de suggestion
+    }
 
     // Discover
     enum class CategorieQuiz { SCIENCES, HISTOIRE, LANGUES, GEOGRAPHIE, INFORMATIQUE, AUTRE }
@@ -126,8 +133,50 @@ interface ContratVuePresentateur {
         fun ouvrirDetails(quizId: Int, titre: String)
     }
 
+
     interface IPresentateurLibrary: Presentateur<IVueLibrary>{
         fun surOngletClique(onglet: OngletLibrairie)
         fun surQuizClique(quizId: Int, titre: String)
+    }
+
+    // Question (écran de jeu, s'ouvre avec le bouton ▶ de l'Accueil)
+    enum class NiveauResultat { EXCELLENT, BIEN, A_PRATIQUER }
+
+    interface IVueQuestion : Vue {
+        /** Affiche une question et ses réponses (réponses vides pour vrai ou faux et réponse écrite). */
+        fun afficherQuestion(
+            titreQuiz: String,
+            numero: Int,
+            total: Int,
+            enonce: String,
+            type: TypeQuestion,
+            reponses: List<String>
+        )
+
+        /** Met à jour la barre de progression (0 à 100). */
+        fun afficherProgression(pourcentage: Int)
+
+        /** Colore la réponse choisie en vert. */
+        fun afficherBonneReponse(indice: Int)
+
+        /** Colore la réponse choisie en orange et la bonne réponse en vert. */
+        fun afficherMauvaiseReponse(indiceChoisi: Int, indiceBonneReponse: Int)
+
+        /** Active le bouton Suivant ; à la dernière question, il devient « Voir mon résultat ». */
+        fun activerSuivant(estDerniere: Boolean)
+
+        /** Affiche l'écran de fin avec le score. */
+        fun afficherResultat(titreQuiz: String, score: Int, total: Int, niveau: NiveauResultat)
+
+        /** Retourne à l'écran précédent. */
+        fun fermer()
+    }
+
+    interface IPresentateurQuestion : Presentateur<IVueQuestion> {
+        fun surDemarrer(quizId: Int)
+        fun surReponseChoisie(indice: Int)   // choix multiple : 0 à 3 ; vrai ou faux : 0 = vrai, 1 = faux
+        fun surSuivantClique()
+        fun surRejouerClique()
+        fun surQuitterClique()
     }
 }
