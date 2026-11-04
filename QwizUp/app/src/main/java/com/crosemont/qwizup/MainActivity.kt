@@ -33,7 +33,8 @@ class MainActivity : AppCompatActivity() {
         // Cache la barre du bas dans l'éditeur de quiz, qui a ses propres boutons en bas
         navController.addOnDestinationChangedListener { _, destination, _ ->
             barreDuBas.isVisible = destination.id != R.id.editeurQuizFragment &&
-                    destination.id != R.id.questionFragment
+                    destination.id != R.id.questionFragment &&
+                    destination.id != R.id.rejoindreFragment
         }
     }
 }
