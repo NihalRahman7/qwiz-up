@@ -124,4 +124,15 @@
     <string name="resultat_detail">Tu as terminé « %1$s ».</string>
     <string name="resultat_rejouer">Rejouer</string>
     <string name="resultat_retour">Retour à l\'accueil</string>
+
+    <!--  Les String de l'écran Rejoindre avec un code   -->
+    <string name="rejoindre_retour">Retour</string>
+    <string name="rejoindre_titre">Rejoindre un quiz</string>
+    <string name="rejoindre_sous_titre">Entre le code à 6 chiffres donné par ton enseignant·e.</string>
+    <string name="rejoindre_label_code">Code du quiz</string>
+    <string name="rejoindre_bouton">Rejoindre</string>
+    <string name="rejoindre_ou">ou</string>
+    <string name="rejoindre_scanner">Scanner un code QR</string>
+    <string name="rejoindre_code_invalide">Ce code ne correspond à aucun quiz.</string>
+    <string name="rejoindre_scanner_invite">Place le code QR dans le cadre</string>
 </resources>

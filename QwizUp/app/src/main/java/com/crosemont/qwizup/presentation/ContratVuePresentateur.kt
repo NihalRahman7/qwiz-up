@@ -13,10 +13,17 @@ interface ContratVuePresentateur {
     interface IVueHome : Vue {
         /** Ouvre l'écran de jeu pour le quiz choisi. */
         fun ouvrirQuiz(quizId: Int)
+
+        /** Ouvre l'écran pour rejoindre un quiz avec un code. */
+        fun ouvrirRejoindre()
     }
 
     interface IPresentateurHome : Presentateur<IVueHome> {
-        fun surQuizClique(quizId: Int)   // bouton ▶ ou carte de suggestion
+        /** L'utilisateur a touché un bouton ▶ ou la carte de suggestion. */
+        fun surQuizClique(quizId: Int)
+
+        /** L'utilisateur a touché le bouton « Code ». */
+        fun surCodeClique()
     }
 
     // Discover
@@ -178,5 +185,34 @@ interface ContratVuePresentateur {
         fun surSuivantClique()
         fun surRejouerClique()
         fun surQuitterClique()
+    }
+
+    // Rejoindre (s'ouvre avec le bouton « Code » de l'Accueil)
+    interface IVueRejoindre : Vue {
+        /** Active ou désactive le bouton Rejoindre (actif seulement avec 6 chiffres). */
+        fun activerRejoindre(actif: Boolean)
+
+        /** Affiche un message d'erreur sous le champ : le code n'existe pas. */
+        fun afficherCodeInvalide()
+
+        /** Retire le message d'erreur. */
+        fun effacerErreur()
+
+        /** Ouvre la caméra pour scanner un code QR. */
+        fun ouvrirScanneur()
+
+        /** Ouvre l'écran de jeu pour le quiz trouvé. */
+        fun ouvrirQuiz(quizId: Int)
+
+        /** Retourne à l'écran précédent. */
+        fun fermer()
+    }
+
+    interface IPresentateurRejoindre : Presentateur<IVueRejoindre> {
+        fun surCodeModifie(code: String)
+        fun surRejoindreClique(code: String)
+        fun surScannerClique()
+        fun surCodeScanne(contenu: String)
+        fun surRetourClique()
     }
 }

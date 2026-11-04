@@ -6,11 +6,7 @@ import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueQuestion
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.NiveauResultat
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
 
-/**
- * Présentateur de l'écran de jeu.
- * Il garde l'état de la partie (question courante, score) et dit à la vue quoi afficher.
- * Aucune classe Android ici, pour pouvoir le tester avec des tests unitaires.
- */
+
 class PresentateurQuestion(
     private val modele: ModeleQuiz = ModeleQuiz()
 ) : IPresentateurQuestion {
@@ -52,7 +48,7 @@ class PresentateurQuestion(
         afficherQuestionCourante()
     }
 
-    /** Envoie la question courante à la vue. */
+    // Envoie la question courante à la vue. //
     private fun afficherQuestionCourante() {
         aRepondu = false
         val question = questions[indiceQuestion]
@@ -69,7 +65,7 @@ class PresentateurQuestion(
         vue?.afficherProgression(indiceQuestion * 100 / questions.size)
     }
 
-    /** Traite la réponse touchée par l'utilisateur. */
+    // Traite la réponse touchée par l'utilisateur. //
     override fun surReponseChoisie(indice: Int) {
         if (aRepondu) return             // déjà répondu : on ignore les autres clics
         aRepondu = true
@@ -86,7 +82,7 @@ class PresentateurQuestion(
         vue?.activerSuivant(estDerniere = indiceQuestion == questions.lastIndex)
     }
 
-    /** Passe à la question suivante, ou affiche le résultat après la dernière. */
+    // Passe à la question suivante, ou affiche le résultat après la dernière. //
     override fun surSuivantClique() {
         if (!aRepondu) return            // il faut répondre avant de continuer
 
@@ -98,17 +94,17 @@ class PresentateurQuestion(
         }
     }
 
-    /** Recommence le même quiz depuis le début. */
+    // Recommence le même quiz depuis le début. //
     override fun surRejouerClique() {
         surDemarrer(quizId)
     }
 
-    /** Quitte le quiz et retourne à l'écran précédent. */
+    // Quitte le quiz et retourne à l'écran précédent. //
     override fun surQuitterClique() {
         vue?.fermer()
     }
 
-    /** Choisit le message de fin selon le pourcentage de bonnes réponses. */
+    // Choisit le message de fin selon le pourcentage de bonnes réponses. //
     private fun niveauPour(score: Int, total: Int): NiveauResultat {
         val pourcentage = score * 100 / total
         return when {

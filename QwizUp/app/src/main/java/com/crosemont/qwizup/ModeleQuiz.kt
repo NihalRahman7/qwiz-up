@@ -208,4 +208,15 @@ class ModeleQuiz {
                 }
             )
         }
+
+
+    // Rejoindre (code à 6 chiffres donné par l'enseignant·e)
+    // Données codées en dur : chaque code ouvre un quiz (même numérotation que Créer)
+    private val codesQuiz = mapOf(
+        "111111" to 1,   // Le système solaire
+        "222222" to 2,   // Bases de Kotlin
+        "333333" to 3    // Capitales d'Europe
+    )
+    /** Retourne l'id du quiz qui correspond au code, ou null si le code n'existe pas. */
+    fun trouverQuizParCode(code: String): Int? = codesQuiz[code.trim()]
 }

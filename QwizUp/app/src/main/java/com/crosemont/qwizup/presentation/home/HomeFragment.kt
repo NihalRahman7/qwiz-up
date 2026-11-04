@@ -9,10 +9,6 @@ import com.crosemont.qwizup.R
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.IPresentateurHome
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueHome
 
-/**
- * Vue de l'Accueil.
- * Elle affiche le layout et transmet chaque clic au présentateur, sans prendre de décision.
- */
 class HomeFragment : Fragment(R.layout.fragment_home), IVueHome {
 
     // Le présentateur qui gère la logique de cet écran
@@ -27,6 +23,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), IVueHome {
         view.findViewById<View>(R.id.button_jouer_1).setOnClickListener { presentateur.surQuizClique(1) }
         view.findViewById<View>(R.id.button_jouer_2).setOnClickListener { presentateur.surQuizClique(2) }
         view.findViewById<View>(R.id.carte_suggestion).setOnClickListener { presentateur.surQuizClique(3) }
+        view.findViewById<View>(R.id.button_join_code).setOnClickListener { presentateur.surCodeClique() }
 
         // L'écran est prêt : on le présente au présentateur
         presentateur.attacherVue(this)
@@ -40,8 +37,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), IVueHome {
 
     // ----- IVueHome -----
 
-    /** Ouvre l'écran de jeu et lui envoie le numéro du quiz à jouer. */
+    // Ouvre l'écran de jeu et lui envoie le numéro du quiz à jouer. //
     override fun ouvrirQuiz(quizId: Int) {
         findNavController().navigate(R.id.action_accueil_vers_question, bundleOf("quizId" to quizId))
+    }
+
+    // Ouvre l'écran pour rejoindre un quiz avec un code. //
+    override fun ouvrirRejoindre() {
+        findNavController().navigate(R.id.action_accueil_vers_rejoindre)
     }
 }

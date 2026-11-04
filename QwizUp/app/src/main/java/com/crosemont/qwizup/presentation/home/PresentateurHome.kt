@@ -18,4 +18,8 @@ class PresentateurHome : IPresentateurHome {
     override fun surQuizClique(quizId: Int) {
         vue?.ouvrirQuiz(quizId)
     }
+
+    override fun surCodeClique() {
+        vue?.ouvrirRejoindre()
+    }
 }
