@@ -1,6 +1,6 @@
 package com.crosemont.qwizup.presentation.library
 
-import com.crosemont.qwizup.ModeleQuiz
+import com.crosemont.qwizup.presentation.ModeleQuiz
 import com.crosemont.qwizup.presentation.ContratVuePresentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.OngletLibrairie
 

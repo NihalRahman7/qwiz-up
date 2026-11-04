@@ -1,6 +1,6 @@
 package com.crosemont.qwizup.presentation.rejoindre
 
-import com.crosemont.qwizup.ModeleQuiz
+import com.crosemont.qwizup.presentation.ModeleQuiz
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.IPresentateurRejoindre
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueRejoindre
 
