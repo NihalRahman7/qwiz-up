@@ -117,7 +117,10 @@ class ModeleQuiz {
                 listOf(
                     choix("Quelle est la plus grande planète du système solaire?",
                         listOf("Mars", "Jupiter", "Saturne", "Neptune"), 1),
-                    vraiFaux("La Lune produit sa propre lumière.", vrai = false)
+                    vraiFaux("La Lune produit sa propre lumière.", vrai = false),
+                    choix("Quelle planète est la plus proche du Soleil?", listOf("Vénus", "Mercure", "Mars", "Terre"), 1),
+                    choix("Combien de planètes compte le système solaire?", listOf("7", "8", "9", "10"), 1),
+                    vraiFaux("Mars est surnommée la planète rouge.", vrai = true)
                 ),
                 estPublie = false
             ),
@@ -129,8 +132,9 @@ class ModeleQuiz {
                     choix("Quel mot-clé déclare une variable qu'on ne peut pas réassigner?",
                         listOf("var", "val", "let", "const"), 1),
                     vraiFaux("Kotlin peut utiliser les bibliothèques Java.", vrai = true),
-                    ecrite("Explique la différence entre val et var.",
-                        "Une val ne peut pas être réassignée, une var peut l'être.")
+                    choix("Quel type représente du texte?", listOf("Int", "Char", "String", "Text"), 2),
+                    choix("Quel mot-clé déclare une fonction?", listOf("function", "def", "fun", "fn"), 2),
+                    vraiFaux("Une variable String peut être null par défaut.", vrai = false)
                 ),
                 estPublie = false
             ),
@@ -188,4 +192,20 @@ class ModeleQuiz {
     fun obternirFavoris(): List<CarteLibrary> = favoris
     fun obternirCompletes(): List<CarteLibrary> = emptyList()
     fun obternirCrees(): List<CarteLibrary> = emptyList()
+
+
+    // Question (écran de jeu)
+    /**
+     * Retourne le quiz à jouer, avec les mêmes données que l'écran Créer.
+     * Les réponses écrites sont retirées pour l'instant : le jeu gère seulement
+     * le choix multiple et le vrai ou faux.
+     */
+    fun obtenirQuizAJouer(quizId: Int): QuizCreer? =
+        obtenirQuizCreer(quizId)?.let { quiz ->
+            quiz.copy(
+                questions = quiz.questions.filter {
+                    it.type != ContratVuePresentateur.TypeQuestion.REPONSE_ECRITE
+                }
+            )
+        }
 }

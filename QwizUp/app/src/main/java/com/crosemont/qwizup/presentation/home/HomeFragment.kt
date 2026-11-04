@@ -1,60 +1,47 @@
 package com.crosemont.qwizup.presentation.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.crosemont.qwizup.presentation.ContratVuePresentateur.IPresentateurHome
+import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueHome
 
 /**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Vue de l'Accueil.
+ * Elle affiche le layout et transmet chaque clic au présentateur, sans prendre de décision.
  */
-class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class HomeFragment : Fragment(R.layout.fragment_home), IVueHome {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    // Le présentateur qui gère la logique de cet écran
+    private val presentateur: IPresentateurHome = PresentateurHome()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Chaque clic est transmis au présentateur.
+        // Les id des quiz suivent la numérotation de Créer :
+        // 1 = Le système solaire, 2 = Bases de Kotlin, 3 = Capitales d'Europe
+        view.findViewById<View>(R.id.button_jouer_1).setOnClickListener { presentateur.surQuizClique(1) }
+        view.findViewById<View>(R.id.button_jouer_2).setOnClickListener { presentateur.surQuizClique(2) }
+        view.findViewById<View>(R.id.carte_suggestion).setOnClickListener { presentateur.surQuizClique(3) }
+
+        // L'écran est prêt : on le présente au présentateur
+        presentateur.attacherVue(this)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    override fun onDestroyView() {
+        // L'écran disparaît : le présentateur ne doit plus l'utiliser
+        presentateur.detacherVue()
+        super.onDestroyView()
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    // ----- IVueHome -----
+
+    /** Ouvre l'écran de jeu et lui envoie le numéro du quiz à jouer. */
+    override fun ouvrirQuiz(quizId: Int) {
+        findNavController().navigate(R.id.action_accueil_vers_question, bundleOf("quizId" to quizId))
     }
 }
