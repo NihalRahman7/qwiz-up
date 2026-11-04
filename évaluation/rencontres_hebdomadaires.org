@@ -17,36 +17,44 @@
 
 * Semaine 9
 
-- Date:
-- Heure de début:
-- Heure de fin:
+- Date: 30 octobre 2026
+- Heure de début: 18h00
+- Heure de fin: 19:00
 - Présences :
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Nihal Rahman
+  2. Aratus Thamidson
+  3. Orphéric Montel
+  4. Joseph Allan
 
 - Avancements de la semaine :
-  -
+  - Travail sur la structure MVP du projet
+  - Avancements sur les fragments
+  - Préparation à la présentation du 4 novembre 2026
     
 - Problèmes envisagés
-  - 
+  - Implémentation du code QR
 * Semaine 10
 
-- Date:
-- Heure de début:
-- Heure de fin:
+- Date: 4 novembre 206
+- Heure de début: 12h00
+- Heure de fin: 12h45
 - Présences :
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Nihal Rahman
+  2. Aratus Thamidson
+  3. Orphéric Montel
+  4. Joseph Allan
 
 - Avancements de la semaine :
-  -
+  - Discussion sur la priorisation
+  - Enlever le code QR et garder le code de numero à six chiffres
     
 - Problèmes envisagés
-  - 
+  - Vérification de l'utilisation de l'API
+  - Amélioration des écrans
+  - Dans l'écrans "Librairie", il faut implémenter soit
+    - "n1/n2" (n1 étant le nombre de question fait et n2 étant le nombre de questions total) lorsqu'un quiz n'est pas fini
+    - "Nouveau" lorsque le quiz a été ajouté mais pas commencé
+    - Un pourcentage de bonne réponses lorsque le quiz est terminé
 
 * Semaine 11
 
