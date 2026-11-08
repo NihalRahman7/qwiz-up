@@ -1,7 +1,7 @@
 package com.crosemont.qwizup.presentation.create
 
-import com.crosemont.qwizup.ModeleQuiz
-import com.crosemont.qwizup.ModeleQuiz.QuestionCreer
+import com.crosemont.qwizup.presentation.ModeleQuiz
+import com.crosemont.qwizup.presentation.ModeleQuiz.QuestionCreer
 import com.crosemont.qwizup.presentation.ContratVuePresentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.AccesQuiz
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz

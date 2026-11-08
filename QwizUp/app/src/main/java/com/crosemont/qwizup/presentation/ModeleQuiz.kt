@@ -1,5 +1,5 @@
-package com.crosemont.qwizup
-import com.crosemont.qwizup.presentation.ContratVuePresentateur
+package com.crosemont.qwizup.presentation
+import java.text.Normalizer
 
 class ModeleQuiz {
     // Home
@@ -68,7 +68,7 @@ class ModeleQuiz {
 
     /** Met le texte en minuscules et enlève les accents (« Révolution » devient « revolution »). */
     private fun simplifier(texte: String): String =
-        java.text.Normalizer.normalize(texte, java.text.Normalizer.Form.NFD)
+        Normalizer.normalize(texte, Normalizer.Form.NFD)
             .filter { Character.getType(it) != Character.NON_SPACING_MARK.toInt() }
             .lowercase()
 

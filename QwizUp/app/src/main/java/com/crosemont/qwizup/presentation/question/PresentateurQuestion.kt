@@ -1,6 +1,6 @@
 package com.crosemont.qwizup.presentation.question
 
-import com.crosemont.qwizup.ModeleQuiz
+import com.crosemont.qwizup.presentation.ModeleQuiz
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.IPresentateurQuestion
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueQuestion
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.NiveauResultat
