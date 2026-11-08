@@ -26,32 +26,8 @@ interface ContratVuePresentateur {
         fun surCodeClique()
     }
 
-    // Discover
+    // Catégories de quiz (utilisées par Découvrir et l'éditeur de Créer)
     enum class CategorieQuiz { SCIENCES, HISTOIRE, LANGUES, GEOGRAPHIE, INFORMATIQUE, AUTRE }
-
-    interface IVueDiscover : Vue {
-        fun viderCartes()
-        fun ajouterCarteQuiz(
-            id: Int,
-            categorie: CategorieQuiz,
-            titre: String,
-            description: String,
-            nbQuestions: Int,
-            dureeMinutes: Int,
-            estFavori: Boolean
-        )
-        fun afficherAucunResultat()
-        fun afficherCategorieChoisie(categorie: CategorieQuiz?)   // null = « Tous »
-        fun ouvrirQuiz(quizId: Int, titre: String)
-        fun afficherQuizBientot(titre: String)   // le quiz n'a pas encore de questions
-    }
-
-    interface IPresentateurDiscover : Presentateur<IVueDiscover> {
-        fun surRechercheModifiee(texte: String)
-        fun surCategorieCliquee(categorie: CategorieQuiz?)   // null = « Tous »
-        fun surFavoriClique(quizId: Int)
-        fun surJouerClique(quizId: Int)
-    }
 
     // Create
     enum class OngletCreer { BROUILLONS, PUBLIES }

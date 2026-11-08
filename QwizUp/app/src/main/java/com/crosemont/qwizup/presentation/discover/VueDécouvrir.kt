@@ -15,22 +15,21 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.ContratVuePresentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
 
-class DiscoverFragment : Fragment(), ContratVuePresentateur.IVueDiscover {
+class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
 
-    private lateinit var presentateur: ContratVuePresentateur.IPresentateurDiscover
+    private lateinit var présentateur: ContratDécouvrir.IPrésentateurDécouvrir
     private lateinit var messageVide: TextView
 
     // Les cartes du XML
     private lateinit var cartes: List<MaterialCardView>
-    private lateinit var categories: List<TextView>
+    private lateinit var catégories: List<TextView>
     private lateinit var titres: List<TextView>
     private lateinit var descriptions: List<TextView>
-    private lateinit var details: List<TextView>
+    private lateinit var détails: List<TextView>
     private lateinit var boutonsFavori: List<ImageButton>
     private lateinit var boutonsJouer: List<View>
 
@@ -53,13 +52,13 @@ class DiscoverFragment : Fragment(), ContratVuePresentateur.IVueDiscover {
 
         cartes = listOf(R.id.carte1, R.id.carte2, R.id.carte3, R.id.carte4)
             .map { view.findViewById<MaterialCardView>(it) }
-        categories = listOf(R.id.categorie1, R.id.categorie2, R.id.categorie3, R.id.categorie4)
+        catégories = listOf(R.id.categorie1, R.id.categorie2, R.id.categorie3, R.id.categorie4)
             .map { view.findViewById<TextView>(it) }
         titres = listOf(R.id.titre1, R.id.titre2, R.id.titre3, R.id.titre4)
             .map { view.findViewById<TextView>(it) }
         descriptions = listOf(R.id.description1, R.id.description2, R.id.description3, R.id.description4)
             .map { view.findViewById<TextView>(it) }
-        details = listOf(R.id.details1, R.id.details2, R.id.details3, R.id.details4)
+        détails = listOf(R.id.details1, R.id.details2, R.id.details3, R.id.details4)
             .map { view.findViewById<TextView>(it) }
         boutonsFavori = listOf(R.id.favori1, R.id.favori2, R.id.favori3, R.id.favori4)
             .map { view.findViewById<ImageButton>(it) }
@@ -76,52 +75,52 @@ class DiscoverFragment : Fragment(), ContratVuePresentateur.IVueDiscover {
 
         )
 
-        presentateur = PresentateurDiscover()
+        présentateur = PrésentateurDécouvrir()
 
         boutonsFavori.forEachIndexed { index, bouton ->
-            bouton.setOnClickListener { presentateur.surFavoriClique(quizIds[index]) }
+            bouton.setOnClickListener { présentateur.basculerFavori(quizIds[index]) }
         }
         boutonsJouer.forEachIndexed { index, bouton ->
-            bouton.setOnClickListener { presentateur.surJouerClique(quizIds[index]) }
+            bouton.setOnClickListener { présentateur.jouer(quizIds[index]) }
         }
-        puces.forEach { (categorie, puce) ->
-            puce.setOnClickListener { presentateur.surCategorieCliquee(categorie) }
+        puces.forEach { (catégorie, puce) ->
+            puce.setOnClickListener { présentateur.choisirCatégorie(catégorie) }
         }
         view.findViewById<EditText>(R.id.edit_search).doAfterTextChanged { texte ->
-            presentateur.surRechercheModifiee(texte?.toString().orEmpty())
+            présentateur.rechercher(texte?.toString().orEmpty())
         }
 
-        presentateur.attacherVue(this)
+        présentateur.attacherVue(this)
     }
 
     override fun onDestroyView() {
-        presentateur.detacherVue()
+        présentateur.detacherVue()
         super.onDestroyView()
     }
 
-    override fun viderCartes() {
+    override fun viderQuiz() {
         prochaineCarte = 0
         messageVide.visibility = View.GONE
         cartes.forEach { it.visibility = View.GONE }
     }
 
-    override fun ajouterCarteQuiz(
+    override fun ajouterQuiz(
         id: Int,
-        categorie: CategorieQuiz,
+        catégorie: CategorieQuiz,
         titre: String,
         description: String,
         nbQuestions: Int,
-        dureeMinutes: Int,
+        duréeMinutes: Int,
         estFavori: Boolean
     ) {
         if (prochaineCarte >= NB_CARTES) return // Le XML n'a que quatre cartes
         val i = prochaineCarte++
 
         quizIds[i] = id
-        categories[i].setText(nomCategorie(categorie))
+        catégories[i].setText(nomCatégorie(catégorie))
         titres[i].text = titre
         descriptions[i].text = description
-        details[i].text = getString(R.string.discover_quiz_details, nbQuestions, dureeMinutes)
+        détails[i].text = getString(R.string.discover_quiz_details, nbQuestions, duréeMinutes)
 
         // Étoile pleine (orange) si le quiz est dans les favoris, sinon étoile vide
         if (estFavori) {
@@ -135,14 +134,14 @@ class DiscoverFragment : Fragment(), ContratVuePresentateur.IVueDiscover {
         cartes[i].visibility = View.VISIBLE
     }
 
-    override fun afficherAucunResultat() {
+    override fun afficherAucunRésultat() {
         messageVide.visibility = View.VISIBLE
     }
 
-    override fun afficherCategorieChoisie(categorie: CategorieQuiz?) {
+    override fun afficherCatégorieChoisie(catégorie: CategorieQuiz?) {
         val contexte = requireContext()
-        puces.forEach { (categoriePuce, puce) ->
-            val choisie = categoriePuce == categorie
+        puces.forEach { (catégoriePuce, puce) ->
+            val choisie = catégoriePuce == catégorie
             val fond = if (choisie) R.color.text_primary else R.color.surface
             val texte = if (choisie) R.color.white else R.color.text_primary
             val contour = if (choisie) R.color.text_primary else R.color.border
@@ -159,12 +158,12 @@ class DiscoverFragment : Fragment(), ContratVuePresentateur.IVueDiscover {
         findNavController().navigate(R.id.action_decouvrir_vers_question, arguments)
     }
 
-    override fun afficherQuizBientot(titre: String) {
+    override fun afficherQuizBientôt(titre: String) {
         Toast.makeText(requireContext(), getString(R.string.discover_play_soon, titre), Toast.LENGTH_SHORT).show()
     }
 
     @StringRes
-    private fun nomCategorie(categorie: CategorieQuiz): Int = when (categorie) {
+    private fun nomCatégorie(catégorie: CategorieQuiz): Int = when (catégorie) {
         CategorieQuiz.SCIENCES -> R.string.category_sciences
         CategorieQuiz.HISTOIRE -> R.string.category_history
         CategorieQuiz.LANGUES -> R.string.category_languages
