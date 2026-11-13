@@ -6,7 +6,7 @@ import com.crosemont.qwizup.sourceDeDonnees.SourceDeDonnees
 import kotlinx.coroutines.CancellationException
 
 class ServiceQuiz(private val source: SourceDeDonnees = SourceBiddon()) {
-    suspend fun obtenirQuiz(limite: Int, decalage: Int = 0): List<Quiz>{
+    suspend fun obtenirQuiz(limite: Int = 10, decalage: Int = 0): List<Quiz>{
         if (limite <= 0) throw ServiceException("La limite doit être supérieure à 0")
         if (decalage < 0) throw ServiceException("Le décalage ne peut pas être négatif")
 
