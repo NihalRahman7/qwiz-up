@@ -34,6 +34,7 @@
     <string name="discover_quiz_details">%1$d questions · %2$d min</string>
     <string name="discover_no_quiz">Aucun quiz trouvé. Essaie un autre mot ou une autre catégorie.</string>
     <string name="discover_play_soon">Le quiz « %1$s » arrive bientôt!</string>
+    <string name="discover_error">Impossible de charger les quiz. Réessaie plus tard.</string>
     <string name="category_all">Tous</string>
     <string name="category_sciences">Sciences</string>
     <string name="category_history">Histoire</string>
