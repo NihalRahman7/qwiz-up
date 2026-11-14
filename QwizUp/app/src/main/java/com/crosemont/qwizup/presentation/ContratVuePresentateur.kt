@@ -78,6 +78,9 @@ interface ContratVuePresentateur {
         fun ouvrirGalerie()
         fun confirmerSauvegarde()
         fun confirmerPublication(titre: String)
+        fun demanderConfirmationSuppression(index: Int)
+        fun demanderConfirmationQuitter()
+        fun fermer()
     }
 
     interface IPresentateurEditeur : Presentateur<IVueEditeur> {
@@ -98,6 +101,9 @@ interface ContratVuePresentateur {
         fun surReponseAttendueModifiee(index: Int, texte: String)
         fun surBrouillonClique()
         fun surPublierClique()
+        fun surSuppressionConfirmee(index: Int)
+        fun surFermerClique()
+        fun surQuitterConfirme()
     }
 
     // Question (écran de jeu, s'ouvre avec le bouton ▶ de l'Accueil)
@@ -129,6 +135,9 @@ interface ContratVuePresentateur {
         /** Affiche l'écran de fin avec le score. */
         fun afficherResultat(titreQuiz: String, score: Int, total: Int, niveau: NiveauResultat)
 
+        /** Demande à l'utilisateur s'il veut vraiment quitter une partie en cours. */
+        fun demanderConfirmationQuitter()
+
         /** Retourne à l'écran précédent. */
         fun fermer()
     }
@@ -139,6 +148,7 @@ interface ContratVuePresentateur {
         fun surSuivantClique()
         fun surRejouerClique()
         fun surQuitterClique()
+        fun surQuitterConfirme()
     }
 
     // Rejoindre (s'ouvre avec le bouton « Code » de l'Accueil)

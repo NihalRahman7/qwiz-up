@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -15,6 +16,7 @@ import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueQuestion
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.NiveauResultat
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
 /**
@@ -80,6 +82,11 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
             .setOnClickListener { presentateur.surRejouerClique() }
         view.findViewById<MaterialButton>(R.id.button_retour_accueil)
             .setOnClickListener { presentateur.surQuitterClique() }
+
+        // Le bouton retour du téléphone passe aussi par le présentateur (confirmation si partie en cours)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            presentateur.surQuitterClique()
+        }
 
         // Démarre la partie avec le quiz reçu de l'Accueil
         presentateur.attacherVue(this)
@@ -192,6 +199,15 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
             }
         )
         texteResultatDetail.text = getString(R.string.resultat_detail, titreQuiz)
+    }
+
+    override fun demanderConfirmationQuitter() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.question_confirmer_quitter_titre)
+            .setMessage(R.string.question_confirmer_quitter_message)
+            .setNegativeButton(R.string.action_annuler, null)
+            .setPositiveButton(R.string.action_quitter) { _, _ -> presentateur.surQuitterConfirme() }
+            .show()
     }
 
     override fun fermer() {

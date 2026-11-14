@@ -21,6 +21,7 @@ class PresentateurQuestion(
     private var indiceQuestion = 0     // question courante (0 = la première)
     private var score = 0
     private var aRepondu = false       // une seule réponse par question
+    private var partieTerminee = false // vrai quand l'écran de résultat est affiché
 
     override fun attacherVue(vue: IVueQuestion) {
         this.vue = vue
@@ -45,6 +46,7 @@ class PresentateurQuestion(
         questions = quiz.questions
         indiceQuestion = 0
         score = 0
+        partieTerminee = false
         afficherQuestionCourante()
     }
 
@@ -87,6 +89,7 @@ class PresentateurQuestion(
         if (!aRepondu) return            // il faut répondre avant de continuer
 
         if (indiceQuestion == questions.lastIndex) {
+            partieTerminee = true
             vue?.afficherResultat(titreQuiz, score, questions.size, niveauPour(score, questions.size))
         } else {
             indiceQuestion++
@@ -101,6 +104,14 @@ class PresentateurQuestion(
 
     // Quitte le quiz et retourne à l'écran précédent. //
     override fun surQuitterClique() {
+        // On demande une confirmation seulement si le joueur perdrait sa progression
+        val partieEnCours = !partieTerminee && (indiceQuestion > 0 || aRepondu)
+        if (partieEnCours) vue?.demanderConfirmationQuitter()
+        else vue?.fermer()
+    }
+
+    // Le joueur a confirmé qu'il veut quitter la partie. //
+    override fun surQuitterConfirme() {
         vue?.fermer()
     }
 
