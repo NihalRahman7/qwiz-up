@@ -12,7 +12,6 @@ import org.junit.Test
 
 class ServiceFavorisTest {
 
-    // Source qui échoue, comme un fichier qu'on ne peut pas lire ou pas modifier
     private class SourceEnPanne(private val peutLire: Boolean = false) : SourceFavoris {
         override fun lireFavoris(): Set<String> {
             if (!peutLire) throw IOException("Fichier illisible")
