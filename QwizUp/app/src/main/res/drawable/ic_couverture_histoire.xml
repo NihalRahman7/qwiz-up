@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Image automatique : catégorie Histoire (monument) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:pathData="M3,21h18"
+        android:strokeWidth="1.6"
+        android:strokeColor="@color/primary_green"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M4,10h16"
+        android:strokeWidth="1.6"
+        android:strokeColor="@color/primary_green"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M12,3l8,5H4z"
+        android:strokeWidth="1.6"
+        android:strokeColor="@color/primary_green"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M6,10v8M10,10v8M14,10v8M18,10v8"
+        android:strokeWidth="1.6"
+        android:strokeColor="@color/primary_green"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M4,18h16"
+        android:strokeWidth="1.6"
+        android:strokeColor="@color/primary_green"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

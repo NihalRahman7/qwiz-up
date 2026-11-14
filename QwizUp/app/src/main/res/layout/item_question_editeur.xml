@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Une question dans l'éditeur : type, texte, puis réponses à cocher ou réponse attendue -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/border"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- QUESTION 1 + poubelle -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_numero_question"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:letterSpacing="0.06"
+                android:textColor="@color/primary_green"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="QUESTION 1" />
+
+            <ImageButton
+                android:id="@+id/button_supprimer_question"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="-12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_supprimer"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <!-- Type de question -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:cardBackgroundColor="@color/border"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/groupe_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_type_choix"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="@string/editeur_type_choix_multiple"
+                    android:stateListAnimator="@animator/elevation_onglet"
+                    android:textColor="@color/texte_onglet"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/fond_onglet"
+                    android:textSize="12sp"
+                    app:cornerRadius="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_type_vrai_faux"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="@string/editeur_type_vrai_faux"
+                    android:stateListAnimator="@animator/elevation_onglet"
+                    android:textColor="@color/texte_onglet"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/fond_onglet"
+                    android:textSize="12sp"
+                    app:cornerRadius="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_type_ecrite"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="@string/editeur_type_ecrite"
+                    android:stateListAnimator="@animator/elevation_onglet"
+                    android:textColor="@color/texte_onglet"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/fond_onglet"
+                    android:textSize="12sp"
+                    app:cornerRadius="12dp" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Texte de la question -->
+        <EditText
+            android:id="@+id/saisie_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_champ_question"
+            android:hint="@string/editeur_question_placeholder"
+            android:importantForAutofill="no"
+            android:inputType="textCapSentences|textMultiLine"
+            android:minHeight="48dp"
+            android:padding="14dp"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp" />
+
+        <!-- Choix multiple et vrai ou faux : réponses à cocher -->
+        <LinearLayout
+            android:id="@+id/zone_choix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/editeur_coche_bonne"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:id="@+id/ligne_reponse_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_reponse"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="4dp"
+                android:paddingEnd="12dp">
+
+                <RadioButton
+                    android:id="@+id/radio_reponse_1"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:buttonTint="@color/primary_green" />
+
+                <EditText
+                    android:id="@+id/saisie_reponse_1"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapSentences"
+                    android:maxLines="1"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    tools:hint="Réponse A" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ligne_reponse_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_reponse"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="4dp"
+                android:paddingEnd="12dp">
+
+                <RadioButton
+                    android:id="@+id/radio_reponse_2"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:buttonTint="@color/primary_green" />
+
+                <EditText
+                    android:id="@+id/saisie_reponse_2"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapSentences"
+                    android:maxLines="1"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    tools:hint="Réponse A" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ligne_reponse_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_reponse"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="4dp"
+                android:paddingEnd="12dp">
+
+                <RadioButton
+                    android:id="@+id/radio_reponse_3"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:buttonTint="@color/primary_green" />
+
+                <EditText
+                    android:id="@+id/saisie_reponse_3"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapSentences"
+                    android:maxLines="1"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    tools:hint="Réponse A" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ligne_reponse_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_reponse"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="4dp"
+                android:paddingEnd="12dp">
+
+                <RadioButton
+                    android:id="@+id/radio_reponse_4"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:buttonTint="@color/primary_green" />
+
+                <EditText
+                    android:id="@+id/saisie_reponse_4"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapSentences"
+                    android:maxLines="1"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    tools:hint="Réponse A" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Réponse écrite : réponse attendue -->
+        <LinearLayout
+            android:id="@+id/zone_ecrite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/editeur_reponse_attendue"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/saisie_reponse_attendue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_reponse"
+                android:gravity="top"
+                android:hint="@string/editeur_reponse_attendue_placeholder"
+                android:importantForAutofill="no"
+                android:inputType="textCapSentences|textMultiLine"
+                android:minLines="3"
+                android:padding="14dp"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/editeur_reponse_attendue_aide"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

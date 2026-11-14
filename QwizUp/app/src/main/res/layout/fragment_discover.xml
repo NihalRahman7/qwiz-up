@@ -1,18 +1,643 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Écran Découvrir : temporaire, en attendant le vrai layout -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Écran Découvrir : titre, barre de recherche, catégories et cartes de quiz -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DiscoverFragment">
+    tools:context=".presentation.discover.DiscoverFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/nav_discover"
-        android:textColor="@color/text_primary"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
 
-</FrameLayout>
+        <!-- Titre -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/figtree_extrabold"
+            android:text="@string/nav_discover"
+            android:textColor="@color/text_primary"
+            android:textSize="26sp" />
+
+        <!-- Barre de recherche -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="20dp"
+            app:cardBackgroundColor="@color/surface"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/border"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_search" />
+
+                <EditText
+                    android:id="@+id/edit_search"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/discover_search_hint"
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_secondary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Catégories : on fait défiler de gauche à droite -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:clipToPadding="false"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:scrollbars="none">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipSpacingHorizontal="8dp"
+                app:singleLine="true">
+
+                <!-- Catégorie choisie : fond foncé -->
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_all"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/category_all"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:chipBackgroundColor="@color/text_primary"
+                    app:chipMinHeight="44dp"
+                    app:chipStrokeColor="@color/text_primary"
+                    app:chipStrokeWidth="1dp"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+
+                <!-- Autres catégories : fond blanc -->
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_sciences"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/category_sciences"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    app:chipBackgroundColor="@color/surface"
+                    app:chipMinHeight="44dp"
+                    app:chipStrokeColor="@color/border"
+                    app:chipStrokeWidth="1dp"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_history"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/category_history"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    app:chipBackgroundColor="@color/surface"
+                    app:chipMinHeight="44dp"
+                    app:chipStrokeColor="@color/border"
+                    app:chipStrokeWidth="1dp"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_languages"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/category_languages"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    app:chipBackgroundColor="@color/surface"
+                    app:chipMinHeight="44dp"
+                    app:chipStrokeColor="@color/border"
+                    app:chipStrokeWidth="1dp"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_informatique"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/category_informatique"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    app:chipBackgroundColor="@color/surface"
+                    app:chipMinHeight="44dp"
+                    app:chipStrokeColor="@color/border"
+                    app:chipStrokeWidth="1dp"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_geography"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/category_geography"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    app:chipBackgroundColor="@color/surface"
+                    app:chipMinHeight="44dp"
+                    app:chipStrokeColor="@color/border"
+                    app:chipStrokeWidth="1dp"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <!-- Cartes de quiz -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
+
+            <!-- Carte n° 1 (remplie par le Fragment avec les données du modèle) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/carte1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="16dp">
+
+                    <!-- Catégorie et titre, avec l'étoile des favoris à droite -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingTop="6dp">
+
+                            <TextView
+                                android:id="@+id/categorie1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:letterSpacing="0.05"
+                                android:textAllCaps="true"
+                                android:textColor="@color/primary_green"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                tools:text="@string/category_geography" />
+
+                            <TextView
+                                android:id="@+id/titre1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:textColor="@color/text_primary"
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                tools:text="Capitales d’Europe" />
+                        </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/favori1"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/discover_add_favorite"
+                            android:scaleType="center"
+                            android:src="@drawable/ic_star_outline" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/description1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:lineSpacingExtra="2sp"
+                        android:paddingEnd="10dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        tools:text="Associe chaque pays à sa capitale, de Lisbonne à Helsinki." />
+
+                    <!-- Nombre de questions, durée et bouton Jouer -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingEnd="10dp">
+
+                        <TextView
+                            android:id="@+id/details1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"
+                            tools:text="12 questions · 6 min" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/jouer1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="18dp"
+                            android:text="@string/discover_play"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:cornerRadius="20dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Carte n° 2 (remplie par le Fragment avec les données du modèle) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/carte2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="16dp">
+
+                    <!-- Catégorie et titre, avec l'étoile des favoris à droite -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingTop="6dp">
+
+                            <TextView
+                                android:id="@+id/categorie2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:letterSpacing="0.05"
+                                android:textAllCaps="true"
+                                android:textColor="@color/primary_green"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                tools:text="@string/category_sciences" />
+
+                            <TextView
+                                android:id="@+id/titre2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:textColor="@color/text_primary"
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                tools:text="Le système solaire" />
+                        </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/favori2"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/discover_add_favorite"
+                            android:scaleType="center"
+                            android:src="@drawable/ic_star_outline" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/description2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:lineSpacingExtra="2sp"
+                        android:paddingEnd="10dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        tools:text="Planètes, lunes et distances : teste tes connaissances." />
+
+                    <!-- Nombre de questions, durée et bouton Jouer -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingEnd="10dp">
+
+                        <TextView
+                            android:id="@+id/details2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"
+                            tools:text="10 questions · 5 min" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/jouer2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="18dp"
+                            android:text="@string/discover_play"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:cornerRadius="20dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Carte n° 3 (remplie par le Fragment avec les données du modèle) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/carte3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="16dp">
+
+                    <!-- Catégorie et titre, avec l'étoile des favoris à droite -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingTop="6dp">
+
+                            <TextView
+                                android:id="@+id/categorie3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:letterSpacing="0.05"
+                                android:textAllCaps="true"
+                                android:textColor="@color/primary_green"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                tools:text="@string/category_history" />
+
+                            <TextView
+                                android:id="@+id/titre3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:textColor="@color/text_primary"
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                tools:text="La Révolution tranquille" />
+                        </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/favori3"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/discover_add_favorite"
+                            android:scaleType="center"
+                            android:src="@drawable/ic_star_outline" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/description3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:lineSpacingExtra="2sp"
+                        android:paddingEnd="10dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        tools:text="Les grands changements du Québec des années 1960." />
+
+                    <!-- Nombre de questions, durée et bouton Jouer -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingEnd="10dp">
+
+                        <TextView
+                            android:id="@+id/details3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"
+                            tools:text="8 questions · 4 min" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/jouer3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="18dp"
+                            android:text="@string/discover_play"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:cornerRadius="20dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Carte n° 4 (remplie par le Fragment avec les données du modèle) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/carte4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="16dp">
+
+                    <!-- Catégorie et titre, avec l'étoile des favoris à droite -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingTop="6dp">
+
+                            <TextView
+                                android:id="@+id/categorie4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:letterSpacing="0.05"
+                                android:textAllCaps="true"
+                                android:textColor="@color/primary_green"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                tools:text="@string/category_languages" />
+
+                            <TextView
+                                android:id="@+id/titre4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:textColor="@color/text_primary"
+                                android:textSize="17sp"
+                                android:textStyle="bold"
+                                tools:text="Verbes irréguliers anglais" />
+                        </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/favori4"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/discover_add_favorite"
+                            android:scaleType="center"
+                            android:src="@drawable/ic_star_outline" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/description4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:lineSpacingExtra="2sp"
+                        android:paddingEnd="10dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        tools:text="Be, go, take… retrouve le passé des verbes les plus utilisés." />
+
+                    <!-- Nombre de questions, durée et bouton Jouer -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingEnd="10dp">
+
+                        <TextView
+                            android:id="@+id/details4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"
+                            tools:text="15 questions · 7 min" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/jouer4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="18dp"
+                            android:text="@string/discover_play"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:cornerRadius="20dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Message affiché quand aucun quiz ne correspond à la recherche -->
+            <TextView
+                android:id="@+id/messageVide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="32dp"
+                android:text="@string/discover_no_quiz"
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

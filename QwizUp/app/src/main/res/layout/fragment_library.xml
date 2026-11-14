@@ -1,334 +1,355 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Écran Librairie : temporaire, en attendant le vrai layout -->
+<!-- Écran Librairie : titre, onglets Favoris / Complétés / Créés et cartes de quiz -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:contentDescription="@string/app_name"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".LibraryFragment">
+    tools:context=".presentation.library.LibraryFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp">
 
+        <!-- Titre -->
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Librairie"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/figtree_extrabold"
+            android:text="@string/librairie_titre"
             android:textColor="@color/text_primary"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textSize="26sp" />
 
-        <!-- Onglets : conteneur arrondi + groupe de boutons -->
+        <!-- Onglets : fond gris clair, l'onglet choisi est une pastille blanche avec une ombre -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:cardBackgroundColor="@color/light_green"
-            app:cardCornerRadius="24dp"
+            app:cardBackgroundColor="@color/border"
+            app:cardCornerRadius="14dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:padding="4dp"
                 app:checkedButton="@id/btnFavoris"
                 app:selectionRequired="true"
-                app:singleSelection="true"
-                app:spacing="4dp">
+                app:singleSelection="true">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnFavoris"
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="0dp"
-                    android:layout_height="48dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="Favoris"
-                    android:textColor="@color/text_primary"
+                    android:stateListAnimator="@animator/elevation_onglet"
+                    android:text="@string/librairie_btn_favoris"
+                    android:textColor="@color/texte_onglet"
+                    android:textSize="14sp"
                     android:textStyle="bold"
-                    app:cornerRadius="20dp" />
+                    app:backgroundTint="@color/fond_onglet"
+                    app:cornerRadius="12dp" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnComplets"
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="0dp"
-                    android:layout_height="48dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="Complétés"
-                    android:textColor="@color/text_primary"
+                    android:stateListAnimator="@animator/elevation_onglet"
+                    android:text="@string/librairie_btn_completes"
+                    android:textColor="@color/texte_onglet"
+                    android:textSize="14sp"
                     android:textStyle="bold"
-                    app:cornerRadius="20dp" />
+                    app:backgroundTint="@color/fond_onglet"
+                    app:cornerRadius="12dp" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnCrees"
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="0dp"
-                    android:layout_height="48dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="Créés"
-                    android:textColor="@color/text_primary"
+                    android:stateListAnimator="@animator/elevation_onglet"
+                    android:text="@string/librairie_btn_crees"
+                    android:textColor="@color/texte_onglet"
+                    android:textSize="14sp"
                     android:textStyle="bold"
-                    app:cornerRadius="20dp" />
+                    app:backgroundTint="@color/fond_onglet"
+                    app:cornerRadius="12dp" />
             </com.google.android.material.button.MaterialButtonToggleGroup>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Carte 1 : Le système solaire -->
+        <!-- Carte 1 (remplie par le Fragment avec les données du modèle) -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.Material3.CardView.Outlined"
+            android:id="@+id/carte1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
             app:cardBackgroundColor="@color/surface"
-            app:cardCornerRadius="16dp"
+            app:cardCornerRadius="18dp"
             app:cardElevation="0dp"
             app:strokeColor="@color/border"
             app:strokeWidth="1dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="14dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/titre1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        tools:text="Le système solaire" />
+
+                    <TextView
+                        android:id="@+id/soustitre1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        tools:text="Sciences · 10 questions" />
+                </LinearLayout>
+
+                <!-- Badge : sa couleur dépend du type (choisie par le Fragment) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/badge1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:cardBackgroundColor="@color/light_green"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
+
+                    <TextView
+                        android:id="@+id/txtBadge1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:textColor="@color/primary_green"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        tools:text="2 / 5" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_jouer_1"
+                    style="@style/Widget.Material3.Button.IconButton.Filled"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    app:iconSize="18dp"
+                    app:icon="@drawable/ic_play" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Carte 2 (remplie par le Fragment avec les données du modèle) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/carte2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/surface"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/border"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:paddingStart="16dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="14dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <!-- Carte 1 : Le système solaire -->
-                    <com.google.android.material.card.MaterialCardView
-                        style="@style/Widget.Material3.CardView.Outlined"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/titre2"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        app:cardBackgroundColor="@color/surface"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:strokeColor="@color/border"
-                        app:strokeWidth="1dp">
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        tools:text="Capitales d'Europe" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:padding="16dp">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Le système solaire"
-                                    android:textColor="@color/text_primary"
-                                    android:textSize="16sp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="2dp"
-                                    android:text="Sciences · 10 questions"
-                                    android:textColor="@color/text_secondary"
-                                    android:textSize="13sp" />
-                            </LinearLayout>
-
-                            <com.google.android.material.card.MaterialCardView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:cardBackgroundColor="@color/light_green"
-                                app:cardCornerRadius="14dp"
-                                app:cardElevation="0dp"
-                                app:strokeWidth="0dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingHorizontal="12dp"
-                                    android:paddingVertical="4dp"
-                                    android:text="2 / 5"
-                                    android:textColor="@color/primary_green"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-                            </com.google.android.material.card.MaterialCardView>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:importantForAccessibility="no"
-                                android:text="›"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="28sp" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- Carte 2 : Capitales d'Europe -->
-                    <com.google.android.material.card.MaterialCardView
-                        style="@style/Widget.Material3.CardView.Outlined"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/soustitre2"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        app:cardBackgroundColor="@color/surface"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:strokeColor="@color/border"
-                        app:strokeWidth="1dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:padding="16dp">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Capitales d’Europe"
-                                    android:textColor="@color/text_primary"
-                                    android:textSize="16sp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="2dp"
-                                    android:text="Géographie · 12 questions"
-                                    android:textColor="@color/text_secondary"
-                                    android:textSize="13sp" />
-                            </LinearLayout>
-
-                            <com.google.android.material.card.MaterialCardView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:cardBackgroundColor="@color/light_blue"
-                                app:cardCornerRadius="14dp"
-                                app:cardElevation="0dp"
-                                app:strokeWidth="0dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingHorizontal="12dp"
-                                    android:paddingVertical="4dp"
-                                    android:text="Nouveau"
-                                    android:textColor="@color/blue_text"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-                            </com.google.android.material.card.MaterialCardView>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:importantForAccessibility="no"
-                                android:text="›"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="28sp" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- Carte 3 : Verbes irréguliers anglais -->
-                    <com.google.android.material.card.MaterialCardView
-                        style="@style/Widget.Material3.CardView.Outlined"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        app:cardBackgroundColor="@color/surface"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:strokeColor="@color/border"
-                        app:strokeWidth="1dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:padding="16dp">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Verbes irréguliers anglais"
-                                    android:textColor="@color/text_primary"
-                                    android:textSize="16sp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="2dp"
-                                    android:text="Langues · 15 questions"
-                                    android:textColor="@color/text_secondary"
-                                    android:textSize="13sp" />
-                            </LinearLayout>
-
-                            <com.google.android.material.card.MaterialCardView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:cardBackgroundColor="@color/border"
-                                app:cardCornerRadius="14dp"
-                                app:cardElevation="0dp"
-                                app:strokeWidth="0dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingHorizontal="12dp"
-                                    android:paddingVertical="4dp"
-                                    android:text="87 %"
-                                    android:textColor="@color/text_primary"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-                            </com.google.android.material.card.MaterialCardView>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:importantForAccessibility="no"
-                                android:text="›"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="28sp" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        tools:text="Géographie · 12 questions" />
                 </LinearLayout>
+
+                <!-- Badge : sa couleur dépend du type (choisie par le Fragment) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/badge2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:cardBackgroundColor="@color/light_blue"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
+
+                    <TextView
+                        android:id="@+id/txtBadge2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:textColor="@color/blue_text"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        tools:text="Nouveau" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_jouer_2"
+                    style="@style/Widget.Material3.Button.IconButton.Filled"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    app:iconSize="18dp"
+                    app:icon="@drawable/ic_play" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <!-- Carte 3 (remplie par le Fragment avec les données du modèle) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/carte3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/surface"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/border"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="14dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/titre3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        tools:text="Verbes irréguliers anglais" />
+
+                    <TextView
+                        android:id="@+id/soustitre3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        tools:text="Langues · 15 questions" />
+                </LinearLayout>
+
+                <!-- Badge : sa couleur dépend du type (choisie par le Fragment) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/badge3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:cardBackgroundColor="@color/border"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
+
+                    <TextView
+                        android:id="@+id/txtBadge3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        tools:text="87 %" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_jouer_3"
+                    style="@style/Widget.Material3.Button.IconButton.Filled"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    app:iconSize="18dp"
+                    app:icon="@drawable/ic_play" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Message affiché quand l'onglet n'a aucun quiz -->
+        <TextView
+            android:id="@+id/messageVide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="32dp"
+            android:textColor="@color/text_secondary"
+            android:textSize="15sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

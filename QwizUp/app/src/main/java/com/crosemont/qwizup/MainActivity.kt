@@ -5,6 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,6 +27,14 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         // Connecte la barre du bas au NavGraph : chaque onglet ouvre la destination qui a le même id
-        findViewById<BottomNavigationView>(R.id.bottom_nav).setupWithNavController(navController)
+        val barreDuBas = findViewById<BottomNavigationView>(R.id.bottom_nav)
+        barreDuBas.setupWithNavController(navController)
+
+        // Cache la barre du bas dans l'éditeur de quiz, qui a ses propres boutons en bas
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            barreDuBas.isVisible = destination.id != R.id.editeurQuizFragment &&
+                    destination.id != R.id.questionFragment &&
+                    destination.id != R.id.rejoindreFragment
+        }
     }
 }

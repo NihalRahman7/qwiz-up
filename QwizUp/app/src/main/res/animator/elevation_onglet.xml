@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ombre d'un onglet : la pastille choisie se soulève un peu, les autres restent à plat -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <objectAnimator
+            android:duration="120"
+            android:propertyName="elevation"
+            android:valueTo="2dp"
+            android:valueType="floatType" />
+    </item>
+    <item>
+        <objectAnimator
+            android:duration="120"
+            android:propertyName="elevation"
+            android:valueTo="0dp"
+            android:valueType="floatType" />
+    </item>
+</selector>

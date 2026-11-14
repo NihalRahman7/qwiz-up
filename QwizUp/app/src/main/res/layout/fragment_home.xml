@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    tools:context=".presentation.home.HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:textStyle="bold"
+                android:fontFamily="@font/figtree_extrabold"
                 android:text="J" />
 
             <LinearLayout
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_primary"
                     android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/figtree_extrabold"
                     android:text="John" />
             </LinearLayout>
 
@@ -103,13 +103,13 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_primary"
                         android:textSize="22sp"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/figtree_extrabold"
                         android:text="10 j" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="6dp"
                         android:text="@string/home_streak"
                         android:textColor="@color/text_secondary"
                         android:textSize="12sp" />
@@ -147,13 +147,13 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_primary"
                         android:textSize="22sp"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/figtree_extrabold"
                         android:text="6" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="6dp"
                         android:text="@string/home_completed"
                         android:textColor="@color/text_secondary"
                         android:textSize="12sp" />
@@ -190,13 +190,13 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_primary"
                         android:textSize="22sp"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/figtree_extrabold"
                         android:text="69 %" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="6dp"
                         android:text="@string/home_correct"
                         android:textColor="@color/text_secondary"
                         android:textSize="12sp" />
@@ -212,7 +212,7 @@
             android:text="@string/home_continue"
             android:textColor="@color/text_primary"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:fontFamily="@font/figtree_extrabold" />
 
         <!-- Quiz en cours n° 1 -->
         <com.google.android.material.card.MaterialCardView
@@ -249,7 +249,7 @@
                             android:text="@string/sample_quiz_1_title"
                             android:textColor="@color/text_primary"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/figtree_extrabold" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -260,10 +260,13 @@
                             android:textSize="13sp" />
                     </LinearLayout>
 
+                    <!-- Bouton ▶ : ouvre le jeu du quiz 1 -->
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_jouer_1"
                         style="@style/Widget.Material3.Button.IconButton.Filled"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        app:iconSize="18dp"
                         android:contentDescription="@string/home_resume_quiz"
                         app:icon="@drawable/ic_play" />
                 </LinearLayout>
@@ -285,7 +288,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             app:cardBackgroundColor="@color/surface"
             app:cardCornerRadius="18dp"
             app:cardElevation="0dp"
@@ -316,7 +319,7 @@
                             android:text="@string/sample_quiz_2_title"
                             android:textColor="@color/text_primary"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/figtree_extrabold" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -327,10 +330,13 @@
                             android:textSize="13sp" />
                     </LinearLayout>
 
+                    <!-- Bouton ▶ : ouvre le jeu du quiz 2 -->
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_jouer_2"
                         style="@style/Widget.Material3.Button.IconButton.Filled"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        app:iconSize="18dp"
                         android:contentDescription="@string/home_resume_quiz"
                         app:icon="@drawable/ic_play" />
                 </LinearLayout>
@@ -363,7 +369,7 @@
                 android:text="@string/home_suggestions"
                 android:textColor="@color/text_primary"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/figtree_extrabold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -373,14 +379,17 @@
                 android:text="@string/home_see_all"
                 android:textColor="@color/primary_green"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/figtree_extrabold" />
         </LinearLayout>
 
-        <!-- Carte de suggestion -->
+        <!-- Carte de suggestion : ouvre le jeu du quiz 3 -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/carte_suggestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:clickable="true"
+            android:focusable="true"
             app:cardBackgroundColor="@color/light_green"
             app:cardCornerRadius="18dp"
             app:cardElevation="0dp"
@@ -423,7 +432,7 @@
                         android:text="@string/sample_suggestion_title"
                         android:textColor="@color/text_primary"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/figtree_extrabold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -441,7 +450,6 @@
                     android:src="@drawable/ic_chevron_right" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

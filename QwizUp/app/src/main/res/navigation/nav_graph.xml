@@ -7,22 +7,74 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.crosemont.qwizup.HomeFragment"
+        android:name="com.crosemont.qwizup.presentation.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_accueil_vers_question"
+            app:destination="@id/questionFragment" />
+        <action
+            android:id="@+id/action_accueil_vers_rejoindre"
+            app:destination="@id/rejoindreFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/createFragment"
-        android:name="com.crosemont.qwizup.CreateFragment"
+        android:name="com.crosemont.qwizup.presentation.create.CreateFragment"
         android:label="fragment_create"
-        tools:layout="@layout/fragment_create" />
+        tools:layout="@layout/fragment_create">
+        <action
+            android:id="@+id/action_creer_vers_editeur"
+            app:destination="@id/editeurQuizFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editeurQuizFragment"
+        android:name="com.crosemont.qwizup.presentation.create.EditeurQuizFragment"
+        android:label="fragment_editeur_quiz"
+        tools:layout="@layout/fragment_editeur_quiz">
+        <argument
+            android:name="quizId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+
     <fragment
         android:id="@+id/discoverFragment"
-        android:name="com.crosemont.qwizup.DiscoverFragment"
+        android:name="com.crosemont.qwizup.presentation.discover.DiscoverFragment"
         android:label="fragment_discover"
-        tools:layout="@layout/fragment_discover" />
+        tools:layout="@layout/fragment_discover">
+        <action
+            android:id="@+id/action_decouvrir_vers_question"
+            app:destination="@id/questionFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="com.crosemont.qwizup.LibraryFragment"
+        android:name="com.crosemont.qwizup.presentation.library.LibraryFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" />
+
+    <fragment
+        android:id="@+id/questionFragment"
+        android:name="com.crosemont.qwizup.presentation.question.QuestionFragment"
+        android:label="fragment_question"
+        tools:layout="@layout/fragment_question">
+        <argument
+            android:name="quizId"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/rejoindreFragment"
+        android:name="com.crosemont.qwizup.presentation.rejoindre.RejoindreFragment"
+        android:label="fragment_rejoindre"
+        tools:layout="@layout/fragment_rejoindre">
+        <action
+            android:id="@+id/action_rejoindre_vers_question"
+            app:destination="@id/questionFragment"
+            app:popUpTo="@id/rejoindreFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
