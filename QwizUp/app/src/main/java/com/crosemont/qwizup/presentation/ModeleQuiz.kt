@@ -1,4 +1,5 @@
 package com.crosemont.qwizup.presentation
+import com.crosemont.qwizup.presentation.library.ContratLibrary
 import java.text.Normalizer
 
 class ModeleQuiz {
@@ -179,14 +180,14 @@ class ModeleQuiz {
         val titre: String,
         val sousTitre: String,
         val badge: String?,
-        val typeBadge: ContratVuePresentateur.TypeBadge
+        val typeBadge: ContratLibrary.TypeBadge
     )
 
     // Données codées en dur
     private val favoris = listOf(
-        CarteLibrary(1, "Le système solaire", "Science - 10 questions", "4/5", ContratVuePresentateur.TypeBadge.PROGRESSION),
-        CarteLibrary(2, "Capitales d'Europe", "Géographie - 12 questions", "Nouveau", ContratVuePresentateur.TypeBadge.NOUVEAU),
-        CarteLibrary(3, "Verbe irréguliers anglais", "Langues - 15 questions", "87%", ContratVuePresentateur.TypeBadge.SCORE)
+        CarteLibrary(1, "Le système solaire", "Science - 10 questions", "4/5", ContratLibrary.TypeBadge.PROGRESSION),
+        CarteLibrary(2, "Capitales d'Europe", "Géographie - 12 questions", "Nouveau", ContratLibrary.TypeBadge.NOUVEAU),
+        CarteLibrary(3, "Verbe irréguliers anglais", "Langues - 15 questions", "87%", ContratLibrary.TypeBadge.SCORE)
     )
 
     fun obternirFavoris(): List<CarteLibrary> = favoris
