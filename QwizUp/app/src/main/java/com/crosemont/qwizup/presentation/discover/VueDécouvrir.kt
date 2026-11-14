@@ -21,6 +21,7 @@ import com.google.android.material.chip.Chip
 
 class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
 
+
     private lateinit var présentateur: ContratDécouvrir.IPrésentateurDécouvrir
     private lateinit var messageVide: TextView
 
@@ -75,7 +76,7 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
 
         )
 
-        présentateur = PrésentateurDécouvrir()
+        présentateur = FabriqueDécouvrir.créerPrésentateur(requireContext().filesDir)
 
         boutonsFavori.forEachIndexed { index, bouton ->
             bouton.setOnClickListener { présentateur.basculerFavori(quizIds[index]) }
@@ -162,6 +163,9 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
         Toast.makeText(requireContext(), getString(R.string.discover_play_soon, titre), Toast.LENGTH_SHORT).show()
     }
 
+    override fun afficherErreur() {
+        Toast.makeText(requireContext(), R.string.discover_error, Toast.LENGTH_SHORT).show()
+    }
     @StringRes
     private fun nomCatégorie(catégorie: CategorieQuiz): Int = when (catégorie) {
         CategorieQuiz.SCIENCES -> R.string.category_sciences
