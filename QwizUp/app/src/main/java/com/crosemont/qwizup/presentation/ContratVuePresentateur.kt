@@ -100,29 +100,6 @@ interface ContratVuePresentateur {
         fun surPublierClique()
     }
 
-    // Library
-    enum class OngletLibrairie { FAVORIS, COMPLETES, CREES }
-    enum class TypeBadge { PROGRESSION, NOUVEAU, SCORE }
-
-    interface IVueLibrary: Vue {
-        fun viderCartes()
-        fun ajouterCarteQuiz(
-            id: Int,
-            titre: String,
-            sousTitre: String,
-            badge: String?,
-            typeBadge: TypeBadge
-        )
-        fun afficherMessageVide(message: String)
-        fun ouvrirDetails(quizId: Int, titre: String)
-    }
-
-
-    interface IPresentateurLibrary: Presentateur<IVueLibrary>{
-        fun surOngletClique(onglet: OngletLibrairie)
-        fun surQuizClique(quizId: Int, titre: String)
-    }
-
     // Question (écran de jeu, s'ouvre avec le bouton ▶ de l'Accueil)
     enum class NiveauResultat { EXCELLENT, BIEN, A_PRATIQUER }
 

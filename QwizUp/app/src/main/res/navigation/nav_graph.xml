@@ -51,7 +51,7 @@
 
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="com.crosemont.qwizup.presentation.library.LibraryFragment"
+        android:name="com.crosemont.qwizup.presentation.library.LibrairieFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" />
 
