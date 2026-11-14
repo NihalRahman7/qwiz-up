@@ -39,6 +39,7 @@ class PresentateurEditeur(
         vue?.afficherCouverture(quiz.categorie)
         vue?.afficherDifficulteChoisie(quiz.difficulte)
         vue?.afficherAccesChoisi(quiz.acces)
+        vue?.afficherPublication(quiz.estPublie)
         afficherQuestions()
     }
 
@@ -47,6 +48,7 @@ class PresentateurEditeur(
     override fun surTitreModifie(titre: String) {
         quiz = quiz.copy(titre = titre)
         if (titre.isNotBlank()) vue?.effacerErreurs()
+        mettreAJourBouton()
     }
 
     override fun surDescriptionModifiee(description: String) {
@@ -122,33 +124,43 @@ class PresentateurEditeur(
 
     // ----- Sauvegarde -----
 
-    override fun surBrouillonClique() {
-        if (quiz.titre.isBlank()) {
-            vue?.afficherErreur(ErreurEditeur.TITRE_VIDE)
-            return
-        }
-        val id = modeleQuiz.sauvegarderQuizCreer(quiz.copy(titre = quiz.titre.trim()))
-        quiz = quiz.copy(id = id)
-        vue?.confirmerSauvegarde()
+    override fun surPublicationCochee(cochee: Boolean) {
+        quiz = quiz.copy(estPublie = cochee)
+        mettreAJourBouton()
     }
 
-    override fun surPublierClique() {
-        if (quiz.titre.isBlank()) {
-            vue?.afficherErreur(ErreurEditeur.TITRE_VIDE)
+    override fun surEnregistrerClique() {
+        // Normalement le bouton est déjà gris s'il manque quelque chose, mais on vérifie quand même
+        val manque = ceQuiManque()
+        if (manque != null) {
+            if (manque.erreur == ErreurEditeur.QUESTION_INCOMPLETE) vue?.afficherErreurQuestion(manque.numeroQuestion)
+            else vue?.afficherErreur(manque.erreur)
             return
         }
-        if (quiz.questions.isEmpty()) {
-            vue?.afficherErreur(ErreurEditeur.AUCUNE_QUESTION)
-            return
-        }
+        val aSauvegarder = quiz.copy(titre = quiz.titre.trim())
+        quiz = aSauvegarder.copy(id = modeleQuiz.sauvegarderQuizCreer(aSauvegarder))
+        quizInitial = quiz
+        if (quiz.estPublie) vue?.confirmerPublication(quiz.titre)
+        else vue?.confirmerSauvegarde()
+    }
+
+    /** Ce qui empêche d'enregistrer le quiz (numéro de question à partir de 1). */
+    private data class Manque(val erreur: ErreurEditeur, val numeroQuestion: Int = 0)
+
+    /** Un brouillon a juste besoin d'un titre ; pour publier, il faut aussi des questions complètes. */
+    private fun ceQuiManque(): Manque? {
+        if (quiz.titre.isBlank()) return Manque(ErreurEditeur.TITRE_VIDE)
+        if (!quiz.estPublie) return null
+        if (quiz.questions.isEmpty()) return Manque(ErreurEditeur.AUCUNE_QUESTION)
         val incomplete = quiz.questions.indexOfFirst { !estComplete(it) }
-        if (incomplete != -1) {
-            vue?.afficherErreurQuestion(incomplete + 1)
-            return
-        }
-        val publie = quiz.copy(titre = quiz.titre.trim(), estPublie = true)
-        quiz = publie.copy(id = modeleQuiz.sauvegarderQuizCreer(publie))
-        vue?.confirmerPublication(quiz.titre)
+        if (incomplete != -1) return Manque(ErreurEditeur.QUESTION_INCOMPLETE, incomplete + 1)
+        return null
+    }
+
+    /** Met à jour le texte du bouton et le rend gris s'il manque quelque chose. */
+    private fun mettreAJourBouton() {
+        val manque = ceQuiManque()
+        vue?.afficherBoutonEnregistrer(quiz.estPublie, manque?.erreur, manque?.numeroQuestion ?: 0)
     }
 
     // ----- Fermeture -----
@@ -172,6 +184,7 @@ class PresentateurEditeur(
     private fun modifierQuestion(index: Int, changement: (QuestionCreer) -> QuestionCreer) {
         if (index !in quiz.questions.indices) return
         quiz = quiz.copy(questions = quiz.questions.mapIndexed { i, q -> if (i == index) changement(q) else q })
+        mettreAJourBouton()
     }
 
     private fun afficherQuestions() {
@@ -180,6 +193,7 @@ class PresentateurEditeur(
             vue?.ajouterQuestion(index, q.texte, q.type, q.reponses, q.bonneReponse, q.reponseAttendue)
         }
         vue?.afficherNombreQuestions(quiz.questions.size)
+        mettreAJourBouton()
     }
 
     private fun questionVide() = QuestionCreer(texte = "", type = TypeQuestion.CHOIX_MULTIPLE)

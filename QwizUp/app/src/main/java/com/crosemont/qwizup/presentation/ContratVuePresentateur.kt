@@ -51,7 +51,7 @@ interface ContratVuePresentateur {
     enum class Difficulte { FACILE, MOYEN, DIFFICILE }
     enum class AccesQuiz { TOUT_LE_MONDE, AVEC_CODE }
     enum class TypeQuestion { CHOIX_MULTIPLE, VRAI_FAUX, REPONSE_ECRITE }
-    enum class ErreurEditeur { TITRE_VIDE, AUCUNE_QUESTION }
+    enum class ErreurEditeur { TITRE_VIDE, AUCUNE_QUESTION, QUESTION_INCOMPLETE }
 
     interface IVueEditeur : Vue {
         fun afficherEnTete(nouveauQuiz: Boolean)
@@ -79,6 +79,9 @@ interface ContratVuePresentateur {
         fun confirmerSauvegarde()
         fun confirmerPublication(titre: String)
         fun demanderConfirmationSuppression(index: Int)
+        fun afficherPublication(estPublie: Boolean)   // coche ou décoche la case « Publier »
+        /** Texte du bouton selon la case, et bouton gris s'il manque quelque chose (manque = null : tout est correct). */
+        fun afficherBoutonEnregistrer(publier: Boolean, manque: ErreurEditeur?, numeroQuestion: Int)
         fun demanderConfirmationQuitter()
         fun fermer()
     }
@@ -99,8 +102,8 @@ interface ContratVuePresentateur {
         fun surReponseModifiee(index: Int, numeroReponse: Int, texte: String)
         fun surBonneReponseCliquee(index: Int, numeroReponse: Int)
         fun surReponseAttendueModifiee(index: Int, texte: String)
-        fun surBrouillonClique()
-        fun surPublierClique()
+        fun surPublicationCochee(cochee: Boolean)
+        fun surEnregistrerClique()
         fun surSuppressionConfirmee(index: Int)
         fun surFermerClique()
         fun surQuitterConfirme()
