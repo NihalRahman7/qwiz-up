@@ -97,6 +97,13 @@
     <string name="editeur_sauvegarde_ok">Brouillon sauvegardé</string>
     <string name="editeur_publie_ok">« %1$s » est publié!</string>
     <string name="editeur_photo_bientot">L\'ajout d\'image arrive bientôt</string>
+    <string name="editeur_confirmer_suppression_titre">Supprimer la question %1$d?</string>
+    <string name="editeur_confirmer_suppression_message">Cette action ne peut pas être annulée.</string>
+    <string name="editeur_confirmer_quitter_titre">Quitter sans sauvegarder?</string>
+    <string name="editeur_confirmer_quitter_message">Tes modifications vont être perdues. Tu peux les garder en brouillon.</string>
+    <string name="action_supprimer">Supprimer</string>
+    <string name="action_quitter">Quitter</string>
+    <string name="action_annuler">Annuler</string>
     <!--  Les String de la Navigation de la page Librairie   -->
     <string name="librairie_titre">Librairie</string>
     <string name="librairie_btn_favoris">Favoris</string>
@@ -118,6 +125,8 @@
     <string name="question_voir_resultat">Voir mon résultat</string>
     <string name="question_bonne">Bonne réponse !</string>
     <string name="question_mauvaise">Pas tout à fait. La bonne réponse est « %1$s ».</string>
+    <string name="question_confirmer_quitter_titre">Quitter le quiz?</string>
+    <string name="question_confirmer_quitter_message">Ta progression et ton score vont être perdus.</string>
     <string name="resultat_excellent">Excellent travail !</string>
     <string name="resultat_bien">Bien joué !</string>
     <string name="resultat_a_pratiquer">Continue de pratiquer !</string>

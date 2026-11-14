@@ -18,6 +18,9 @@ class PresentateurEditeur(
     // Le quiz en cours de modification (pas encore sauvegardé dans le modèle)
     private var quiz = nouveauQuiz()
 
+    // Le quiz tel qu'il était à l'ouverture : sert à savoir s'il y a des changements non sauvegardés
+    private var quizInitial = nouveauQuiz()
+
     override fun attacherVue(vue: ContratVuePresentateur.IVueEditeur) {
         this.vue = vue
     }
@@ -28,6 +31,7 @@ class PresentateurEditeur(
 
     override fun chargerQuiz(quizId: Int?) {
         quiz = quizId?.let { modeleQuiz.obtenirQuizCreer(it) } ?: nouveauQuiz()
+        quizInitial = quiz
 
         vue?.afficherEnTete(nouveauQuiz = quiz.id == 0)
         vue?.afficherInfosQuiz(quiz.titre, quiz.description)
@@ -81,6 +85,11 @@ class PresentateurEditeur(
     }
 
     override fun surSupprimerQuestionClique(index: Int) {
+        if (index !in quiz.questions.indices) return
+        vue?.demanderConfirmationSuppression(index)
+    }
+
+    override fun surSuppressionConfirmee(index: Int) {
         quiz = quiz.copy(questions = quiz.questions.filterIndexed { i, _ -> i != index })
         afficherQuestions()
     }
@@ -140,6 +149,17 @@ class PresentateurEditeur(
         val publie = quiz.copy(titre = quiz.titre.trim(), estPublie = true)
         quiz = publie.copy(id = modeleQuiz.sauvegarderQuizCreer(publie))
         vue?.confirmerPublication(quiz.titre)
+    }
+
+    // ----- Fermeture -----
+
+    override fun surFermerClique() {
+        if (quiz != quizInitial) vue?.demanderConfirmationQuitter()
+        else vue?.fermer()
+    }
+
+    override fun surQuitterConfirme() {
+        vue?.fermer()
     }
 
     /** Une question est complète quand elle a un texte et une bonne réponse remplie. */

@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -35,6 +36,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -124,7 +126,12 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
         listeQuestions = view.findViewById(R.id.liste_questions)
 
         view.findViewById<ImageButton>(R.id.button_fermer)
-            .setOnClickListener { findNavController().popBackStack() }
+            .setOnClickListener { presentateur.surFermerClique() }
+
+        // Le bouton retour du téléphone demande aussi une confirmation
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            presentateur.surFermerClique()
+        }
 
         saisieTitre.doAfterTextChanged { presentateur.surTitreModifie(it?.toString().orEmpty()) }
         saisieDescription.doAfterTextChanged { presentateur.surDescriptionModifiee(it?.toString().orEmpty()) }
@@ -366,6 +373,31 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
 
     override fun confirmerPublication(titre: String) {
         Toast.makeText(requireContext(), getString(R.string.editeur_publie_ok, titre), Toast.LENGTH_SHORT).show()
+        findNavController().popBackStack()
+    }
+
+    override fun demanderConfirmationSuppression(index: Int) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.editeur_confirmer_suppression_titre, index + 1))
+            .setMessage(R.string.editeur_confirmer_suppression_message)
+            .setNegativeButton(R.string.action_annuler, null)
+            .setPositiveButton(R.string.action_supprimer) { _, _ ->
+                presentateur.surSuppressionConfirmee(index)
+            }
+            .show()
+    }
+
+    override fun demanderConfirmationQuitter() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.editeur_confirmer_quitter_titre)
+            .setMessage(R.string.editeur_confirmer_quitter_message)
+            .setNegativeButton(R.string.action_annuler, null)
+            .setNeutralButton(R.string.editeur_brouillon) { _, _ -> presentateur.surBrouillonClique() }
+            .setPositiveButton(R.string.action_quitter) { _, _ -> presentateur.surQuitterConfirme() }
+            .show()
+    }
+
+    override fun fermer() {
         findNavController().popBackStack()
     }
 }
