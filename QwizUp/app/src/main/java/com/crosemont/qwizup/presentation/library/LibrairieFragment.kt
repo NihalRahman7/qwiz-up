@@ -9,8 +9,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.library.ContratLibrary.OngletLibrairie
-import com.crosemont.qwizup.presentation.library.ContratLibrary.TypeBadge
+import com.crosemont.qwizup.presentation.library.ContratLibrairie.OngletLibrairie
+import com.crosemont.qwizup.presentation.library.ContratLibrairie.TypeBadge
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.card.MaterialCardView
 
@@ -21,12 +21,12 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [LibraryFragment.newInstance] factory method to
+ * Use the [LibrairieFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LibraryFragment : Fragment(), ContratLibrary.IVueLibrary {
+class LibrairieFragment : Fragment(), ContratLibrairie.IVueLibrary {
 
-    private lateinit var presentateur: ContratLibrary.IPresentateurLibrary
+    private lateinit var presentateur: ContratLibrairie.IPresentateurLibrary
     private lateinit var messageVide: TextView
 
     // Les cartes du XML
@@ -62,7 +62,7 @@ class LibraryFragment : Fragment(), ContratLibrary.IVueLibrary {
         textesBadges = listOf(R.id.txtBadge1, R.id.txtBadge2, R.id.txtBadge3)
             .map { view.findViewById<TextView>(it) }
 
-        presentateur = PresentateurLibrary()
+        presentateur = PresentateurLibrairie()
 
         cartes.forEachIndexed { index, carte ->
             carte.setOnClickListener { presentateur.surQuizClique(quizIds[index], titres[index].text.toString()) }
@@ -98,7 +98,7 @@ class LibraryFragment : Fragment(), ContratLibrary.IVueLibrary {
         titre: String,
         sousTitre: String,
         badge: String?,
-        typeBadge: ContratLibrary.TypeBadge
+        typeBadge: ContratLibrairie.TypeBadge
     ) {
         if (prochaineCarte >= NB_CARTES) return // Le XML n'a que trois cartes
         val i = prochaineCarte++
@@ -148,7 +148,7 @@ class LibraryFragment : Fragment(), ContratLibrary.IVueLibrary {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            LibraryFragment().apply {
+            LibrairieFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

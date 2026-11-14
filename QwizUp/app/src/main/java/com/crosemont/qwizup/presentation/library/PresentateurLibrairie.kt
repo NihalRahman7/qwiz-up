@@ -1,13 +1,13 @@
 package com.crosemont.qwizup.presentation.library
 
 import com.crosemont.qwizup.presentation.ModeleQuiz
-import com.crosemont.qwizup.presentation.library.ContratLibrary.OngletLibrairie
+import com.crosemont.qwizup.presentation.library.ContratLibrairie.OngletLibrairie
 
-class PresentateurLibrary(
+class PresentateurLibrairie(
         var modeleQuiz: ModeleQuiz = ModeleQuiz(),
-    ): ContratLibrary.IPresentateurLibrary {
+    ): ContratLibrairie.IPresentateurLibrary {
 
-        private var vue: ContratLibrary.IVueLibrary? = null
+        private var vue: ContratLibrairie.IVueLibrary? = null
 
         override fun surOngletClique(onglet: OngletLibrairie) {
             val (cartes, messageVide) = when (onglet) {
@@ -30,7 +30,7 @@ class PresentateurLibrary(
             vue?.ouvrirDetails(quizId, titre)
         }
 
-        override fun attacherVue(vue: ContratLibrary.IVueLibrary) {
+        override fun attacherVue(vue: ContratLibrairie.IVueLibrary) {
             this.vue = vue
             surOngletClique(OngletLibrairie.FAVORIS)
         }
