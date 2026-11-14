@@ -9,23 +9,6 @@ interface ContratVuePresentateur {
         fun detacherVue()
     }
 
-    // Home
-    interface IVueHome : Vue {
-        /** Ouvre l'écran de jeu pour le quiz choisi. */
-        fun ouvrirQuiz(quizId: Int)
-
-        /** Ouvre l'écran pour rejoindre un quiz avec un code. */
-        fun ouvrirRejoindre()
-    }
-
-    interface IPresentateurHome : Presentateur<IVueHome> {
-        /** L'utilisateur a touché un bouton ▶ ou la carte de suggestion. */
-        fun surQuizClique(quizId: Int)
-
-        /** L'utilisateur a touché le bouton « Code ». */
-        fun surCodeClique()
-    }
-
     // Catégories de quiz (utilisées par Découvrir et l'éditeur de Créer)
     enum class CategorieQuiz { SCIENCES, HISTOIRE, LANGUES, GEOGRAPHIE, INFORMATIQUE, AUTRE }
 
