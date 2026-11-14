@@ -41,7 +41,7 @@
 
     <fragment
         android:id="@+id/discoverFragment"
-        android:name="com.crosemont.qwizup.presentation.discover.DiscoverFragment"
+        android:name="com.crosemont.qwizup.presentation.discover.VueDécouvrir"
         android:label="fragment_discover"
         tools:layout="@layout/fragment_discover">
         <action
