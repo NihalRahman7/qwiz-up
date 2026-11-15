@@ -2,17 +2,16 @@ package com.crosemont.qwizup.presentation.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IPresentateurHome
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueHome
+import com.crosemont.qwizup.presentation.home.ContratAccueil.IPresentateurAccueil
+import com.crosemont.qwizup.presentation.home.ContratAccueil.IVueAccueil
 
-class HomeFragment : Fragment(R.layout.fragment_home), IVueHome {
+class AccueilFragment : Fragment(R.layout.fragment_home), IVueAccueil {
 
     // Le présentateur qui gère la logique de cet écran
-    private val presentateur: IPresentateurHome = PresentateurHome()
+    private val presentateur: IPresentateurAccueil = PresentateurAccueil()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,14 +34,15 @@ class HomeFragment : Fragment(R.layout.fragment_home), IVueHome {
         super.onDestroyView()
     }
 
-    // ----- IVueHome -----
+    // ----- IVueAccueil -----
 
-    // Ouvre l'écran de jeu et lui envoie le numéro du quiz à jouer. //
+    // Ouvre l'écran de jeu et lui envoie le numéro du quiz à jouer
     override fun ouvrirQuiz(quizId: Int) {
-        findNavController().navigate(R.id.action_accueil_vers_question, bundleOf("quizId" to quizId))
+        val arguments = Bundle().apply { putInt("quizId", quizId) }
+        findNavController().navigate(R.id.action_accueil_vers_question, arguments)
     }
 
-    // Ouvre l'écran pour rejoindre un quiz avec un code. //
+    // Ouvre l'écran pour rejoindre un quiz avec un code
     override fun ouvrirRejoindre() {
         findNavController().navigate(R.id.action_accueil_vers_rejoindre)
     }

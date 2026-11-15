@@ -113,9 +113,8 @@
     <string name="librairie_titre">Librairie</string>
     <string name="librairie_btn_favoris">Favoris</string>
     <string name="librairie_btn_completes">Complétés</string>
-    <string name="librairie_btn_crees">Crées</string>
+    <string name="librairie_btn_crees">Créés</string>
     <string name="librairie_quiz_soon">Le quiz « %1$s » arrive bientôt!</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--  Les String de l'écran Question (jeu)   -->
@@ -148,8 +147,5 @@
     <string name="rejoindre_sous_titre">Entre le code à 6 chiffres donné par ton enseignant·e.</string>
     <string name="rejoindre_label_code">Code du quiz</string>
     <string name="rejoindre_bouton">Rejoindre</string>
-    <string name="rejoindre_ou">ou</string>
-    <string name="rejoindre_scanner">Scanner un code QR</string>
     <string name="rejoindre_code_invalide">Ce code ne correspond à aucun quiz.</string>
-    <string name="rejoindre_scanner_invite">Place le code QR dans le cadre</string>
 </resources>

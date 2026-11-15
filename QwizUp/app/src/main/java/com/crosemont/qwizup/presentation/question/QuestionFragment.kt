@@ -11,10 +11,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IPresentateurQuestion
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueQuestion
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.NiveauResultat
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
+import com.crosemont.qwizup.presentation.question.ContratQuestion.IPresentateurQuestion
+import com.crosemont.qwizup.presentation.question.ContratQuestion.IVueQuestion
+import com.crosemont.qwizup.presentation.question.ContratQuestion.NiveauResultat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.LinearProgressIndicator

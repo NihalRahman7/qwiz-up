@@ -1,10 +1,10 @@
 package com.crosemont.qwizup.presentation.question
 
 import com.crosemont.qwizup.presentation.ModeleQuiz
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IPresentateurQuestion
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueQuestion
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.NiveauResultat
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
+import com.crosemont.qwizup.presentation.question.ContratQuestion.IPresentateurQuestion
+import com.crosemont.qwizup.presentation.question.ContratQuestion.IVueQuestion
+import com.crosemont.qwizup.presentation.question.ContratQuestion.NiveauResultat
 
 
 class PresentateurQuestion(
