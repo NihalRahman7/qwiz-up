@@ -85,7 +85,7 @@ class ModeleQuiz {
         val texte: String,
         val type: ContratVuePresentateur.TypeQuestion,
         val reponses: List<String> = listOf("", "", "", ""),   // choix multiple : A, B, C, D
-        val bonneReponse: Int = 0,          // choix multiple : 0 à 3 ; vrai ou faux : 0 = vrai, 1 = faux
+        val bonnesReponses: Set<Int> = setOf(0),   // choix multiple : une ou plusieurs de 0 à 3 ; vrai ou faux : {0} = vrai, {1} = faux
         val reponseAttendue: String = ""    // réponse écrite
     )
 
@@ -101,10 +101,10 @@ class ModeleQuiz {
     )
 
     companion object {
-        private fun choix(texte: String, reponses: List<String>, bonne: Int) =
-            QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.CHOIX_MULTIPLE, reponses, bonne)
+        private fun choix(texte: String, reponses: List<String>, vararg bonnes: Int) =
+            QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.CHOIX_MULTIPLE, reponses, bonnes.toSet())
         private fun vraiFaux(texte: String, vrai: Boolean) =
-            QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.VRAI_FAUX, bonneReponse = if (vrai) 0 else 1)
+            QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.VRAI_FAUX, bonnesReponses = setOf(if (vrai) 0 else 1))
         private fun ecrite(texte: String, attendue: String) =
             QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.REPONSE_ECRITE, reponseAttendue = attendue)
 
@@ -135,6 +135,7 @@ class ModeleQuiz {
                     vraiFaux("Kotlin peut utiliser les bibliothèques Java.", vrai = true),
                     choix("Quel type représente du texte?", listOf("Int", "Char", "String", "Text"), 2),
                     choix("Quel mot-clé déclare une fonction?", listOf("function", "def", "fun", "fn"), 2),
+                    choix("Lesquels sont des types de base en Kotlin?", listOf("Int", "String", "Integer", "Boolean"), 0, 1, 3),
                     vraiFaux("Une variable String peut être null par défaut.", vrai = false)
                 ),
                 estPublie = false
@@ -146,6 +147,7 @@ class ModeleQuiz {
                 listOf(
                     choix("Quelle est la capitale du Portugal?", listOf("Porto", "Lisbonne", "Madrid", "Faro"), 1),
                     choix("Quelle est la capitale de la Finlande?", listOf("Oslo", "Stockholm", "Helsinki", "Tallinn"), 2),
+                    choix("Lesquelles de ces villes sont des capitales?", listOf("Paris", "Barcelone", "Rome", "Berlin"), 0, 2, 3),
                     vraiFaux("Genève est la capitale de la Suisse.", vrai = false)
                 ),
                 estPublie = true

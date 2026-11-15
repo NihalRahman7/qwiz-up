@@ -10,7 +10,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RadioButton
+import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
@@ -88,7 +88,7 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
         TypeQuestion.REPONSE_ECRITE to R.id.button_type_ecrite
     )
     private val lignesReponses = listOf(R.id.ligne_reponse_1, R.id.ligne_reponse_2, R.id.ligne_reponse_3, R.id.ligne_reponse_4)
-    private val radiosReponses = listOf(R.id.radio_reponse_1, R.id.radio_reponse_2, R.id.radio_reponse_3, R.id.radio_reponse_4)
+    private val casesReponses = listOf(R.id.case_reponse_1, R.id.case_reponse_2, R.id.case_reponse_3, R.id.case_reponse_4)
     private val saisiesReponses = listOf(R.id.saisie_reponse_1, R.id.saisie_reponse_2, R.id.saisie_reponse_3, R.id.saisie_reponse_4)
     private val lettres = listOf("A", "B", "C", "D")
 
@@ -237,7 +237,7 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
         texte: String,
         type: TypeQuestion,
         reponses: List<String>,
-        bonneReponse: Int,
+        bonnesReponses: Set<Int>,
         reponseAttendue: String
     ) {
         val carte = layoutInflater.inflate(R.layout.item_question_editeur, listeQuestions, false)
@@ -264,6 +264,9 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
         val zoneEcrite = carte.findViewById<View>(R.id.zone_ecrite)
         zoneChoix.isVisible = type != TypeQuestion.REPONSE_ECRITE
         zoneEcrite.isVisible = type == TypeQuestion.REPONSE_ECRITE
+        carte.findViewById<TextView>(R.id.text_coche_bonne).setText(
+            if (type == TypeQuestion.CHOIX_MULTIPLE) R.string.editeur_coche_bonnes else R.string.editeur_coche_bonne
+        )
 
         when (type) {
             TypeQuestion.CHOIX_MULTIPLE -> lignesReponses.indices.forEach { i ->
@@ -293,11 +296,11 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
 
         cartesQuestions.add(carte)
         listeQuestions.addView(carte)
-        afficherBonneReponse(index, bonneReponse)
+        afficherBonnesReponses(index, bonnesReponses)
     }
 
     private fun preparerRadio(carte: View, index: Int, numeroReponse: Int) {
-        val radio = carte.findViewById<RadioButton>(radiosReponses[numeroReponse])
+        val radio = carte.findViewById<CompoundButton>(casesReponses[numeroReponse])
         radio.contentDescription = getString(R.string.editeur_choisir_bonne, numeroReponse + 1)
         radio.setOnClickListener { presentateur.surBonneReponseCliquee(index, numeroReponse) }
         // Toucher la ligne choisit aussi la réponse (pratique en vrai ou faux)
@@ -305,11 +308,11 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
             .setOnClickListener { presentateur.surBonneReponseCliquee(index, numeroReponse) }
     }
 
-    override fun afficherBonneReponse(index: Int, bonneReponse: Int) {
+    override fun afficherBonnesReponses(index: Int, bonnesReponses: Set<Int>) {
         val carte = cartesQuestions.getOrNull(index) ?: return
         lignesReponses.indices.forEach { i ->
-            val choisie = i == bonneReponse
-            carte.findViewById<RadioButton>(radiosReponses[i]).isChecked = choisie
+            val choisie = i in bonnesReponses
+            carte.findViewById<CompoundButton>(casesReponses[i]).isChecked = choisie
             val fond = carte.findViewById<View>(lignesReponses[i]).background.mutate() as GradientDrawable
             fond.setColor(couleur(if (choisie) R.color.light_green else R.color.surface))
             fond.setStroke(
@@ -411,11 +414,11 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
         casePublier.isChecked = estPublie
     }
 
-    override fun afficherBoutonEnregistrer(publier: Boolean, manque: ErreurEditeur?, numeroQuestion: Int) {
+    override fun afficherBoutonEnregistrer(publier: Boolean, actif: Boolean, raison: ErreurEditeur?, numeroQuestion: Int) {
         boutonEnregistrer.setText(if (publier) R.string.editeur_publier else R.string.editeur_enregistrer_brouillon)
-        boutonEnregistrer.isEnabled = manque == null
-        texteRaisonBouton.isVisible = manque != null
-        texteRaisonBouton.text = when (manque) {
+        boutonEnregistrer.isEnabled = actif
+        texteRaisonBouton.isVisible = raison != null
+        texteRaisonBouton.text = when (raison) {
             ErreurEditeur.TITRE_VIDE -> getString(R.string.editeur_erreur_titre)
             ErreurEditeur.AUCUNE_QUESTION -> getString(R.string.editeur_erreur_questions)
             ErreurEditeur.QUESTION_INCOMPLETE -> getString(R.string.editeur_erreur_question, numeroQuestion)

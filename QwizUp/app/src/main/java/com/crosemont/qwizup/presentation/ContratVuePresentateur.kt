@@ -66,10 +66,10 @@ interface ContratVuePresentateur {
             texte: String,
             type: TypeQuestion,
             reponses: List<String>,        // 4 réponses (choix multiple seulement)
-            bonneReponse: Int,             // choix multiple : 0 à 3 ; vrai ou faux : 0 = vrai, 1 = faux
+            bonnesReponses: Set<Int>,      // choix multiple : une ou plusieurs de 0 à 3 ; vrai ou faux : {0} = vrai, {1} = faux
             reponseAttendue: String        // réponse écrite seulement
         )
-        fun afficherBonneReponse(index: Int, bonneReponse: Int)
+        fun afficherBonnesReponses(index: Int, bonnesReponses: Set<Int>)
         fun afficherNombreQuestions(nombre: Int)
         fun afficherErreur(erreur: ErreurEditeur)
         fun afficherErreurQuestion(numero: Int)
@@ -80,8 +80,11 @@ interface ContratVuePresentateur {
         fun confirmerPublication(titre: String)
         fun demanderConfirmationSuppression(index: Int)
         fun afficherPublication(estPublie: Boolean)   // coche ou décoche la case « Publier »
-        /** Texte du bouton selon la case, et bouton gris s'il manque quelque chose (manque = null : tout est correct). */
-        fun afficherBoutonEnregistrer(publier: Boolean, manque: ErreurEditeur?, numeroQuestion: Int)
+        /**
+         * Texte du bouton selon la case, bouton gris s'il n'est pas actif,
+         * et message sous le bouton pour dire ce qui manque (raison = null : aucun message).
+         */
+        fun afficherBoutonEnregistrer(publier: Boolean, actif: Boolean, raison: ErreurEditeur?, numeroQuestion: Int)
         fun demanderConfirmationQuitter()
         fun fermer()
     }
@@ -120,17 +123,21 @@ interface ContratVuePresentateur {
             total: Int,
             enonce: String,
             type: TypeQuestion,
-            reponses: List<String>
+            reponses: List<String>,
+            plusieursReponses: Boolean     // vrai : le joueur coche ses réponses puis touche « Valider »
         )
 
         /** Met à jour la barre de progression (0 à 100). */
         fun afficherProgression(pourcentage: Int)
 
-        /** Colore la réponse choisie en vert. */
-        fun afficherBonneReponse(indice: Int)
+        /** Montre les réponses cochées par le joueur (question à plusieurs réponses). */
+        fun afficherSelection(indices: Set<Int>)
 
-        /** Colore la réponse choisie en orange et la bonne réponse en vert. */
-        fun afficherMauvaiseReponse(indiceChoisi: Int, indiceBonneReponse: Int)
+        /** Active le bouton « Valider » quand au moins une réponse est cochée. */
+        fun activerValider(actif: Boolean)
+
+        /** Colore les bonnes réponses en vert et les mauvaises réponses choisies en orange. */
+        fun afficherCorrection(choisies: Set<Int>, bonnes: Set<Int>, estBonne: Boolean)
 
         /** Active le bouton Suivant ; à la dernière question, il devient « Voir mon résultat ». */
         fun activerSuivant(estDerniere: Boolean)
@@ -147,7 +154,7 @@ interface ContratVuePresentateur {
 
     interface IPresentateurQuestion : Presentateur<IVueQuestion> {
         fun surDemarrer(quizId: Int)
-        fun surReponseChoisie(indice: Int)   // choix multiple : 0 à 3 ; vrai ou faux : 0 = vrai, 1 = faux
+        fun surReponseChoisie(indice: Int)   // 0 à 3 ; plusieurs réponses : coche ou décoche la réponse
         fun surSuivantClique()
         fun surRejouerClique()
         fun surQuitterClique()
