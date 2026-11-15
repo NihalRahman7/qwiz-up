@@ -34,6 +34,7 @@ import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueEditeur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -56,6 +57,9 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
     private lateinit var groupeAcces: MaterialButtonToggleGroup
     private lateinit var texteAideAcces: TextView
     private lateinit var listeQuestions: LinearLayout
+    private lateinit var casePublier: MaterialCheckBox
+    private lateinit var boutonEnregistrer: MaterialButton
+    private lateinit var texteRaisonBouton: TextView
 
     // Une carte par question, dans l'ordre
     private val cartesQuestions = mutableListOf<View>()
@@ -152,10 +156,11 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
             .setOnClickListener { presentateur.surGalerieClique() }
         view.findViewById<MaterialButton>(R.id.button_ajouter_question)
             .setOnClickListener { presentateur.surAjouterQuestionClique() }
-        view.findViewById<MaterialButton>(R.id.button_brouillon)
-            .setOnClickListener { presentateur.surBrouillonClique() }
-        view.findViewById<MaterialButton>(R.id.button_publier)
-            .setOnClickListener { presentateur.surPublierClique() }
+        casePublier = view.findViewById(R.id.case_publier)
+        boutonEnregistrer = view.findViewById(R.id.button_enregistrer)
+        texteRaisonBouton = view.findViewById(R.id.text_raison_bouton)
+        casePublier.setOnCheckedChangeListener { _, cochee -> presentateur.surPublicationCochee(cochee) }
+        boutonEnregistrer.setOnClickListener { presentateur.surEnregistrerClique() }
 
         // La barre du bas de l'app est cachée ici : on garde nos boutons au-dessus de la barre système
         val barreActions = view.findViewById<LinearLayout>(R.id.barre_actions)
@@ -328,6 +333,7 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
             }
             ErreurEditeur.AUCUNE_QUESTION ->
                 Toast.makeText(requireContext(), R.string.editeur_erreur_questions, Toast.LENGTH_SHORT).show()
+            ErreurEditeur.QUESTION_INCOMPLETE -> Unit   // géré par afficherErreurQuestion
         }
     }
 
@@ -392,12 +398,28 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
             .setTitle(R.string.editeur_confirmer_quitter_titre)
             .setMessage(R.string.editeur_confirmer_quitter_message)
             .setNegativeButton(R.string.action_annuler, null)
-            .setNeutralButton(R.string.editeur_brouillon) { _, _ -> presentateur.surBrouillonClique() }
+            .setNeutralButton(R.string.editeur_enregistrer) { _, _ -> presentateur.surEnregistrerClique() }
             .setPositiveButton(R.string.action_quitter) { _, _ -> presentateur.surQuitterConfirme() }
             .show()
     }
 
     override fun fermer() {
         findNavController().popBackStack()
+    }
+
+    override fun afficherPublication(estPublie: Boolean) {
+        casePublier.isChecked = estPublie
+    }
+
+    override fun afficherBoutonEnregistrer(publier: Boolean, manque: ErreurEditeur?, numeroQuestion: Int) {
+        boutonEnregistrer.setText(if (publier) R.string.editeur_publier else R.string.editeur_enregistrer_brouillon)
+        boutonEnregistrer.isEnabled = manque == null
+        texteRaisonBouton.isVisible = manque != null
+        texteRaisonBouton.text = when (manque) {
+            ErreurEditeur.TITRE_VIDE -> getString(R.string.editeur_erreur_titre)
+            ErreurEditeur.AUCUNE_QUESTION -> getString(R.string.editeur_erreur_questions)
+            ErreurEditeur.QUESTION_INCOMPLETE -> getString(R.string.editeur_erreur_question, numeroQuestion)
+            null -> ""
+        }
     }
 }
