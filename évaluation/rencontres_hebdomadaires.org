@@ -35,7 +35,7 @@
   - Implémentation du code QR
 * Semaine 10
 
-- Date: 4 novembre 206
+- Date: 4 novembre 2026
 - Heure de début: 12h00
 - Heure de fin: 12h45
 - Présences :
@@ -57,21 +57,31 @@
     - Un pourcentage de bonne réponses lorsque le quiz est terminé
 
 * Semaine 11
-
-- Date:
-- Heure de début:
-- Heure de fin:
+ 
+- Date: 14 novembre 2026
+- Heure de début: 12h00
+- Heure de fin: 13h00
 - Présences :
-  1. 
-  2. 
-  3. 
-  4. 
-
+  1. Nihal Rahman
+  2. Aratus Thamidson
+  3. Orphéric Montel
+  4. Joseph Allan
+ 
 - Avancements de la semaine :
-  -
-    
+  - Lecture de la correction du sprint 2 et de la revue de code du prof
+  - Fusion de structure-MVP dans main, pour que le travail du sprint 2 soit dans main
+  - Création de la branche sprint-3 : les demandes de fusion du sprint vont dans cette branche
+  - Couche domaine : entité Quiz et ServiceQuiz, avec ses tests 
+  - Source de données bidon 
+  - Corrections du prof pour Découvrir et la Librairie : contrats séparés par écran, noms en français, plus de « clic » dans les présentateurs
+  - Découvrir : favoris sauvegardés dans un fichier (source locale), ServiceFavoris, modèle injecté par interface, fils d'exécution avec des coroutines, 32 tests unitaires, traduction anglaise 
+  - Confirmations avant les actions destructives dans l'éditeur et l'écran de jeu 
+ 
 - Problèmes envisagés
-  - 
+  - Remplacer les ID dans les entités, comme le prof l'a demandé 
+  - Choisir le présentateur de Découvrir comme modèle pour les autres écrans
+  - Ajouter chaque nouveau texte aussi dans values-en/strings.xml
+  - Écrire le README et la rétrospective du sprint
 
 * Semaine 12
 
