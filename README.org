@@ -1,10 +1,90 @@
-Ce projet est une base pour le projet de développement d'application du cours 420-G55-RO.
+#+TITLE: QwizUp
 
-Vous devez :
- - Créer une divergence par équipe
- - Ajouter tous les membres de votre équipe comme «Chargé de maintenance»
- - Remplir le [[évaluation/proposition.org][formulaire de proposition]]
- - Remplacer ce fichier README par une «page d'accueil» de votre projet
- - Facultativement, ajouter un fichier de licence
+QwizUp est une application Android de quiz pour apprendre en jouant. On y découvre des quiz par catégorie, on les joue, on crée les siens et on retrouve ses favoris et ses résultats dans sa librairie. Un enseignant peut aussi partager un quiz à sa classe avec un code à 6 chiffres.
 
-   [[./licence.png]]
+Projet d'équipe du cours 420-G55-RO (Programmation native 3), Cégep de Rosemont, automne 2026.
+
+* Écrans
+
+| Écran        | Ce qu'on peut faire                                                                  |
+|--------------+--------------------------------------------------------------------------------------|
+| Accueil      | Voir sa série, ses quiz complétés et son taux de réussite, reprendre un quiz en cours |
+| Découvrir    | Chercher un quiz, filtrer par catégorie, mettre un quiz en favori, lancer un quiz     |
+| Créer        | Voir ses brouillons et ses quiz publiés, créer ou modifier un quiz                    |
+| Éditeur      | Écrire les questions (choix multiple, vrai ou faux, réponse écrite), choisir la catégorie, la difficulté et qui peut jouer |
+| Librairie    | Retrouver ses quiz favoris, complétés et créés                                        |
+| Question     | Jouer un quiz, question par question, puis voir son résultat                          |
+| Rejoindre    | Entrer le code à 6 chiffres donné par l'enseignant                                     |
+
+L'application est en français et en anglais : elle suit la langue du téléphone.
+
+* Architecture
+
+L'application est séparée en trois couches. Chaque couche dépend seulement de la couche en dessous, et toujours par une interface.
+
+| Couche                | Dossier                        | Rôle                                                                 |
+|-----------------------+--------------------------------+----------------------------------------------------------------------|
+| Présentation (MVP)    | =presentation/=                | Une vue (fragment), un présentateur, un modèle et un contrat par écran |
+| Domaine               | =domaine/entites=, =domaine/service= | Les entités (ex. : =Quiz=) et les services qui contiennent les règles |
+| Accès aux données     | =sourceDeDonnees/=             | Les sources de données, derrière une interface                       |
+
+- *Vue* : affiche et transmet les actions de l'utilisateur au présentateur. Elle ne décide rien.
+- *Présentateur* : décide quoi afficher. Il reçoit son modèle par une interface et l'appelle sur un fil d'arrière-plan avec des coroutines, pour que l'écran ne gèle jamais.
+- *Modèle* : donne les données à l'écran en passant par les services.
+- *Contrat* : les interfaces qui relient la vue et le présentateur, une par écran (ex. : =ContratDécouvrir=).
+- *Sources de données* : chaque source a une version « bidon » (données en mémoire, pour les tests) et, si besoin, une version « locale » (fichier sur l'appareil). Exemple : les favoris sont sauvegardés dans un fichier par =SourceFavorisLocale=.
+
+* Lancer l'application
+
+1. Cloner le dépôt et ouvrir le dossier =QwizUp/= dans Android Studio (version Rabbit 2026.2 ou plus récente).
+2. Attendre la synchronisation Gradle.
+3. Choisir un émulateur ou un téléphone (Android 8.0, API 26, minimum) et cliquer sur Run.
+
+* Lancer les tests
+
+Dans Android Studio : clic droit sur =com.crosemont.qwizup (test)= → Run 'Tests in…'.
+
+Ou dans un terminal, depuis le dossier =QwizUp/= :
+
+#+begin_src sh
+./gradlew testDebugUnitTest
+#+end_src
+
+Les tests unitaires couvrent les services, les sources de données, les modèles et les présentateurs. Les présentateurs sont testés avec une fausse vue et un faux modèle.
+
+* Technologies
+
+- Kotlin, Android (minSdk 26, compileSdk 37)
+- Navigation Component et barre de navigation du bas
+- Coroutines Kotlin pour les fils d'exécution
+- JUnit 4 et kotlinx-coroutines-test pour les tests
+
+* Équipe
+
+| Membre                  | Écrans et responsabilités                                    |
+|-------------------------+--------------------------------------------------------------|
+| Nihal Rahman            | Librairie, structure MVP, couche service, source bidon, API  |
+| Orphéric Montel Hountondji | Découvrir, favoris (source locale et service), traduction anglaise |
+| Aratus Thamidson        | Créer, éditeur de quiz                                        |
+| Joseph Allan Lupez      | Accueil, écran de jeu (Question), Rejoindre                   |
+
+* Organisation du travail
+
+- Chaque fonctionnalité est faite sur sa propre branche.
+- Chaque branche passe par une demande de fusion vers la branche du sprint (ex. : =sprint-3=), approuvée par un autre membre.
+- À la fin du sprint, la branche du sprint est fusionnée dans =main=.
+- Les comptes rendus des rencontres sont dans [[file:évaluation/rencontres_hebdomadaires.org][évaluation/rencontres_hebdomadaires.org]].
+- Les maquettes sont dans [[file:Maquettes][Maquettes/]].
+
+* Avancement
+
+| Sprint | Contenu                                                                                          | État     |
+|--------+--------------------------------------------------------------------------------------------------+----------|
+| 1      | Proposition, maquettes, premiers écrans et navigation                                            | Terminé  |
+| 2      | Écrans principaux en MVP avec des données codées en dur                                          | Terminé  |
+| 3      | Couches domaine et accès aux données, sources bidon et locale, injection par interfaces, fils d'exécution, tests unitaires | En cours |
+| 4      | Connexion à l'API externe                                                                        | À venir  |
+
+* Licence
+
+[[./licence.png]]
