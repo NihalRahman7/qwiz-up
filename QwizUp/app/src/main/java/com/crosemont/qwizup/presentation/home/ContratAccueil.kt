@@ -3,7 +3,6 @@ package com.crosemont.qwizup.presentation.home
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.Presentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.Vue
 
-// Contrat de l'écran d'accueil : ce que la vue sait faire et ce que le présentateur reçoit
 interface ContratAccueil {
 
     interface IVueAccueil : Vue {
