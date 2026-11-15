@@ -125,7 +125,8 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
         total: Int,
         enonce: String,
         type: TypeQuestion,
-        reponses: List<String>
+        reponses: List<String>,
+        plusieursReponses: Boolean
     ) {
         groupeJeu.isVisible = true
         groupeResultat.isVisible = false
@@ -154,28 +155,48 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
         // Nouvelle question : pas de message, bouton Suivant désactivé
         texteRetroaction.isVisible = false
         boutonSuivant.isEnabled = false
-        boutonSuivant.text = getString(R.string.question_choisir)
+        boutonSuivant.text = getString(
+            if (plusieursReponses) R.string.question_choisir_plusieurs else R.string.question_choisir
+        )
     }
 
     override fun afficherProgression(pourcentage: Int) {
         progression.setProgressCompat(pourcentage, true)
     }
 
-    override fun afficherBonneReponse(indice: Int) {
-        bloquerReponses()
-        colorer(boutonsReponses[indice], R.color.light_green, R.color.primary_green)
-        afficherMessage(getString(R.string.question_bonne), R.color.light_green, R.color.primary_green)
+    override fun afficherSelection(indices: Set<Int>) {
+        // Réponses cochées en bleu (pas en vert, pour ne pas donner la réponse)
+        reponsesAffichees.indices.forEach { i ->
+            if (i in indices) colorer(boutonsReponses[i], R.color.light_blue, R.color.blue_text)
+            else colorer(boutonsReponses[i], R.color.surface, R.color.border)
+        }
     }
 
-    override fun afficherMauvaiseReponse(indiceChoisi: Int, indiceBonneReponse: Int) {
+    override fun activerValider(actif: Boolean) {
+        boutonSuivant.isEnabled = actif
+        boutonSuivant.text = getString(if (actif) R.string.question_valider else R.string.question_choisir_plusieurs)
+    }
+
+    override fun afficherCorrection(choisies: Set<Int>, bonnes: Set<Int>, estBonne: Boolean) {
         bloquerReponses()
-        colorer(boutonsReponses[indiceChoisi], R.color.light_orange, R.color.accent_orange)
-        colorer(boutonsReponses[indiceBonneReponse], R.color.light_green, R.color.primary_green)
-        afficherMessage(
-            getString(R.string.question_mauvaise, reponsesAffichees[indiceBonneReponse]),
-            R.color.light_orange,
-            R.color.red_text
-        )
+        reponsesAffichees.indices.forEach { i ->
+            when (i) {
+                in bonnes -> colorer(boutonsReponses[i], R.color.light_green, R.color.primary_green)
+                in choisies -> colorer(boutonsReponses[i], R.color.light_orange, R.color.accent_orange)
+                else -> colorer(boutonsReponses[i], R.color.surface, R.color.border)
+            }
+        }
+
+        if (estBonne) {
+            afficherMessage(getString(R.string.question_bonne), R.color.light_green, R.color.primary_green)
+        } else {
+            val message = if (bonnes.size == 1) {
+                getString(R.string.question_mauvaise, reponsesAffichees[bonnes.first()])
+            } else {
+                getString(R.string.question_mauvaise_plusieurs, bonnes.sorted().joinToString { "« ${reponsesAffichees[it]} »" })
+            }
+            afficherMessage(message, R.color.light_orange, R.color.red_text)
+        }
     }
 
     override fun activerSuivant(estDerniere: Boolean) {
