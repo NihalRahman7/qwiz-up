@@ -490,17 +490,8 @@
             android:text="@string/editeur_case_publier"
             android:textColor="@color/text_primary"
             android:textSize="16sp"
+            android:layout_marginBottom="4dp"
             app:buttonTint="@color/primary_green" />
-
-        <TextView
-            android:id="@+id/text_aide_publier"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/editeur_case_publier_aide"
-            android:textColor="@color/text_secondary"
-            android:textSize="13sp" />
 
         <!-- Un seul bouton : « Enregistrer le brouillon » ou « Publier » selon la case -->
         <com.google.android.material.button.MaterialButton

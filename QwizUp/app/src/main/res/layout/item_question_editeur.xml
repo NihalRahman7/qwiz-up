@@ -144,6 +144,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/text_coche_bonne"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -162,8 +163,8 @@
                 android:paddingStart="4dp"
                 android:paddingEnd="12dp">
 
-                <RadioButton
-                    android:id="@+id/radio_reponse_1"
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/case_reponse_1"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     app:buttonTint="@color/primary_green" />
@@ -193,8 +194,8 @@
                 android:paddingStart="4dp"
                 android:paddingEnd="12dp">
 
-                <RadioButton
-                    android:id="@+id/radio_reponse_2"
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/case_reponse_2"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     app:buttonTint="@color/primary_green" />
@@ -224,8 +225,8 @@
                 android:paddingStart="4dp"
                 android:paddingEnd="12dp">
 
-                <RadioButton
-                    android:id="@+id/radio_reponse_3"
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/case_reponse_3"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     app:buttonTint="@color/primary_green" />
@@ -255,8 +256,8 @@
                 android:paddingStart="4dp"
                 android:paddingEnd="12dp">
 
-                <RadioButton
-                    android:id="@+id/radio_reponse_4"
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/case_reponse_4"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     app:buttonTint="@color/primary_green" />

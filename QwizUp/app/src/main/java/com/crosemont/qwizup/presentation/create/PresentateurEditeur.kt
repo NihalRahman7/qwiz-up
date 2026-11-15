@@ -99,7 +99,7 @@ class PresentateurEditeur(
     override fun surTypeQuestionClique(index: Int, type: TypeQuestion) {
         val question = quiz.questions.getOrNull(index) ?: return
         if (question.type == type) return
-        modifierQuestion(index) { it.copy(type = type, bonneReponse = 0) }
+        modifierQuestion(index) { it.copy(type = type, bonnesReponses = setOf(0)) }
         afficherQuestions()   // la carte change de forme : on la redessine
     }
 
@@ -114,8 +114,16 @@ class PresentateurEditeur(
     }
 
     override fun surBonneReponseCliquee(index: Int, numeroReponse: Int) {
-        modifierQuestion(index) { it.copy(bonneReponse = numeroReponse) }
-        vue?.afficherBonneReponse(index, numeroReponse)
+        val question = quiz.questions.getOrNull(index) ?: return
+        val nouvelles = if (question.type == TypeQuestion.CHOIX_MULTIPLE) {
+            // Choix multiple : on coche ou on décoche (plusieurs bonnes réponses possibles)
+            if (numeroReponse in question.bonnesReponses) question.bonnesReponses - numeroReponse
+            else question.bonnesReponses + numeroReponse
+        } else {
+            setOf(numeroReponse)   // Vrai ou faux : une seule bonne réponse
+        }
+        modifierQuestion(index) { it.copy(bonnesReponses = nouvelles) }
+        vue?.afficherBonnesReponses(index, nouvelles)
     }
 
     override fun surReponseAttendueModifiee(index: Int, texte: String) {
@@ -157,10 +165,19 @@ class PresentateurEditeur(
         return null
     }
 
-    /** Met à jour le texte du bouton et le rend gris s'il manque quelque chose. */
+    /**
+     * Met à jour le texte du bouton et le rend gris s'il manque quelque chose.
+     * Le message qui explique quoi apparaît seulement quand l'utilisateur a commencé à modifier le quiz.
+     */
     private fun mettreAJourBouton() {
         val manque = ceQuiManque()
-        vue?.afficherBoutonEnregistrer(quiz.estPublie, manque?.erreur, manque?.numeroQuestion ?: 0)
+        val aCommence = quiz != quizInitial
+        vue?.afficherBoutonEnregistrer(
+            publier = quiz.estPublie,
+            actif = manque == null,
+            raison = if (aCommence) manque?.erreur else null,
+            numeroQuestion = manque?.numeroQuestion ?: 0
+        )
     }
 
     // ----- Fermeture -----
@@ -176,7 +193,9 @@ class PresentateurEditeur(
 
     /** Une question est complète quand elle a un texte et une bonne réponse remplie. */
     private fun estComplete(question: QuestionCreer): Boolean = question.texte.isNotBlank() && when (question.type) {
-        TypeQuestion.CHOIX_MULTIPLE -> question.reponses.getOrElse(question.bonneReponse) { "" }.isNotBlank()
+        // Au moins une bonne réponse cochée, et chaque réponse cochée doit être remplie
+        TypeQuestion.CHOIX_MULTIPLE -> question.bonnesReponses.isNotEmpty() &&
+            question.bonnesReponses.all { question.reponses.getOrElse(it) { "" }.isNotBlank() }
         TypeQuestion.VRAI_FAUX -> true
         TypeQuestion.REPONSE_ECRITE -> question.reponseAttendue.isNotBlank()
     }
@@ -190,7 +209,7 @@ class PresentateurEditeur(
     private fun afficherQuestions() {
         vue?.viderQuestions()
         quiz.questions.forEachIndexed { index, q ->
-            vue?.ajouterQuestion(index, q.texte, q.type, q.reponses, q.bonneReponse, q.reponseAttendue)
+            vue?.ajouterQuestion(index, q.texte, q.type, q.reponses, q.bonnesReponses, q.reponseAttendue)
         }
         vue?.afficherNombreQuestions(quiz.questions.size)
         mettreAJourBouton()
