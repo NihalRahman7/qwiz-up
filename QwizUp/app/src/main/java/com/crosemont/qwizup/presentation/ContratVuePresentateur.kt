@@ -33,8 +33,9 @@ interface ContratVuePresentateur {
     // Éditeur de quiz (s'ouvre depuis Create avec « Nouveau quiz » ou « Continuer »)
     enum class Difficulte { FACILE, MOYEN, DIFFICILE }
     enum class AccesQuiz { TOUT_LE_MONDE, AVEC_CODE }
+    // Partagé : utilisé aussi par l'écran Question
     enum class TypeQuestion { CHOIX_MULTIPLE, VRAI_FAUX, REPONSE_ECRITE }
-    enum class ErreurEditeur { TITRE_VIDE, AUCUNE_QUESTION }
+    enum class ErreurEditeur { TITRE_VIDE, AUCUNE_QUESTION, QUESTION_INCOMPLETE }
 
     interface IVueEditeur : Vue {
         fun afficherEnTete(nouveauQuiz: Boolean)
@@ -49,10 +50,10 @@ interface ContratVuePresentateur {
             texte: String,
             type: TypeQuestion,
             reponses: List<String>,        // 4 réponses (choix multiple seulement)
-            bonneReponse: Int,             // choix multiple : 0 à 3 ; vrai ou faux : 0 = vrai, 1 = faux
+            bonnesReponses: Set<Int>,      // choix multiple : une ou plusieurs de 0 à 3 ; vrai ou faux : {0} = vrai, {1} = faux
             reponseAttendue: String        // réponse écrite seulement
         )
-        fun afficherBonneReponse(index: Int, bonneReponse: Int)
+        fun afficherBonnesReponses(index: Int, bonnesReponses: Set<Int>)
         fun afficherNombreQuestions(nombre: Int)
         fun afficherErreur(erreur: ErreurEditeur)
         fun afficherErreurQuestion(numero: Int)
@@ -62,6 +63,12 @@ interface ContratVuePresentateur {
         fun confirmerSauvegarde()
         fun confirmerPublication(titre: String)
         fun demanderConfirmationSuppression(index: Int)
+        fun afficherPublication(estPublie: Boolean)   // coche ou décoche la case « Publier »
+        /**
+         * Texte du bouton selon la case, bouton gris s'il n'est pas actif,
+         * et message sous le bouton pour dire ce qui manque (raison = null : aucun message).
+         */
+        fun afficherBoutonEnregistrer(publier: Boolean, actif: Boolean, raison: ErreurEditeur?, numeroQuestion: Int)
         fun demanderConfirmationQuitter()
         fun fermer()
     }
@@ -82,11 +89,10 @@ interface ContratVuePresentateur {
         fun surReponseModifiee(index: Int, numeroReponse: Int, texte: String)
         fun surBonneReponseCliquee(index: Int, numeroReponse: Int)
         fun surReponseAttendueModifiee(index: Int, texte: String)
-        fun surBrouillonClique()
-        fun surPublierClique()
+        fun surPublicationCochee(cochee: Boolean)
+        fun surEnregistrerClique()
         fun surSuppressionConfirmee(index: Int)
         fun surFermerClique()
         fun surQuitterConfirme()
     }
-
 }
