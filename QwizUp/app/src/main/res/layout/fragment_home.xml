@@ -104,7 +104,7 @@
                         android:textColor="@color/text_primary"
                         android:textSize="22sp"
                         android:fontFamily="@font/figtree_extrabold"
-                        android:text="10 j" />
+                        tools:text="10 j" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -148,7 +148,7 @@
                         android:textColor="@color/text_primary"
                         android:textSize="22sp"
                         android:fontFamily="@font/figtree_extrabold"
-                        android:text="6" />
+                        tools:text="6" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -191,7 +191,7 @@
                         android:textColor="@color/text_primary"
                         android:textSize="22sp"
                         android:fontFamily="@font/figtree_extrabold"
-                        android:text="69 %" />
+                        tools:text="69 %" />
 
                     <TextView
                         android:layout_width="wrap_content"

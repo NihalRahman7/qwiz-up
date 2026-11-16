@@ -1,5 +1,6 @@
 package com.crosemont.qwizup.presentation.home
 
+import com.crosemont.qwizup.domaine.entites.Statistiques
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.Presentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.Vue
 
@@ -11,6 +12,10 @@ interface ContratAccueil {
         fun ouvrirQuiz(quizId: Int)
         // Ouvre l'écran pour entrer un code de quiz
         fun ouvrirRejoindre()
+        // Affiche la série, le nombre de quiz complétés et le taux de réussite
+        fun afficherStatistiques(serie: Int, nbQuizCompletes: Int, tauxReussite: Int)
+        // Le modèle n'a pas pu répondre
+        fun afficherErreur()
     }
 
     interface IPresentateurAccueil : Presentateur<IVueAccueil> {
@@ -18,5 +23,9 @@ interface ContratAccueil {
         fun surQuizClique(quizId: Int)
         // L'utilisateur a cliqué sur le bouton « Code »
         fun surCodeClique()
+    }
+
+    interface IModeleAccueil {
+        suspend fun obtenirStatistiques(): Statistiques
     }
 }

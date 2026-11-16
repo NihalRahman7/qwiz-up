@@ -14,6 +14,9 @@
     <string name="home_suggestions">Suggestions</string>
     <string name="home_see_all">See all</string>
     <string name="home_resume_quiz">Resume quiz</string>
+    <string name="home_streak_value">%1$d d</string>
+    <string name="home_correct_value">%1$d %%</string>
+    <string name="home_error">Unable to load your statistics.</string>
 
     <string name="sample_quiz_1_title">The Solar System</string>
     <string name="sample_quiz_1_meta">2 / 5 questions · Science</string>
@@ -90,6 +93,10 @@
     <string name="editeur_erreur_titre">Give your quiz a title</string>
     <string name="editeur_erreur_questions">Add at least one question before publishing</string>
     <string name="editeur_erreur_question">Question %1$d is not complete</string>
+    <string name="editeur_coche_bonnes">Check the correct answer(s)</string>
+    <string name="editeur_case_publier">Publish the quiz</string>
+    <string name="editeur_enregistrer">Save</string>
+    <string name="editeur_enregistrer_brouillon">Save draft</string>
     <string name="editeur_sauvegarde_ok">Draft saved</string>
     <string name="editeur_publie_ok">“%1$s” is published!</string>
     <string name="editeur_photo_bientot">Adding images is coming soon</string>
@@ -115,6 +122,9 @@
     <string name="question_confirmer_quitter_titre">Quit the quiz?</string>
     <string name="question_confirmer_quitter_message">Your progress and score will be lost.</string>
     <string name="question_reponse">%1$s · %2$s</string>
+    <string name="question_mauvaise_plusieurs">Not quite. The correct answers are: %1$s.</string>
+    <string name="question_choisir_plusieurs">Choose one or more answers</string>
+    <string name="question_valider">Submit</string>
     <string name="question_vrai">True</string>
     <string name="question_faux">False</string>
     <string name="question_choisir">Choose an answer</string>
