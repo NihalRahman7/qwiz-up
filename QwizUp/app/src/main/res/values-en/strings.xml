@@ -93,6 +93,14 @@
     <string name="editeur_sauvegarde_ok">Draft saved</string>
     <string name="editeur_publie_ok">“%1$s” is published!</string>
     <string name="editeur_photo_bientot">Adding images is coming soon</string>
+    <string name="editeur_confirmer_suppression_titre">Delete question %1$d?</string>
+    <string name="editeur_confirmer_suppression_message">This action cannot be undone.</string>
+    <string name="editeur_confirmer_quitter_titre">Leave without saving?</string>
+    <string name="editeur_confirmer_quitter_message">Your changes will be lost. You can keep them as a draft.</string>
+    <string name="action_supprimer">Delete</string>
+    <string name="action_quitter">Leave</string>
+    <string name="action_annuler">Cancel</string>
+
 
     <string name="librairie_titre">Library</string>
     <string name="librairie_btn_favoris">Favorites</string>
@@ -104,6 +112,8 @@
     <string name="question_quitter">Quit the quiz</string>
     <string name="question_compteur">%1$d / %2$d</string>
     <string name="question_numero">Question %1$d</string>
+    <string name="question_confirmer_quitter_titre">Quit the quiz?</string>
+    <string name="question_confirmer_quitter_message">Your progress and score will be lost.</string>
     <string name="question_reponse">%1$s · %2$s</string>
     <string name="question_vrai">True</string>
     <string name="question_faux">False</string>
@@ -124,8 +134,5 @@
     <string name="rejoindre_sous_titre">Enter the 6-digit code given by your teacher.</string>
     <string name="rejoindre_label_code">Quiz code</string>
     <string name="rejoindre_bouton">Join</string>
-    <string name="rejoindre_ou">or</string>
-    <string name="rejoindre_scanner">Scan a QR code</string>
     <string name="rejoindre_code_invalide">This code does not match any quiz.</string>
-    <string name="rejoindre_scanner_invite">Place the QR code inside the frame</string>
 </resources>
