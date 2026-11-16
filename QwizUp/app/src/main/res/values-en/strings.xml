@@ -138,6 +138,7 @@
     <string name="resultat_detail">You finished “%1$s”.</string>
     <string name="resultat_rejouer">Play again</string>
     <string name="resultat_retour">Back to home</string>
+    <string name="question_erreur">Unable to load or save the game.</string>
 
     <string name="rejoindre_retour">Back</string>
     <string name="rejoindre_titre">Join a quiz</string>

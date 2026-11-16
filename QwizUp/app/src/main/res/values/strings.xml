@@ -10,7 +10,7 @@
     <string name="home_greeting">Bonjour</string>
     <string name="home_join_code">Code</string>
     <string name="home_streak">Série</string>
-    <string name="home_completed">Quiz complétés </string>
+    <string name="home_completed">Quiz complétés</string>
     <string name="home_correct">Réussite</string>
     <string name="home_continue">Continuer</string>
     <string name="home_suggestions">Suggestions</string>
@@ -28,6 +28,7 @@
     <string name="sample_quiz_2_meta">3 / 5 questions · Informatique</string>
     <string name="sample_suggestion_title">Capitales d\'Europe</string>
     <string name="sample_suggestion_meta">12 questions · 6 min · Géographie</string>
+    <string name="question_erreur">Impossible de charger ou de sauvegarder la partie.</string>
 
     <!--  Les String de la Navigation de la page Découvrir   -->
     <string name="discover_search_hint">Rechercher un quiz</string>
