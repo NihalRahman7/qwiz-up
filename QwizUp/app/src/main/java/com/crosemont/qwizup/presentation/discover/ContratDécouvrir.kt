@@ -23,6 +23,7 @@ interface ContratDécouvrir {
         fun ouvrirQuiz(quizId: Int, titre: String)
         fun afficherQuizBientôt(titre: String)   // le quiz n'a pas encore de questions
         fun afficherErreur()   // le modèle n'a pas pu répondre
+        fun afficherChargement(visible: Boolean)
     }
 
     interface IPrésentateurDécouvrir : Presentateur<IVueDécouvrir> {

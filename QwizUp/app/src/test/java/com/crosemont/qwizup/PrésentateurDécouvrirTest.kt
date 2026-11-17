@@ -243,5 +243,9 @@ class PrésentateurDécouvrirTest {
             nbAppels++
             erreurAffichée = true
         }
+
+        override fun afficherChargement(visible: Boolean) {
+            nbAppels++
+        }
     }
 }

@@ -14,7 +14,15 @@ class ModèleDécouvrir(
     private val catalogue: ModeleQuiz = ModeleQuiz(),
 ) : ContratDécouvrir.IModèleDécouvrir {
 
+    @Volatile
+    private var catalogueChargé = false
+
     override suspend fun obtenirQuiz(catégorie: CategorieQuiz?, recherche: String): List<CarteDiscover> {
+        // Les quiz viennent du service, chargés une seule fois
+        if (!catalogueChargé) {
+            catalogue.chargerQuizDiscover()
+            catalogueChargé = true
+        }
         val favoris = serviceFavoris.obtenirFavoris()
         return catalogue.obtenirQuizDiscover(catégorie, recherche)
             .map { it.copy(estFavori = it.titre in favoris) }

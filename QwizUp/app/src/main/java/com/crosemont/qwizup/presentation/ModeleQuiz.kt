@@ -1,12 +1,11 @@
 package com.crosemont.qwizup.presentation
 
+import com.crosemont.qwizup.domaine.service.ServiceQuiz
 import com.crosemont.qwizup.sourceDeDonnees.SourceQuizCréésBidon
 import com.crosemont.qwizup.presentation.library.ContratLibrairie
 import java.text.Normalizer
 
-class ModeleQuiz {
-    // Home
-    // TODO: Faire le modèle avec des données codées en dur pour le fragment Home
+class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
 
     // Discover
     data class CarteDiscover(
@@ -16,28 +15,38 @@ class ModeleQuiz {
         val description: String,
         val nbQuestions: Int,
         val dureeMinutes: Int,
-        val estFavori: Boolean = false
+        val estFavori: Boolean = false,
+        val quizIdApi: String = ""
     )
 
-    // Données codées en dur
-    private val quizDiscover = mutableListOf(
-        CarteDiscover(
-            3, ContratVuePresentateur.CategorieQuiz.GEOGRAPHIE, "Capitales d’Europe",
-            "Associe chaque pays à sa capitale, de Lisbonne à Helsinki.", 12, 6
-        ),
-        CarteDiscover(
-            1, ContratVuePresentateur.CategorieQuiz.SCIENCES, "Le système solaire",
-            "Planètes, lunes et distances : teste tes connaissances.", 10, 5, estFavori = true
-        ),
-        CarteDiscover(
-            4, ContratVuePresentateur.CategorieQuiz.HISTOIRE, "La Révolution tranquille",
-            "Les grands changements du Québec des années 1960.", 8, 4
-        ),
-        CarteDiscover(
-            5, ContratVuePresentateur.CategorieQuiz.LANGUES, "Verbes irréguliers anglais",
-            "Be, go, take… retrouve le passé des verbes les plus utilisés.", 15, 7
-        )
-    )
+    /**
+     * Favoris de Découvrir (par identifiant de l'API). Le quiz bidon 1 est favori au départ
+     */
+    private val favorisDiscover = mutableSetOf("bidon-1")
+
+    /**
+     * Liste remplie par le service. Elle commence vide
+     */
+    @Volatile
+    private var quizDiscover: List<CarteDiscover> = emptyList()
+
+    /**
+     * Va chercher les quiz via la couche service (À appeler depuis une coroutine)
+     */
+    suspend fun chargerQuizDiscover() {
+        quizDiscover = service.obtenirQuiz().map { quiz ->
+            CarteDiscover(
+                id = quiz.id,
+                categorie = versCategorie(quiz.categorie),
+                titre = quiz.titre,
+                description = quiz.description,
+                nbQuestions = quiz.nbQuestions,
+                dureeMinutes = (quiz.nbQuestions / 2).coerceAtLeast(1),
+                estFavori = quiz.quizIdApi in favorisDiscover,
+                quizIdApi = quiz.quizIdApi
+            )
+        }
+    }
 
     /**
      * Retourne les quiz de la catégorie choisie (null = tous) dont le titre ou la description
@@ -62,12 +71,22 @@ class ModeleQuiz {
 
     /** Ajoute le quiz aux favoris s'il n'y est pas, sinon le retire. */
     fun basculerFavoriDiscover(quizId: Int) {
-        val index = quizDiscover.indexOfFirst { it.id == quizId }
-        if (index != -1) {
-            val quiz = quizDiscover[index]
-            quizDiscover[index] = quiz.copy(estFavori = !quiz.estFavori)
+        val quiz = quizDiscover.find { it.id == quizId } ?: return
+        if (!favorisDiscover.remove(quiz.quizIdApi)) { favorisDiscover.add(quiz.quizIdApi) }
+        quizDiscover = quizDiscover.map {
+            if (it.id == quizId) it.copy(estFavori = quiz.quizIdApi in favorisDiscover) else it
         }
     }
+
+    private fun versCategorie(texte: String): ContratVuePresentateur.CategorieQuiz =
+        when (simplifier(texte)) {
+            "sciences", "science" -> ContratVuePresentateur.CategorieQuiz.SCIENCES
+            "histoire"            -> ContratVuePresentateur.CategorieQuiz.HISTOIRE
+            "langues"             -> ContratVuePresentateur.CategorieQuiz.LANGUES
+            "geographie"          -> ContratVuePresentateur.CategorieQuiz.GEOGRAPHIE
+            "informatique"        -> ContratVuePresentateur.CategorieQuiz.INFORMATIQUE
+            else                  -> ContratVuePresentateur.CategorieQuiz.AUTRE
+        }
 
     /** Met le texte en minuscules et enlève les accents (« Révolution » devient « revolution »). */
     private fun simplifier(texte: String): String =
