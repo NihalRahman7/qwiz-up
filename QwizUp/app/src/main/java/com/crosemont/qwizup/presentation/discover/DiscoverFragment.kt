@@ -163,6 +163,15 @@ class DiscoverFragment : Fragment(), ContratVuePresentateur.IVueDiscover {
         Toast.makeText(requireContext(), getString(R.string.discover_play_soon, titre), Toast.LENGTH_SHORT).show()
     }
 
+    override fun afficherChargement(visible: Boolean) {
+        view?.findViewById<View>(R.id.progression)?.visibility =
+            if (visible) View.VISIBLE else View.GONE
+    }
+
+    override fun afficherErreur(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
+
     @StringRes
     private fun nomCategorie(categorie: CategorieQuiz): Int = when (categorie) {
         CategorieQuiz.SCIENCES -> R.string.category_sciences

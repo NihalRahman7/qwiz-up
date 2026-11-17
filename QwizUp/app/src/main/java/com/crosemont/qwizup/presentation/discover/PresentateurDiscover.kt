@@ -1,14 +1,21 @@
 package com.crosemont.qwizup.presentation.discover
 
+import com.crosemont.qwizup.domaine.service.ServiceException
 import com.crosemont.qwizup.presentation.ModeleQuiz
 import com.crosemont.qwizup.presentation.ContratVuePresentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class PresentateurDiscover(
     var modeleQuiz: ModeleQuiz = ModeleQuiz(),
 ) : ContratVuePresentateur.IPresentateurDiscover {
 
     private var vue: ContratVuePresentateur.IVueDiscover? = null
+    private var scope: CoroutineScope? = null
 
     // Filtres choisis par l'utilisateur
     private var categorieChoisie: CategorieQuiz? = null   // null = « Tous »
@@ -16,11 +23,13 @@ class PresentateurDiscover(
 
     override fun attacherVue(vue: ContratVuePresentateur.IVueDiscover) {
         this.vue = vue
-        vue.afficherCategorieChoisie(categorieChoisie)
-        afficherQuiz()
+        scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+        charger()
     }
 
     override fun detacherVue() {
+        scope?.cancel()
+        scope = null
         vue = null
     }
 
@@ -64,6 +73,21 @@ class PresentateurDiscover(
                     it.id, it.categorie, it.titre, it.description,
                     it.nbQuestions, it.dureeMinutes, it.estFavori
                 )
+            }
+        }
+    }
+
+    // Cherche les quiz et les envoie à l'écran
+    private fun charger() {
+        scope?.launch {
+            vue?.afficherChargement(true)
+            try {
+                modeleQuiz.chargerQuizDiscover()
+                afficherQuiz()
+            } catch (e: ServiceException) {
+                vue?.afficherErreur(e.message ?: "Erreur inconnue")
+            } finally {
+                vue?.afficherChargement(false)
             }
         }
     }
