@@ -62,7 +62,7 @@ class LibrairieFragment : Fragment(), ContratLibrairie.IVueLibrary {
         textesBadges = listOf(R.id.txtBadge1, R.id.txtBadge2, R.id.txtBadge3)
             .map { view.findViewById<TextView>(it) }
 
-        presentateur = PresentateurLibrairie()
+        presentateur = FabriqueLibrairie.creerPresentateur(requireContext().filesDir)
 
         cartes.forEachIndexed { index, carte ->
             carte.setOnClickListener { presentateur.surQuizClique(quizIds[index], titres[index].text.toString()) }
