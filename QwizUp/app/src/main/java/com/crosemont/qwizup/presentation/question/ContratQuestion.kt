@@ -3,6 +3,7 @@ package com.crosemont.qwizup.presentation.question
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.Presentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.Vue
+import com.crosemont.qwizup.presentation.ModeleQuiz
 
 // Contrat de l'écran de jeu : affichage des questions, rétroaction et résultat final
 interface ContratQuestion {
@@ -43,6 +44,9 @@ interface ContratQuestion {
         // Demande à l'utilisateur s'il veut vraiment quitter une partie en cours
         fun demanderConfirmationQuitter()
 
+        // Le modèle n'a pas pu charger le quiz ou sauvegarder le résultat
+        fun afficherErreur()
+
         // Retourne à l'écran précédent
         fun fermer()
     }
@@ -54,5 +58,12 @@ interface ContratQuestion {
         fun surRejouerClique()
         fun surQuitterClique()
         fun surQuitterConfirme()
+    }
+
+    // Les fonctions sont « suspend » : elles peuvent lire ou écrire un fichier,
+    // donc le présentateur les appelle sur un fil d'arrière-plan.
+    interface IModeleQuestion {
+        suspend fun obtenirQuizAJouer(quizId: Int): ModeleQuiz.QuizCreer?
+        suspend fun enregistrerPartie(quizId: Int, score: Int, total: Int)
     }
 }

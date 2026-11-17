@@ -1,8 +1,10 @@
 package com.crosemont.qwizup.presentation.question
 
 import android.content.res.ColorStateList
+import com.crosemont.qwizup.presentation.ModeleQuiz
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
@@ -25,8 +27,8 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
  */
 class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
 
-    // Le présentateur qui gère la partie
-    private val presentateur: IPresentateurQuestion = PresentateurQuestion()
+    // Le présentateur qui gère la partie (créé dans onViewCreated, quand le contexte existe)
+    private lateinit var presentateur: IPresentateurQuestion
 
     // Les éléments du layout
     private lateinit var groupeJeu: View
@@ -49,6 +51,7 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
     private val lettres = listOf("A", "B", "C", "D")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presentateur = FabriqueQuestion.creerPresentateur(requireContext().filesDir)
         super.onViewCreated(view, savedInstanceState)
 
         // Récupère les éléments du layout
@@ -229,6 +232,10 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
             .setNegativeButton(R.string.action_annuler, null)
             .setPositiveButton(R.string.action_quitter) { _, _ -> presentateur.surQuitterConfirme() }
             .show()
+    }
+
+    override fun afficherErreur() {
+        Toast.makeText(requireContext(), R.string.question_erreur, Toast.LENGTH_SHORT).show()
     }
 
     override fun fermer() {

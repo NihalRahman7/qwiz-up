@@ -10,13 +10,16 @@
     <string name="home_greeting">Bonjour</string>
     <string name="home_join_code">Code</string>
     <string name="home_streak">Série</string>
-    <string name="home_completed">Quiz complétés </string>
+    <string name="home_completed">Quiz complétés</string>
     <string name="home_correct">Réussite</string>
     <string name="home_continue">Continuer</string>
     <string name="home_suggestions">Suggestions</string>
 
     <string name="home_see_all">Tout voir</string>
     <string name="home_resume_quiz">Continuer le quiz</string>
+    <string name="home_streak_value">%1$d j</string>
+    <string name="home_correct_value">%1$d %%</string>
+    <string name="home_error">Impossible de charger tes statistiques.</string>
 
     <!-- Exemples temporaires, remplacés plus tard par les données du Modèle -->
     <string name="sample_quiz_1_title">Le système solaire</string>
@@ -25,6 +28,7 @@
     <string name="sample_quiz_2_meta">3 / 5 questions · Informatique</string>
     <string name="sample_suggestion_title">Capitales d\'Europe</string>
     <string name="sample_suggestion_meta">12 questions · 6 min · Géographie</string>
+    <string name="question_erreur">Impossible de charger ou de sauvegarder la partie.</string>
 
     <!--  Les String de la Navigation de la page Découvrir   -->
     <string name="discover_search_hint">Rechercher un quiz</string>
@@ -42,6 +46,7 @@
     <string name="category_geography">Géographie</string>
     <string name="category_informatique">Informatique</string>
     <string name="category_autre">Autre</string>
+
     <!--  Les String de la Navigation de la page Créer   -->
     <string name="creer_nouveau_quiz">Nouveau quiz</string>
     <string name="creer_continuer">Continuer</string>
