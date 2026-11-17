@@ -67,6 +67,7 @@ class PrésentateurÉditeur(
         vue?.afficherInfosQuiz(quiz.titre, quiz.description)
         vue?.afficherCategorieChoisie(quiz.categorie)
         vue?.afficherCouverture(quiz.categorie)
+        vue?.afficherCategoriePerso(visible = quiz.categorie == CategorieQuiz.AUTRE, nom = quiz.categoriePerso)
         vue?.afficherDifficulteChoisie(quiz.difficulte)
         vue?.afficherAccesChoisi(quiz.acces)
         vue?.afficherPublication(quiz.estPublie)
@@ -89,6 +90,14 @@ class PrésentateurÉditeur(
         quiz = quiz.copy(categorie = categorie)
         vue?.afficherCategorieChoisie(categorie)
         vue?.afficherCouverture(categorie)
+        vue?.afficherCategoriePerso(visible = categorie == CategorieQuiz.AUTRE, nom = quiz.categoriePerso)
+        mettreAJourBouton()
+    }
+
+    override fun surCategoriePersoModifiee(nom: String) {
+        quiz = quiz.copy(categoriePerso = nom)
+        if (nom.isNotBlank()) vue?.effacerErreurs()
+        mettreAJourBouton()
     }
 
     override fun surDifficulteCliquee(difficulte: Difficulte) {
@@ -200,6 +209,7 @@ class PrésentateurÉditeur(
     private fun ceQuiManque(): Manque? {
         if (quiz.titre.isBlank()) return Manque(ErreurEditeur.TITRE_VIDE)
         if (!quiz.estPublie) return null
+        if (quiz.categorie == CategorieQuiz.AUTRE && quiz.categoriePerso.isBlank()) return Manque(ErreurEditeur.CATEGORIE_VIDE)
         if (quiz.questions.isEmpty()) return Manque(ErreurEditeur.AUCUNE_QUESTION)
         val incomplete = quiz.questions.indexOfFirst { !it.estComplete() }
         if (incomplete != -1) return Manque(ErreurEditeur.QUESTION_INCOMPLETE, incomplete + 1)

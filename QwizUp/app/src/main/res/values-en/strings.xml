@@ -153,4 +153,7 @@
     <string name="creer_liste_vide_brouillons">No drafts yet</string>
     <string name="creer_liste_vide_publies">No published quizzes yet</string>
     <string name="creer_erreur_chargement">Couldn\'t load your quizzes. Try again later.</string>
+    <string name="editeur_erreur_categorie">Specify your quiz\'s category</string>
+    <string name="editeur_label_categorie_perso">Specify the category</string>
+    <string name="editeur_categorie_perso_placeholder">E.g. Sports, Music, Cooking</string>
 </resources>

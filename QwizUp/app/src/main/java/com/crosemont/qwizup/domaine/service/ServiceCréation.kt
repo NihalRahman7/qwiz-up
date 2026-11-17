@@ -1,5 +1,6 @@
 package com.crosemont.qwizup.domaine.service
 
+import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
 import com.crosemont.qwizup.presentation.ModeleQuiz.QuizCreer
 import com.crosemont.qwizup.sourceDeDonnees.SourceQuizCréés
 import kotlinx.coroutines.CancellationException
@@ -30,7 +31,9 @@ class ServiceCréation(private val source: SourceQuizCréés) {
 
         val àEnregistrer = quiz.copy(
             id = if (estNouveau) (tous.maxOfOrNull { it.id } ?: 0) + 1 else quiz.id,
-            titre = quiz.titre.trim()
+            titre = quiz.titre.trim(),
+            // Le nom de catégorie sert seulement avec « Autre »
+            categoriePerso = if (quiz.categorie == CategorieQuiz.AUTRE) quiz.categoriePerso.trim() else ""
         )
         val nouvelleListe =
             if (estNouveau) tous + àEnregistrer
@@ -40,10 +43,15 @@ class ServiceCréation(private val source: SourceQuizCréés) {
         return àEnregistrer
     }
 
-    /** Un brouillon a juste besoin d'un titre ; un quiz publié doit avoir des questions complètes. */
+    /**
+     * Un brouillon a juste besoin d'un titre. Un quiz publié doit avoir des questions complètes,
+     * et préciser sa catégorie s'il est dans « Autre ».
+     */
     private fun vérifier(quiz: QuizCreer) {
         if (quiz.titre.isBlank()) throw ServiceException("Le titre du quiz est vide")
         if (!quiz.estPublie) return
+        if (quiz.categorie == CategorieQuiz.AUTRE && quiz.categoriePerso.isBlank())
+            throw ServiceException("Un quiz publié dans la catégorie Autre doit préciser sa catégorie")
         if (quiz.questions.isEmpty()) throw ServiceException("Un quiz publié doit avoir au moins une question")
         val incomplète = quiz.questions.indexOfFirst { !it.estComplete() }
         if (incomplète != -1) throw ServiceException("La question ${incomplète + 1} n'est pas complète")

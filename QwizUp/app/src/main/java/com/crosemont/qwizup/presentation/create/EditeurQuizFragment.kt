@@ -53,6 +53,8 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdite
     private lateinit var champTitre: TextInputLayout
     private lateinit var saisieTitre: TextInputEditText
     private lateinit var saisieDescription: TextInputEditText
+    private lateinit var champCategoriePerso: TextInputLayout
+    private lateinit var saisieCategoriePerso: TextInputEditText
     private lateinit var groupeCategories: ChipGroup
     private lateinit var groupeDifficulte: MaterialButtonToggleGroup
     private lateinit var groupeAcces: MaterialButtonToggleGroup
@@ -125,6 +127,8 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdite
         saisieTitre = view.findViewById(R.id.saisie_titre)
         saisieDescription = view.findViewById(R.id.saisie_description)
         groupeCategories = view.findViewById(R.id.groupe_categories)
+        champCategoriePerso = view.findViewById(R.id.champ_categorie_perso)
+        saisieCategoriePerso = view.findViewById(R.id.saisie_categorie_perso)
         groupeDifficulte = view.findViewById(R.id.groupe_difficulte)
         groupeAcces = view.findViewById(R.id.groupe_acces)
         texteAideAcces = view.findViewById(R.id.text_aide_acces)
@@ -144,6 +148,7 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdite
         chipsCategories.forEach { (categorie, id) ->
             view.findViewById<Chip>(id).setOnClickListener { presentateur.surCategorieCliquee(categorie) }
         }
+        saisieCategoriePerso.doAfterTextChanged { presentateur.surCategoriePersoModifiee(it?.toString().orEmpty()) }
         boutonsDifficulte.forEach { (difficulte, id) ->
             view.findViewById<MaterialButton>(id).setOnClickListener { presentateur.surDifficulteCliquee(difficulte) }
         }
@@ -198,6 +203,12 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdite
 
     override fun afficherCategorieChoisie(categorie: CategorieQuiz) {
         groupeCategories.check(chipsCategories.getValue(categorie))
+    }
+
+    override fun afficherCategoriePerso(visible: Boolean, nom: String) {
+        champCategoriePerso.isVisible = visible
+        // On remplit seulement si le texte est différent, pour ne pas déplacer le curseur pendant qu'on écrit
+        if (saisieCategoriePerso.text?.toString() != nom) saisieCategoriePerso.setText(nom)
     }
 
     override fun afficherCouverture(categorie: CategorieQuiz) {
@@ -335,6 +346,10 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdite
                 champTitre.error = getString(R.string.editeur_erreur_titre)
                 saisieTitre.requestFocus()
             }
+            ErreurEditeur.CATEGORIE_VIDE -> {
+                champCategoriePerso.error = getString(R.string.editeur_erreur_categorie)
+                saisieCategoriePerso.requestFocus()
+            }
             ErreurEditeur.AUCUNE_QUESTION ->
                 Toast.makeText(requireContext(), R.string.editeur_erreur_questions, Toast.LENGTH_SHORT).show()
             ErreurEditeur.QUESTION_INCOMPLETE -> Unit   // géré par afficherErreurQuestion
@@ -348,6 +363,7 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdite
 
     override fun effacerErreurs() {
         champTitre.error = null
+        champCategoriePerso.error = null
     }
 
     override fun ouvrirAppareilPhoto() {
@@ -421,6 +437,7 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdite
         texteRaisonBouton.isVisible = raison != null
         texteRaisonBouton.text = when (raison) {
             ErreurEditeur.TITRE_VIDE -> getString(R.string.editeur_erreur_titre)
+            ErreurEditeur.CATEGORIE_VIDE -> getString(R.string.editeur_erreur_categorie)
             ErreurEditeur.AUCUNE_QUESTION -> getString(R.string.editeur_erreur_questions)
             ErreurEditeur.QUESTION_INCOMPLETE -> getString(R.string.editeur_erreur_question, numeroQuestion)
             null -> ""

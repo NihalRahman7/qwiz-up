@@ -13,7 +13,7 @@ import com.crosemont.qwizup.presentation.ModeleQuiz.QuizCreer
 interface ContratCréer {
 
     enum class OngletCreer { BROUILLONS, PUBLIES }
-    enum class ErreurEditeur { TITRE_VIDE, AUCUNE_QUESTION, QUESTION_INCOMPLETE }
+    enum class ErreurEditeur { TITRE_VIDE, CATEGORIE_VIDE, AUCUNE_QUESTION, QUESTION_INCOMPLETE }
 
     // ----- Écran Créer : les brouillons et les quiz publiés -----
 
@@ -40,6 +40,7 @@ interface ContratCréer {
         fun afficherInfosQuiz(titre: String, description: String)
         fun afficherCategorieChoisie(categorie: CategorieQuiz)
         fun afficherCouverture(categorie: CategorieQuiz)   // image automatique selon la catégorie
+        fun afficherCategoriePerso(visible: Boolean, nom: String)   // champ « Précise la catégorie » (Autre)
         fun afficherDifficulteChoisie(difficulte: Difficulte)
         fun afficherAccesChoisi(acces: AccesQuiz)
         fun viderQuestions()
@@ -78,6 +79,7 @@ interface ContratCréer {
         fun surTitreModifie(titre: String)
         fun surDescriptionModifiee(description: String)
         fun surCategorieCliquee(categorie: CategorieQuiz)
+        fun surCategoriePersoModifiee(nom: String)
         fun surDifficulteCliquee(difficulte: Difficulte)
         fun surAccesClique(acces: AccesQuiz)
         fun surPrendrePhotoClique()
