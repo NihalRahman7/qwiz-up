@@ -4,20 +4,22 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IPresentateurCreate
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueCreate
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.OngletCreer
+import com.crosemont.qwizup.presentation.create.ContratCréer.IPrésentateurCréer
+import com.crosemont.qwizup.presentation.create.ContratCréer.IVueCréer
+import com.crosemont.qwizup.presentation.create.ContratCréer.OngletCreer
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 
-class CreateFragment : Fragment(R.layout.fragment_create), IVueCreate {
+class CreateFragment : Fragment(R.layout.fragment_create), IVueCréer {
 
-    private val presentateur: IPresentateurCreate = PresentateurCreate()
+    // La Fabrique assemble source → service → modèle → présentateur
+    private val presentateur: IPrésentateurCréer = FabriqueCréer.créerPrésentateurCréer()
 
     private lateinit var groupeOnglets: MaterialButtonToggleGroup
     private lateinit var ongletBrouillons: MaterialButton
@@ -45,7 +47,7 @@ class CreateFragment : Fragment(R.layout.fragment_create), IVueCreate {
         super.onDestroyView()
     }
 
-    // ----- IVueCreate -----
+    // ----- IVueCréer -----
 
     override fun afficherCompteurs(nbBrouillons: Int, nbPublies: Int) {
         ongletBrouillons.text = getString(R.string.creer_onglet_brouillons, nbBrouillons)
@@ -77,9 +79,12 @@ class CreateFragment : Fragment(R.layout.fragment_create), IVueCreate {
         listeQuiz.addView(carte)
     }
 
-    override fun afficherMessageVide(message: String) {
+    override fun afficherListeVide(onglet: OngletCreer) {
         val texte = TextView(requireContext()).apply {
-            text = message
+            setText(
+                if (onglet == OngletCreer.BROUILLONS) R.string.creer_liste_vide_brouillons
+                else R.string.creer_liste_vide_publies
+            )
             setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary))
             setPadding(0, 32, 0, 8)
         }
@@ -90,5 +95,9 @@ class CreateFragment : Fragment(R.layout.fragment_create), IVueCreate {
         // -1 = nouveau quiz (un argument de navigation ne peut pas être null)
         val args = bundleOf("quizId" to (quizId ?: -1))
         findNavController().navigate(R.id.action_creer_vers_editeur, args)
+    }
+
+    override fun afficherErreurChargement() {
+        Toast.makeText(requireContext(), R.string.creer_erreur_chargement, Toast.LENGTH_LONG).show()
     }
 }

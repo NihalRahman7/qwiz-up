@@ -107,6 +107,11 @@
     <string name="editeur_case_publier">Publier le quiz</string>
     <string name="editeur_enregistrer">Enregistrer</string>
     <string name="editeur_enregistrer_brouillon">Enregistrer le brouillon</string>
+    <string name="editeur_erreur_chargement">Impossible d\'ouvrir ce quiz.</string>
+    <string name="editeur_erreur_sauvegarde">Impossible d\'enregistrer le quiz. Réessaie.</string>
+    <string name="creer_liste_vide_brouillons">Aucun brouillon pour l\'instant</string>
+    <string name="creer_liste_vide_publies">Aucun quiz publié pour l\'instant</string>
+    <string name="creer_erreur_chargement">Impossible de charger tes quiz. Réessaie plus tard.</string>
     <string name="action_quitter">Quitter</string>
     <string name="action_annuler">Annuler</string>
     <!--  Les String de la Navigation de la page Librairie   -->

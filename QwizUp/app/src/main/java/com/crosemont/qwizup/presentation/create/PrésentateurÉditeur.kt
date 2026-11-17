@@ -1,19 +1,34 @@
 package com.crosemont.qwizup.presentation.create
 
-import com.crosemont.qwizup.presentation.ModeleQuiz
-import com.crosemont.qwizup.presentation.ModeleQuiz.QuestionCreer
-import com.crosemont.qwizup.presentation.ContratVuePresentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.AccesQuiz
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.Difficulte
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.ErreurEditeur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
+import com.crosemont.qwizup.presentation.ModeleQuiz.QuestionCreer
+import com.crosemont.qwizup.presentation.ModeleQuiz.QuizCreer
+import com.crosemont.qwizup.presentation.create.ContratCréer.ErreurEditeur
+import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class PresentateurEditeur(
-    var modeleQuiz: ModeleQuiz = ModeleQuiz(),
-) : ContratVuePresentateur.IPresentateurEditeur {
+class PrésentateurÉditeur(
+    private val modèle: ContratCréer.IModèleCréer,
+    private val filPrincipal: CoroutineContext = Dispatchers.Main,   // pour mettre la vue à jour
+    private val filArrièrePlan: CoroutineContext = Dispatchers.IO,   // pour appeler le modèle
+) : ContratCréer.IPrésentateurÉditeur {
 
-    private var vue: ContratVuePresentateur.IVueEditeur? = null
+    private var vue: ContratCréer.IVueÉditeur? = null
+
+    // Les coroutines du présentateur vivent tant que la vue est attachée
+    private var coroutines: CoroutineScope? = null
+
+    // Vrai pendant l'enregistrement : évite d'enregistrer deux fois si on touche le bouton deux fois
+    private var enregistrementEnCours = false
 
     // Le quiz en cours de modification (pas encore sauvegardé dans le modèle)
     private var quiz = nouveauQuiz()
@@ -21,16 +36,31 @@ class PresentateurEditeur(
     // Le quiz tel qu'il était à l'ouverture : sert à savoir s'il y a des changements non sauvegardés
     private var quizInitial = nouveauQuiz()
 
-    override fun attacherVue(vue: ContratVuePresentateur.IVueEditeur) {
+    override fun attacherVue(vue: ContratCréer.IVueÉditeur) {
         this.vue = vue
+        coroutines = CoroutineScope(filPrincipal + Job())
     }
 
     override fun detacherVue() {
+        coroutines?.cancel()   // arrête le travail en cours : la vue n'existe plus
+        coroutines = null
         vue = null
     }
 
     override fun chargerQuiz(quizId: Int?) {
-        quiz = quizId?.let { modeleQuiz.obtenirQuizCreer(it) } ?: nouveauQuiz()
+        if (quizId == null) {
+            afficherQuiz(nouveauQuiz())
+            return
+        }
+        // Quiz existant : on le demande au modèle en arrière-plan
+        lancer(siErreur = { vue?.afficherErreurChargement() }) {
+            val quizCharge = withContext(filArrièrePlan) { modèle.obtenirQuiz(quizId) }
+            afficherQuiz(quizCharge)
+        }
+    }
+
+    private fun afficherQuiz(quizAAfficher: QuizCreer) {
+        quiz = quizAAfficher
         quizInitial = quiz
 
         vue?.afficherEnTete(nouveauQuiz = quiz.id == 0)
@@ -145,11 +175,22 @@ class PresentateurEditeur(
             else vue?.afficherErreur(manque.erreur)
             return
         }
+        if (enregistrementEnCours) return
+        enregistrementEnCours = true
+
         val aSauvegarder = quiz.copy(titre = quiz.titre.trim())
-        quiz = aSauvegarder.copy(id = modeleQuiz.sauvegarderQuizCreer(aSauvegarder))
-        quizInitial = quiz
-        if (quiz.estPublie) vue?.confirmerPublication(quiz.titre)
-        else vue?.confirmerSauvegarde()
+        lancer(siErreur = { vue?.afficherErreurSauvegarde() }) {
+            try {
+                // Le service vérifie et enregistre le quiz en arrière-plan, puis retourne son id
+                val id = withContext(filArrièrePlan) { modèle.sauvegarderQuiz(aSauvegarder) }
+                quiz = aSauvegarder.copy(id = id)
+                quizInitial = quiz
+                if (quiz.estPublie) vue?.confirmerPublication(quiz.titre)
+                else vue?.confirmerSauvegarde()
+            } finally {
+                enregistrementEnCours = false
+            }
+        }
     }
 
     /** Ce qui empêche d'enregistrer le quiz (numéro de question à partir de 1). */
@@ -160,7 +201,7 @@ class PresentateurEditeur(
         if (quiz.titre.isBlank()) return Manque(ErreurEditeur.TITRE_VIDE)
         if (!quiz.estPublie) return null
         if (quiz.questions.isEmpty()) return Manque(ErreurEditeur.AUCUNE_QUESTION)
-        val incomplete = quiz.questions.indexOfFirst { !estComplete(it) }
+        val incomplete = quiz.questions.indexOfFirst { !it.estComplete() }
         if (incomplete != -1) return Manque(ErreurEditeur.QUESTION_INCOMPLETE, incomplete + 1)
         return null
     }
@@ -191,15 +232,6 @@ class PresentateurEditeur(
         vue?.fermer()
     }
 
-    /** Une question est complète quand elle a un texte et une bonne réponse remplie. */
-    private fun estComplete(question: QuestionCreer): Boolean = question.texte.isNotBlank() && when (question.type) {
-        // Au moins une bonne réponse cochée, et chaque réponse cochée doit être remplie
-        TypeQuestion.CHOIX_MULTIPLE -> question.bonnesReponses.isNotEmpty() &&
-            question.bonnesReponses.all { question.reponses.getOrElse(it) { "" }.isNotBlank() }
-        TypeQuestion.VRAI_FAUX -> true
-        TypeQuestion.REPONSE_ECRITE -> question.reponseAttendue.isNotBlank()
-    }
-
     private fun modifierQuestion(index: Int, changement: (QuestionCreer) -> QuestionCreer) {
         if (index !in quiz.questions.indices) return
         quiz = quiz.copy(questions = quiz.questions.mapIndexed { i, q -> if (i == index) changement(q) else q })
@@ -217,7 +249,7 @@ class PresentateurEditeur(
 
     private fun questionVide() = QuestionCreer(texte = "", type = TypeQuestion.CHOIX_MULTIPLE)
 
-    private fun nouveauQuiz() = ModeleQuiz.QuizCreer(
+    private fun nouveauQuiz() = QuizCreer(
         id = 0,
         titre = "",
         description = "",
@@ -227,4 +259,16 @@ class PresentateurEditeur(
         questions = listOf(questionVide()),
         estPublie = false
     )
+
+    // Lance une coroutine sur le fil principal. Si le modèle échoue, on appelle siErreur.
+    private fun lancer(siErreur: () -> Unit, travail: suspend () -> Unit): Job? =
+        coroutines?.launch {
+            try {
+                travail()
+            } catch (e: CancellationException) {
+                throw e   // la coroutine a été annulée : ce n'est pas une erreur
+            } catch (e: Exception) {
+                siErreur()
+            }
+        }
 }

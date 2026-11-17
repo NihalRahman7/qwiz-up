@@ -28,9 +28,9 @@ import com.crosemont.qwizup.R
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.AccesQuiz
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.Difficulte
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.ErreurEditeur
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IPresentateurEditeur
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueEditeur
+import com.crosemont.qwizup.presentation.create.ContratCréer.ErreurEditeur
+import com.crosemont.qwizup.presentation.create.ContratCréer.IPrésentateurÉditeur
+import com.crosemont.qwizup.presentation.create.ContratCréer.IVueÉditeur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
@@ -41,9 +41,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeur {
+class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉditeur {
 
-    private val presentateur: IPresentateurEditeur = PresentateurEditeur()
+    // La Fabrique assemble source → service → modèle → présentateur
+    private val presentateur: IPrésentateurÉditeur = FabriqueCréer.créerPrésentateurÉditeur()
 
     private lateinit var texteTitreEcran: TextView
     private lateinit var texteNombreQuestions: TextView
@@ -184,7 +185,7 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
 
     private fun couleur(id: Int) = ContextCompat.getColor(requireContext(), id)
 
-    // ----- IVueEditeur : infos du quiz -----
+    // ----- IVueÉditeur : infos du quiz -----
 
     override fun afficherEnTete(nouveauQuiz: Boolean) {
         texteTitreEcran.setText(if (nouveauQuiz) R.string.editeur_titre_nouveau else R.string.editeur_titre_modifier)
@@ -225,7 +226,7 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
         )
     }
 
-    // ----- IVueEditeur : questions -----
+    // ----- IVueÉditeur : questions -----
 
     override fun viderQuestions() {
         listeQuestions.removeAllViews()
@@ -326,7 +327,7 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
         texteNombreQuestions.text = resources.getQuantityString(R.plurals.editeur_nombre_questions, nombre, nombre)
     }
 
-    // ----- IVueEditeur : erreurs et actions -----
+    // ----- IVueÉditeur : erreurs et actions -----
 
     override fun afficherErreur(erreur: ErreurEditeur) {
         when (erreur) {
@@ -424,5 +425,14 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
             ErreurEditeur.QUESTION_INCOMPLETE -> getString(R.string.editeur_erreur_question, numeroQuestion)
             null -> ""
         }
+    }
+
+    override fun afficherErreurChargement() {
+        Toast.makeText(requireContext(), R.string.editeur_erreur_chargement, Toast.LENGTH_LONG).show()
+        findNavController().popBackStack()
+    }
+
+    override fun afficherErreurSauvegarde() {
+        Toast.makeText(requireContext(), R.string.editeur_erreur_sauvegarde, Toast.LENGTH_LONG).show()
     }
 }
