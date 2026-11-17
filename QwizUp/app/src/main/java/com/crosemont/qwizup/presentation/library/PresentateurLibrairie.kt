@@ -13,7 +13,7 @@ class PresentateurLibrairie(
             val (cartes, messageVide) = when (onglet) {
                 OngletLibrairie.FAVORIS -> modeleQuiz.obternirFavoris() to "Aucun favori pour l’instant"
                 OngletLibrairie.COMPLETES -> modeleQuiz.obternirCompletes() to "Aucun quiz complété"
-                OngletLibrairie.CREES -> modeleQuiz.obternirCrees() to "Vous n'avez crées aucun quiz"
+                OngletLibrairie.CREES -> modeleQuiz.obternirCrees() to "Vous n'avez créé aucun quiz"
             }
 
             vue?.viderCartes()
