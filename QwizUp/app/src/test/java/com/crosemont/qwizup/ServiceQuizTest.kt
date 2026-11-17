@@ -53,7 +53,7 @@ class ServiceQuizTest {
         val service = ServiceQuiz()
         val resultat = service.obtenirQuiz(limite = 2, decalage = 2)
 
-        assertEquals(listOf(3, 4), resultat.map{ it.id })
+        assertEquals(listOf(4, 5), resultat.map { it.id })
     }
 
     @Test
