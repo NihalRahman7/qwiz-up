@@ -1,7 +1,14 @@
 package com.crosemont.qwizup.presentation
+
+import com.crosemont.qwizup.domaine.entites.Quiz
+import com.crosemont.qwizup.domaine.service.ServiceQuiz
 import java.text.Normalizer
 
-class ModeleQuiz {
+class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
+
+    // Méthode pour obtenir les quiz de la source de données "bidon" à partir de la couche service
+    suspend fun obtenirQuiz(limite: Int = 10, decalage: Int = 0): List<Quiz> = service.obtenirQuiz(limite)
+
     // Home
     // TODO: Faire le modèle avec des données codées en dur pour le fragment Home
 
