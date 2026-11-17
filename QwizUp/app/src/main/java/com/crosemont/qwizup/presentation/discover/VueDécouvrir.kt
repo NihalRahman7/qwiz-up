@@ -15,6 +15,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
+import com.crosemont.qwizup.presentation.ContratVuePresentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
@@ -166,6 +167,11 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
     override fun afficherErreur() {
         Toast.makeText(requireContext(), R.string.discover_error, Toast.LENGTH_SHORT).show()
     }
+    override fun afficherChargement(visible: Boolean) {
+        view?.findViewById<View>(R.id.progression)?.visibility =
+            if (visible) View.VISIBLE else View.GONE
+    }
+
     @StringRes
     private fun nomCatégorie(catégorie: CategorieQuiz): Int = when (catégorie) {
         CategorieQuiz.SCIENCES -> R.string.category_sciences
