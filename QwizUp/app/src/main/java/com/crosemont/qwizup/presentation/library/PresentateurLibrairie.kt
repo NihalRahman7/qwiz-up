@@ -1,41 +1,70 @@
 package com.crosemont.qwizup.presentation.library
 
-import com.crosemont.qwizup.presentation.ModeleQuiz
 import com.crosemont.qwizup.presentation.library.ContratLibrairie.OngletLibrairie
+import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PresentateurLibrairie(
-        var modeleQuiz: ModeleQuiz = ModeleQuiz(),
-    ): ContratLibrairie.IPresentateurLibrary {
+    private val modele: ContratLibrairie.IModeleLibrairie,
+    private val filPrincipal: CoroutineContext = Dispatchers.Main,
+    private val filArrierePlan: CoroutineContext = Dispatchers.IO,
+): ContratLibrairie.IPresentateurLibrary {
 
-        private var vue: ContratLibrairie.IVueLibrary? = null
+    private var vue: ContratLibrairie.IVueLibrary? = null
 
-        override fun surOngletClique(onglet: OngletLibrairie) {
-            val (cartes, messageVide) = when (onglet) {
-                OngletLibrairie.FAVORIS -> modeleQuiz.obternirFavoris() to "Aucun favori pour l’instant"
-                OngletLibrairie.COMPLETES -> modeleQuiz.obternirCompletes() to "Aucun quiz complété"
-                OngletLibrairie.CREES -> modeleQuiz.obternirCrees() to "Vous n'avez crées aucun quiz"
-            }
 
-            vue?.viderCartes()
-            if (cartes.isEmpty()){
-                vue?.afficherMessageVide(messageVide)
-            } else {
-                cartes.forEach {
-                    vue?.ajouterCarteQuiz(it.id, it.titre, it.sousTitre, it.badge, it.typeBadge)
+    private var coroutines: CoroutineScope? = null
+    private var chargement: Job? = null
+
+    override fun surOngletClique(onglet: OngletLibrairie) {
+        val messageVide = when (onglet) {
+            OngletLibrairie.FAVORIS -> "Aucun favori pour l’instant"
+            OngletLibrairie.COMPLETES -> "Aucun quiz complété"
+            OngletLibrairie.CREES -> "Vous n'avez crées aucun quiz"
+        }
+
+        chargement?.cancel()   // un nouvel onglet remplace la demande en cours
+        chargement = coroutines?.launch {
+            try {
+
+                val cartes = withContext(filArrierePlan) { modele.obtenirQuiz(onglet) }
+
+                vue?.viderCartes()
+                if (cartes.isEmpty()){
+                    vue?.afficherMessageVide(messageVide)
+                } else {
+                    cartes.forEach {
+                        vue?.ajouterCarteQuiz(it.id, it.titre, it.sousTitre, it.badge, it.typeBadge)
+                    }
                 }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                vue?.viderCartes()
+                vue?.afficherMessageVide("Impossible de charger les quiz")
             }
         }
+    }
 
-        override fun surQuizClique(quizId: Int, titre: String) {
-            vue?.ouvrirDetails(quizId, titre)
-        }
+    override fun surQuizClique(quizId: Int, titre: String) {
+        vue?.ouvrirDetails(quizId, titre)
+    }
 
-        override fun attacherVue(vue: ContratLibrairie.IVueLibrary) {
-            this.vue = vue
-            surOngletClique(OngletLibrairie.FAVORIS)
-        }
+    override fun attacherVue(vue: ContratLibrairie.IVueLibrary) {
+        this.vue = vue
+        coroutines = CoroutineScope(filPrincipal + Job())
+        surOngletClique(OngletLibrairie.FAVORIS)
+    }
 
-        override fun detacherVue() {
-            vue = null
-        }
+    override fun detacherVue() {
+        coroutines?.cancel()   // arrête le travail en cours : la vue n'existe plus
+        coroutines = null
+        vue = null
+    }
 }

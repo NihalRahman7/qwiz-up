@@ -2,6 +2,7 @@ package com.crosemont.qwizup.presentation.library
 
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.Presentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.Vue
+import com.crosemont.qwizup.presentation.ModeleQuiz
 
 interface ContratLibrairie {
     enum class OngletLibrairie { FAVORIS, COMPLETES, CREES }
@@ -24,5 +25,9 @@ interface ContratLibrairie {
     interface IPresentateurLibrary: Presentateur<IVueLibrary>{
         fun surOngletClique(onglet: OngletLibrairie)
         fun surQuizClique(quizId: Int, titre: String)
+    }
+
+    interface IModeleLibrairie {
+        suspend fun obtenirQuiz(onglet: OngletLibrairie): List<ModeleQuiz.CarteLibrary>
     }
 }
