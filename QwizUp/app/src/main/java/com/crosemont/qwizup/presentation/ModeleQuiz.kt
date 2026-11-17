@@ -26,6 +26,7 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
     /**
      * Liste remplie par le service. Elle commence vide
      */
+    @Volatile
     private var quizDiscover: List<CarteDiscover> = emptyList()
 
     /**

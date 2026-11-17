@@ -79,19 +79,24 @@ class PrésentateurDécouvrir(
     private fun afficherQuiz() {
         chargement?.cancel()   // une nouvelle demande remplace celle qui est en cours
         chargement = lancer {
-            val quiz = withContext(filArrièrePlan) { modèle.obtenirQuiz(catégorieChoisie, recherche) }
-            quizAffichés = quiz
+            vue?.afficherChargement(true)
+            try {
+                val quiz = withContext(filArrièrePlan) { modèle.obtenirQuiz(catégorieChoisie, recherche) }
+                quizAffichés = quiz
 
-            vue?.viderQuiz()
-            if (quiz.isEmpty()) {
-                vue?.afficherAucunRésultat()
-            } else {
-                quiz.forEach {
-                    vue?.ajouterQuiz(
-                        it.id, it.categorie, it.titre, it.description,
-                        it.nbQuestions, it.dureeMinutes, it.estFavori
-                    )
+                vue?.viderQuiz()
+                if (quiz.isEmpty()) {
+                    vue?.afficherAucunRésultat()
+                } else {
+                    quiz.forEach {
+                        vue?.ajouterQuiz(
+                            it.id, it.categorie, it.titre, it.description,
+                            it.nbQuestions, it.dureeMinutes, it.estFavori
+                        )
+                    }
                 }
+            } finally {
+                vue?.afficherChargement(false)
             }
         }
     }
