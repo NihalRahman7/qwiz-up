@@ -1,6 +1,7 @@
 package com.crosemont.qwizup.presentation
 
 import com.crosemont.qwizup.domaine.service.ServiceQuiz
+import com.crosemont.qwizup.presentation.library.ContratLibrairie
 import java.text.Normalizer
 
 class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
@@ -103,7 +104,7 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         val texte: String,
         val type: ContratVuePresentateur.TypeQuestion,
         val reponses: List<String> = listOf("", "", "", ""),   // choix multiple : A, B, C, D
-        val bonneReponse: Int = 0,          // choix multiple : 0 à 3 ; vrai ou faux : 0 = vrai, 1 = faux
+        val bonnesReponses: Set<Int> = setOf(0),   // choix multiple : une ou plusieurs de 0 à 3 ; vrai ou faux : {0} = vrai, {1} = faux
         val reponseAttendue: String = ""    // réponse écrite
     )
 
@@ -119,10 +120,10 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
     )
 
     companion object {
-        private fun choix(texte: String, reponses: List<String>, bonne: Int) =
-            QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.CHOIX_MULTIPLE, reponses, bonne)
+        private fun choix(texte: String, reponses: List<String>, vararg bonnes: Int) =
+            QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.CHOIX_MULTIPLE, reponses, bonnes.toSet())
         private fun vraiFaux(texte: String, vrai: Boolean) =
-            QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.VRAI_FAUX, bonneReponse = if (vrai) 0 else 1)
+            QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.VRAI_FAUX, bonnesReponses = setOf(if (vrai) 0 else 1))
         private fun ecrite(texte: String, attendue: String) =
             QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.REPONSE_ECRITE, reponseAttendue = attendue)
 
@@ -153,6 +154,7 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
                     vraiFaux("Kotlin peut utiliser les bibliothèques Java.", vrai = true),
                     choix("Quel type représente du texte?", listOf("Int", "Char", "String", "Text"), 2),
                     choix("Quel mot-clé déclare une fonction?", listOf("function", "def", "fun", "fn"), 2),
+                    choix("Lesquels sont des types de base en Kotlin?", listOf("Int", "String", "Integer", "Boolean"), 0, 1, 3),
                     vraiFaux("Une variable String peut être null par défaut.", vrai = false)
                 ),
                 estPublie = false
@@ -164,6 +166,7 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
                 listOf(
                     choix("Quelle est la capitale du Portugal?", listOf("Porto", "Lisbonne", "Madrid", "Faro"), 1),
                     choix("Quelle est la capitale de la Finlande?", listOf("Oslo", "Stockholm", "Helsinki", "Tallinn"), 2),
+                    choix("Lesquelles de ces villes sont des capitales?", listOf("Paris", "Barcelone", "Rome", "Berlin"), 0, 2, 3),
                     vraiFaux("Genève est la capitale de la Suisse.", vrai = false)
                 ),
                 estPublie = true
@@ -198,14 +201,14 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         val titre: String,
         val sousTitre: String,
         val badge: String?,
-        val typeBadge: ContratVuePresentateur.TypeBadge
+        val typeBadge: ContratLibrairie.TypeBadge
     )
 
     // Données codées en dur
     private val favoris = listOf(
-        CarteLibrary(1, "Le système solaire", "Science - 10 questions", "4/5", ContratVuePresentateur.TypeBadge.PROGRESSION),
-        CarteLibrary(2, "Capitales d'Europe", "Géographie - 12 questions", "Nouveau", ContratVuePresentateur.TypeBadge.NOUVEAU),
-        CarteLibrary(3, "Verbe irréguliers anglais", "Langues - 15 questions", "87%", ContratVuePresentateur.TypeBadge.SCORE)
+        CarteLibrary(1, "Le système solaire", "Science - 10 questions", "4/5", ContratLibrairie.TypeBadge.PROGRESSION),
+        CarteLibrary(2, "Capitales d'Europe", "Géographie - 12 questions", "Nouveau", ContratLibrairie.TypeBadge.NOUVEAU),
+        CarteLibrary(3, "Verbe irréguliers anglais", "Langues - 15 questions", "87%", ContratLibrairie.TypeBadge.SCORE)
     )
 
     fun obternirFavoris(): List<CarteLibrary> = favoris

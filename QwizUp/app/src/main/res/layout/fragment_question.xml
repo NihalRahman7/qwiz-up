@@ -207,8 +207,10 @@
             android:layout_marginTop="12dp"
             android:enabled="false"
             android:text="@string/question_choisir"
+            android:textColor="@color/texte_bouton_principal"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:backgroundTint="@color/fond_bouton_principal"
             app:cornerRadius="16dp" />
     </LinearLayout>
 

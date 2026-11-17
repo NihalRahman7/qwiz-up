@@ -1,20 +1,24 @@
 package com.crosemont.qwizup.presentation.question
 
 import android.content.res.ColorStateList
+import com.crosemont.qwizup.presentation.ModeleQuiz
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IPresentateurQuestion
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueQuestion
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.NiveauResultat
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
+import com.crosemont.qwizup.presentation.question.ContratQuestion.IPresentateurQuestion
+import com.crosemont.qwizup.presentation.question.ContratQuestion.IVueQuestion
+import com.crosemont.qwizup.presentation.question.ContratQuestion.NiveauResultat
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
 /**
@@ -23,8 +27,8 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
  */
 class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
 
-    // Le présentateur qui gère la partie
-    private val presentateur: IPresentateurQuestion = PresentateurQuestion()
+    // Le présentateur qui gère la partie (créé dans onViewCreated, quand le contexte existe)
+    private lateinit var presentateur: IPresentateurQuestion
 
     // Les éléments du layout
     private lateinit var groupeJeu: View
@@ -47,6 +51,7 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
     private val lettres = listOf("A", "B", "C", "D")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presentateur = FabriqueQuestion.creerPresentateur(requireContext().filesDir)
         super.onViewCreated(view, savedInstanceState)
 
         // Récupère les éléments du layout
@@ -80,6 +85,11 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
             .setOnClickListener { presentateur.surRejouerClique() }
         view.findViewById<MaterialButton>(R.id.button_retour_accueil)
             .setOnClickListener { presentateur.surQuitterClique() }
+
+        // Le bouton retour du téléphone passe aussi par le présentateur (confirmation si partie en cours)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            presentateur.surQuitterClique()
+        }
 
         // Démarre la partie avec le quiz reçu de l'Accueil
         presentateur.attacherVue(this)
@@ -118,7 +128,8 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
         total: Int,
         enonce: String,
         type: TypeQuestion,
-        reponses: List<String>
+        reponses: List<String>,
+        plusieursReponses: Boolean
     ) {
         groupeJeu.isVisible = true
         groupeResultat.isVisible = false
@@ -147,28 +158,48 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
         // Nouvelle question : pas de message, bouton Suivant désactivé
         texteRetroaction.isVisible = false
         boutonSuivant.isEnabled = false
-        boutonSuivant.text = getString(R.string.question_choisir)
+        boutonSuivant.text = getString(
+            if (plusieursReponses) R.string.question_choisir_plusieurs else R.string.question_choisir
+        )
     }
 
     override fun afficherProgression(pourcentage: Int) {
         progression.setProgressCompat(pourcentage, true)
     }
 
-    override fun afficherBonneReponse(indice: Int) {
-        bloquerReponses()
-        colorer(boutonsReponses[indice], R.color.light_green, R.color.primary_green)
-        afficherMessage(getString(R.string.question_bonne), R.color.light_green, R.color.primary_green)
+    override fun afficherSelection(indices: Set<Int>) {
+        // Réponses cochées en bleu (pas en vert, pour ne pas donner la réponse)
+        reponsesAffichees.indices.forEach { i ->
+            if (i in indices) colorer(boutonsReponses[i], R.color.light_blue, R.color.blue_text)
+            else colorer(boutonsReponses[i], R.color.surface, R.color.border)
+        }
     }
 
-    override fun afficherMauvaiseReponse(indiceChoisi: Int, indiceBonneReponse: Int) {
+    override fun activerValider(actif: Boolean) {
+        boutonSuivant.isEnabled = actif
+        boutonSuivant.text = getString(if (actif) R.string.question_valider else R.string.question_choisir_plusieurs)
+    }
+
+    override fun afficherCorrection(choisies: Set<Int>, bonnes: Set<Int>, estBonne: Boolean) {
         bloquerReponses()
-        colorer(boutonsReponses[indiceChoisi], R.color.light_orange, R.color.accent_orange)
-        colorer(boutonsReponses[indiceBonneReponse], R.color.light_green, R.color.primary_green)
-        afficherMessage(
-            getString(R.string.question_mauvaise, reponsesAffichees[indiceBonneReponse]),
-            R.color.light_orange,
-            R.color.red_text
-        )
+        reponsesAffichees.indices.forEach { i ->
+            when (i) {
+                in bonnes -> colorer(boutonsReponses[i], R.color.light_green, R.color.primary_green)
+                in choisies -> colorer(boutonsReponses[i], R.color.light_orange, R.color.accent_orange)
+                else -> colorer(boutonsReponses[i], R.color.surface, R.color.border)
+            }
+        }
+
+        if (estBonne) {
+            afficherMessage(getString(R.string.question_bonne), R.color.light_green, R.color.primary_green)
+        } else {
+            val message = if (bonnes.size == 1) {
+                getString(R.string.question_mauvaise, reponsesAffichees[bonnes.first()])
+            } else {
+                getString(R.string.question_mauvaise_plusieurs, bonnes.sorted().joinToString { "« ${reponsesAffichees[it]} »" })
+            }
+            afficherMessage(message, R.color.light_orange, R.color.red_text)
+        }
     }
 
     override fun activerSuivant(estDerniere: Boolean) {
@@ -192,6 +223,19 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
             }
         )
         texteResultatDetail.text = getString(R.string.resultat_detail, titreQuiz)
+    }
+
+    override fun demanderConfirmationQuitter() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.question_confirmer_quitter_titre)
+            .setMessage(R.string.question_confirmer_quitter_message)
+            .setNegativeButton(R.string.action_annuler, null)
+            .setPositiveButton(R.string.action_quitter) { _, _ -> presentateur.surQuitterConfirme() }
+            .show()
+    }
+
+    override fun afficherErreur() {
+        Toast.makeText(requireContext(), R.string.question_erreur, Toast.LENGTH_SHORT).show()
     }
 
     override fun fermer() {

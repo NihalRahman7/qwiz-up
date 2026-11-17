@@ -10,9 +10,10 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RadioButton
+import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -33,8 +34,10 @@ import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueEditeur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -54,6 +57,9 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
     private lateinit var groupeAcces: MaterialButtonToggleGroup
     private lateinit var texteAideAcces: TextView
     private lateinit var listeQuestions: LinearLayout
+    private lateinit var casePublier: MaterialCheckBox
+    private lateinit var boutonEnregistrer: MaterialButton
+    private lateinit var texteRaisonBouton: TextView
 
     // Une carte par question, dans l'ordre
     private val cartesQuestions = mutableListOf<View>()
@@ -82,7 +88,7 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
         TypeQuestion.REPONSE_ECRITE to R.id.button_type_ecrite
     )
     private val lignesReponses = listOf(R.id.ligne_reponse_1, R.id.ligne_reponse_2, R.id.ligne_reponse_3, R.id.ligne_reponse_4)
-    private val radiosReponses = listOf(R.id.radio_reponse_1, R.id.radio_reponse_2, R.id.radio_reponse_3, R.id.radio_reponse_4)
+    private val casesReponses = listOf(R.id.case_reponse_1, R.id.case_reponse_2, R.id.case_reponse_3, R.id.case_reponse_4)
     private val saisiesReponses = listOf(R.id.saisie_reponse_1, R.id.saisie_reponse_2, R.id.saisie_reponse_3, R.id.saisie_reponse_4)
     private val lettres = listOf("A", "B", "C", "D")
 
@@ -124,7 +130,12 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
         listeQuestions = view.findViewById(R.id.liste_questions)
 
         view.findViewById<ImageButton>(R.id.button_fermer)
-            .setOnClickListener { findNavController().popBackStack() }
+            .setOnClickListener { presentateur.surFermerClique() }
+
+        // Le bouton retour du téléphone demande aussi une confirmation
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            presentateur.surFermerClique()
+        }
 
         saisieTitre.doAfterTextChanged { presentateur.surTitreModifie(it?.toString().orEmpty()) }
         saisieDescription.doAfterTextChanged { presentateur.surDescriptionModifiee(it?.toString().orEmpty()) }
@@ -145,10 +156,11 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
             .setOnClickListener { presentateur.surGalerieClique() }
         view.findViewById<MaterialButton>(R.id.button_ajouter_question)
             .setOnClickListener { presentateur.surAjouterQuestionClique() }
-        view.findViewById<MaterialButton>(R.id.button_brouillon)
-            .setOnClickListener { presentateur.surBrouillonClique() }
-        view.findViewById<MaterialButton>(R.id.button_publier)
-            .setOnClickListener { presentateur.surPublierClique() }
+        casePublier = view.findViewById(R.id.case_publier)
+        boutonEnregistrer = view.findViewById(R.id.button_enregistrer)
+        texteRaisonBouton = view.findViewById(R.id.text_raison_bouton)
+        casePublier.setOnCheckedChangeListener { _, cochee -> presentateur.surPublicationCochee(cochee) }
+        boutonEnregistrer.setOnClickListener { presentateur.surEnregistrerClique() }
 
         // La barre du bas de l'app est cachée ici : on garde nos boutons au-dessus de la barre système
         val barreActions = view.findViewById<LinearLayout>(R.id.barre_actions)
@@ -225,7 +237,7 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
         texte: String,
         type: TypeQuestion,
         reponses: List<String>,
-        bonneReponse: Int,
+        bonnesReponses: Set<Int>,
         reponseAttendue: String
     ) {
         val carte = layoutInflater.inflate(R.layout.item_question_editeur, listeQuestions, false)
@@ -252,6 +264,9 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
         val zoneEcrite = carte.findViewById<View>(R.id.zone_ecrite)
         zoneChoix.isVisible = type != TypeQuestion.REPONSE_ECRITE
         zoneEcrite.isVisible = type == TypeQuestion.REPONSE_ECRITE
+        carte.findViewById<TextView>(R.id.text_coche_bonne).setText(
+            if (type == TypeQuestion.CHOIX_MULTIPLE) R.string.editeur_coche_bonnes else R.string.editeur_coche_bonne
+        )
 
         when (type) {
             TypeQuestion.CHOIX_MULTIPLE -> lignesReponses.indices.forEach { i ->
@@ -281,11 +296,11 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
 
         cartesQuestions.add(carte)
         listeQuestions.addView(carte)
-        afficherBonneReponse(index, bonneReponse)
+        afficherBonnesReponses(index, bonnesReponses)
     }
 
     private fun preparerRadio(carte: View, index: Int, numeroReponse: Int) {
-        val radio = carte.findViewById<RadioButton>(radiosReponses[numeroReponse])
+        val radio = carte.findViewById<CompoundButton>(casesReponses[numeroReponse])
         radio.contentDescription = getString(R.string.editeur_choisir_bonne, numeroReponse + 1)
         radio.setOnClickListener { presentateur.surBonneReponseCliquee(index, numeroReponse) }
         // Toucher la ligne choisit aussi la réponse (pratique en vrai ou faux)
@@ -293,11 +308,11 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
             .setOnClickListener { presentateur.surBonneReponseCliquee(index, numeroReponse) }
     }
 
-    override fun afficherBonneReponse(index: Int, bonneReponse: Int) {
+    override fun afficherBonnesReponses(index: Int, bonnesReponses: Set<Int>) {
         val carte = cartesQuestions.getOrNull(index) ?: return
         lignesReponses.indices.forEach { i ->
-            val choisie = i == bonneReponse
-            carte.findViewById<RadioButton>(radiosReponses[i]).isChecked = choisie
+            val choisie = i in bonnesReponses
+            carte.findViewById<CompoundButton>(casesReponses[i]).isChecked = choisie
             val fond = carte.findViewById<View>(lignesReponses[i]).background.mutate() as GradientDrawable
             fond.setColor(couleur(if (choisie) R.color.light_green else R.color.surface))
             fond.setStroke(
@@ -321,6 +336,7 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
             }
             ErreurEditeur.AUCUNE_QUESTION ->
                 Toast.makeText(requireContext(), R.string.editeur_erreur_questions, Toast.LENGTH_SHORT).show()
+            ErreurEditeur.QUESTION_INCOMPLETE -> Unit   // géré par afficherErreurQuestion
         }
     }
 
@@ -367,5 +383,46 @@ class EditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeu
     override fun confirmerPublication(titre: String) {
         Toast.makeText(requireContext(), getString(R.string.editeur_publie_ok, titre), Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()
+    }
+
+    override fun demanderConfirmationSuppression(index: Int) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.editeur_confirmer_suppression_titre, index + 1))
+            .setMessage(R.string.editeur_confirmer_suppression_message)
+            .setNegativeButton(R.string.action_annuler, null)
+            .setPositiveButton(R.string.action_supprimer) { _, _ ->
+                presentateur.surSuppressionConfirmee(index)
+            }
+            .show()
+    }
+
+    override fun demanderConfirmationQuitter() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.editeur_confirmer_quitter_titre)
+            .setMessage(R.string.editeur_confirmer_quitter_message)
+            .setNegativeButton(R.string.action_annuler, null)
+            .setNeutralButton(R.string.editeur_enregistrer) { _, _ -> presentateur.surEnregistrerClique() }
+            .setPositiveButton(R.string.action_quitter) { _, _ -> presentateur.surQuitterConfirme() }
+            .show()
+    }
+
+    override fun fermer() {
+        findNavController().popBackStack()
+    }
+
+    override fun afficherPublication(estPublie: Boolean) {
+        casePublier.isChecked = estPublie
+    }
+
+    override fun afficherBoutonEnregistrer(publier: Boolean, actif: Boolean, raison: ErreurEditeur?, numeroQuestion: Int) {
+        boutonEnregistrer.setText(if (publier) R.string.editeur_publier else R.string.editeur_enregistrer_brouillon)
+        boutonEnregistrer.isEnabled = actif
+        texteRaisonBouton.isVisible = raison != null
+        texteRaisonBouton.text = when (raison) {
+            ErreurEditeur.TITRE_VIDE -> getString(R.string.editeur_erreur_titre)
+            ErreurEditeur.AUCUNE_QUESTION -> getString(R.string.editeur_erreur_questions)
+            ErreurEditeur.QUESTION_INCOMPLETE -> getString(R.string.editeur_erreur_question, numeroQuestion)
+            null -> ""
+        }
     }
 }

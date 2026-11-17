@@ -10,13 +10,16 @@
     <string name="home_greeting">Bonjour</string>
     <string name="home_join_code">Code</string>
     <string name="home_streak">Série</string>
-    <string name="home_completed">Quiz complétés </string>
+    <string name="home_completed">Quiz complétés</string>
     <string name="home_correct">Réussite</string>
     <string name="home_continue">Continuer</string>
     <string name="home_suggestions">Suggestions</string>
 
     <string name="home_see_all">Tout voir</string>
     <string name="home_resume_quiz">Continuer le quiz</string>
+    <string name="home_streak_value">%1$d j</string>
+    <string name="home_correct_value">%1$d %%</string>
+    <string name="home_error">Impossible de charger tes statistiques.</string>
 
     <!-- Exemples temporaires, remplacés plus tard par les données du Modèle -->
     <string name="sample_quiz_1_title">Le système solaire</string>
@@ -25,6 +28,7 @@
     <string name="sample_quiz_2_meta">3 / 5 questions · Informatique</string>
     <string name="sample_suggestion_title">Capitales d\'Europe</string>
     <string name="sample_suggestion_meta">12 questions · 6 min · Géographie</string>
+    <string name="question_erreur">Impossible de charger ou de sauvegarder la partie.</string>
 
     <!--  Les String de la Navigation de la page Découvrir   -->
     <string name="discover_search_hint">Rechercher un quiz</string>
@@ -34,6 +38,7 @@
     <string name="discover_quiz_details">%1$d questions · %2$d min</string>
     <string name="discover_no_quiz">Aucun quiz trouvé. Essaie un autre mot ou une autre catégorie.</string>
     <string name="discover_play_soon">Le quiz « %1$s » arrive bientôt!</string>
+    <string name="discover_error">Impossible de charger les quiz. Réessaie plus tard.</string>
     <string name="category_all">Tous</string>
     <string name="category_sciences">Sciences</string>
     <string name="category_history">Histoire</string>
@@ -41,6 +46,7 @@
     <string name="category_geography">Géographie</string>
     <string name="category_informatique">Informatique</string>
     <string name="category_autre">Autre</string>
+
     <!--  Les String de la Navigation de la page Créer   -->
     <string name="creer_nouveau_quiz">Nouveau quiz</string>
     <string name="creer_continuer">Continuer</string>
@@ -81,6 +87,7 @@
     <string name="editeur_type_ecrite">Réponse écrite</string>
     <string name="editeur_question_placeholder">Écris ta question</string>
     <string name="editeur_coche_bonne">Coche la bonne réponse</string>
+    <string name="editeur_coche_bonnes">Coche la ou les bonnes réponses</string>
     <string name="editeur_reponse_lettre">Réponse %1$s</string>
     <string name="editeur_choisir_bonne">Choisir la réponse %1$d comme bonne réponse</string>
     <string name="editeur_vrai">Vrai</string>
@@ -97,13 +104,22 @@
     <string name="editeur_sauvegarde_ok">Brouillon sauvegardé</string>
     <string name="editeur_publie_ok">« %1$s » est publié!</string>
     <string name="editeur_photo_bientot">L\'ajout d\'image arrive bientôt</string>
+    <string name="editeur_confirmer_suppression_titre">Supprimer la question %1$d?</string>
+    <string name="editeur_confirmer_suppression_message">Cette action ne peut pas être annulée.</string>
+    <string name="editeur_confirmer_quitter_titre">Quitter sans sauvegarder?</string>
+    <string name="editeur_confirmer_quitter_message">Tes modifications vont être perdues. Tu peux les enregistrer avant de quitter.</string>
+    <string name="action_supprimer">Supprimer</string>
+    <string name="editeur_case_publier">Publier le quiz</string>
+    <string name="editeur_enregistrer">Enregistrer</string>
+    <string name="editeur_enregistrer_brouillon">Enregistrer le brouillon</string>
+    <string name="action_quitter">Quitter</string>
+    <string name="action_annuler">Annuler</string>
     <!--  Les String de la Navigation de la page Librairie   -->
     <string name="librairie_titre">Librairie</string>
     <string name="librairie_btn_favoris">Favoris</string>
     <string name="librairie_btn_completes">Complétés</string>
-    <string name="librairie_btn_crees">Crées</string>
+    <string name="librairie_btn_crees">Créés</string>
     <string name="librairie_quiz_soon">Le quiz « %1$s » arrive bientôt!</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--  Les String de l'écran Question (jeu)   -->
@@ -118,6 +134,11 @@
     <string name="question_voir_resultat">Voir mon résultat</string>
     <string name="question_bonne">Bonne réponse !</string>
     <string name="question_mauvaise">Pas tout à fait. La bonne réponse est « %1$s ».</string>
+    <string name="question_mauvaise_plusieurs">Pas tout à fait. Les bonnes réponses sont : %1$s.</string>
+    <string name="question_choisir_plusieurs">Choisis une ou plusieurs réponses</string>
+    <string name="question_valider">Valider</string>
+    <string name="question_confirmer_quitter_titre">Quitter le quiz?</string>
+    <string name="question_confirmer_quitter_message">Ta progression et ton score vont être perdus.</string>
     <string name="resultat_excellent">Excellent travail !</string>
     <string name="resultat_bien">Bien joué !</string>
     <string name="resultat_a_pratiquer">Continue de pratiquer !</string>
@@ -131,8 +152,5 @@
     <string name="rejoindre_sous_titre">Entre le code à 6 chiffres donné par ton enseignant·e.</string>
     <string name="rejoindre_label_code">Code du quiz</string>
     <string name="rejoindre_bouton">Rejoindre</string>
-    <string name="rejoindre_ou">ou</string>
-    <string name="rejoindre_scanner">Scanner un code QR</string>
     <string name="rejoindre_code_invalide">Ce code ne correspond à aucun quiz.</string>
-    <string name="rejoindre_scanner_invite">Place le code QR dans le cadre</string>
 </resources>

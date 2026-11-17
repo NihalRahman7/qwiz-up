@@ -1,6 +1,5 @@
 package com.crosemont.qwizup.presentation.library
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,9 +9,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.ContratVuePresentateur
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.OngletLibrairie
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeBadge
+import com.crosemont.qwizup.presentation.library.ContratLibrairie.OngletLibrairie
+import com.crosemont.qwizup.presentation.library.ContratLibrairie.TypeBadge
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.card.MaterialCardView
 
@@ -23,12 +21,12 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [LibraryFragment.newInstance] factory method to
+ * Use the [LibrairieFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LibraryFragment : Fragment(), ContratVuePresentateur.IVueLibrary {
+class LibrairieFragment : Fragment(), ContratLibrairie.IVueLibrary {
 
-    private lateinit var presentateur: ContratVuePresentateur.IPresentateurLibrary
+    private lateinit var presentateur: ContratLibrairie.IPresentateurLibrary
     private lateinit var messageVide: TextView
 
     // Les cartes du XML
@@ -64,7 +62,7 @@ class LibraryFragment : Fragment(), ContratVuePresentateur.IVueLibrary {
         textesBadges = listOf(R.id.txtBadge1, R.id.txtBadge2, R.id.txtBadge3)
             .map { view.findViewById<TextView>(it) }
 
-        presentateur = PresentateurLibrary()
+        presentateur = PresentateurLibrairie()
 
         cartes.forEachIndexed { index, carte ->
             carte.setOnClickListener { presentateur.surQuizClique(quizIds[index], titres[index].text.toString()) }
@@ -100,7 +98,7 @@ class LibraryFragment : Fragment(), ContratVuePresentateur.IVueLibrary {
         titre: String,
         sousTitre: String,
         badge: String?,
-        typeBadge: ContratVuePresentateur.TypeBadge
+        typeBadge: ContratLibrairie.TypeBadge
     ) {
         if (prochaineCarte >= NB_CARTES) return // Le XML n'a que trois cartes
         val i = prochaineCarte++
@@ -150,7 +148,7 @@ class LibraryFragment : Fragment(), ContratVuePresentateur.IVueLibrary {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            LibraryFragment().apply {
+            LibrairieFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

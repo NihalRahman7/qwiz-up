@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.crosemont.qwizup.presentation.home.HomeFragment"
+        android:name="com.crosemont.qwizup.presentation.home.AccueilFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -41,7 +41,7 @@
 
     <fragment
         android:id="@+id/discoverFragment"
-        android:name="com.crosemont.qwizup.presentation.discover.DiscoverFragment"
+        android:name="com.crosemont.qwizup.presentation.discover.VueDécouvrir"
         android:label="fragment_discover"
         tools:layout="@layout/fragment_discover">
         <action
@@ -51,7 +51,7 @@
 
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="com.crosemont.qwizup.presentation.library.LibraryFragment"
+        android:name="com.crosemont.qwizup.presentation.library.LibrairieFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" />
 
