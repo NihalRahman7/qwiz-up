@@ -136,7 +136,21 @@ class ModeleQuiz {
 
     fun obternirFavoris(): List<CarteLibrary> = favoris
     fun obternirCompletes(): List<CarteLibrary> = emptyList()
-    fun obternirCrees(): List<CarteLibrary> = emptyList()
+    /**
+     * Les quiz créés par l'utilisateur, lus dans la même source que l'écran Créer.
+     * Pont temporaire (comme pour l'écran de jeu) en attendant que la Librairie passe par un service.
+     */
+    fun obternirCrees(): List<CarteLibrary> =
+        SourceQuizCréésBidon.lireMaintenant().map { quiz ->
+            val nb = quiz.questions.size
+            CarteLibrary(
+                id = quiz.id,
+                titre = quiz.titre,
+                sousTitre = if (nb == 1) "1 question" else "$nb questions",
+                badge = null,
+                typeBadge = ContratLibrairie.TypeBadge.NOUVEAU   // pas affiché quand badge = null
+            )
+        }
 
 
     // Question (écran de jeu)
