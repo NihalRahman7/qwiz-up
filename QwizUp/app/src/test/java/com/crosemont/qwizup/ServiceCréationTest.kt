@@ -197,6 +197,52 @@ class ServiceCréationTest {
         }
     }
 
+    // ----- Catégorie « Autre » -----
+
+    private fun quizAutre(nom: String, estPublie: Boolean) =
+        quiz(0, "Quiz de sport", estPublie).copy(categorie = CategorieQuiz.AUTRE, categoriePerso = nom)
+
+    @Test
+    fun `Étant donné un quiz Autre sans nom de catégorie lorsqu'on le publie, on obtient une ServiceException`() = runBlocking {
+        try {
+            service.sauvegarder(quizAutre("   ", estPublie = true))
+            fail("Une ServiceException était attendue")
+        } catch (e: ServiceException) {
+            assertEquals(2, source.lireQuiz().size)   // rien n'a été enregistré
+        }
+    }
+
+    @Test
+    fun `Étant donné un quiz Autre avec un nom de catégorie lorsqu'on le publie, on obtient le quiz enregistré avec ce nom`() = runBlocking {
+        val enregistré = service.sauvegarder(quizAutre("Sport", estPublie = true))
+
+        assertEquals("Sport", enregistré.categoriePerso)
+        assertEquals("Sport", source.lireQuiz().first { it.id == enregistré.id }.categoriePerso)
+    }
+
+    @Test
+    fun `Étant donné un brouillon Autre sans nom de catégorie lorsqu'on le sauvegarde, on obtient le brouillon enregistré`() = runBlocking {
+        val enregistré = service.sauvegarder(quizAutre("", estPublie = false))
+
+        assertEquals(3, enregistré.id)
+    }
+
+    @Test
+    fun `Étant donné un nom de catégorie avec des espaces lorsqu'on le sauvegarde, on obtient le nom sans les espaces`() = runBlocking {
+        val enregistré = service.sauvegarder(quizAutre("   Sport   ", estPublie = true))
+
+        assertEquals("Sport", enregistré.categoriePerso)
+    }
+
+    @Test
+    fun `Étant donné une catégorie qui n'est pas Autre avec un nom de catégorie lorsqu'on le sauvegarde, on obtient un nom de catégorie vide`() = runBlocking {
+        val sciences = quiz(0, "Planètes", true).copy(categorie = CategorieQuiz.SCIENCES, categoriePerso = "Sport")
+
+        val enregistré = service.sauvegarder(sciences)
+
+        assertEquals("", enregistré.categoriePerso)   // le nom ne sert qu'avec Autre
+    }
+
     /** Fausse source qui échoue toujours, comme un fichier illisible. */
     private class SourceEnPanne : SourceQuizCréés {
         override suspend fun lireQuiz(): List<QuizCreer> = throw IOException("Lecture impossible")
