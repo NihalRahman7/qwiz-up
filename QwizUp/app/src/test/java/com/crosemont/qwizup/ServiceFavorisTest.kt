@@ -1,14 +1,13 @@
-
 package com.crosemont.qwizup
 
 import com.crosemont.qwizup.domaine.service.ServiceException
 import com.crosemont.qwizup.domaine.service.ServiceFavoris
-import com.crosemont.qwizup.sourceDeDonnees.SourceFavoris
-import com.crosemont.qwizup.sourceDeDonnees.SourceFavorisBidon
-import java.io.IOException
+import com.crosemont.qwizup.accèsAuxDonnées.SourceFavoris
+import com.crosemont.qwizup.accèsAuxDonnées.SourceFavorisBidon
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.io.IOException
 
 class ServiceFavorisTest {
 
@@ -50,7 +49,8 @@ class ServiceFavorisTest {
 
     @Test
     fun `Étant donné que deux favoris existent lorsqu'on en bascule un, on obtient l'autre encore favori`() {
-        val service = ServiceFavoris(SourceFavorisBidon(setOf("Le système solaire", "Bases de Kotlin")))
+        val service =
+            ServiceFavoris(SourceFavorisBidon(setOf("Le système solaire", "Bases de Kotlin")))
 
         service.basculerFavori("Le système solaire")
 

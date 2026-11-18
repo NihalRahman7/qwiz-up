@@ -1,10 +1,10 @@
 package com.crosemont.qwizup
 
-import com.crosemont.qwizup.presentation.ModeleQuiz.CarteLibrary
+import com.crosemont.qwizup.presentation.ModèleQuiz.CarteLibrary
 import com.crosemont.qwizup.presentation.library.ContratLibrairie
 import com.crosemont.qwizup.presentation.library.ContratLibrairie.OngletLibrairie
 import com.crosemont.qwizup.presentation.library.ContratLibrairie.TypeBadge
-import com.crosemont.qwizup.presentation.library.PresentateurLibrairie
+import com.crosemont.qwizup.presentation.library.PrésentateurLibrairie
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
@@ -13,20 +13,20 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-class PresentateurLibrairieTest {
+class PrésentateurLibrairieTest {
 
     private lateinit var vue: FausseVue
-    private lateinit var modele: FauxModele
-    private lateinit var presentateur: PresentateurLibrairie
+    private lateinit var modele: FauxModèle
+    private lateinit var presentateur: PrésentateurLibrairie
 
     @Before
     fun preparer() {
         vue = FausseVue()
-        modele = FauxModele()
-        presentateur = PresentateurLibrairie(
+        modele = FauxModèle()
+        presentateur = PrésentateurLibrairie(
             modele,
             filPrincipal = Dispatchers.Unconfined + CoroutineName("principal"),
-            filArrierePlan = Dispatchers.Unconfined + CoroutineName("arrière-plan")
+            filArrièrePlan = Dispatchers.Unconfined + CoroutineName("arrière-plan")
         )
     }
 
@@ -60,7 +60,7 @@ class PresentateurLibrairieTest {
     @Test
     fun `Étant donné qu'un fil d'arrière-plan est configuré lorsqu'on change d'onglet, on obtient tous les appels au modèle sur ce fil`() {
         presentateur.attacherVue(vue)
-        presentateur.surOngletClique(OngletLibrairie.COMPLETES)
+        presentateur.surOngletClique(OngletLibrairie.COMPLÉTÉS)
 
         assertEquals(listOf("arrière-plan", "arrière-plan"), modele.filsUtilises)
     }
@@ -71,15 +71,27 @@ class PresentateurLibrairieTest {
         presentateur.detacherVue()
         val appelsAvant = vue.nbAppels
 
-        presentateur.surOngletClique(OngletLibrairie.CREES)
+        presentateur.surOngletClique(OngletLibrairie.CRÉES)
 
         assertEquals(appelsAvant, vue.nbAppels)
     }
 
-    private class FauxModele : ContratLibrairie.IModeleLibrairie {
+    private class FauxModèle : ContratLibrairie.IModèleLibrairie {
         var favoris = listOf(
-            CarteLibrary(1, "Le système solaire", "Sciences · 10 questions", null, TypeBadge.NOUVEAU),
-            CarteLibrary(4, "La Révolution tranquille", "Histoire · 8 questions", null, TypeBadge.NOUVEAU)
+            CarteLibrary(
+                1,
+                "Le système solaire",
+                "Sciences · 10 questions",
+                null,
+                TypeBadge.NOUVEAU
+            ),
+            CarteLibrary(
+                4,
+                "La Révolution tranquille",
+                "Histoire · 8 questions",
+                null,
+                TypeBadge.NOUVEAU
+            )
         )
         var enPanne = false
         val filsUtilises = mutableListOf<String?>()
@@ -102,7 +114,13 @@ class PresentateurLibrairieTest {
             messageVide = null
         }
 
-        override fun ajouterCarteQuiz(id: Int, titre: String, sousTitre: String, badge: String?, typeBadge: TypeBadge) {
+        override fun ajouterCarteQuiz(
+            id: Int,
+            titre: String,
+            sousTitre: String,
+            badge: String?,
+            typeBadge: TypeBadge
+        ) {
             nbAppels++
             titresAffiches.add(titre)
         }
@@ -112,7 +130,7 @@ class PresentateurLibrairieTest {
             messageVide = message
         }
 
-        override fun ouvrirDetails(quizId: Int, titre: String) {
+        override fun ouvrirDétails(quizId: Int, titre: String) {
             nbAppels++
         }
     }

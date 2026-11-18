@@ -1,16 +1,16 @@
 package com.crosemont.qwizup
 
-import com.crosemont.qwizup.domaine.entites.ResultatPartie
-import com.crosemont.qwizup.sourceDeDonnees.SourceResultatsLocale
-import java.io.File
-import java.time.LocalDate
+import com.crosemont.qwizup.domaine.entites.RésultatPartie
+import com.crosemont.qwizup.accèsAuxDonnées.SourceRésultatsLocale
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import java.io.File
+import java.time.LocalDate
 
-class SourceResultatsLocaleTest {
+class SourceRésultatsLocaleTest {
     private lateinit var fichier: File
 
     @Before
@@ -27,29 +27,29 @@ class SourceResultatsLocaleTest {
 
     @Test
     fun `Étant donné qu'aucun fichier n'existe lorsqu'on lit les résultats, on obtient une liste vide`() {
-        assertTrue(SourceResultatsLocale(fichier).lireResultats().isEmpty())
+        assertTrue(SourceRésultatsLocale(fichier).lireRésultats().isEmpty())
     }
 
     @Test
     fun `Étant donné deux résultats ajoutés lorsqu'on les relit, on obtient les deux dans l'ordre`() {
-        val source = SourceResultatsLocale(fichier)
-        val premier = ResultatPartie(1, 4, 5, LocalDate.of(2026, 11, 14))
-        val deuxieme = ResultatPartie(2, 3, 5, LocalDate.of(2026, 11, 15))
+        val source = SourceRésultatsLocale(fichier)
+        val premier = RésultatPartie(1, 4, 5, LocalDate.of(2026, 11, 14))
+        val deuxieme = RésultatPartie(2, 3, 5, LocalDate.of(2026, 11, 15))
 
-        source.ajouterResultat(premier)
-        source.ajouterResultat(deuxieme)
+        source.ajouterRésultat(premier)
+        source.ajouterRésultat(deuxieme)
 
-        assertEquals(listOf(premier, deuxieme), source.lireResultats())
+        assertEquals(listOf(premier, deuxieme), source.lireRésultats())
     }
 
     @Test
     fun `Étant donné un résultat ajouté lorsqu'on relit avec une nouvelle source, on obtient le même résultat`() {
-        val resultat = ResultatPartie(1, 4, 5, LocalDate.of(2026, 11, 15))
-        SourceResultatsLocale(fichier).ajouterResultat(resultat)
+        val resultat = RésultatPartie(1, 4, 5, LocalDate.of(2026, 11, 15))
+        SourceRésultatsLocale(fichier).ajouterRésultat(resultat)
 
         // Une nouvelle source sur le même fichier, comme quand on ferme et qu'on rouvre l'app
-        val sourceApresRedemarrage = SourceResultatsLocale(fichier)
+        val sourceApresRedemarrage = SourceRésultatsLocale(fichier)
 
-        assertEquals(listOf(resultat), sourceApresRedemarrage.lireResultats())
+        assertEquals(listOf(resultat), sourceApresRedemarrage.lireRésultats())
     }
 }

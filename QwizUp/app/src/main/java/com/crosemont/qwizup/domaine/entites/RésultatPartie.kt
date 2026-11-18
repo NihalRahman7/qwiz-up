@@ -2,7 +2,7 @@ package com.crosemont.qwizup.domaine.entites
 
 import java.time.LocalDate
 
-data class ResultatPartie(
+data class RésultatPartie(
     val quizId: Int,
     val score: Int, // nombre de bonnes réponses
     val total: Int, // nombre de questions
@@ -10,8 +10,8 @@ data class ResultatPartie(
 )
 
 data class Statistiques(
-    val serie: Int, // jours consécutifs avec au moins une partie
-    val nbQuizCompletes: Int, // nombre de quiz différents terminés
-    val tauxReussite: Int // pourcentage de bonnes réponses (0 à 100)
+    val série: Int, // jours consécutifs avec au moins une partie
+    val nbQuizComplètes: Int, // nombre de quiz différents terminés
+    val tauxRéussite: Int // pourcentage de bonnes réponses (0 à 100)
 )
 

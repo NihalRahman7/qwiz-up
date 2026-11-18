@@ -1,10 +1,10 @@
 package com.crosemont.qwizup.presentation.rejoindre
 
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.Presentateur
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.Vue
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Présentateur
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Vue
 
 interface ContratRejoindre {
-    interface  IVueRejoindre : Vue{
+    interface IVueRejoindre : Vue {
 
         // Active ou désactive le bouton « Rejoindre »
         fun activerRejoindre(actif: Boolean)
@@ -22,7 +22,7 @@ interface ContratRejoindre {
         fun fermer()
     }
 
-    interface IPresentateurRejoindre : Presentateur<IVueRejoindre> {
+    interface IPrésentateurRejoindre : Présentateur<IVueRejoindre> {
         // Le texte du champ a changé
         fun surCodeModifie(code: String)
 

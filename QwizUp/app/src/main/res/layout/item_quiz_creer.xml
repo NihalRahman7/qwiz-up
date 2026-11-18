@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Une ligne de la liste de Créer : titre, nombre de questions et bouton Continuer / Modifier -->
+<?xml version="1.0" encoding="utf-8"?><!-- Une ligne de la liste de Créer : titre, nombre de questions et bouton Continuer / Modifier -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"

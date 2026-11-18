@@ -1,6 +1,6 @@
 package com.crosemont.qwizup.presentation.create
 
-import com.crosemont.qwizup.presentation.ModeleQuiz.CarteCreate
+import com.crosemont.qwizup.presentation.ModèleQuiz.CarteCreate
 import com.crosemont.qwizup.presentation.create.ContratCréer.OngletCreer
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CancellationException
@@ -72,7 +72,7 @@ class PrésentateurCréer(
         if (cartes.isEmpty()) {
             vue?.afficherListeVide(ongletActif)
         } else {
-            cartes.forEach { vue?.ajouterCarteQuiz(it.id, it.titre, it.nbQuestions, it.estPublie) }
+            cartes.forEach { vue?.ajouterCarteQuiz(it.id, it.titre, it.nbQuestions, it.estPublié) }
         }
     }
 

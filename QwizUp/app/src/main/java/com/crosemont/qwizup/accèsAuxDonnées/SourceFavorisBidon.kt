@@ -1,4 +1,4 @@
-package com.crosemont.qwizup.sourceDeDonnees
+package com.crosemont.qwizup.accèsAuxDonnées
 
 /** Source « bidon » : simule la vraie source en gardant les favoris en mémoire. */
 

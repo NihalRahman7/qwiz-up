@@ -1,13 +1,13 @@
 package com.crosemont.qwizup.presentation.create
 
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.AccesQuiz
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.Difficulte
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.Presentateur
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.Vue
-import com.crosemont.qwizup.presentation.ModeleQuiz.CarteCreate
-import com.crosemont.qwizup.presentation.ModeleQuiz.QuizCreer
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.AccèsQuiz
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Difficulté
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Présentateur
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.TypeQuestion
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Vue
+import com.crosemont.qwizup.presentation.ModèleQuiz.CarteCreate
+import com.crosemont.qwizup.presentation.ModèleQuiz.QuizCréer
 
 /** Contrat de l'écran Créer (liste des quiz) et de l'éditeur de quiz. */
 interface ContratCréer {
@@ -21,13 +21,13 @@ interface ContratCréer {
         fun afficherCompteurs(nbBrouillons: Int, nbPublies: Int)
         fun afficherOngletChoisi(onglet: OngletCreer)
         fun viderCartes()
-        fun ajouterCarteQuiz(id: Int, titre: String, nbQuestions: Int, estPublie: Boolean)
+        fun ajouterCarteQuiz(id: Int, titre: String, nbQuestions: Int, estPublié: Boolean)
         fun afficherListeVide(onglet: OngletCreer)
         fun ouvrirEditeur(quizId: Int?)   // null = nouveau quiz
         fun afficherErreurChargement()    // le modèle n'a pas pu répondre
     }
 
-    interface IPrésentateurCréer : Presentateur<IVueCréer> {
+    interface IPrésentateurCréer : Présentateur<IVueCréer> {
         fun surNouveauQuizClique()
         fun surOngletClique(onglet: OngletCreer)
         fun surQuizClique(quizId: Int)   // « Continuer » ou « Modifier »
@@ -38,21 +38,21 @@ interface ContratCréer {
     interface IVueÉditeur : Vue {
         fun afficherEnTete(nouveauQuiz: Boolean)
         fun afficherInfosQuiz(titre: String, description: String)
-        fun afficherCategorieChoisie(categorie: CategorieQuiz)
-        fun afficherCouverture(categorie: CategorieQuiz)   // image automatique selon la catégorie
+        fun afficherCategorieChoisie(catégorie: CatégorieQuiz)
+        fun afficherCouverture(catégorie: CatégorieQuiz)   // image automatique selon la catégorie
         fun afficherCategoriePerso(visible: Boolean, nom: String)   // champ « Précise la catégorie » (Autre)
-        fun afficherDifficulteChoisie(difficulte: Difficulte)
-        fun afficherAccesChoisi(acces: AccesQuiz)
+        fun afficherDifficulteChoisie(difficulté: Difficulté)
+        fun afficherAccesChoisi(accès: AccèsQuiz)
         fun viderQuestions()
         fun ajouterQuestion(
             index: Int,
             texte: String,
             type: TypeQuestion,
-            reponses: List<String>,        // 4 réponses (choix multiple seulement)
-            bonnesReponses: Set<Int>,      // choix multiple : une ou plusieurs de 0 à 3 ; vrai ou faux : {0} = vrai, {1} = faux
-            reponseAttendue: String        // réponse écrite seulement
+            réponses: List<String>,        // 4 réponses (choix multiple seulement)
+            bonnesRéponses: Set<Int>,      // choix multiple : une ou plusieurs de 0 à 3 ; vrai ou faux : {0} = vrai, {1} = faux
+            réponseAttendue: String        // réponse écrite seulement
         )
-        fun afficherBonnesReponses(index: Int, bonnesReponses: Set<Int>)
+        fun afficherBonnesReponses(index: Int, bonnesRéponses: Set<Int>)
         fun afficherNombreQuestions(nombre: Int)
         fun afficherErreur(erreur: ErreurEditeur)
         fun afficherErreurQuestion(numero: Int)
@@ -62,7 +62,7 @@ interface ContratCréer {
         fun confirmerSauvegarde()
         fun confirmerPublication(titre: String)
         fun demanderConfirmationSuppression(index: Int)
-        fun afficherPublication(estPublie: Boolean)   // coche ou décoche la case « Publier »
+        fun afficherPublication(estPublié: Boolean)   // coche ou décoche la case « Publier »
         /**
          * Texte du bouton selon la case, bouton gris s'il n'est pas actif,
          * et message sous le bouton pour dire ce qui manque (raison = null : aucun message).
@@ -74,14 +74,14 @@ interface ContratCréer {
         fun afficherErreurSauvegarde()   // le quiz n'a pas pu être enregistré
     }
 
-    interface IPrésentateurÉditeur : Presentateur<IVueÉditeur> {
+    interface IPrésentateurÉditeur : Présentateur<IVueÉditeur> {
         fun chargerQuiz(quizId: Int?)   // null = nouveau quiz
         fun surTitreModifie(titre: String)
         fun surDescriptionModifiee(description: String)
-        fun surCategorieCliquee(categorie: CategorieQuiz)
+        fun surCategorieCliquee(catégorie: CatégorieQuiz)
         fun surCategoriePersoModifiee(nom: String)
-        fun surDifficulteCliquee(difficulte: Difficulte)
-        fun surAccesClique(acces: AccesQuiz)
+        fun surDifficulteCliquee(difficulté: Difficulté)
+        fun surAccesClique(accès: AccèsQuiz)
         fun surPrendrePhotoClique()
         fun surGalerieClique()
         fun surAjouterQuestionClique()
@@ -105,7 +105,7 @@ interface ContratCréer {
     interface IModèleCréer {
         suspend fun obtenirBrouillons(): List<CarteCreate>
         suspend fun obtenirPubliés(): List<CarteCreate>
-        suspend fun obtenirQuiz(quizId: Int): QuizCreer
-        suspend fun sauvegarderQuiz(quiz: QuizCreer): Int   // retourne l'id du quiz enregistré
+        suspend fun obtenirQuiz(quizId: Int): QuizCréer
+        suspend fun sauvegarderQuiz(quiz: QuizCréer): Int   // retourne l'id du quiz enregistré
     }
 }

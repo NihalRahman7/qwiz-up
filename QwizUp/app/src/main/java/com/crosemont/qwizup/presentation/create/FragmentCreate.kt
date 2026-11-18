@@ -16,7 +16,7 @@ import com.crosemont.qwizup.presentation.create.ContratCréer.OngletCreer
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 
-class CreateFragment : Fragment(R.layout.fragment_create), IVueCréer {
+class FragmentCreate : Fragment(R.layout.fragment_create), IVueCréer {
 
     // La Fabrique assemble source → service → modèle → présentateur
     private val presentateur: IPrésentateurCréer = FabriqueCréer.créerPrésentateurCréer()
@@ -67,13 +67,13 @@ class CreateFragment : Fragment(R.layout.fragment_create), IVueCréer {
         listeQuiz.removeAllViews()
     }
 
-    override fun ajouterCarteQuiz(id: Int, titre: String, nbQuestions: Int, estPublie: Boolean) {
+    override fun ajouterCarteQuiz(id: Int, titre: String, nbQuestions: Int, estPublié: Boolean) {
         val carte = layoutInflater.inflate(R.layout.item_quiz_creer, listeQuiz, false)
         carte.findViewById<TextView>(R.id.text_titre_quiz).text = titre
         carte.findViewById<TextView>(R.id.text_details_quiz).text =
             resources.getQuantityString(R.plurals.editeur_nombre_questions, nbQuestions, nbQuestions)
         carte.findViewById<MaterialButton>(R.id.button_continuer).apply {
-            setText(if (estPublie) R.string.creer_modifier else R.string.creer_continuer)
+            setText(if (estPublié) R.string.creer_modifier else R.string.creer_continuer)
             setOnClickListener { presentateur.surQuizClique(id) }
         }
         listeQuiz.addView(carte)

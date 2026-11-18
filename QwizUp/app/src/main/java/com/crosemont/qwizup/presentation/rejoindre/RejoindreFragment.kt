@@ -7,7 +7,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.rejoindre.ContratRejoindre.IPresentateurRejoindre
+import com.crosemont.qwizup.presentation.rejoindre.ContratRejoindre.IPrésentateurRejoindre
 import com.crosemont.qwizup.presentation.rejoindre.ContratRejoindre.IVueRejoindre
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -21,7 +21,7 @@ import com.google.android.material.textfield.TextInputLayout
 class RejoindreFragment : Fragment(R.layout.fragment_rejoindre), IVueRejoindre {
 
     // Le présentateur qui vérifie les codes
-    private val presentateur: IPresentateurRejoindre = PresentateurRejoindre()
+    private val presentateur: IPrésentateurRejoindre = PrésentateurRejoindre()
 
     private lateinit var champCode: TextInputLayout
     private lateinit var editCode: TextInputEditText

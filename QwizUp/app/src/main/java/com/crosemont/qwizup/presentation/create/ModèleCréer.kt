@@ -1,8 +1,8 @@
 package com.crosemont.qwizup.presentation.create
 
 import com.crosemont.qwizup.domaine.service.ServiceCréation
-import com.crosemont.qwizup.presentation.ModeleQuiz.CarteCreate
-import com.crosemont.qwizup.presentation.ModeleQuiz.QuizCreer
+import com.crosemont.qwizup.presentation.ModèleQuiz.CarteCreate
+import com.crosemont.qwizup.presentation.ModèleQuiz.QuizCréer
 
 /**
  * Modèle de l'écran Créer et de l'éditeur.
@@ -14,9 +14,9 @@ class ModèleCréer(private val service: ServiceCréation) : ContratCréer.IMod�
 
     override suspend fun obtenirPubliés(): List<CarteCreate> = service.obtenirPubliés().map { it.enCarte() }
 
-    override suspend fun obtenirQuiz(quizId: Int): QuizCreer = service.obtenirQuiz(quizId)
+    override suspend fun obtenirQuiz(quizId: Int): QuizCréer = service.obtenirQuiz(quizId)
 
-    override suspend fun sauvegarderQuiz(quiz: QuizCreer): Int = service.sauvegarder(quiz).id
+    override suspend fun sauvegarderQuiz(quiz: QuizCréer): Int = service.sauvegarder(quiz).id
 
-    private fun QuizCreer.enCarte() = CarteCreate(id, titre, estPublie, questions.size)
+    private fun QuizCréer.enCarte() = CarteCreate(id, titre, estPublié, questions.size)
 }

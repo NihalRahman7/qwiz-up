@@ -1,11 +1,11 @@
 package com.crosemont.qwizup.presentation.create
 
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.AccesQuiz
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.Difficulte
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
-import com.crosemont.qwizup.presentation.ModeleQuiz.QuestionCreer
-import com.crosemont.qwizup.presentation.ModeleQuiz.QuizCreer
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.AccèsQuiz
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Difficulté
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.TypeQuestion
+import com.crosemont.qwizup.presentation.ModèleQuiz.QuestionCréer
+import com.crosemont.qwizup.presentation.ModèleQuiz.QuizCréer
 import com.crosemont.qwizup.presentation.create.ContratCréer.ErreurEditeur
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CancellationException
@@ -59,18 +59,18 @@ class PrésentateurÉditeur(
         }
     }
 
-    private fun afficherQuiz(quizAAfficher: QuizCreer) {
+    private fun afficherQuiz(quizAAfficher: QuizCréer) {
         quiz = quizAAfficher
         quizInitial = quiz
 
         vue?.afficherEnTete(nouveauQuiz = quiz.id == 0)
         vue?.afficherInfosQuiz(quiz.titre, quiz.description)
-        vue?.afficherCategorieChoisie(quiz.categorie)
-        vue?.afficherCouverture(quiz.categorie)
-        vue?.afficherCategoriePerso(visible = quiz.categorie == CategorieQuiz.AUTRE, nom = quiz.categoriePerso)
-        vue?.afficherDifficulteChoisie(quiz.difficulte)
-        vue?.afficherAccesChoisi(quiz.acces)
-        vue?.afficherPublication(quiz.estPublie)
+        vue?.afficherCategorieChoisie(quiz.catégorie)
+        vue?.afficherCouverture(quiz.catégorie)
+        vue?.afficherCategoriePerso(visible = quiz.catégorie == CatégorieQuiz.AUTRE, nom = quiz.categoriePerso)
+        vue?.afficherDifficulteChoisie(quiz.difficulté)
+        vue?.afficherAccesChoisi(quiz.accès)
+        vue?.afficherPublication(quiz.estPublié)
         afficherQuestions()
     }
 
@@ -86,11 +86,11 @@ class PrésentateurÉditeur(
         quiz = quiz.copy(description = description)
     }
 
-    override fun surCategorieCliquee(categorie: CategorieQuiz) {
-        quiz = quiz.copy(categorie = categorie)
-        vue?.afficherCategorieChoisie(categorie)
-        vue?.afficherCouverture(categorie)
-        vue?.afficherCategoriePerso(visible = categorie == CategorieQuiz.AUTRE, nom = quiz.categoriePerso)
+    override fun surCategorieCliquee(catégorie: CatégorieQuiz) {
+        quiz = quiz.copy(catégorie = catégorie)
+        vue?.afficherCategorieChoisie(catégorie)
+        vue?.afficherCouverture(catégorie)
+        vue?.afficherCategoriePerso(visible = catégorie == CatégorieQuiz.AUTRE, nom = quiz.categoriePerso)
         mettreAJourBouton()
     }
 
@@ -100,14 +100,14 @@ class PrésentateurÉditeur(
         mettreAJourBouton()
     }
 
-    override fun surDifficulteCliquee(difficulte: Difficulte) {
-        quiz = quiz.copy(difficulte = difficulte)
-        vue?.afficherDifficulteChoisie(difficulte)
+    override fun surDifficulteCliquee(difficulté: Difficulté) {
+        quiz = quiz.copy(difficulté = difficulté)
+        vue?.afficherDifficulteChoisie(difficulté)
     }
 
-    override fun surAccesClique(acces: AccesQuiz) {
-        quiz = quiz.copy(acces = acces)
-        vue?.afficherAccesChoisi(acces)
+    override fun surAccesClique(accès: AccèsQuiz) {
+        quiz = quiz.copy(accès = accès)
+        vue?.afficherAccesChoisi(accès)
     }
 
     override fun surPrendrePhotoClique() {
@@ -138,7 +138,7 @@ class PrésentateurÉditeur(
     override fun surTypeQuestionClique(index: Int, type: TypeQuestion) {
         val question = quiz.questions.getOrNull(index) ?: return
         if (question.type == type) return
-        modifierQuestion(index) { it.copy(type = type, bonnesReponses = setOf(0)) }
+        modifierQuestion(index) { it.copy(type = type, bonnesRéponses = setOf(0)) }
         afficherQuestions()   // la carte change de forme : on la redessine
     }
 
@@ -148,7 +148,7 @@ class PrésentateurÉditeur(
 
     override fun surReponseModifiee(index: Int, numeroReponse: Int, texte: String) {
         modifierQuestion(index) { question ->
-            question.copy(reponses = question.reponses.mapIndexed { i, r -> if (i == numeroReponse) texte else r })
+            question.copy(réponses = question.réponses.mapIndexed { i, r -> if (i == numeroReponse) texte else r })
         }
     }
 
@@ -156,23 +156,23 @@ class PrésentateurÉditeur(
         val question = quiz.questions.getOrNull(index) ?: return
         val nouvelles = if (question.type == TypeQuestion.CHOIX_MULTIPLE) {
             // Choix multiple : on coche ou on décoche (plusieurs bonnes réponses possibles)
-            if (numeroReponse in question.bonnesReponses) question.bonnesReponses - numeroReponse
-            else question.bonnesReponses + numeroReponse
+            if (numeroReponse in question.bonnesRéponses) question.bonnesRéponses - numeroReponse
+            else question.bonnesRéponses + numeroReponse
         } else {
             setOf(numeroReponse)   // Vrai ou faux : une seule bonne réponse
         }
-        modifierQuestion(index) { it.copy(bonnesReponses = nouvelles) }
+        modifierQuestion(index) { it.copy(bonnesRéponses = nouvelles) }
         vue?.afficherBonnesReponses(index, nouvelles)
     }
 
     override fun surReponseAttendueModifiee(index: Int, texte: String) {
-        modifierQuestion(index) { it.copy(reponseAttendue = texte) }
+        modifierQuestion(index) { it.copy(réponseAttendue = texte) }
     }
 
     // ----- Sauvegarde -----
 
     override fun surPublicationCochee(cochee: Boolean) {
-        quiz = quiz.copy(estPublie = cochee)
+        quiz = quiz.copy(estPublié = cochee)
         mettreAJourBouton()
     }
 
@@ -194,7 +194,7 @@ class PrésentateurÉditeur(
                 val id = withContext(filArrièrePlan) { modèle.sauvegarderQuiz(aSauvegarder) }
                 quiz = aSauvegarder.copy(id = id)
                 quizInitial = quiz
-                if (quiz.estPublie) vue?.confirmerPublication(quiz.titre)
+                if (quiz.estPublié) vue?.confirmerPublication(quiz.titre)
                 else vue?.confirmerSauvegarde()
             } finally {
                 enregistrementEnCours = false
@@ -208,8 +208,8 @@ class PrésentateurÉditeur(
     /** Un brouillon a juste besoin d'un titre ; pour publier, il faut aussi des questions complètes. */
     private fun ceQuiManque(): Manque? {
         if (quiz.titre.isBlank()) return Manque(ErreurEditeur.TITRE_VIDE)
-        if (!quiz.estPublie) return null
-        if (quiz.categorie == CategorieQuiz.AUTRE && quiz.categoriePerso.isBlank()) return Manque(ErreurEditeur.CATEGORIE_VIDE)
+        if (!quiz.estPublié) return null
+        if (quiz.catégorie == CatégorieQuiz.AUTRE && quiz.categoriePerso.isBlank()) return Manque(ErreurEditeur.CATEGORIE_VIDE)
         if (quiz.questions.isEmpty()) return Manque(ErreurEditeur.AUCUNE_QUESTION)
         val incomplete = quiz.questions.indexOfFirst { !it.estComplete() }
         if (incomplete != -1) return Manque(ErreurEditeur.QUESTION_INCOMPLETE, incomplete + 1)
@@ -224,7 +224,7 @@ class PrésentateurÉditeur(
         val manque = ceQuiManque()
         val aCommence = quiz != quizInitial
         vue?.afficherBoutonEnregistrer(
-            publier = quiz.estPublie,
+            publier = quiz.estPublié,
             actif = manque == null,
             raison = if (aCommence) manque?.erreur else null,
             numeroQuestion = manque?.numeroQuestion ?: 0
@@ -242,7 +242,7 @@ class PrésentateurÉditeur(
         vue?.fermer()
     }
 
-    private fun modifierQuestion(index: Int, changement: (QuestionCreer) -> QuestionCreer) {
+    private fun modifierQuestion(index: Int, changement: (QuestionCréer) -> QuestionCréer) {
         if (index !in quiz.questions.indices) return
         quiz = quiz.copy(questions = quiz.questions.mapIndexed { i, q -> if (i == index) changement(q) else q })
         mettreAJourBouton()
@@ -251,23 +251,23 @@ class PrésentateurÉditeur(
     private fun afficherQuestions() {
         vue?.viderQuestions()
         quiz.questions.forEachIndexed { index, q ->
-            vue?.ajouterQuestion(index, q.texte, q.type, q.reponses, q.bonnesReponses, q.reponseAttendue)
+            vue?.ajouterQuestion(index, q.texte, q.type, q.réponses, q.bonnesRéponses, q.réponseAttendue)
         }
         vue?.afficherNombreQuestions(quiz.questions.size)
         mettreAJourBouton()
     }
 
-    private fun questionVide() = QuestionCreer(texte = "", type = TypeQuestion.CHOIX_MULTIPLE)
+    private fun questionVide() = QuestionCréer(texte = "", type = TypeQuestion.CHOIX_MULTIPLE)
 
-    private fun nouveauQuiz() = QuizCreer(
+    private fun nouveauQuiz() = QuizCréer(
         id = 0,
         titre = "",
         description = "",
-        categorie = CategorieQuiz.SCIENCES,
-        difficulte = Difficulte.MOYEN,
-        acces = AccesQuiz.AVEC_CODE,
+        catégorie = CatégorieQuiz.SCIENCES,
+        difficulté = Difficulté.MOYEN,
+        accès = AccèsQuiz.AVEC_CODE,
         questions = listOf(questionVide()),
-        estPublie = false
+        estPublié = false
     )
 
     // Lance une coroutine sur le fil principal. Si le modèle échoue, on appelle siErreur.

@@ -1,7 +1,7 @@
 package com.crosemont.qwizup
 
-import com.crosemont.qwizup.presentation.ModeleQuiz.CarteCreate
-import com.crosemont.qwizup.presentation.ModeleQuiz.QuizCreer
+import com.crosemont.qwizup.presentation.ModèleQuiz.CarteCreate
+import com.crosemont.qwizup.presentation.ModèleQuiz.QuizCréer
 import com.crosemont.qwizup.presentation.create.ContratCréer
 import com.crosemont.qwizup.presentation.create.ContratCréer.OngletCreer
 import com.crosemont.qwizup.presentation.create.PrésentateurCréer
@@ -96,8 +96,8 @@ class PrésentateurCréerTest {
             return brouillons
         }
         override suspend fun obtenirPubliés(): List<CarteCreate> = publiés
-        override suspend fun obtenirQuiz(quizId: Int): QuizCreer = throw UnsupportedOperationException()
-        override suspend fun sauvegarderQuiz(quiz: QuizCreer): Int = throw UnsupportedOperationException()
+        override suspend fun obtenirQuiz(quizId: Int): QuizCréer = throw UnsupportedOperationException()
+        override suspend fun sauvegarderQuiz(quiz: QuizCréer): Int = throw UnsupportedOperationException()
     }
 
     private class FausseVue : ContratCréer.IVueCréer {
@@ -112,7 +112,7 @@ class PrésentateurCréerTest {
         override fun afficherCompteurs(nbBrouillons: Int, nbPublies: Int) { compteurs = nbBrouillons to nbPublies }
         override fun afficherOngletChoisi(onglet: OngletCreer) { ongletChoisi = onglet }
         override fun viderCartes() { titresAffichés.clear(); listeVide = null }
-        override fun ajouterCarteQuiz(id: Int, titre: String, nbQuestions: Int, estPublie: Boolean) { titresAffichés += titre }
+        override fun ajouterCarteQuiz(id: Int, titre: String, nbQuestions: Int, estPublié: Boolean) { titresAffichés += titre }
         override fun afficherListeVide(onglet: OngletCreer) { listeVide = onglet }
         override fun ouvrirEditeur(quizId: Int?) { éditeurOuvert = true; idOuvert = quizId }
         override fun afficherErreurChargement() { erreurChargement = true }

@@ -1,8 +1,7 @@
-
 package com.crosemont.qwizup
 
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
-import com.crosemont.qwizup.presentation.ModeleQuiz.CarteDiscover
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
+import com.crosemont.qwizup.presentation.ModèleQuiz.CarteDiscover
 import com.crosemont.qwizup.presentation.discover.ContratDécouvrir
 import com.crosemont.qwizup.presentation.discover.PrésentateurDécouvrir
 import kotlinx.coroutines.CoroutineName
@@ -36,7 +35,7 @@ class PrésentateurDécouvrirTest {
     fun `Étant donné qu'un modèle contient deux quiz lorsqu'on attache la vue, on obtient Tous et les deux quiz`() {
         présentateur.attacherVue(vue)
 
-        assertEquals(listOf<CategorieQuiz?>(null), vue.catégoriesAffichées)
+        assertEquals(listOf<CatégorieQuiz?>(null), vue.catégoriesAffichées)
         assertEquals(listOf("Le système solaire", "La Révolution tranquille"), vue.titresAffichés)
     }
 
@@ -44,9 +43,9 @@ class PrésentateurDécouvrirTest {
     fun `Étant donné que deux quiz sont disponibles lorsqu'on choisit Sciences, on obtient seulement le quiz de sciences`() {
         présentateur.attacherVue(vue)
 
-        présentateur.choisirCatégorie(CategorieQuiz.SCIENCES)
+        présentateur.choisirCatégorie(CatégorieQuiz.SCIENCES)
 
-        assertEquals(CategorieQuiz.SCIENCES, vue.catégoriesAffichées.last())
+        assertEquals(CatégorieQuiz.SCIENCES, vue.catégoriesAffichées.last())
         assertEquals(listOf("Le système solaire"), vue.titresAffichés)
     }
 
@@ -138,7 +137,7 @@ class PrésentateurDécouvrirTest {
         val appelsAvant = vue.nbAppels
 
         présentateur.rechercher("zzz")
-        présentateur.choisirCatégorie(CategorieQuiz.HISTOIRE)
+        présentateur.choisirCatégorie(CatégorieQuiz.HISTOIRE)
         présentateur.basculerFavori(1)
         présentateur.jouer(1)
 
@@ -157,18 +156,35 @@ class PrésentateurDécouvrirTest {
 
     private class FauxModèle : ContratDécouvrir.IModèleDécouvrir {
         private val quiz = listOf(
-            CarteDiscover(1, CategorieQuiz.SCIENCES, "Le système solaire", "Planètes et lunes", 10, 5),
-            CarteDiscover(2, CategorieQuiz.HISTOIRE, "La Révolution tranquille", "Le Québec des années 1960", 8, 4)
+            CarteDiscover(
+                1,
+                CatégorieQuiz.SCIENCES,
+                "Le système solaire",
+                "Planètes et lunes",
+                10,
+                5
+            ),
+            CarteDiscover(
+                2,
+                CatégorieQuiz.HISTOIRE,
+                "La Révolution tranquille",
+                "Le Québec des années 1960",
+                8,
+                4
+            )
         )
         val favoris = mutableSetOf<String>()
         val filsUtilisés = mutableListOf<String?>()
         var enPanne = false
 
-        override suspend fun obtenirQuiz(catégorie: CategorieQuiz?, recherche: String): List<CarteDiscover> {
+        override suspend fun obtenirQuiz(
+            catégorie: CatégorieQuiz?,
+            recherche: String
+        ): List<CarteDiscover> {
             noterLeFil()
             if (enPanne) throw IllegalStateException("Le modèle est en panne")
             return quiz
-                .filter { catégorie == null || it.categorie == catégorie }
+                .filter { catégorie == null || it.catégorie == catégorie }
                 .filter { it.titre.contains(recherche, ignoreCase = true) }
                 .map { it.copy(estFavori = it.titre in favoris) }
         }
@@ -191,7 +207,7 @@ class PrésentateurDécouvrirTest {
     private class FausseVue : ContratDécouvrir.IVueDécouvrir {
         val titresAffichés = mutableListOf<String>()
         val favorisParId = mutableMapOf<Int, Boolean>()
-        val catégoriesAffichées = mutableListOf<CategorieQuiz?>()
+        val catégoriesAffichées = mutableListOf<CatégorieQuiz?>()
         var aucunRésultat = false
         var quizOuvert: String? = null
         var quizBientôt: String? = null
@@ -207,7 +223,7 @@ class PrésentateurDécouvrirTest {
 
         override fun ajouterQuiz(
             id: Int,
-            catégorie: CategorieQuiz,
+            catégorie: CatégorieQuiz,
             titre: String,
             description: String,
             nbQuestions: Int,
@@ -224,7 +240,7 @@ class PrésentateurDécouvrirTest {
             aucunRésultat = true
         }
 
-        override fun afficherCatégorieChoisie(catégorie: CategorieQuiz?) {
+        override fun afficherCatégorieChoisie(catégorie: CatégorieQuiz?) {
             nbAppels++
             catégoriesAffichées.add(catégorie)
         }

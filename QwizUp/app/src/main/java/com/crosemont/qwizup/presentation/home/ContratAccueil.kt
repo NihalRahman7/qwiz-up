@@ -1,8 +1,8 @@
 package com.crosemont.qwizup.presentation.home
 
 import com.crosemont.qwizup.domaine.entites.Statistiques
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.Presentateur
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.Vue
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Présentateur
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Vue
 
 // Contrat de l'écran d'accueil : ce que la vue sait faire et ce que le présentateur reçoit
 interface ContratAccueil {
@@ -10,22 +10,26 @@ interface ContratAccueil {
     interface IVueAccueil : Vue {
         // Ouvre l'écran de jeu pour le quiz choisi
         fun ouvrirQuiz(quizId: Int)
+
         // Ouvre l'écran pour entrer un code de quiz
         fun ouvrirRejoindre()
+
         // Affiche la série, le nombre de quiz complétés et le taux de réussite
-        fun afficherStatistiques(serie: Int, nbQuizCompletes: Int, tauxReussite: Int)
+        fun afficherStatistiques(serie: Int, nbQuizCompletes: Int, tauxRéussite: Int)
+
         // Le modèle n'a pas pu répondre
         fun afficherErreur()
     }
 
-    interface IPresentateurAccueil : Presentateur<IVueAccueil> {
+    interface IPrésentateurAccueil : Présentateur<IVueAccueil> {
         // L'utilisateur a cliqué sur une carte de quiz
         fun surQuizClique(quizId: Int)
+
         // L'utilisateur a cliqué sur le bouton « Code »
         fun surCodeClique()
     }
 
-    interface IModeleAccueil {
+    interface IModèleAccueil {
         suspend fun obtenirStatistiques(): Statistiques
     }
 }

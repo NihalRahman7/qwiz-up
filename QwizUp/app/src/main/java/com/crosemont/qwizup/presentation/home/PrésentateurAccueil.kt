@@ -1,6 +1,6 @@
 package com.crosemont.qwizup.presentation.home
 
-import com.crosemont.qwizup.presentation.home.ContratAccueil.IPresentateurAccueil
+import com.crosemont.qwizup.presentation.home.ContratAccueil.IPrésentateurAccueil
 import com.crosemont.qwizup.presentation.home.ContratAccueil.IVueAccueil
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
@@ -12,11 +12,11 @@ import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 // Présentateur de l'accueil : reçoit les clics de la vue et décide quoi faire
-class PresentateurAccueil (
-    private val modele: ContratAccueil.IModeleAccueil,
+class PrésentateurAccueil(
+    private val modele: ContratAccueil.IModèleAccueil,
     private val filPrincipal: CoroutineContext = Dispatchers.Main, // pour mettre la vue à jour
     private val filArrièrePlan: CoroutineContext = Dispatchers.IO, // pour appeler le modèle
-) : IPresentateurAccueil {
+) : IPrésentateurAccueil {
 
     // La vue attachée (null quand l'écran n'est pas affiché)
     private var vue: IVueAccueil? = null
@@ -47,11 +47,11 @@ class PresentateurAccueil (
         vue?.ouvrirRejoindre()
     }
 
-    private fun chargerStatistiques(){
+    private fun chargerStatistiques() {
         corountines?.launch {
             try {
                 val stats = withContext(filArrièrePlan) { modele.obtenirStatistiques() }
-                vue?.afficherStatistiques(stats.serie, stats.nbQuizCompletes, stats.tauxReussite)
+                vue?.afficherStatistiques(stats.série, stats.nbQuizComplètes, stats.tauxRéussite)
             } catch (e: CancellationException) {
                 vue?.afficherErreur()
             } catch (e: Exception) {

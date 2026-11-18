@@ -2,14 +2,14 @@ package com.crosemont.qwizup
 
 import com.crosemont.qwizup.domaine.service.ServiceCréation
 import com.crosemont.qwizup.domaine.service.ServiceException
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.AccesQuiz
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.Difficulte
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
-import com.crosemont.qwizup.presentation.ModeleQuiz.QuestionCreer
-import com.crosemont.qwizup.presentation.ModeleQuiz.QuizCreer
-import com.crosemont.qwizup.sourceDeDonnees.SourceQuizCréés
-import com.crosemont.qwizup.sourceDeDonnees.SourceQuizCréésBidon
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.AccèsQuiz
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Difficulté
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.TypeQuestion
+import com.crosemont.qwizup.presentation.ModèleQuiz.QuestionCréer
+import com.crosemont.qwizup.presentation.ModèleQuiz.QuizCréer
+import com.crosemont.qwizup.accèsAuxDonnées.SourceQuizCréés
+import com.crosemont.qwizup.accèsAuxDonnées.SourceQuizCréésBidon
 import java.io.IOException
 import kotlin.time.Duration
 import kotlinx.coroutines.runBlocking
@@ -24,16 +24,16 @@ class ServiceCréationTest {
     private lateinit var source: SourceQuizCréésBidon
     private lateinit var service: ServiceCréation
 
-    private val questionComplète = QuestionCreer(
+    private val questionComplète = QuestionCréer(
         "Quelle est la capitale du Canada?", TypeQuestion.CHOIX_MULTIPLE,
         listOf("Toronto", "Ottawa", "Montréal", "Vancouver"), setOf(1)
     )
-    private val questionIncomplète = QuestionCreer("", TypeQuestion.CHOIX_MULTIPLE)
+    private val questionIncomplète = QuestionCréer("", TypeQuestion.CHOIX_MULTIPLE)
 
-    private fun quiz(id: Int, titre: String, estPublie: Boolean, questions: List<QuestionCreer> = listOf(questionComplète)) =
-        QuizCreer(
-            id, titre, "", CategorieQuiz.GEOGRAPHIE, Difficulte.FACILE, AccesQuiz.TOUT_LE_MONDE,
-            questions, estPublie
+    private fun quiz(id: Int, titre: String, estPublié: Boolean, questions: List<QuestionCréer> = listOf(questionComplète)) =
+        QuizCréer(
+            id, titre, "", CatégorieQuiz.GÉOGRAPHIE, Difficulté.FACILE, AccèsQuiz.TOUT_LE_MONDE,
+            questions, estPublié
         )
 
     @Before
@@ -113,13 +113,13 @@ class ServiceCréationTest {
 
     @Test
     fun `Étant donné un quiz avec plusieurs bonnes réponses remplies lorsqu'on le publie, on obtient le quiz enregistré`() = runBlocking {
-        val plusieurs = QuestionCreer(
+        val plusieurs = QuestionCréer(
             "Lesquelles sont des capitales?", TypeQuestion.CHOIX_MULTIPLE,
             listOf("Paris", "Barcelone", "Rome", "Berlin"), setOf(0, 2, 3)
         )
         val enregistré = service.sauvegarder(quiz(0, "Capitales", true, listOf(plusieurs)))
 
-        assertTrue(enregistré.estPublie)
+        assertTrue(enregistré.estPublié)
     }
 
     @Test
@@ -155,7 +155,7 @@ class ServiceCréationTest {
 
     @Test
     fun `Étant donné une question à choix multiple sans bonne réponse cochée lorsqu'on publie, on obtient une ServiceException`() = runBlocking {
-        val sansBonneRéponse = questionComplète.copy(bonnesReponses = emptySet())
+        val sansBonneRéponse = questionComplète.copy(bonnesRéponses = emptySet())
         try {
             service.sauvegarder(quiz(0, "Quiz", true, listOf(sansBonneRéponse)))
             fail("Une ServiceException était attendue")
@@ -166,7 +166,7 @@ class ServiceCréationTest {
 
     @Test
     fun `Étant donné une bonne réponse cochée mais vide lorsqu'on publie, on obtient une ServiceException`() = runBlocking {
-        val réponseVide = questionComplète.copy(reponses = listOf("Toronto", "", "Montréal", "Vancouver"))   // la B est cochée
+        val réponseVide = questionComplète.copy(réponses = listOf("Toronto", "", "Montréal", "Vancouver"))   // la B est cochée
         try {
             service.sauvegarder(quiz(0, "Quiz", true, listOf(réponseVide)))
             fail("Une ServiceException était attendue")
@@ -177,7 +177,7 @@ class ServiceCréationTest {
 
     @Test
     fun `Étant donné une question à réponse écrite sans réponse attendue lorsqu'on publie, on obtient une ServiceException`() = runBlocking {
-        val écriteVide = QuestionCreer("Explique le cycle de l'eau", TypeQuestion.REPONSE_ECRITE, reponseAttendue = "  ")
+        val écriteVide = QuestionCréer("Explique le cycle de l'eau", TypeQuestion.REPONSE_ECRITE, réponseAttendue = "  ")
         try {
             service.sauvegarder(quiz(0, "Quiz", true, listOf(écriteVide)))
             fail("Une ServiceException était attendue")
@@ -199,13 +199,13 @@ class ServiceCréationTest {
 
     // ----- Catégorie « Autre » -----
 
-    private fun quizAutre(nom: String, estPublie: Boolean) =
-        quiz(0, "Quiz de sport", estPublie).copy(categorie = CategorieQuiz.AUTRE, categoriePerso = nom)
+    private fun quizAutre(nom: String, estPublié: Boolean) =
+        quiz(0, "Quiz de sport", estPublié).copy(catégorie = CatégorieQuiz.AUTRE, categoriePerso = nom)
 
     @Test
     fun `Étant donné un quiz Autre sans nom de catégorie lorsqu'on le publie, on obtient une ServiceException`() = runBlocking {
         try {
-            service.sauvegarder(quizAutre("   ", estPublie = true))
+            service.sauvegarder(quizAutre("   ", estPublié = true))
             fail("Une ServiceException était attendue")
         } catch (e: ServiceException) {
             assertEquals(2, source.lireQuiz().size)   // rien n'a été enregistré
@@ -214,7 +214,7 @@ class ServiceCréationTest {
 
     @Test
     fun `Étant donné un quiz Autre avec un nom de catégorie lorsqu'on le publie, on obtient le quiz enregistré avec ce nom`() = runBlocking {
-        val enregistré = service.sauvegarder(quizAutre("Sport", estPublie = true))
+        val enregistré = service.sauvegarder(quizAutre("Sport", estPublié = true))
 
         assertEquals("Sport", enregistré.categoriePerso)
         assertEquals("Sport", source.lireQuiz().first { it.id == enregistré.id }.categoriePerso)
@@ -222,21 +222,21 @@ class ServiceCréationTest {
 
     @Test
     fun `Étant donné un brouillon Autre sans nom de catégorie lorsqu'on le sauvegarde, on obtient le brouillon enregistré`() = runBlocking {
-        val enregistré = service.sauvegarder(quizAutre("", estPublie = false))
+        val enregistré = service.sauvegarder(quizAutre("", estPublié = false))
 
         assertEquals(3, enregistré.id)
     }
 
     @Test
     fun `Étant donné un nom de catégorie avec des espaces lorsqu'on le sauvegarde, on obtient le nom sans les espaces`() = runBlocking {
-        val enregistré = service.sauvegarder(quizAutre("   Sport   ", estPublie = true))
+        val enregistré = service.sauvegarder(quizAutre("   Sport   ", estPublié = true))
 
         assertEquals("Sport", enregistré.categoriePerso)
     }
 
     @Test
     fun `Étant donné une catégorie qui n'est pas Autre avec un nom de catégorie lorsqu'on le sauvegarde, on obtient un nom de catégorie vide`() = runBlocking {
-        val sciences = quiz(0, "Planètes", true).copy(categorie = CategorieQuiz.SCIENCES, categoriePerso = "Sport")
+        val sciences = quiz(0, "Planètes", true).copy(catégorie = CatégorieQuiz.SCIENCES, categoriePerso = "Sport")
 
         val enregistré = service.sauvegarder(sciences)
 
@@ -245,7 +245,7 @@ class ServiceCréationTest {
 
     /** Fausse source qui échoue toujours, comme un fichier illisible. */
     private class SourceEnPanne : SourceQuizCréés {
-        override suspend fun lireQuiz(): List<QuizCreer> = throw IOException("Lecture impossible")
-        override suspend fun écrireQuiz(quiz: List<QuizCreer>) = throw IOException("Écriture impossible")
+        override suspend fun lireQuiz(): List<QuizCréer> = throw IOException("Lecture impossible")
+        override suspend fun écrireQuiz(quiz: List<QuizCréer>) = throw IOException("Écriture impossible")
     }
 }

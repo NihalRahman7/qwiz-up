@@ -7,52 +7,56 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.home.ContratAccueil.IPresentateurAccueil
+import com.crosemont.qwizup.presentation.home.ContratAccueil.IPrésentateurAccueil
 import com.crosemont.qwizup.presentation.home.ContratAccueil.IVueAccueil
 
-class AccueilFragment : Fragment(R.layout.fragment_home), IVueAccueil {
+class FragmentAccueil : Fragment(R.layout.fragment_home), IVueAccueil {
 
     // Le présentateur qui gère la logique de cet écran (créé dans onViewCreated, quand le contexte existe)
-    private lateinit var presentateur: IPresentateurAccueil
+    private lateinit var présentateur: IPrésentateurAccueil
 
     // Les textes des statistiques
-    private lateinit var texteSerie: TextView
-    private lateinit var texteCompletes: TextView
-    private lateinit var texteReussite: TextView
+    private lateinit var texteSérie: TextView
+    private lateinit var texteComplètes: TextView
+    private lateinit var texteRéussite: TextView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presentateur = FabriqueAccueil.creerPresentateur(requireContext().filesDir)
+        présentateur = FabriqueAccueil.créerPrésentateur(requireContext().filesDir)
 
-        texteSerie = view.findViewById(R.id.text_streak)
-        texteCompletes = view.findViewById(R.id.text_completed)
-        texteReussite = view.findViewById(R.id.text_correct)
+        texteSérie = view.findViewById(R.id.text_streak)
+        texteComplètes = view.findViewById(R.id.text_completed)
+        texteRéussite = view.findViewById(R.id.text_correct)
 
         // Chaque clic est transmis au présentateur.
         // Les id des quiz suivent la numérotation de Créer :
         // 1 = Le système solaire, 2 = Bases de Kotlin, 3 = Capitales d'Europe
-        view.findViewById<View>(R.id.button_jouer_1).setOnClickListener { presentateur.surQuizClique(1) }
-        view.findViewById<View>(R.id.button_jouer_2).setOnClickListener { presentateur.surQuizClique(2) }
-        view.findViewById<View>(R.id.carte_suggestion).setOnClickListener { presentateur.surQuizClique(3) }
-        view.findViewById<View>(R.id.button_join_code).setOnClickListener { presentateur.surCodeClique() }
+        view.findViewById<View>(R.id.button_jouer_1)
+            .setOnClickListener { présentateur.surQuizClique(1) }
+        view.findViewById<View>(R.id.button_jouer_2)
+            .setOnClickListener { présentateur.surQuizClique(2) }
+        view.findViewById<View>(R.id.carte_suggestion)
+            .setOnClickListener { présentateur.surQuizClique(3) }
+        view.findViewById<View>(R.id.button_join_code)
+            .setOnClickListener { présentateur.surCodeClique() }
 
         // L'écran est prêt : on le présente au présentateur (il charge alors les statistiques)
-        presentateur.attacherVue(this)
+        présentateur.attacherVue(this)
     }
 
     override fun onDestroyView() {
         // L'écran disparaît : le présentateur ne doit plus l'utiliser
-        presentateur.detacherVue()
+        présentateur.detacherVue()
         super.onDestroyView()
     }
 
     // ----- IVueAccueil -----
 
     // Affiche les statistiques reçues du présentateur
-    override fun afficherStatistiques(serie: Int, nbQuizCompletes: Int, tauxReussite: Int) {
-        texteSerie.text = getString(R.string.home_streak_value, serie)
-        texteCompletes.text = nbQuizCompletes.toString()
-        texteReussite.text = getString(R.string.home_correct_value, tauxReussite)
+    override fun afficherStatistiques(serie: Int, nbQuizCompletes: Int, tauxRéussite: Int) {
+        texteSérie.text = getString(R.string.home_streak_value, serie)
+        texteComplètes.text = nbQuizCompletes.toString()
+        texteRéussite.text = getString(R.string.home_correct_value, tauxRéussite)
     }
 
     // Le modèle n'a pas pu lire les statistiques
