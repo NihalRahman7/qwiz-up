@@ -10,7 +10,10 @@ class ModèleAccueil(
     override suspend fun obtenirStatistiques(): Statistiques =
         serviceStatistiques.obtenirStatistiques()
 
-    override suspend fun obtenirQuizEnCours(): List<Int> = QUIZ_EN_COURS_SIMULÉS   // pas encore fait (test en rouge)
+    override suspend fun obtenirQuizEnCours(): List<Int> {
+        val complétés = serviceStatistiques.obtenirQuizComplétés().toSet()
+        return QUIZ_EN_COURS_SIMULÉS.filter { it !in complétés }   // réussi à 100 % : plus en cours
+    }
 
     companion object {
         /**
