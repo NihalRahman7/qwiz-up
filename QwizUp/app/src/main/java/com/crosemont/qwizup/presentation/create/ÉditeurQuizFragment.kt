@@ -1,11 +1,8 @@
 package com.crosemont.qwizup.presentation.create
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -14,8 +11,6 @@ import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -95,27 +90,6 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdit
     private val saisiesReponses = listOf(R.id.saisie_reponse_1, R.id.saisie_reponse_2, R.id.saisie_reponse_3, R.id.saisie_reponse_4)
     private val lettres = listOf("A", "B", "C", "D")
 
-    // Vrai quand l'utilisateur a choisi sa propre photo : on ne la remplace plus par l'icône de la catégorie
-    private var photoChoisie = false
-
-    // Galerie : ouvre le sélecteur de photos d'Android (aucune permission nécessaire)
-    private val choisirPhoto =
-        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            if (uri != null) afficherPhotoCouverture { it.setImageURI(uri) }
-        }
-
-    // Appareil photo : ouvre l'app Caméra du téléphone et reçoit une petite image
-    private val prendrePhoto =
-        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { image ->
-            if (image != null) afficherPhotoCouverture { it.setImageBitmap(image) }
-        }
-
-    // Permission de la caméra : obligatoire, car la librairie du scan QR déclare la permission CAMERA
-    private val permissionCamera =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { accordee ->
-            if (accordee) prendrePhoto.launch(null)
-        }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -156,10 +130,6 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdit
             view.findViewById<MaterialButton>(id).setOnClickListener { presentateur.surAccesClique(accès) }
         }
 
-        view.findViewById<MaterialButton>(R.id.button_prendre_photo)
-            .setOnClickListener { presentateur.surPrendrePhotoClique() }
-        view.findViewById<MaterialButton>(R.id.button_galerie)
-            .setOnClickListener { presentateur.surGalerieClique() }
         view.findViewById<MaterialButton>(R.id.button_ajouter_question)
             .setOnClickListener { presentateur.surAjouterQuestionClique() }
         casePublier = view.findViewById(R.id.case_publier)
@@ -220,8 +190,8 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdit
             CatégorieQuiz.GÉOGRAPHIE -> R.drawable.ic_globe to R.color.badge_green_bg
             CatégorieQuiz.AUTRE -> R.drawable.ic_couverture_autre to R.color.badge_gray_bg
         }
-        // Si l'utilisateur a choisi sa photo, on la garde ; sinon, l'icône suit la catégorie
-        if (!photoChoisie) imageCouverture.setImageResource(image)
+        // L'image de couverture est toujours l'icône de la catégorie
+        imageCouverture.setImageResource(image)
         // Change seulement la couleur de fond : le contour pointillé reste
         (zoneCouverture.background.mutate() as GradientDrawable).setColor(couleur(fond))
     }
@@ -366,32 +336,6 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdit
         champCategoriePerso.error = null
     }
 
-    override fun ouvrirAppareilPhoto() {
-        // Demande la permission de la caméra si elle n'est pas encore accordée, puis ouvre l'app Caméra
-        val dejaAccordee = ContextCompat.checkSelfPermission(
-            requireContext(), Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED
-
-        if (dejaAccordee) prendrePhoto.launch(null)
-        else permissionCamera.launch(Manifest.permission.CAMERA)
-    }
-
-    override fun ouvrirGalerie() {
-        // Ouvre le sélecteur de photos d'Android (images seulement)
-        choisirPhoto.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-    }
-
-    /** Remplace l'icône de la catégorie par la photo choisie, en grand. */
-    private fun afficherPhotoCouverture(charger: (ImageView) -> Unit) {
-        photoChoisie = true
-        imageCouverture.layoutParams = imageCouverture.layoutParams.apply {
-            width = ViewGroup.LayoutParams.MATCH_PARENT
-            height = (160 * resources.displayMetrics.density).toInt()   // 160dp
-        }
-        imageCouverture.scaleType = ImageView.ScaleType.CENTER_CROP
-        charger(imageCouverture)
-    }
-
     override fun confirmerSauvegarde() {
         Toast.makeText(requireContext(), R.string.editeur_sauvegarde_ok, Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()
@@ -413,14 +357,23 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdit
             .show()
     }
 
-    override fun demanderConfirmationQuitter() {
-        MaterialAlertDialogBuilder(requireContext())
+    override fun demanderConfirmationQuitter(peutEnregistrer: Boolean, publier: Boolean) {
+        val dialogue = MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.editeur_confirmer_quitter_titre)
-            .setMessage(R.string.editeur_confirmer_quitter_message)
             .setNegativeButton(R.string.action_annuler, null)
-            .setNeutralButton(R.string.editeur_enregistrer) { _, _ -> presentateur.surEnregistrerClique() }
             .setPositiveButton(R.string.action_quitter) { _, _ -> presentateur.surQuitterConfirme() }
-            .show()
+
+        if (peutEnregistrer) {
+            // Le bouton dit exactement ce qu'il va faire, comme le gros bouton en bas
+            dialogue.setMessage(R.string.editeur_confirmer_quitter_message)
+                .setNeutralButton(if (publier) R.string.editeur_publier else R.string.editeur_enregistrer_brouillon) { _, _ ->
+                    presentateur.surEnregistrerClique()
+                }
+        } else {
+            // Il manque quelque chose : pas de bouton qui ne marcherait pas
+            dialogue.setMessage(R.string.editeur_confirmer_quitter_message_court)
+        }
+        dialogue.show()
     }
 
     override fun fermer() {

@@ -52,6 +52,10 @@ class PrésentateurAccueil(
             try {
                 val stats = withContext(filArrièrePlan) { modele.obtenirStatistiques() }
                 vue?.afficherStatistiques(stats.série, stats.nbQuizComplètes, stats.tauxRéussite)
+
+                // Un quiz réussi à 100 % disparaît de « Continuer »
+                val enCours = withContext(filArrièrePlan) { modele.obtenirQuizEnCours() }
+                vue?.afficherQuizEnCours(enCours)
             } catch (e: CancellationException) {
                 vue?.afficherErreur()
             } catch (e: Exception) {

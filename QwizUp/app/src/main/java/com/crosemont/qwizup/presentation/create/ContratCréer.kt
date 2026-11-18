@@ -57,8 +57,6 @@ interface ContratCréer {
         fun afficherErreur(erreur: ErreurEditeur)
         fun afficherErreurQuestion(numero: Int)
         fun effacerErreurs()
-        fun ouvrirAppareilPhoto()
-        fun ouvrirGalerie()
         fun confirmerSauvegarde()
         fun confirmerPublication(titre: String)
         fun demanderConfirmationSuppression(index: Int)
@@ -68,7 +66,11 @@ interface ContratCréer {
          * et message sous le bouton pour dire ce qui manque (raison = null : aucun message).
          */
         fun afficherBoutonEnregistrer(publier: Boolean, actif: Boolean, raison: ErreurEditeur?, numeroQuestion: Int)
-        fun demanderConfirmationQuitter()
+        /**
+         * Dialogue « Quitter sans sauvegarder? ». Le bouton pour enregistrer apparaît seulement
+         * si le quiz peut être enregistré, et il dit ce qu'il va faire (publier ou brouillon).
+         */
+        fun demanderConfirmationQuitter(peutEnregistrer: Boolean, publier: Boolean)
         fun fermer()
         fun afficherErreurChargement()   // le quiz n'a pas pu être ouvert
         fun afficherErreurSauvegarde()   // le quiz n'a pas pu être enregistré
@@ -82,8 +84,6 @@ interface ContratCréer {
         fun surCategoriePersoModifiee(nom: String)
         fun surDifficulteCliquee(difficulté: Difficulté)
         fun surAccesClique(accès: AccèsQuiz)
-        fun surPrendrePhotoClique()
-        fun surGalerieClique()
         fun surAjouterQuestionClique()
         fun surSupprimerQuestionClique(index: Int)
         fun surTypeQuestionClique(index: Int, type: TypeQuestion)

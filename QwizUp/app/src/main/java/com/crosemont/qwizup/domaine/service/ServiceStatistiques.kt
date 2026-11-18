@@ -24,6 +24,18 @@ class ServiceStatistiques(
         )
     }
 
+    /**
+     * Les quiz complétés : ceux réussis à 100 % (toutes les bonnes réponses) au moins une fois.
+     * Le plus récent en premier, chaque quiz une seule fois.
+     */
+    fun obtenirQuizComplétés(): List<Int> =
+        lireRésultats()
+            .reversed()                          // la dernière partie ajoutée en premier
+            .filter { it.score == it.total }     // toutes les bonnes réponses
+            .sortedByDescending { it.date }      // le jour le plus récent en premier
+            .map { it.quizId }
+            .distinct()                          // un quiz réussi deux fois compte une fois
+
     /** Enregistre une partie terminée, datée d'aujourd'hui. */
     fun enregistrerPartie(quizId: Int, score: Int, total: Int) {
         if (total <= 0) throw ServiceException("Le quiz n'a aucune question")

@@ -110,14 +110,6 @@ class PrésentateurÉditeur(
         vue?.afficherAccesChoisi(accès)
     }
 
-    override fun surPrendrePhotoClique() {
-        vue?.ouvrirAppareilPhoto()
-    }
-
-    override fun surGalerieClique() {
-        vue?.ouvrirGalerie()
-    }
-
     // ----- Questions -----
 
     override fun surAjouterQuestionClique() {
@@ -234,7 +226,9 @@ class PrésentateurÉditeur(
     // ----- Fermeture -----
 
     override fun surFermerClique() {
-        if (quiz != quizInitial) vue?.demanderConfirmationQuitter()
+        // Le bouton pour enregistrer est offert seulement si le quiz peut être enregistré,
+        // avec le même mot que le gros bouton en bas (« Publier » ou « Enregistrer le brouillon »)
+        if (quiz != quizInitial) vue?.demanderConfirmationQuitter(peutEnregistrer = ceQuiManque() == null, publier = quiz.estPublié)
         else vue?.fermer()
     }
 

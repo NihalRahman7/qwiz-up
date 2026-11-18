@@ -1,5 +1,6 @@
 package com.crosemont.qwizup.presentation
 
+import com.crosemont.qwizup.accèsAuxDonnées.QuizÀJouerBidon
 import com.crosemont.qwizup.accèsAuxDonnées.SourceQuizCréésBidon
 import com.crosemont.qwizup.domaine.service.ServiceQuiz
 import com.crosemont.qwizup.presentation.library.ContratLibrairie
@@ -135,7 +136,6 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         val typeBadge: ContratLibrairie.TypeBadge
     )
 
-    fun obternirCompletes(): List<CarteLibrary> = emptyList()
     /**
      * Les quiz créés par l'utilisateur, lus dans la même source que l'écran Créer.
      * Pont temporaire (comme pour l'écran de jeu) en attendant que la Librairie passe par un service.

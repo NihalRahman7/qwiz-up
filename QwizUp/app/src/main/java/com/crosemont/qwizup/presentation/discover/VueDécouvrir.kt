@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
@@ -77,7 +78,9 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
             CatégorieQuiz.HISTOIRE to view.findViewById<Chip>(R.id.chip_history),
             CatégorieQuiz.LANGUES to view.findViewById<Chip>(R.id.chip_languages),
             CatégorieQuiz.INFORMATIQUE to view.findViewById<Chip>(R.id.chip_informatique),
-            CatégorieQuiz.GÉOGRAPHIE to view.findViewById<Chip>(R.id.chip_geography)
+            CatégorieQuiz.GÉOGRAPHIE to view.findViewById<Chip>(R.id.chip_geography),
+            CatégorieQuiz.AUTRE to view.findViewById<Chip>(R.id.chip_autre)
+
         )
         puceFavoris = view.findViewById(R.id.chip_favoris)
 
