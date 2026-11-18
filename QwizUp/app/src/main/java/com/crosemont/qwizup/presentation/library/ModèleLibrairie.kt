@@ -1,6 +1,8 @@
 package com.crosemont.qwizup.presentation.library
 
+import com.crosemont.qwizup.accèsAuxDonnées.SourceRésultatsBidon
 import com.crosemont.qwizup.domaine.service.ServiceFavoris
+import com.crosemont.qwizup.domaine.service.ServiceStatistiques
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
 import com.crosemont.qwizup.presentation.ModèleQuiz
 import com.crosemont.qwizup.presentation.ModèleQuiz.CarteLibrary
@@ -10,6 +12,8 @@ import com.crosemont.qwizup.presentation.library.ContratLibrairie.OngletLibrairi
 class ModèleLibrairie(
     private val serviceFavoris: ServiceFavoris,
     private val catalogue: ModèleQuiz = ModèleQuiz(),
+    // Les parties jouées : sert à l'onglet Complétés (aucune partie par défaut)
+    private val serviceStatistiques: ServiceStatistiques = ServiceStatistiques(SourceRésultatsBidon(emptyList())),
 ) : ContratLibrairie.IModèleLibrairie {
 
     override suspend fun obtenirQuiz(onglet: OngletLibrairie): List<CarteLibrary> =
