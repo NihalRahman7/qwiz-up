@@ -127,7 +127,8 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         val difficulte: ContratVuePresentateur.Difficulte,
         val acces: ContratVuePresentateur.AccesQuiz,
         val questions: List<QuestionCreer>,
-        val estPublie: Boolean
+        val estPublie: Boolean,
+        val categoriePerso: String = ""     // nom de la catégorie quand categorie = AUTRE (ex. : Sport)
     )
 
     /**

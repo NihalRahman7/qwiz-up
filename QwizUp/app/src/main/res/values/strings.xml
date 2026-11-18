@@ -99,6 +99,9 @@
     <string name="editeur_brouillon">Brouillon</string>
     <string name="editeur_publier">Publier</string>
     <string name="editeur_erreur_titre">Donne un titre à ton quiz</string>
+    <string name="editeur_erreur_categorie">Précise la catégorie de ton quiz</string>
+    <string name="editeur_label_categorie_perso">Précise la catégorie</string>
+    <string name="editeur_categorie_perso_placeholder">Ex. : Sport, Musique, Cuisine</string>
     <string name="editeur_erreur_questions">Ajoute au moins une question avant de publier</string>
     <string name="editeur_erreur_question">La question %1$d n\'est pas complète</string>
     <string name="editeur_sauvegarde_ok">Brouillon sauvegardé</string>
