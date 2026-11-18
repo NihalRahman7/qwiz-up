@@ -20,6 +20,8 @@
     <string name="home_streak_value">%1$d j</string>
     <string name="home_correct_value">%1$d %%</string>
     <string name="home_error">Impossible de charger tes statistiques.</string>
+    <string name="home_avatar_initiale" translatable="false">J</string>
+    <string name="home_nom_utilisateur" translatable="false">John</string>
 
     <!-- Exemples temporaires, remplacés plus tard par les données du Modèle -->
     <string name="sample_quiz_1_title">Le système solaire</string>

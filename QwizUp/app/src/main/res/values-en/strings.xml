@@ -8,7 +8,7 @@
     <string name="home_greeting">Hello</string>
     <string name="home_join_code">Code</string>
     <string name="home_streak">Streak</string>
-    <string name="home_completed">Quizzes completed</string>
+    <string name="home_completed">Quiz completed</string>
     <string name="home_correct">Success rate</string>
     <string name="home_continue">Continue</string>
     <string name="home_suggestions">Suggestions</string>
@@ -17,6 +17,8 @@
     <string name="home_streak_value">%1$d d</string>
     <string name="home_correct_value">%1$d %%</string>
     <string name="home_error">Unable to load your statistics.</string>
+    <string name="home_avatar_initiale" translatable="false">J</string>
+    <string name="home_nom_utilisateur" translatable="false">John</string>
 
     <string name="sample_quiz_1_title">The Solar System</string>
     <string name="sample_quiz_1_meta">2 / 5 questions · Science</string>
