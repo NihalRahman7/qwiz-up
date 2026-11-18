@@ -27,7 +27,13 @@
     <string name="sample_quiz_2_title">Bases de Kotlin</string>
     <string name="sample_quiz_2_meta">3 / 5 questions · Informatique</string>
     <string name="sample_suggestion_title">Capitales d\'Europe</string>
-    <string name="sample_suggestion_meta">12 questions · 6 min · Géographie</string>
+    <string name="sample_suggestion_meta">4 questions · 2 min · Géographie</string>
+    <string name="sample_quiz_3_title">La Révolution tranquille</string>
+    <string name="sample_quiz_3_meta">1 / 4 questions · Histoire</string>
+    <string name="sample_suggestion_2_title">Verbes irréguliers anglais</string>
+    <string name="sample_suggestion_2_meta">5 questions · 3 min · Langues</string>
+    <string name="sample_suggestion_3_title">Géographie du Québec</string>
+    <string name="sample_suggestion_3_meta">4 questions · 2 min · Géographie</string>
     <string name="question_erreur">Impossible de charger ou de sauvegarder la partie.</string>
 
     <!--  Les String de la Navigation de la page Découvrir   -->

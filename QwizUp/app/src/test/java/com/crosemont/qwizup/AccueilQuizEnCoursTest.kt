@@ -25,7 +25,7 @@ class AccueilQuizEnCoursTest {
     private fun partie(quizId: Int, score: Int, total: Int) =
         RésultatPartie(quizId, score, total, aujourdhui)
 
-    // Quiz en cours simulés : 1 = Le système solaire, 2 = Bases de Kotlin
+    // Quiz en cours simulés : 1 = Le système solaire, 2 = Bases de Kotlin, 101 = La Révolution tranquille
     private fun quizEnCours(vararg parties: RésultatPartie) = runBlocking {
         ModèleAccueil(ServiceStatistiques(SourceRésultatsBidon(parties.toList())) { aujourdhui })
             .obtenirQuizEnCours()
@@ -34,23 +34,23 @@ class AccueilQuizEnCoursTest {
     // ----- Modèle -----
 
     @Test
-    fun `Étant donné qu'aucune partie n'a été jouée lorsqu'on obtient les quiz en cours, on obtient les deux quiz`() {
-        assertEquals(listOf(1, 2), quizEnCours())
+    fun `Étant donné qu'aucune partie n'a été jouée lorsqu'on obtient les quiz en cours, on obtient les trois quiz`() {
+        assertEquals(listOf(1, 2, 101), quizEnCours())
     }
 
     @Test
     fun `Étant donné le système solaire réussi à 100 % lorsqu'on obtient les quiz en cours, il n'y est plus`() {
-        assertEquals(listOf(2), quizEnCours(partie(1, 5, 5)))
+        assertEquals(listOf(2, 101), quizEnCours(partie(1, 5, 5)))
     }
 
     @Test
     fun `Étant donné le système solaire fini à 4 sur 5 lorsqu'on obtient les quiz en cours, il y est encore`() {
-        assertEquals(listOf(1, 2), quizEnCours(partie(1, 4, 5)))
+        assertEquals(listOf(1, 2, 101), quizEnCours(partie(1, 4, 5)))
     }
 
     @Test
-    fun `Étant donné les deux quiz réussis à 100 % lorsqu'on obtient les quiz en cours, on obtient une liste vide`() {
-        assertTrue(quizEnCours(partie(1, 5, 5), partie(2, 6, 6)).isEmpty())
+    fun `Étant donné les trois quiz réussis à 100 % lorsqu'on obtient les quiz en cours, on obtient une liste vide`() {
+        assertTrue(quizEnCours(partie(1, 5, 5), partie(2, 6, 6), partie(101, 4, 4)).isEmpty())
     }
 
     // ----- Présentateur -----

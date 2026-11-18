@@ -34,18 +34,26 @@ class FragmentAccueil : Fragment(R.layout.fragment_home), IVueAccueil {
         titreContinuer = view.findViewById(R.id.text_titre_continuer)
         cartesEnCours = mapOf(
             1 to view.findViewById(R.id.carte_en_cours_1),
-            2 to view.findViewById(R.id.carte_en_cours_2)
+            2 to view.findViewById(R.id.carte_en_cours_2),
+            101 to view.findViewById(R.id.carte_en_cours_3)
         )
 
         // Chaque clic est transmis au présentateur.
         // Les id des quiz suivent la numérotation de Créer :
         // 1 = Le système solaire, 2 = Bases de Kotlin, 3 = Capitales d'Europe
+        // 101 à 103 : quiz de test (QuizÀJouerBidon)
         view.findViewById<View>(R.id.button_jouer_1)
             .setOnClickListener { présentateur.surQuizClique(1) }
         view.findViewById<View>(R.id.button_jouer_2)
             .setOnClickListener { présentateur.surQuizClique(2) }
+        view.findViewById<View>(R.id.button_jouer_3)
+            .setOnClickListener { présentateur.surQuizClique(101) }
         view.findViewById<View>(R.id.carte_suggestion)
             .setOnClickListener { présentateur.surQuizClique(3) }
+        view.findViewById<View>(R.id.carte_suggestion_2)
+            .setOnClickListener { présentateur.surQuizClique(102) }
+        view.findViewById<View>(R.id.carte_suggestion_3)
+            .setOnClickListener { présentateur.surQuizClique(103) }
         view.findViewById<View>(R.id.button_join_code)
             .setOnClickListener { présentateur.surCodeClique() }
 

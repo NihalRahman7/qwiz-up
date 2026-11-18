@@ -23,7 +23,13 @@
     <string name="sample_quiz_2_title">Kotlin Basics</string>
     <string name="sample_quiz_2_meta">3 / 5 questions · Computer science</string>
     <string name="sample_suggestion_title">Capitals of Europe</string>
-    <string name="sample_suggestion_meta">12 questions · 6 min · Geography</string>
+    <string name="sample_suggestion_meta">4 questions · 2 min · Geography</string>
+    <string name="sample_quiz_3_title">The Quiet Revolution</string>
+    <string name="sample_quiz_3_meta">1 / 4 questions · History</string>
+    <string name="sample_suggestion_2_title">English irregular verbs</string>
+    <string name="sample_suggestion_2_meta">5 questions · 3 min · Languages</string>
+    <string name="sample_suggestion_3_title">Geography of Quebec</string>
+    <string name="sample_suggestion_3_meta">4 questions · 2 min · Geography</string>
 
     <string name="discover_search_hint">Search for a quiz</string>
     <string name="discover_play">Play</string>

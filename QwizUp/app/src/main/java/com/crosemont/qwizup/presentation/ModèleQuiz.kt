@@ -1,5 +1,6 @@
 package com.crosemont.qwizup.presentation
 
+import com.crosemont.qwizup.accèsAuxDonnées.QuizÀJouerBidon
 import com.crosemont.qwizup.accèsAuxDonnées.SourceQuizCréésBidon
 import com.crosemont.qwizup.domaine.service.ServiceQuiz
 import com.crosemont.qwizup.presentation.library.ContratLibrairie
@@ -158,7 +159,7 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
      * le choix multiple et le vrai ou faux.
      */
     fun obtenirQuizÀJouer(quizId: Int): QuizCréer? =
-        obtenirQuizCréer(quizId)?.let { quiz ->
+        (obtenirQuizCréer(quizId) ?: QuizÀJouerBidon.trouver(quizId))?.let { quiz ->
             quiz.copy(
                 questions = quiz.questions.filter {
                     it.type != ContratVuePrésentateur.TypeQuestion.REPONSE_ECRITE

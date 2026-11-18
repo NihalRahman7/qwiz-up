@@ -18,8 +18,9 @@ class ModèleAccueil(
     companion object {
         /**
          * Les quiz « en cours » sont encore simulés : la progression d'un quiz pas fini n'est pas sauvegardée.
-         * Ce sont les deux cartes « Continuer » du XML : 1 = Le système solaire, 2 = Bases de Kotlin.
+         * Ce sont les trois cartes « Continuer » du XML :
+         * 1 = Le système solaire, 2 = Bases de Kotlin, 101 = La Révolution tranquille.
          */
-        val QUIZ_EN_COURS_SIMULÉS = listOf(1, 2)
+        val QUIZ_EN_COURS_SIMULÉS = listOf(1, 2, 101)
     }
 }
