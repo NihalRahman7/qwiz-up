@@ -2,14 +2,17 @@ package com.crosemont.qwizup.presentation.discover
 
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
 import com.crosemont.qwizup.presentation.ModèleQuiz.CarteDiscover
+import com.crosemont.qwizup.presentation.discover.ContratDécouvrir.MeilleurScore
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.coroutines.CoroutineContext
 
 class PrésentateurDécouvrir(
     private val modèle: ContratDécouvrir.IModèleDécouvrir,
@@ -25,6 +28,7 @@ class PrésentateurDécouvrir(
 
     // Filtres choisis par l'utilisateur
     private var catégorieChoisie: CatégorieQuiz? = null   // null = « Tous »
+    private var seulementFavoris = false
     private var recherche = ""
 
     // Les quiz affichés en ce moment
@@ -33,7 +37,7 @@ class PrésentateurDécouvrir(
     override fun attacherVue(vue: ContratDécouvrir.IVueDécouvrir) {
         this.vue = vue
         coroutines = CoroutineScope(filPrincipal + Job())
-        vue.afficherCatégorieChoisie(catégorieChoisie)
+        afficherFiltre()
         afficherQuiz()
     }
 
@@ -50,7 +54,15 @@ class PrésentateurDécouvrir(
 
     override fun choisirCatégorie(catégorie: CatégorieQuiz?) {
         catégorieChoisie = catégorie
-        vue?.afficherCatégorieChoisie(catégorie)
+        seulementFavoris = false
+        afficherFiltre()
+        afficherQuiz()
+    }
+
+    override fun choisirFavoris() {
+        catégorieChoisie = null
+        seulementFavoris = true
+        afficherFiltre()
         afficherQuiz()
     }
 
@@ -75,32 +87,49 @@ class PrésentateurDécouvrir(
         }
     }
 
+    private fun afficherFiltre() {
+        if (seulementFavoris) vue?.afficherFavorisChoisis() else vue?.afficherCatégorieChoisie(catégorieChoisie)
+    }
+
     // Demande au modèle les quiz qui correspondent aux filtres, puis les envoie à la vue
     private fun afficherQuiz() {
         chargement?.cancel()   // une nouvelle demande remplace celle qui est en cours
         chargement = lancer {
             vue?.afficherChargement(true)
             try {
-                val quiz =
-                    withContext(filArrièrePlan) { modèle.obtenirQuiz(catégorieChoisie, recherche) }
+                val (tous, scores) = withContext(filArrièrePlan) {
+                    modèle.obtenirQuiz(catégorieChoisie, recherche) to meilleursScores()
+                }
+                val quiz = if (seulementFavoris) tous.filter { it.estFavori } else tous
                 quizAffichés = quiz
 
                 vue?.viderQuiz()
                 if (quiz.isEmpty()) {
-                    vue?.afficherAucunRésultat()
+                    if (seulementFavoris) vue?.afficherAucunFavori() else vue?.afficherAucunRésultat()
                 } else {
                     quiz.forEach {
                         vue?.ajouterQuiz(
                             it.id, it.catégorie, it.titre, it.description,
-                            it.nbQuestions, it.dureeMinutes, it.estFavori
+                            it.nbQuestions, it.dureeMinutes, it.estFavori, scores[it.id]
                         )
                     }
                 }
             } finally {
-                vue?.afficherChargement(false)
+                // Si une nouvelle recherche a remplacé celle-ci, c'est elle qui cachera l'indicateur
+                if (currentCoroutineContext().isActive) vue?.afficherChargement(false)
             }
         }
     }
+
+    // Les scores sont un bonus : s'ils ne peuvent pas être lus, on affiche quand même les quiz
+    private suspend fun meilleursScores(): Map<Int, MeilleurScore> =
+        try {
+            modèle.obtenirMeilleursScores()
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            emptyMap()
+        }
 
     // Lance une coroutine sur le fil principal. Si le modèle échoue, la vue affiche une erreur.
     private fun lancer(travail: suspend () -> Unit): Job? =

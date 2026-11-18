@@ -36,6 +36,12 @@ class ServiceStatistiques(
         }
     }
 
+    /** Le meilleur résultat obtenu pour chaque quiz déjà joué (la clé est le numéro du quiz). */
+    fun obtenirMeilleursScores(): Map<Int, RésultatPartie> =
+        lireRésultats()
+            .groupBy { it.quizId }
+            .mapValues { (_, parties) -> parties.maxBy { it.score.toDouble() / it.total } }
+
     private fun lireRésultats(): List<RésultatPartie> =
         try {
             source.lireRésultats()

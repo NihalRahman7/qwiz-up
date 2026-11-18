@@ -3,6 +3,7 @@ package com.crosemont.qwizup
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
 import com.crosemont.qwizup.presentation.ModèleQuiz.CarteDiscover
 import com.crosemont.qwizup.presentation.discover.ContratDécouvrir
+import com.crosemont.qwizup.presentation.discover.ContratDécouvrir.MeilleurScore
 import com.crosemont.qwizup.presentation.discover.PrésentateurDécouvrir
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Dispatchers
@@ -154,39 +155,99 @@ class PrésentateurDécouvrirTest {
         assertTrue(modèle.filsUtilisés.all { it == "arrière-plan" })
     }
 
+    @Test
+    fun `Étant donné que le modèle répond lorsqu'on attache la vue, on obtient l'indicateur affiché puis caché`() {
+        présentateur.attacherVue(vue)
+
+        assertEquals(listOf(true, false), vue.chargements)
+    }
+
+    @Test
+    fun `Étant donné que le modèle est en panne lorsqu'on attache la vue, on obtient l'indicateur caché`() {
+        modèle.enPanne = true
+
+        présentateur.attacherVue(vue)
+
+        assertEquals(false, vue.chargements.last())
+    }
+
+    @Test
+    fun `Étant donné qu'un quiz est en favori lorsqu'on choisit Favoris, on obtient la puce Favoris et seulement ce quiz`() {
+        modèle.favoris.add("La Révolution tranquille")
+        présentateur.attacherVue(vue)
+
+        présentateur.choisirFavoris()
+
+        assertEquals(1, vue.nbFavorisChoisis)
+        assertEquals(listOf("La Révolution tranquille"), vue.titresAffichés)
+    }
+
+    @Test
+    fun `Étant donné qu'aucun quiz n'est en favori lorsqu'on choisit Favoris, on obtient le message aucun favori`() {
+        présentateur.attacherVue(vue)
+
+        présentateur.choisirFavoris()
+
+        assertTrue(vue.aucunFavori)
+        assertFalse(vue.aucunRésultat)
+        assertTrue(vue.titresAffichés.isEmpty())
+    }
+
+    @Test
+    fun `Étant donné que Favoris est choisi lorsqu'on choisit Sciences, on obtient le quiz de sciences même sans étoile`() {
+        présentateur.attacherVue(vue)
+        présentateur.choisirFavoris()
+
+        présentateur.choisirCatégorie(CatégorieQuiz.SCIENCES)
+
+        assertEquals(CatégorieQuiz.SCIENCES, vue.catégoriesAffichées.last())
+        assertEquals(listOf("Le système solaire"), vue.titresAffichés)
+    }
+
+    @Test
+    fun `Étant donné qu'un quiz a déjà été joué lorsqu'on attache la vue, on obtient son meilleur score sur sa carte`() {
+        modèle.scores[1] = MeilleurScore(4, 5)
+
+        présentateur.attacherVue(vue)
+
+        assertEquals(MeilleurScore(4, 5), vue.scoresParId[1])
+        assertNull(vue.scoresParId[2])
+    }
+
+    @Test
+    fun `Étant donné que les scores sont illisibles lorsqu'on attache la vue, on obtient quand même les quiz sans erreur`() {
+        modèle.scoresEnPanne = true
+
+        présentateur.attacherVue(vue)
+
+        assertEquals(2, vue.titresAffichés.size)
+        assertFalse(vue.erreurAffichée)
+    }
+
     private class FauxModèle : ContratDécouvrir.IModèleDécouvrir {
         private val quiz = listOf(
-            CarteDiscover(
-                1,
-                CatégorieQuiz.SCIENCES,
-                "Le système solaire",
-                "Planètes et lunes",
-                10,
-                5
-            ),
-            CarteDiscover(
-                2,
-                CatégorieQuiz.HISTOIRE,
-                "La Révolution tranquille",
-                "Le Québec des années 1960",
-                8,
-                4
-            )
+            CarteDiscover(1, CatégorieQuiz.SCIENCES, "Le système solaire", "Planètes et lunes", 10, 5),
+            CarteDiscover(2, CatégorieQuiz.HISTOIRE, "La Révolution tranquille", "Le Québec des années 1960", 8, 4)
         )
         val favoris = mutableSetOf<String>()
+        val scores = mutableMapOf<Int, MeilleurScore>()
+        var scoresEnPanne = false
         val filsUtilisés = mutableListOf<String?>()
         var enPanne = false
 
-        override suspend fun obtenirQuiz(
-            catégorie: CatégorieQuiz?,
-            recherche: String
-        ): List<CarteDiscover> {
+        override suspend fun obtenirQuiz(catégorie: CatégorieQuiz?, recherche: String): List<CarteDiscover> {
             noterLeFil()
             if (enPanne) throw IllegalStateException("Le modèle est en panne")
             return quiz
                 .filter { catégorie == null || it.catégorie == catégorie }
                 .filter { it.titre.contains(recherche, ignoreCase = true) }
                 .map { it.copy(estFavori = it.titre in favoris) }
+        }
+
+        override suspend fun obtenirMeilleursScores(): Map<Int, MeilleurScore> {
+            noterLeFil()
+            if (scoresEnPanne) throw IllegalStateException("Les résultats sont illisibles")
+            return scores
         }
 
         override suspend fun basculerFavori(titre: String) {
@@ -207,18 +268,24 @@ class PrésentateurDécouvrirTest {
     private class FausseVue : ContratDécouvrir.IVueDécouvrir {
         val titresAffichés = mutableListOf<String>()
         val favorisParId = mutableMapOf<Int, Boolean>()
+        val scoresParId = mutableMapOf<Int, MeilleurScore?>()
         val catégoriesAffichées = mutableListOf<CatégorieQuiz?>()
         var aucunRésultat = false
+        var aucunFavori = false
+        var nbFavorisChoisis = 0
         var quizOuvert: String? = null
         var quizBientôt: String? = null
         var erreurAffichée = false
+        val chargements = mutableListOf<Boolean>()
         var nbAppels = 0
 
         override fun viderQuiz() {
             nbAppels++
             titresAffichés.clear()
             favorisParId.clear()
+            scoresParId.clear()
             aucunRésultat = false
+            aucunFavori = false
         }
 
         override fun ajouterQuiz(
@@ -228,16 +295,28 @@ class PrésentateurDécouvrirTest {
             description: String,
             nbQuestions: Int,
             duréeMinutes: Int,
-            estFavori: Boolean
+            estFavori: Boolean,
+            meilleurScore: MeilleurScore?
         ) {
             nbAppels++
             titresAffichés.add(titre)
             favorisParId[id] = estFavori
+            scoresParId[id] = meilleurScore
         }
 
         override fun afficherAucunRésultat() {
             nbAppels++
             aucunRésultat = true
+        }
+
+        override fun afficherAucunFavori() {
+            nbAppels++
+            aucunFavori = true
+        }
+
+        override fun afficherFavorisChoisis() {
+            nbAppels++
+            nbFavorisChoisis++
         }
 
         override fun afficherCatégorieChoisie(catégorie: CatégorieQuiz?) {
@@ -262,6 +341,7 @@ class PrésentateurDécouvrirTest {
 
         override fun afficherChargement(visible: Boolean) {
             nbAppels++
+            chargements.add(visible)
         }
     }
 }

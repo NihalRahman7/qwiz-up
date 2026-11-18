@@ -159,13 +159,53 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
      * le choix multiple et le vrai ou faux.
      */
     fun obtenirQuizÀJouer(quizId: Int): QuizCréer? =
-        obtenirQuizCréer(quizId)?.let { quiz ->
+        (obtenirQuizCréer(quizId) ?: quizDécouvrirÀJouer[quizId])?.let { quiz ->   // aussi les quiz 4 et 5 de Découvrir
             quiz.copy(
                 questions = quiz.questions.filter {
                     it.type != ContratVuePrésentateur.TypeQuestion.REPONSE_ECRITE
                 }
             )
         }
+
+
+    // Questions des quiz de Découvrir qui ne viennent pas de l'écran Créer (4 et 5)
+    private fun choixDécouvrir(texte: String, réponses: List<String>, vararg bonnes: Int) =
+        QuestionCréer(texte, ContratVuePrésentateur.TypeQuestion.CHOIX_MULTIPLE, réponses, bonnes.toSet())
+
+    private fun vraiFauxDécouvrir(texte: String, vrai: Boolean) =
+        QuestionCréer(texte, ContratVuePrésentateur.TypeQuestion.VRAI_FAUX, bonnesRéponses = setOf(if (vrai) 0 else 1))
+
+    private val quizDécouvrirÀJouer: Map<Int, QuizCréer> = mapOf(
+        4 to QuizCréer(
+            4, "La Révolution tranquille", "Les grands changements du Québec des années 1960.",
+            ContratVuePrésentateur.CatégorieQuiz.HISTOIRE, ContratVuePrésentateur.Difficulté.MOYEN,
+            ContratVuePrésentateur.AccèsQuiz.TOUT_LE_MONDE,
+            listOf(
+                choixDécouvrir("En quelle décennie la Révolution tranquille a-t-elle commencé?",
+                    listOf("1940", "1950", "1960", "1970"), 2),
+                choixDécouvrir("Quel premier ministre est élu en 1960, au début de la Révolution tranquille?",
+                    listOf("Maurice Duplessis", "Jean Lesage", "René Lévesque", "Robert Bourassa"), 1),
+                choixDécouvrir("Quel slogan a marqué l'élection de 1962?",
+                    listOf("Maîtres chez nous", "Je me souviens", "Égalité ou indépendance", "Vive le Québec libre"), 0),
+                vraiFauxDécouvrir("Le ministère de l'Éducation du Québec a été créé en 1964.", vrai = true),
+                vraiFauxDécouvrir("Hydro-Québec a été fondée pendant la Révolution tranquille.", vrai = false)
+            ),
+            estPublié = true
+        ),
+        5 to QuizCréer(
+            5, "Verbes irréguliers anglais", "Be, go, take… retrouve le passé des verbes les plus utilisés.",
+            ContratVuePrésentateur.CatégorieQuiz.LANGUES, ContratVuePrésentateur.Difficulté.FACILE,
+            ContratVuePrésentateur.AccèsQuiz.TOUT_LE_MONDE,
+            listOf(
+                choixDécouvrir("Quel est le passé simple de « go »?", listOf("goed", "went", "gone", "going"), 1),
+                choixDécouvrir("Quel est le participe passé de « take »?", listOf("took", "taked", "taken", "takes"), 2),
+                choixDécouvrir("Quel est le passé simple de « buy »?", listOf("buyed", "bought", "brought", "buys"), 1),
+                choixDécouvrir("Lesquels sont des verbes irréguliers?", listOf("eat", "play", "write", "walk"), 0, 2),
+                vraiFauxDécouvrir("Le passé simple de « cut » est « cut ».", vrai = true)
+            ),
+            estPublié = true
+        )
+    )
 
     // Rejoindre (code à 6 chiffres donné par l'enseignant·e)
     // Données codées en dur : chaque code ouvre un quiz (même numérotation que Créer)

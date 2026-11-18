@@ -33,6 +33,11 @@
     <string name="discover_no_quiz">No quiz found. Try another word or another category.</string>
     <string name="discover_play_soon">The quiz “%1$s” is coming soon!</string>
     <string name="discover_error">Unable to load the quizzes. Try again later.</string>
+    <string name="discover_ok">OK</string>
+    <string name="category_favorites">Favorites</string>
+    <string name="discover_no_favorite">No favorites yet. Tap a quiz\'s star to find it here.</string>
+    <string name="discover_best_score">Best score: %1$d/%2$d</string>
+    <string name="discover_not_played">Not played yet</string>
     <string name="category_all">All</string>
     <string name="category_sciences">Science</string>
     <string name="category_history">History</string>

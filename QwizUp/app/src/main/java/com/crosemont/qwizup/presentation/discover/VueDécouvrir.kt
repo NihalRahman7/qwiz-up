@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
@@ -17,7 +16,9 @@ import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
 import com.google.android.material.card.MaterialCardView
+import com.crosemont.qwizup.presentation.discover.ContratDécouvrir.MeilleurScore
 import com.google.android.material.chip.Chip
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
 
@@ -31,11 +32,13 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
     private lateinit var titres: List<TextView>
     private lateinit var descriptions: List<TextView>
     private lateinit var détails: List<TextView>
+    private lateinit var scores: List<TextView>
     private lateinit var boutonsFavori: List<ImageButton>
     private lateinit var boutonsJouer: List<View>
 
     // Les puces de catégorie (null = « Tous »)
     private lateinit var puces: Map<CatégorieQuiz?, Chip>
+    private lateinit var puceFavoris: Chip
 
     private val quizIds = IntArray(NB_CARTES)
     private var prochaineCarte = 0
@@ -57,10 +60,11 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
             .map { view.findViewById<TextView>(it) }
         titres = listOf(R.id.titre1, R.id.titre2, R.id.titre3, R.id.titre4)
             .map { view.findViewById<TextView>(it) }
-        descriptions =
-            listOf(R.id.description1, R.id.description2, R.id.description3, R.id.description4)
-                .map { view.findViewById<TextView>(it) }
+        descriptions = listOf(R.id.description1, R.id.description2, R.id.description3, R.id.description4)
+            .map { view.findViewById<TextView>(it) }
         détails = listOf(R.id.details1, R.id.details2, R.id.details3, R.id.details4)
+            .map { view.findViewById<TextView>(it) }
+        scores = listOf(R.id.score1, R.id.score2, R.id.score3, R.id.score4)
             .map { view.findViewById<TextView>(it) }
         boutonsFavori = listOf(R.id.favori1, R.id.favori2, R.id.favori3, R.id.favori4)
             .map { view.findViewById<ImageButton>(it) }
@@ -74,8 +78,8 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
             CatégorieQuiz.LANGUES to view.findViewById<Chip>(R.id.chip_languages),
             CatégorieQuiz.INFORMATIQUE to view.findViewById<Chip>(R.id.chip_informatique),
             CatégorieQuiz.GÉOGRAPHIE to view.findViewById<Chip>(R.id.chip_geography)
-
         )
+        puceFavoris = view.findViewById(R.id.chip_favoris)
 
         présentateur = FabriqueDécouvrir.créerPrésentateur(requireContext().filesDir)
 
@@ -88,9 +92,13 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
         puces.forEach { (catégorie, puce) ->
             puce.setOnClickListener { présentateur.choisirCatégorie(catégorie) }
         }
+        puceFavoris.setOnClickListener { présentateur.choisirFavoris() }
         view.findViewById<EditText>(R.id.edit_search).doAfterTextChanged { texte ->
             présentateur.rechercher(texte?.toString().orEmpty())
         }
+
+        // Les cartes restent cachées jusqu'à ce que les quiz arrivent
+        cartes.forEach { it.visibility = View.GONE }
 
         présentateur.attacherVue(this)
     }
@@ -113,7 +121,8 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
         description: String,
         nbQuestions: Int,
         duréeMinutes: Int,
-        estFavori: Boolean
+        estFavori: Boolean,
+        meilleurScore: MeilleurScore?
     ) {
         if (prochaineCarte >= NB_CARTES) return // Le XML n'a que quatre cartes
         val i = prochaineCarte++
@@ -133,26 +142,48 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
             boutonsFavori[i].contentDescription = getString(R.string.discover_add_favorite)
         }
 
+        // Meilleur score si le quiz a déjà été joué
+        if (meilleurScore != null) {
+            scores[i].text = getString(R.string.discover_best_score, meilleurScore.score, meilleurScore.total)
+            scores[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.primary_green))
+        } else {
+            scores[i].setText(R.string.discover_not_played)
+            scores[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary))
+        }
+
         cartes[i].visibility = View.VISIBLE
     }
 
     override fun afficherAucunRésultat() {
+        messageVide.setText(R.string.discover_no_quiz)
+        messageVide.visibility = View.VISIBLE
+    }
+
+    override fun afficherAucunFavori() {
+        messageVide.setText(R.string.discover_no_favorite)
         messageVide.visibility = View.VISIBLE
     }
 
     override fun afficherCatégorieChoisie(catégorie: CatégorieQuiz?) {
-        val contexte = requireContext()
-        puces.forEach { (catégoriePuce, puce) ->
-            val choisie = catégoriePuce == catégorie
-            val fond = if (choisie) R.color.text_primary else R.color.surface
-            val texte = if (choisie) R.color.white else R.color.text_primary
-            val contour = if (choisie) R.color.text_primary else R.color.border
+        puces.forEach { (catégoriePuce, puce) -> colorer(puce, choisie = catégoriePuce == catégorie) }
+        colorer(puceFavoris, choisie = false)
+    }
 
-            puce.chipBackgroundColor =
-                ColorStateList.valueOf(ContextCompat.getColor(contexte, fond))
-            puce.chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(contexte, contour))
-            puce.setTextColor(ContextCompat.getColor(contexte, texte))
-        }
+    override fun afficherFavorisChoisis() {
+        puces.values.forEach { colorer(it, choisie = false) }
+        colorer(puceFavoris, choisie = true)
+    }
+
+    // Puce choisie : fond foncé et texte blanc. Les autres : fond blanc.
+    private fun colorer(puce: Chip, choisie: Boolean) {
+        val contexte = requireContext()
+        val fond = if (choisie) R.color.text_primary else R.color.surface
+        val texte = if (choisie) R.color.white else R.color.text_primary
+        val contour = if (choisie) R.color.text_primary else R.color.border
+
+        puce.chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(contexte, fond))
+        puce.chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(contexte, contour))
+        puce.setTextColor(ContextCompat.getColor(contexte, texte))
     }
 
     override fun ouvrirQuiz(quizId: Int, titre: String) {
@@ -161,21 +192,25 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
         findNavController().navigate(R.id.action_decouvrir_vers_question, arguments)
     }
 
+    // Les messages restent affichés jusqu'à ce que l'utilisateur appuie sur OK
     override fun afficherQuizBientôt(titre: String) {
-        Toast.makeText(
-            requireContext(),
-            getString(R.string.discover_play_soon, titre),
-            Toast.LENGTH_SHORT
-        ).show()
+        afficherMessage(getString(R.string.discover_play_soon, titre))
     }
 
     override fun afficherErreur() {
-        Toast.makeText(requireContext(), R.string.discover_error, Toast.LENGTH_SHORT).show()
+        afficherMessage(getString(R.string.discover_error))
     }
 
     override fun afficherChargement(visible: Boolean) {
-        view?.findViewById<View>(R.id.progression)?.visibility =
+        view?.findViewById<View>(R.id.indicateurChargement)?.visibility =
             if (visible) View.VISIBLE else View.GONE
+    }
+
+    private fun afficherMessage(message: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage(message)
+            .setPositiveButton(R.string.discover_ok, null)
+            .show()
     }
 
     @StringRes
