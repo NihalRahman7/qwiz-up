@@ -19,8 +19,23 @@ class ModèleLibrairie(
     override suspend fun obtenirQuiz(onglet: OngletLibrairie): List<CarteLibrary> =
         when (onglet) {
             OngletLibrairie.FAVORIS -> obtenirFavoris()
-            OngletLibrairie.COMPLÉTÉS -> catalogue.obternirCompletes()
+            OngletLibrairie.COMPLÉTÉS -> obtenirComplétés()
             OngletLibrairie.CRÉES -> catalogue.obternirCrees()
+        }
+
+    /** Les quiz réussis à 100 %. Un résultat dont le quiz n'existe plus est ignoré. */
+    private fun obtenirComplétés(): List<CarteLibrary> =
+        serviceStatistiques.obtenirQuizComplétés().mapNotNull { quizId ->
+            catalogue.obtenirQuizÀJouer(quizId)?.let { quiz ->   // mêmes questions que dans le jeu
+                val nb = quiz.questions.size
+                CarteLibrary(
+                    quiz.id,
+                    quiz.titre,
+                    "${if (nb == 1) "1 question" else "$nb questions"} · toutes bonnes",
+                    badge = "100 %",
+                    typeBadge = ContratLibrairie.TypeBadge.PROGRESSION   // badge vert
+                )
+            }
         }
 
     private suspend fun obtenirFavoris(): List<CarteLibrary> {
