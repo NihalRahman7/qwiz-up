@@ -69,7 +69,11 @@ class CreateFragment : Fragment(R.layout.fragment_create), IVueCreate {
         val carte = layoutInflater.inflate(R.layout.item_quiz_creer, listeQuiz, false)
         carte.findViewById<TextView>(R.id.text_titre_quiz).text = titre
         carte.findViewById<TextView>(R.id.text_details_quiz).text =
-            resources.getQuantityString(R.plurals.editeur_nombre_questions, nbQuestions, nbQuestions)
+            resources.getQuantityString(
+                R.plurals.editeur_nombre_questions,
+                nbQuestions,
+                nbQuestions
+            )
         carte.findViewById<MaterialButton>(R.id.button_continuer).apply {
             setText(if (estPublie) R.string.creer_modifier else R.string.creer_continuer)
             setOnClickListener { presentateur.surQuizClique(id) }

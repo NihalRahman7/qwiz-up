@@ -78,8 +78,20 @@ class PresentateurLibrairieTest {
 
     private class FauxModele : ContratLibrairie.IModeleLibrairie {
         var favoris = listOf(
-            CarteLibrary(1, "Le système solaire", "Sciences · 10 questions", null, TypeBadge.NOUVEAU),
-            CarteLibrary(4, "La Révolution tranquille", "Histoire · 8 questions", null, TypeBadge.NOUVEAU)
+            CarteLibrary(
+                1,
+                "Le système solaire",
+                "Sciences · 10 questions",
+                null,
+                TypeBadge.NOUVEAU
+            ),
+            CarteLibrary(
+                4,
+                "La Révolution tranquille",
+                "Histoire · 8 questions",
+                null,
+                TypeBadge.NOUVEAU
+            )
         )
         var enPanne = false
         val filsUtilises = mutableListOf<String?>()
@@ -102,7 +114,13 @@ class PresentateurLibrairieTest {
             messageVide = null
         }
 
-        override fun ajouterCarteQuiz(id: Int, titre: String, sousTitre: String, badge: String?, typeBadge: TypeBadge) {
+        override fun ajouterCarteQuiz(
+            id: Int,
+            titre: String,
+            sousTitre: String,
+            badge: String?,
+            typeBadge: TypeBadge
+        ) {
             nbAppels++
             titresAffiches.add(titre)
         }

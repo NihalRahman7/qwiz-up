@@ -10,10 +10,13 @@ interface ContratAccueil {
     interface IVueAccueil : Vue {
         // Ouvre l'écran de jeu pour le quiz choisi
         fun ouvrirQuiz(quizId: Int)
+
         // Ouvre l'écran pour entrer un code de quiz
         fun ouvrirRejoindre()
+
         // Affiche la série, le nombre de quiz complétés et le taux de réussite
         fun afficherStatistiques(serie: Int, nbQuizCompletes: Int, tauxReussite: Int)
+
         // Le modèle n'a pas pu répondre
         fun afficherErreur()
     }
@@ -21,6 +24,7 @@ interface ContratAccueil {
     interface IPresentateurAccueil : Presentateur<IVueAccueil> {
         // L'utilisateur a cliqué sur une carte de quiz
         fun surQuizClique(quizId: Int)
+
         // L'utilisateur a cliqué sur le bouton « Code »
         fun surCodeClique()
     }

@@ -2,7 +2,6 @@ package com.crosemont.qwizup.presentation.discover
 
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
 import com.crosemont.qwizup.presentation.ModeleQuiz.CarteDiscover
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -10,6 +9,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
 
 class PrésentateurDécouvrir(
     private val modèle: ContratDécouvrir.IModèleDécouvrir,
@@ -81,7 +81,8 @@ class PrésentateurDécouvrir(
         chargement = lancer {
             vue?.afficherChargement(true)
             try {
-                val quiz = withContext(filArrièrePlan) { modèle.obtenirQuiz(catégorieChoisie, recherche) }
+                val quiz =
+                    withContext(filArrièrePlan) { modèle.obtenirQuiz(catégorieChoisie, recherche) }
                 quizAffichés = quiz
 
                 vue?.viderQuiz()

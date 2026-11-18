@@ -17,7 +17,10 @@ class ModèleDécouvrir(
     @Volatile
     private var catalogueChargé = false
 
-    override suspend fun obtenirQuiz(catégorie: CategorieQuiz?, recherche: String): List<CarteDiscover> {
+    override suspend fun obtenirQuiz(
+        catégorie: CategorieQuiz?,
+        recherche: String
+    ): List<CarteDiscover> {
         // Les quiz viennent du service, chargés une seule fois
         if (!catalogueChargé) {
             catalogue.chargerQuizDiscover()

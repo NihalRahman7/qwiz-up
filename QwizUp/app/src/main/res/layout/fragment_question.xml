@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Écran Question : une question à la fois, puis l'écran de résultat -->
+<?xml version="1.0" encoding="utf-8"?><!-- Écran Question : une question à la fois, puis l'écran de résultat -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"

@@ -1,14 +1,13 @@
 package com.crosemont.qwizup.presentation.question
 
 import android.content.res.ColorStateList
-import com.crosemont.qwizup.presentation.ModeleQuiz
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -103,8 +102,10 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
 
     /** Change la couleur de fond et de bordure d'un bouton de réponse. */
     private fun colorer(bouton: MaterialButton, @ColorRes fond: Int, @ColorRes bordure: Int) {
-        bouton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), fond))
-        bouton.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), bordure))
+        bouton.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), fond))
+        bouton.strokeColor =
+            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), bordure))
     }
 
     /** Affiche le message sous les réponses, avec ses couleurs. */
@@ -141,14 +142,18 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
 
         // Vrai ou faux : 2 boutons ; choix multiple : les réponses reçues
         reponsesAffichees =
-            if (type == TypeQuestion.VRAI_FAUX) listOf(getString(R.string.question_vrai), getString(R.string.question_faux))
+            if (type == TypeQuestion.VRAI_FAUX) listOf(
+                getString(R.string.question_vrai),
+                getString(R.string.question_faux)
+            )
             else reponses
 
         boutonsReponses.forEachIndexed { indice, bouton ->
             if (indice < reponsesAffichees.size) {
                 bouton.isVisible = true
                 bouton.isClickable = true
-                bouton.text = getString(R.string.question_reponse, lettres[indice], reponsesAffichees[indice])
+                bouton.text =
+                    getString(R.string.question_reponse, lettres[indice], reponsesAffichees[indice])
                 colorer(bouton, R.color.surface, R.color.border)
             } else {
                 bouton.isVisible = false
@@ -177,7 +182,8 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
 
     override fun activerValider(actif: Boolean) {
         boutonSuivant.isEnabled = actif
-        boutonSuivant.text = getString(if (actif) R.string.question_valider else R.string.question_choisir_plusieurs)
+        boutonSuivant.text =
+            getString(if (actif) R.string.question_valider else R.string.question_choisir_plusieurs)
     }
 
     override fun afficherCorrection(choisies: Set<Int>, bonnes: Set<Int>, estBonne: Boolean) {
@@ -185,18 +191,29 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
         reponsesAffichees.indices.forEach { i ->
             when (i) {
                 in bonnes -> colorer(boutonsReponses[i], R.color.light_green, R.color.primary_green)
-                in choisies -> colorer(boutonsReponses[i], R.color.light_orange, R.color.accent_orange)
+                in choisies -> colorer(
+                    boutonsReponses[i],
+                    R.color.light_orange,
+                    R.color.accent_orange
+                )
+
                 else -> colorer(boutonsReponses[i], R.color.surface, R.color.border)
             }
         }
 
         if (estBonne) {
-            afficherMessage(getString(R.string.question_bonne), R.color.light_green, R.color.primary_green)
+            afficherMessage(
+                getString(R.string.question_bonne),
+                R.color.light_green,
+                R.color.primary_green
+            )
         } else {
             val message = if (bonnes.size == 1) {
                 getString(R.string.question_mauvaise, reponsesAffichees[bonnes.first()])
             } else {
-                getString(R.string.question_mauvaise_plusieurs, bonnes.sorted().joinToString { "« ${reponsesAffichees[it]} »" })
+                getString(
+                    R.string.question_mauvaise_plusieurs,
+                    bonnes.sorted().joinToString { "« ${reponsesAffichees[it]} »" })
             }
             afficherMessage(message, R.color.light_orange, R.color.red_text)
         }
@@ -209,7 +226,12 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
         )
     }
 
-    override fun afficherResultat(titreQuiz: String, score: Int, total: Int, niveau: NiveauResultat) {
+    override fun afficherResultat(
+        titreQuiz: String,
+        score: Int,
+        total: Int,
+        niveau: NiveauResultat
+    ) {
         // Cache la partie jeu et montre la partie résultat
         groupeJeu.isVisible = false
         groupeResultat.isVisible = true

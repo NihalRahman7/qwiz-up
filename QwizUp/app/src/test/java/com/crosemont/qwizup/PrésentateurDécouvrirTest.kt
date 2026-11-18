@@ -1,4 +1,3 @@
-
 package com.crosemont.qwizup
 
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
@@ -157,14 +156,31 @@ class PrésentateurDécouvrirTest {
 
     private class FauxModèle : ContratDécouvrir.IModèleDécouvrir {
         private val quiz = listOf(
-            CarteDiscover(1, CategorieQuiz.SCIENCES, "Le système solaire", "Planètes et lunes", 10, 5),
-            CarteDiscover(2, CategorieQuiz.HISTOIRE, "La Révolution tranquille", "Le Québec des années 1960", 8, 4)
+            CarteDiscover(
+                1,
+                CategorieQuiz.SCIENCES,
+                "Le système solaire",
+                "Planètes et lunes",
+                10,
+                5
+            ),
+            CarteDiscover(
+                2,
+                CategorieQuiz.HISTOIRE,
+                "La Révolution tranquille",
+                "Le Québec des années 1960",
+                8,
+                4
+            )
         )
         val favoris = mutableSetOf<String>()
         val filsUtilisés = mutableListOf<String?>()
         var enPanne = false
 
-        override suspend fun obtenirQuiz(catégorie: CategorieQuiz?, recherche: String): List<CarteDiscover> {
+        override suspend fun obtenirQuiz(
+            catégorie: CategorieQuiz?,
+            recherche: String
+        ): List<CarteDiscover> {
             noterLeFil()
             if (enPanne) throw IllegalStateException("Le modèle est en panne")
             return quiz

@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.crosemont.qwizup.presentation.home.AccueilFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_accueil_vers_question"
             app:destination="@id/questionFragment" />
@@ -35,8 +35,8 @@
         tools:layout="@layout/fragment_editeur_quiz">
         <argument
             android:name="quizId"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
 
     <fragment
@@ -62,8 +62,8 @@
         tools:layout="@layout/fragment_question">
         <argument
             android:name="quizId"
-            app:argType="integer"
-            android:defaultValue="1" />
+            android:defaultValue="1"
+            app:argType="integer" />
     </fragment>
 
     <fragment

@@ -15,7 +15,6 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.ContratVuePresentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
@@ -58,8 +57,9 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
             .map { view.findViewById<TextView>(it) }
         titres = listOf(R.id.titre1, R.id.titre2, R.id.titre3, R.id.titre4)
             .map { view.findViewById<TextView>(it) }
-        descriptions = listOf(R.id.description1, R.id.description2, R.id.description3, R.id.description4)
-            .map { view.findViewById<TextView>(it) }
+        descriptions =
+            listOf(R.id.description1, R.id.description2, R.id.description3, R.id.description4)
+                .map { view.findViewById<TextView>(it) }
         détails = listOf(R.id.details1, R.id.details2, R.id.details3, R.id.details4)
             .map { view.findViewById<TextView>(it) }
         boutonsFavori = listOf(R.id.favori1, R.id.favori2, R.id.favori3, R.id.favori4)
@@ -148,7 +148,8 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
             val texte = if (choisie) R.color.white else R.color.text_primary
             val contour = if (choisie) R.color.text_primary else R.color.border
 
-            puce.chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(contexte, fond))
+            puce.chipBackgroundColor =
+                ColorStateList.valueOf(ContextCompat.getColor(contexte, fond))
             puce.chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(contexte, contour))
             puce.setTextColor(ContextCompat.getColor(contexte, texte))
         }
@@ -161,12 +162,17 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
     }
 
     override fun afficherQuizBientôt(titre: String) {
-        Toast.makeText(requireContext(), getString(R.string.discover_play_soon, titre), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.discover_play_soon, titre),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun afficherErreur() {
         Toast.makeText(requireContext(), R.string.discover_error, Toast.LENGTH_SHORT).show()
     }
+
     override fun afficherChargement(visible: Boolean) {
         view?.findViewById<View>(R.id.progression)?.visibility =
             if (visible) View.VISIBLE else View.GONE

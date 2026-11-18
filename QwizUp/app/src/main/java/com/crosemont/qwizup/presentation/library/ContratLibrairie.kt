@@ -8,7 +8,7 @@ interface ContratLibrairie {
     enum class OngletLibrairie { FAVORIS, COMPLETES, CREES }
     enum class TypeBadge { PROGRESSION, NOUVEAU, SCORE }
 
-    interface IVueLibrary: Vue {
+    interface IVueLibrary : Vue {
         fun viderCartes()
         fun ajouterCarteQuiz(
             id: Int,
@@ -17,12 +17,13 @@ interface ContratLibrairie {
             badge: String?,
             typeBadge: TypeBadge
         )
+
         fun afficherMessageVide(message: String)
         fun ouvrirDetails(quizId: Int, titre: String)
     }
 
 
-    interface IPresentateurLibrary: Presentateur<IVueLibrary>{
+    interface IPresentateurLibrary : Presentateur<IVueLibrary> {
         fun surOngletClique(onglet: OngletLibrairie)
         fun surQuizClique(quizId: Int, titre: String)
     }

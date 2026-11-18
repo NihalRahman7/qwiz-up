@@ -2,13 +2,13 @@ package com.crosemont.qwizup
 
 import com.crosemont.qwizup.domaine.entites.ResultatPartie
 import com.crosemont.qwizup.sourceDeDonnees.SourceResultatsLocale
-import java.io.File
-import java.time.LocalDate
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import java.io.File
+import java.time.LocalDate
 
 class SourceResultatsLocaleTest {
     private lateinit var fichier: File

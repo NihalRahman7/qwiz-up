@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Zone pointillée pour l'image de couverture -->
+<?xml version="1.0" encoding="utf-8"?><!-- Zone pointillée pour l'image de couverture -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <solid android:color="@color/light_green" />

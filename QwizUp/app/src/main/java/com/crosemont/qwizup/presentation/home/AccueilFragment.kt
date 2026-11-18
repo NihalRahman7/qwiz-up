@@ -31,10 +31,14 @@ class AccueilFragment : Fragment(R.layout.fragment_home), IVueAccueil {
         // Chaque clic est transmis au présentateur.
         // Les id des quiz suivent la numérotation de Créer :
         // 1 = Le système solaire, 2 = Bases de Kotlin, 3 = Capitales d'Europe
-        view.findViewById<View>(R.id.button_jouer_1).setOnClickListener { presentateur.surQuizClique(1) }
-        view.findViewById<View>(R.id.button_jouer_2).setOnClickListener { presentateur.surQuizClique(2) }
-        view.findViewById<View>(R.id.carte_suggestion).setOnClickListener { presentateur.surQuizClique(3) }
-        view.findViewById<View>(R.id.button_join_code).setOnClickListener { presentateur.surCodeClique() }
+        view.findViewById<View>(R.id.button_jouer_1)
+            .setOnClickListener { presentateur.surQuizClique(1) }
+        view.findViewById<View>(R.id.button_jouer_2)
+            .setOnClickListener { presentateur.surQuizClique(2) }
+        view.findViewById<View>(R.id.carte_suggestion)
+            .setOnClickListener { presentateur.surQuizClique(3) }
+        view.findViewById<View>(R.id.button_join_code)
+            .setOnClickListener { presentateur.surCodeClique() }
 
         // L'écran est prêt : on le présente au présentateur (il charge alors les statistiques)
         presentateur.attacherVue(this)

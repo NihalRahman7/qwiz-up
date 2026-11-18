@@ -61,7 +61,8 @@ class ModeleLibrairieTest {
     @Test(expected = ServiceException::class)
     fun `Étant donné que la source des quiz est en panne lorsqu'on demande les favoris, on obtient une ServiceException`() {
         val sourceEnPanne = object : SourceDeDonnees {
-            override suspend fun obtenirQuiz(limite: Int, decalage: Int): List<Quiz> = throw IllegalStateException("Pas de réseau")
+            override suspend fun obtenirQuiz(limite: Int, decalage: Int): List<Quiz> =
+                throw IllegalStateException("Pas de réseau")
         }
         val modele = ModeleLibrairie(
             ServiceFavoris(SourceFavorisBidon(setOf("Le système solaire"))),

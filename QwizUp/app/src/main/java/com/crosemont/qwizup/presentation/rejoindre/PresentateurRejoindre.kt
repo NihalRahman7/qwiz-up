@@ -33,8 +33,9 @@ class PresentateurRejoindre(
 
     override fun surRejoindreClique(code: String) {
         val codeTrimmer = code.trim()
-        val quizId = if (estFormatValide(codeTrimmer)) modele.trouverQuizParCode(codeTrimmer) else null
-        if (quizId == null){
+        val quizId =
+            if (estFormatValide(codeTrimmer)) modele.trouverQuizParCode(codeTrimmer) else null
+        if (quizId == null) {
             vue?.afficherCodeInvalide()
         } else {
             vue?.ouvrirQuiz(quizId)

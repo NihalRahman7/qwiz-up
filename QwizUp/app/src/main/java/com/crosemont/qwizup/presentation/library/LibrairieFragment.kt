@@ -1,13 +1,13 @@
 package com.crosemont.qwizup.presentation.library
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.crosemont.qwizup.R
 import com.crosemont.qwizup.presentation.library.ContratLibrairie.OngletLibrairie
 import com.crosemont.qwizup.presentation.library.ContratLibrairie.TypeBadge
@@ -65,12 +65,17 @@ class LibrairieFragment : Fragment(), ContratLibrairie.IVueLibrary {
         presentateur = FabriqueLibrairie.creerPresentateur(requireContext().filesDir)
 
         cartes.forEachIndexed { index, carte ->
-            carte.setOnClickListener { presentateur.surQuizClique(quizIds[index], titres[index].text.toString()) }
+            carte.setOnClickListener {
+                presentateur.surQuizClique(
+                    quizIds[index],
+                    titres[index].text.toString()
+                )
+            }
         }
 
         view.findViewById<MaterialButtonToggleGroup>(R.id.tabs)
             .addOnButtonCheckedListener { _, btnId, estCoche ->
-                if (estCoche){
+                if (estCoche) {
                     when (btnId) {
                         R.id.btnFavoris -> presentateur.surOngletClique(OngletLibrairie.FAVORIS)
                         R.id.btnComplets -> presentateur.surOngletClique(OngletLibrairie.COMPLETES)
@@ -90,7 +95,7 @@ class LibrairieFragment : Fragment(), ContratLibrairie.IVueLibrary {
     override fun viderCartes() {
         prochaineCarte = 0
         messageVide.visibility = View.GONE
-        cartes.forEach { it.visibility = View.GONE}
+        cartes.forEach { it.visibility = View.GONE }
     }
 
     override fun ajouterCarteQuiz(
@@ -108,7 +113,7 @@ class LibrairieFragment : Fragment(), ContratLibrairie.IVueLibrary {
         titres[i].text = titre
         sousTitres[i].text = sousTitre
 
-        if (badge == null){
+        if (badge == null) {
             cartesBadges[i].visibility = View.GONE
         } else {
             cartesBadges[i].visibility = View.VISIBLE
@@ -131,7 +136,11 @@ class LibrairieFragment : Fragment(), ContratLibrairie.IVueLibrary {
     }
 
     override fun ouvrirDetails(quizId: Int, titre: String) {
-        Toast.makeText(requireContext(), getString(R.string.librairie_quiz_soon, titre), Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.librairie_quiz_soon, titre),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     companion object {

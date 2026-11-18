@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Écran Librairie : titre, onglets Favoris / Complétés / Créés et cartes de quiz -->
+<?xml version="1.0" encoding="utf-8"?><!-- Écran Librairie : titre, onglets Favoris / Complétés / Créés et cartes de quiz -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -171,8 +170,8 @@
                     style="@style/Widget.Material3.Button.IconButton.Filled"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
-                    app:iconSize="18dp"
-                    app:icon="@drawable/ic_play" />
+                    app:icon="@drawable/ic_play"
+                    app:iconSize="18dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -253,8 +252,8 @@
                     style="@style/Widget.Material3.Button.IconButton.Filled"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
-                    app:iconSize="18dp"
-                    app:icon="@drawable/ic_play" />
+                    app:icon="@drawable/ic_play"
+                    app:iconSize="18dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -335,8 +334,8 @@
                     style="@style/Widget.Material3.Button.IconButton.Filled"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
-                    app:iconSize="18dp"
-                    app:icon="@drawable/ic_play" />
+                    app:icon="@drawable/ic_play"
+                    app:iconSize="18dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

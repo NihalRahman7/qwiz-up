@@ -1,7 +1,6 @@
 package com.crosemont.qwizup.presentation.library
 
 import com.crosemont.qwizup.presentation.library.ContratLibrairie.OngletLibrairie
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -9,12 +8,13 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
 
 class PresentateurLibrairie(
     private val modele: ContratLibrairie.IModeleLibrairie,
     private val filPrincipal: CoroutineContext = Dispatchers.Main,
     private val filArrierePlan: CoroutineContext = Dispatchers.IO,
-): ContratLibrairie.IPresentateurLibrary {
+) : ContratLibrairie.IPresentateurLibrary {
 
     private var vue: ContratLibrairie.IVueLibrary? = null
 
@@ -36,7 +36,7 @@ class PresentateurLibrairie(
                 val cartes = withContext(filArrierePlan) { modele.obtenirQuiz(onglet) }
 
                 vue?.viderCartes()
-                if (cartes.isEmpty()){
+                if (cartes.isEmpty()) {
                     vue?.afficherMessageVide(messageVide)
                 } else {
                     cartes.forEach {

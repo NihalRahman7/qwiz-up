@@ -4,7 +4,7 @@ import com.crosemont.qwizup.presentation.ContratVuePresentateur.Presentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.Vue
 
 interface ContratRejoindre {
-    interface  IVueRejoindre : Vue{
+    interface IVueRejoindre : Vue {
 
         // Active ou désactive le bouton « Rejoindre »
         fun activerRejoindre(actif: Boolean)

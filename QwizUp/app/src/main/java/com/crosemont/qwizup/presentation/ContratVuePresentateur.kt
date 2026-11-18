@@ -23,6 +23,7 @@ interface ContratVuePresentateur {
             dureeMinutes: Int,
             estFavori: Boolean
         )
+
         fun afficherAucunResultat()
         fun afficherCategorieChoisie(categorie: CategorieQuiz?)   // null = « Tous »
         fun ouvrirQuiz(quizId: Int, titre: String)
@@ -57,6 +58,7 @@ interface ContratVuePresentateur {
     // Éditeur de quiz (s'ouvre depuis Create avec « Nouveau quiz » ou « Continuer »)
     enum class Difficulte { FACILE, MOYEN, DIFFICILE }
     enum class AccesQuiz { TOUT_LE_MONDE, AVEC_CODE }
+
     // Partagé : utilisé aussi par l'écran Question
     enum class TypeQuestion { CHOIX_MULTIPLE, VRAI_FAUX, REPONSE_ECRITE }
     enum class ErreurEditeur { TITRE_VIDE, AUCUNE_QUESTION, QUESTION_INCOMPLETE }
@@ -77,6 +79,7 @@ interface ContratVuePresentateur {
             bonnesReponses: Set<Int>,      // choix multiple : une ou plusieurs de 0 à 3 ; vrai ou faux : {0} = vrai, {1} = faux
             reponseAttendue: String        // réponse écrite seulement
         )
+
         fun afficherBonnesReponses(index: Int, bonnesReponses: Set<Int>)
         fun afficherNombreQuestions(nombre: Int)
         fun afficherErreur(erreur: ErreurEditeur)
@@ -88,11 +91,18 @@ interface ContratVuePresentateur {
         fun confirmerPublication(titre: String)
         fun demanderConfirmationSuppression(index: Int)
         fun afficherPublication(estPublie: Boolean)   // coche ou décoche la case « Publier »
+
         /**
          * Texte du bouton selon la case, bouton gris s'il n'est pas actif,
          * et message sous le bouton pour dire ce qui manque (raison = null : aucun message).
          */
-        fun afficherBoutonEnregistrer(publier: Boolean, actif: Boolean, raison: ErreurEditeur?, numeroQuestion: Int)
+        fun afficherBoutonEnregistrer(
+            publier: Boolean,
+            actif: Boolean,
+            raison: ErreurEditeur?,
+            numeroQuestion: Int
+        )
+
         fun demanderConfirmationQuitter()
         fun fermer()
     }

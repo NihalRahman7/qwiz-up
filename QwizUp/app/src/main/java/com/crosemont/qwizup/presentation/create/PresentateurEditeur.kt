@@ -1,13 +1,13 @@
 package com.crosemont.qwizup.presentation.create
 
-import com.crosemont.qwizup.presentation.ModeleQuiz
-import com.crosemont.qwizup.presentation.ModeleQuiz.QuestionCreer
 import com.crosemont.qwizup.presentation.ContratVuePresentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.AccesQuiz
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.Difficulte
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.ErreurEditeur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
+import com.crosemont.qwizup.presentation.ModeleQuiz
+import com.crosemont.qwizup.presentation.ModeleQuiz.QuestionCreer
 
 class PresentateurEditeur(
     var modeleQuiz: ModeleQuiz = ModeleQuiz(),
@@ -141,7 +141,9 @@ class PresentateurEditeur(
         // Normalement le bouton est déjà gris s'il manque quelque chose, mais on vérifie quand même
         val manque = ceQuiManque()
         if (manque != null) {
-            if (manque.erreur == ErreurEditeur.QUESTION_INCOMPLETE) vue?.afficherErreurQuestion(manque.numeroQuestion)
+            if (manque.erreur == ErreurEditeur.QUESTION_INCOMPLETE) vue?.afficherErreurQuestion(
+                manque.numeroQuestion
+            )
             else vue?.afficherErreur(manque.erreur)
             return
         }
@@ -192,24 +194,36 @@ class PresentateurEditeur(
     }
 
     /** Une question est complète quand elle a un texte et une bonne réponse remplie. */
-    private fun estComplete(question: QuestionCreer): Boolean = question.texte.isNotBlank() && when (question.type) {
-        // Au moins une bonne réponse cochée, et chaque réponse cochée doit être remplie
-        TypeQuestion.CHOIX_MULTIPLE -> question.bonnesReponses.isNotEmpty() &&
-            question.bonnesReponses.all { question.reponses.getOrElse(it) { "" }.isNotBlank() }
-        TypeQuestion.VRAI_FAUX -> true
-        TypeQuestion.REPONSE_ECRITE -> question.reponseAttendue.isNotBlank()
-    }
+    private fun estComplete(question: QuestionCreer): Boolean =
+        question.texte.isNotBlank() && when (question.type) {
+            // Au moins une bonne réponse cochée, et chaque réponse cochée doit être remplie
+            TypeQuestion.CHOIX_MULTIPLE -> question.bonnesReponses.isNotEmpty() &&
+                    question.bonnesReponses.all {
+                        question.reponses.getOrElse(it) { "" }.isNotBlank()
+                    }
+
+            TypeQuestion.VRAI_FAUX -> true
+            TypeQuestion.REPONSE_ECRITE -> question.reponseAttendue.isNotBlank()
+        }
 
     private fun modifierQuestion(index: Int, changement: (QuestionCreer) -> QuestionCreer) {
         if (index !in quiz.questions.indices) return
-        quiz = quiz.copy(questions = quiz.questions.mapIndexed { i, q -> if (i == index) changement(q) else q })
+        quiz =
+            quiz.copy(questions = quiz.questions.mapIndexed { i, q -> if (i == index) changement(q) else q })
         mettreAJourBouton()
     }
 
     private fun afficherQuestions() {
         vue?.viderQuestions()
         quiz.questions.forEachIndexed { index, q ->
-            vue?.ajouterQuestion(index, q.texte, q.type, q.reponses, q.bonnesReponses, q.reponseAttendue)
+            vue?.ajouterQuestion(
+                index,
+                q.texte,
+                q.type,
+                q.reponses,
+                q.bonnesReponses,
+                q.reponseAttendue
+            )
         }
         vue?.afficherNombreQuestions(quiz.questions.size)
         mettreAJourBouton()

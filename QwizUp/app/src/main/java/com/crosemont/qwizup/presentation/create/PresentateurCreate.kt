@@ -1,8 +1,8 @@
 package com.crosemont.qwizup.presentation.create
 
-import com.crosemont.qwizup.presentation.ModeleQuiz
 import com.crosemont.qwizup.presentation.ContratVuePresentateur
 import com.crosemont.qwizup.presentation.ContratVuePresentateur.OngletCreer
+import com.crosemont.qwizup.presentation.ModeleQuiz
 
 class PresentateurCreate(
     var modeleQuiz: ModeleQuiz = ModeleQuiz(),

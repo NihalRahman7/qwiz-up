@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Ombre d'un onglet : la pastille choisie se soulève un peu, les autres restent à plat -->
+<?xml version="1.0" encoding="utf-8"?><!-- Ombre d'un onglet : la pastille choisie se soulève un peu, les autres restent à plat -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="true">
         <objectAnimator

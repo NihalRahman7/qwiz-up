@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 // Présentateur de l'accueil : reçoit les clics de la vue et décide quoi faire
-class PresentateurAccueil (
+class PresentateurAccueil(
     private val modele: ContratAccueil.IModeleAccueil,
     private val filPrincipal: CoroutineContext = Dispatchers.Main, // pour mettre la vue à jour
     private val filArrièrePlan: CoroutineContext = Dispatchers.IO, // pour appeler le modèle
@@ -47,7 +47,7 @@ class PresentateurAccueil (
         vue?.ouvrirRejoindre()
     }
 
-    private fun chargerStatistiques(){
+    private fun chargerStatistiques() {
         corountines?.launch {
             try {
                 val stats = withContext(filArrièrePlan) { modele.obtenirStatistiques() }

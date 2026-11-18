@@ -4,9 +4,9 @@ import com.crosemont.qwizup.domaine.entites.ResultatPartie
 import com.crosemont.qwizup.domaine.service.ServiceException
 import com.crosemont.qwizup.domaine.service.ServiceStatistiques
 import com.crosemont.qwizup.sourceDeDonnees.SourceResultatsBidon
-import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.time.LocalDate
 
 class ServiceStatistiquesTest {
 
@@ -32,7 +32,11 @@ class ServiceStatistiquesTest {
 
     @Test
     fun `Étant donné des parties aujourd'hui, hier et avant-hier lorsqu'on obtient la série, on obtient 3`() {
-        val stats = service(partie(1, 5, 5, 0), partie(2, 5, 5, 1), partie(3, 5, 5, 2)).obtenirStatistiques()
+        val stats = service(
+            partie(1, 5, 5, 0),
+            partie(2, 5, 5, 1),
+            partie(3, 5, 5, 2)
+        ).obtenirStatistiques()
 
         assertEquals(3, stats.serie)
     }

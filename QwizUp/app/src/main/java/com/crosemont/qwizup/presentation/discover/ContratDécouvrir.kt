@@ -18,6 +18,7 @@ interface ContratDécouvrir {
             duréeMinutes: Int,
             estFavori: Boolean
         )
+
         fun afficherAucunRésultat()
         fun afficherCatégorieChoisie(catégorie: CategorieQuiz?)   // null = « Tous »
         fun ouvrirQuiz(quizId: Int, titre: String)

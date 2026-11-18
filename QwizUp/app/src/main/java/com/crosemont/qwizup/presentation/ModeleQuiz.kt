@@ -59,8 +59,8 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         return quizDiscover.filter { quiz ->
             val bonneCategorie = categorie == null || quiz.categorie == categorie
             val contientTexte = texte.isEmpty() ||
-                simplifier(quiz.titre).contains(texte) ||
-                simplifier(quiz.description).contains(texte)
+                    simplifier(quiz.titre).contains(texte) ||
+                    simplifier(quiz.description).contains(texte)
             bonneCategorie && contientTexte
         }
     }
@@ -71,7 +71,9 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
     /** Ajoute le quiz aux favoris s'il n'y est pas, sinon le retire. */
     fun basculerFavoriDiscover(quizId: Int) {
         val quiz = quizDiscover.find { it.id == quizId } ?: return
-        if (!favorisDiscover.remove(quiz.quizIdApi)) { favorisDiscover.add(quiz.quizIdApi) }
+        if (!favorisDiscover.remove(quiz.quizIdApi)) {
+            favorisDiscover.add(quiz.quizIdApi)
+        }
         quizDiscover = quizDiscover.map {
             if (it.id == quizId) it.copy(estFavori = quiz.quizIdApi in favorisDiscover) else it
         }
@@ -80,11 +82,11 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
     private fun versCategorie(texte: String): ContratVuePresentateur.CategorieQuiz =
         when (simplifier(texte)) {
             "sciences", "science" -> ContratVuePresentateur.CategorieQuiz.SCIENCES
-            "histoire"            -> ContratVuePresentateur.CategorieQuiz.HISTOIRE
-            "langues"             -> ContratVuePresentateur.CategorieQuiz.LANGUES
-            "geographie"          -> ContratVuePresentateur.CategorieQuiz.GEOGRAPHIE
-            "informatique"        -> ContratVuePresentateur.CategorieQuiz.INFORMATIQUE
-            else                  -> ContratVuePresentateur.CategorieQuiz.AUTRE
+            "histoire" -> ContratVuePresentateur.CategorieQuiz.HISTOIRE
+            "langues" -> ContratVuePresentateur.CategorieQuiz.LANGUES
+            "geographie" -> ContratVuePresentateur.CategorieQuiz.GEOGRAPHIE
+            "informatique" -> ContratVuePresentateur.CategorieQuiz.INFORMATIQUE
+            else -> ContratVuePresentateur.CategorieQuiz.AUTRE
         }
 
     /** Met le texte en minuscules et enlève les accents (« Révolution » devient « revolution »). */
@@ -122,52 +124,116 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
 
     companion object {
         private fun choix(texte: String, reponses: List<String>, vararg bonnes: Int) =
-            QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.CHOIX_MULTIPLE, reponses, bonnes.toSet())
+            QuestionCreer(
+                texte,
+                ContratVuePresentateur.TypeQuestion.CHOIX_MULTIPLE,
+                reponses,
+                bonnes.toSet()
+            )
+
         private fun vraiFaux(texte: String, vrai: Boolean) =
-            QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.VRAI_FAUX, bonnesReponses = setOf(if (vrai) 0 else 1))
+            QuestionCreer(
+                texte,
+                ContratVuePresentateur.TypeQuestion.VRAI_FAUX,
+                bonnesReponses = setOf(if (vrai) 0 else 1)
+            )
+
         private fun ecrite(texte: String, attendue: String) =
-            QuestionCreer(texte, ContratVuePresentateur.TypeQuestion.REPONSE_ECRITE, reponseAttendue = attendue)
+            QuestionCreer(
+                texte,
+                ContratVuePresentateur.TypeQuestion.REPONSE_ECRITE,
+                reponseAttendue = attendue
+            )
 
         // Données codées en dur, partagées par tous les ModeleQuiz :
         // l'écran Créer et l'éditeur voient donc les mêmes quiz
         private val quizCreer = mutableListOf(
             QuizCreer(
-                1, "Le système solaire", "Planètes, lunes et distances.",
-                ContratVuePresentateur.CategorieQuiz.SCIENCES, ContratVuePresentateur.Difficulte.MOYEN,
+                1,
+                "Le système solaire",
+                "Planètes, lunes et distances.",
+                ContratVuePresentateur.CategorieQuiz.SCIENCES,
+                ContratVuePresentateur.Difficulte.MOYEN,
                 ContratVuePresentateur.AccesQuiz.AVEC_CODE,
                 listOf(
-                    choix("Quelle est la plus grande planète du système solaire?",
-                        listOf("Mars", "Jupiter", "Saturne", "Neptune"), 1),
+                    choix(
+                        "Quelle est la plus grande planète du système solaire?",
+                        listOf("Mars", "Jupiter", "Saturne", "Neptune"), 1
+                    ),
                     vraiFaux("La Lune produit sa propre lumière.", vrai = false),
-                    choix("Quelle planète est la plus proche du Soleil?", listOf("Vénus", "Mercure", "Mars", "Terre"), 1),
-                    choix("Combien de planètes compte le système solaire?", listOf("7", "8", "9", "10"), 1),
+                    choix(
+                        "Quelle planète est la plus proche du Soleil?",
+                        listOf("Vénus", "Mercure", "Mars", "Terre"),
+                        1
+                    ),
+                    choix(
+                        "Combien de planètes compte le système solaire?",
+                        listOf("7", "8", "9", "10"),
+                        1
+                    ),
                     vraiFaux("Mars est surnommée la planète rouge.", vrai = true)
                 ),
                 estPublie = false
             ),
             QuizCreer(
-                2, "Bases de Kotlin", "Les notions de base du langage Kotlin.",
-                ContratVuePresentateur.CategorieQuiz.INFORMATIQUE, ContratVuePresentateur.Difficulte.FACILE,
+                2,
+                "Bases de Kotlin",
+                "Les notions de base du langage Kotlin.",
+                ContratVuePresentateur.CategorieQuiz.INFORMATIQUE,
+                ContratVuePresentateur.Difficulte.FACILE,
                 ContratVuePresentateur.AccesQuiz.AVEC_CODE,
                 listOf(
-                    choix("Quel mot-clé déclare une variable qu'on ne peut pas réassigner?",
-                        listOf("var", "val", "let", "const"), 1),
+                    choix(
+                        "Quel mot-clé déclare une variable qu'on ne peut pas réassigner?",
+                        listOf("var", "val", "let", "const"), 1
+                    ),
                     vraiFaux("Kotlin peut utiliser les bibliothèques Java.", vrai = true),
-                    choix("Quel type représente du texte?", listOf("Int", "Char", "String", "Text"), 2),
-                    choix("Quel mot-clé déclare une fonction?", listOf("function", "def", "fun", "fn"), 2),
-                    choix("Lesquels sont des types de base en Kotlin?", listOf("Int", "String", "Integer", "Boolean"), 0, 1, 3),
+                    choix(
+                        "Quel type représente du texte?",
+                        listOf("Int", "Char", "String", "Text"),
+                        2
+                    ),
+                    choix(
+                        "Quel mot-clé déclare une fonction?",
+                        listOf("function", "def", "fun", "fn"),
+                        2
+                    ),
+                    choix(
+                        "Lesquels sont des types de base en Kotlin?",
+                        listOf("Int", "String", "Integer", "Boolean"),
+                        0,
+                        1,
+                        3
+                    ),
                     vraiFaux("Une variable String peut être null par défaut.", vrai = false)
                 ),
                 estPublie = false
             ),
             QuizCreer(
-                3, "Capitales d'Europe", "Associe chaque pays à sa capitale.",
-                ContratVuePresentateur.CategorieQuiz.GEOGRAPHIE, ContratVuePresentateur.Difficulte.FACILE,
+                3,
+                "Capitales d'Europe",
+                "Associe chaque pays à sa capitale.",
+                ContratVuePresentateur.CategorieQuiz.GEOGRAPHIE,
+                ContratVuePresentateur.Difficulte.FACILE,
                 ContratVuePresentateur.AccesQuiz.TOUT_LE_MONDE,
                 listOf(
-                    choix("Quelle est la capitale du Portugal?", listOf("Porto", "Lisbonne", "Madrid", "Faro"), 1),
-                    choix("Quelle est la capitale de la Finlande?", listOf("Oslo", "Stockholm", "Helsinki", "Tallinn"), 2),
-                    choix("Lesquelles de ces villes sont des capitales?", listOf("Paris", "Barcelone", "Rome", "Berlin"), 0, 2, 3),
+                    choix(
+                        "Quelle est la capitale du Portugal?",
+                        listOf("Porto", "Lisbonne", "Madrid", "Faro"),
+                        1
+                    ),
+                    choix(
+                        "Quelle est la capitale de la Finlande?",
+                        listOf("Oslo", "Stockholm", "Helsinki", "Tallinn"),
+                        2
+                    ),
+                    choix(
+                        "Lesquelles de ces villes sont des capitales?",
+                        listOf("Paris", "Barcelone", "Rome", "Berlin"),
+                        0,
+                        2,
+                        3
+                    ),
                     vraiFaux("Genève est la capitale de la Suisse.", vrai = false)
                 ),
                 estPublie = true
@@ -176,7 +242,9 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         private var prochainIdCreer = 4
     }
 
-    fun obtenirBrouillons(): List<CarteCreate> = quizCreer.filter { !it.estPublie }.map { it.enCarte() }
+    fun obtenirBrouillons(): List<CarteCreate> =
+        quizCreer.filter { !it.estPublie }.map { it.enCarte() }
+
     fun obtenirPublies(): List<CarteCreate> = quizCreer.filter { it.estPublie }.map { it.enCarte() }
 
     fun obtenirQuizCreer(quizId: Int): QuizCreer? = quizCreer.find { it.id == quizId }
@@ -207,9 +275,27 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
 
     // Données codées en dur
     private val favoris = listOf(
-        CarteLibrary(1, "Le système solaire", "Science - 10 questions", "4/5", ContratLibrairie.TypeBadge.PROGRESSION),
-        CarteLibrary(2, "Capitales d'Europe", "Géographie - 12 questions", "Nouveau", ContratLibrairie.TypeBadge.NOUVEAU),
-        CarteLibrary(3, "Verbe irréguliers anglais", "Langues - 15 questions", "87%", ContratLibrairie.TypeBadge.SCORE)
+        CarteLibrary(
+            1,
+            "Le système solaire",
+            "Science - 10 questions",
+            "4/5",
+            ContratLibrairie.TypeBadge.PROGRESSION
+        ),
+        CarteLibrary(
+            2,
+            "Capitales d'Europe",
+            "Géographie - 12 questions",
+            "Nouveau",
+            ContratLibrairie.TypeBadge.NOUVEAU
+        ),
+        CarteLibrary(
+            3,
+            "Verbe irréguliers anglais",
+            "Langues - 15 questions",
+            "87%",
+            ContratLibrairie.TypeBadge.SCORE
+        )
     )
 
     fun obternirFavoris(): List<CarteLibrary> = favoris
@@ -240,6 +326,7 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         "222222" to 2,   // Bases de Kotlin
         "333333" to 3    // Capitales d'Europe
     )
+
     /** Retourne l'id du quiz qui correspond au code, ou null si le code n'existe pas. */
     fun trouverQuizParCode(code: String): Int? = codesQuiz[code.trim()]
 }

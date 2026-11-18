@@ -29,6 +29,7 @@ class SourceResultatsLocale(private val fichier: File) : SourceResultats {
 
     companion object {
 
-        const val NOM_FICHIER = "resultats.txt" // Le même fichier est utilisé par l'accueil (lecture) et le jeu (écriture)
+        const val NOM_FICHIER =
+            "resultats.txt" // Le même fichier est utilisé par l'accueil (lecture) et le jeu (écriture)
     }
 }

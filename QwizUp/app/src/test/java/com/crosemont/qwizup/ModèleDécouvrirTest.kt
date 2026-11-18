@@ -1,4 +1,3 @@
-
 package com.crosemont.qwizup
 
 import com.crosemont.qwizup.domaine.service.ServiceFavoris
@@ -16,7 +15,11 @@ class ModèleDécouvrirTest {
     private fun créerModèle(vararg favoris: String) =
         ModèleDécouvrir(ServiceFavoris(SourceFavorisBidon(favoris.toSet())))
 
-    private fun quizDe(modèle: ModèleDécouvrir, catégorie: CategorieQuiz? = null, recherche: String = "") =
+    private fun quizDe(
+        modèle: ModèleDécouvrir,
+        catégorie: CategorieQuiz? = null,
+        recherche: String = ""
+    ) =
         runBlocking { modèle.obtenirQuiz(catégorie, recherche) }
 
     private fun basculer(modèle: ModèleDécouvrir, titre: String) =

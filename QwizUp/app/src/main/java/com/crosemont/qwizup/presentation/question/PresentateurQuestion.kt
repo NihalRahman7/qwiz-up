@@ -5,7 +5,6 @@ import com.crosemont.qwizup.presentation.ModeleQuiz
 import com.crosemont.qwizup.presentation.question.ContratQuestion.IPresentateurQuestion
 import com.crosemont.qwizup.presentation.question.ContratQuestion.IVueQuestion
 import com.crosemont.qwizup.presentation.question.ContratQuestion.NiveauResultat
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,6 +13,7 @@ import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
 
 class PresentateurQuestion(
     private val modele: ContratQuestion.IModeleQuestion,
@@ -127,7 +127,12 @@ class PresentateurQuestion(
 
         if (indiceQuestion == questions.lastIndex) {
             partieTerminee = true
-            vue?.afficherResultat(titreQuiz, score, questions.size, niveauPour(score, questions.size))
+            vue?.afficherResultat(
+                titreQuiz,
+                score,
+                questions.size,
+                niveauPour(score, questions.size)
+            )
             enregistrerPartie(quizId, score, questions.size)
         } else {
             indiceQuestion++
