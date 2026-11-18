@@ -1,7 +1,6 @@
 package com.crosemont.qwizup.presentation.library
 
 import com.crosemont.qwizup.presentation.library.ContratLibrairie.OngletLibrairie
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -9,12 +8,13 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
 
-class PresentateurLibrairie(
-    private val modele: ContratLibrairie.IModeleLibrairie,
+class PrésentateurLibrairie(
+    private val modèle: ContratLibrairie.IModèleLibrairie,
     private val filPrincipal: CoroutineContext = Dispatchers.Main,
-    private val filArrierePlan: CoroutineContext = Dispatchers.IO,
-): ContratLibrairie.IPresentateurLibrary {
+    private val filArrièrePlan: CoroutineContext = Dispatchers.IO,
+) : ContratLibrairie.IPrésentateurLibrary {
 
     private var vue: ContratLibrairie.IVueLibrary? = null
 
@@ -25,18 +25,18 @@ class PresentateurLibrairie(
     override fun surOngletClique(onglet: OngletLibrairie) {
         val messageVide = when (onglet) {
             OngletLibrairie.FAVORIS -> "Aucun favori pour l’instant"
-            OngletLibrairie.COMPLETES -> "Aucun quiz complété"
-            OngletLibrairie.CREES -> "Vous n'avez crées aucun quiz"
+            OngletLibrairie.COMPLÉTÉS -> "Aucun quiz complété"
+            OngletLibrairie.CRÉES -> "Vous n'avez crées aucun quiz"
         }
 
         chargement?.cancel()   // un nouvel onglet remplace la demande en cours
         chargement = coroutines?.launch {
             try {
 
-                val cartes = withContext(filArrierePlan) { modele.obtenirQuiz(onglet) }
+                val cartes = withContext(filArrièrePlan) { modèle.obtenirQuiz(onglet) }
 
                 vue?.viderCartes()
-                if (cartes.isEmpty()){
+                if (cartes.isEmpty()) {
                     vue?.afficherMessageVide(messageVide)
                 } else {
                     cartes.forEach {
@@ -53,7 +53,7 @@ class PresentateurLibrairie(
     }
 
     override fun surQuizClique(quizId: Int, titre: String) {
-        vue?.ouvrirDetails(quizId, titre)
+        vue?.ouvrirDétails(quizId, titre)
     }
 
     override fun attacherVue(vue: ContratLibrairie.IVueLibrary) {

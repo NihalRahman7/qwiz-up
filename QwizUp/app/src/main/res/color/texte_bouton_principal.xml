@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Texte du bouton principal : gris quand il est désactivé, blanc sinon -->
+<?xml version="1.0" encoding="utf-8"?><!-- Texte du bouton principal : gris quand il est désactivé, blanc sinon -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:color="@color/text_secondary" android:state_enabled="false" />
     <item android:color="@color/white" />

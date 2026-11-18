@@ -1,40 +1,16 @@
 package com.crosemont.qwizup.presentation
 
-interface ContratVuePresentateur {
+interface ContratVuePrésentateur {
 
     // Base commune
     interface Vue
-    interface Presentateur<V : Vue> {
+    interface Présentateur<V : Vue> {
         fun attacherVue(vue: V)
         fun detacherVue()
     }
 
     // Catégories de quiz (utilisées par Découvrir et l'éditeur de Créer)
-    enum class CategorieQuiz { SCIENCES, HISTOIRE, LANGUES, GEOGRAPHIE, INFORMATIQUE, AUTRE }
-
-    interface IVueDiscover : Vue {
-        fun viderCartes()
-        fun ajouterCarteQuiz(
-            id: Int,
-            categorie: CategorieQuiz,
-            titre: String,
-            description: String,
-            nbQuestions: Int,
-            dureeMinutes: Int,
-            estFavori: Boolean
-        )
-        fun afficherAucunResultat()
-        fun afficherCategorieChoisie(categorie: CategorieQuiz?)   // null = « Tous »
-        fun ouvrirQuiz(quizId: Int, titre: String)
-        fun afficherQuizBientot(titre: String)   // le quiz n'a pas encore de questions
-    }
-
-    interface IPresentateurDiscover : Presentateur<IVueDiscover> {
-        fun surRechercheModifiee(texte: String)
-        fun surCategorieCliquee(categorie: CategorieQuiz?)   // null = « Tous »
-        fun surFavoriClique(quizId: Int)
-        fun surJouerClique(quizId: Int)
-    }
+    enum class CatégorieQuiz { SCIENCES, HISTOIRE, LANGUES, GÉOGRAPHIE, INFORMATIQUE, AUTRE }
 
     // Create
     enum class OngletCreer { BROUILLONS, PUBLIES }
@@ -48,15 +24,16 @@ interface ContratVuePresentateur {
         fun ouvrirEditeur(quizId: Int?)   // null = nouveau quiz
     }
 
-    interface IPresentateurCreate : Presentateur<IVueCreate> {
+    interface IPrésentateurCreate : Présentateur<IVueCreate> {
         fun surNouveauQuizClique()
         fun surOngletClique(onglet: OngletCreer)
         fun surQuizClique(quizId: Int)   // « Continuer » ou « Modifier »
     }
 
     // Éditeur de quiz (s'ouvre depuis Create avec « Nouveau quiz » ou « Continuer »)
-    enum class Difficulte { FACILE, MOYEN, DIFFICILE }
-    enum class AccesQuiz { TOUT_LE_MONDE, AVEC_CODE }
+    enum class Difficulté { FACILE, MOYEN, DIFFICILE }
+    enum class AccèsQuiz { TOUT_LE_MONDE, AVEC_CODE }
+
     // Partagé : utilisé aussi par l'écran Question
     enum class TypeQuestion { CHOIX_MULTIPLE, VRAI_FAUX, REPONSE_ECRITE }
     enum class ErreurEditeur { TITRE_VIDE, AUCUNE_QUESTION, QUESTION_INCOMPLETE }
@@ -64,10 +41,10 @@ interface ContratVuePresentateur {
     interface IVueEditeur : Vue {
         fun afficherEnTete(nouveauQuiz: Boolean)
         fun afficherInfosQuiz(titre: String, description: String)
-        fun afficherCategorieChoisie(categorie: CategorieQuiz)
-        fun afficherCouverture(categorie: CategorieQuiz)   // image automatique selon la catégorie
-        fun afficherDifficulteChoisie(difficulte: Difficulte)
-        fun afficherAccesChoisi(acces: AccesQuiz)
+        fun afficherCategorieChoisie(categorie: CatégorieQuiz)
+        fun afficherCouverture(categorie: CatégorieQuiz)   // image automatique selon la catégorie
+        fun afficherDifficulteChoisie(difficulté: Difficulté)
+        fun afficherAccesChoisi(acces: AccèsQuiz)
         fun viderQuestions()
         fun ajouterQuestion(
             index: Int,
@@ -77,6 +54,7 @@ interface ContratVuePresentateur {
             bonnesReponses: Set<Int>,      // choix multiple : une ou plusieurs de 0 à 3 ; vrai ou faux : {0} = vrai, {1} = faux
             reponseAttendue: String        // réponse écrite seulement
         )
+
         fun afficherBonnesReponses(index: Int, bonnesReponses: Set<Int>)
         fun afficherNombreQuestions(nombre: Int)
         fun afficherErreur(erreur: ErreurEditeur)
@@ -88,22 +66,29 @@ interface ContratVuePresentateur {
         fun confirmerPublication(titre: String)
         fun demanderConfirmationSuppression(index: Int)
         fun afficherPublication(estPublie: Boolean)   // coche ou décoche la case « Publier »
+
         /**
          * Texte du bouton selon la case, bouton gris s'il n'est pas actif,
          * et message sous le bouton pour dire ce qui manque (raison = null : aucun message).
          */
-        fun afficherBoutonEnregistrer(publier: Boolean, actif: Boolean, raison: ErreurEditeur?, numeroQuestion: Int)
+        fun afficherBoutonEnregistrer(
+            publier: Boolean,
+            actif: Boolean,
+            raison: ErreurEditeur?,
+            numeroQuestion: Int
+        )
+
         fun demanderConfirmationQuitter()
         fun fermer()
     }
 
-    interface IPresentateurEditeur : Presentateur<IVueEditeur> {
+    interface IPrésentateurEditeur : Présentateur<IVueEditeur> {
         fun chargerQuiz(quizId: Int?)   // null = nouveau quiz
         fun surTitreModifie(titre: String)
         fun surDescriptionModifiee(description: String)
-        fun surCategorieCliquee(categorie: CategorieQuiz)
-        fun surDifficulteCliquee(difficulte: Difficulte)
-        fun surAccesClique(acces: AccesQuiz)
+        fun surCategorieCliquee(categorie: CatégorieQuiz)
+        fun surDifficulteCliquee(difficulté: Difficulté)
+        fun surAccesClique(acces: AccèsQuiz)
         fun surPrendrePhotoClique()
         fun surGalerieClique()
         fun surAjouterQuestionClique()

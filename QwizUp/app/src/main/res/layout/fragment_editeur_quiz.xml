@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Éditeur de quiz : s'ouvre depuis Créer (« Nouveau quiz » ou « Continuer ») -->
+<?xml version="1.0" encoding="utf-8"?><!-- Éditeur de quiz : s'ouvre depuis Créer (« Nouveau quiz » ou « Continuer ») -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".presentation.create.EditeurQuizFragment">
+    tools:context=".presentation.create.ÉditeurQuizFragment">
 
     <!-- En-tête : fermer, titre de l'écran, nombre de questions -->
     <LinearLayout
@@ -114,9 +113,9 @@
                         android:paddingStart="22dp"
                         android:paddingEnd="22dp"
                         android:text="@string/editeur_galerie"
+                        android:textColor="@color/primary_green"
                         android:textSize="15sp"
                         android:textStyle="bold"
-                        android:textColor="@color/primary_green"
                         app:cornerRadius="26dp"
                         app:strokeColor="@color/primary_green" />
                 </LinearLayout>
@@ -210,6 +209,7 @@
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/category_sciences"
                     android:textColor="@color/texte_puce"
                     android:textSize="14sp"
                     app:checkedIconVisible="false"
@@ -217,14 +217,14 @@
                     app:chipMinHeight="44dp"
                     app:chipStrokeColor="@color/contour_puce"
                     app:chipStrokeWidth="1dp"
-                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
-                    android:text="@string/category_sciences" />
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_editeur_histoire"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/category_history"
                     android:textColor="@color/texte_puce"
                     android:textSize="14sp"
                     app:checkedIconVisible="false"
@@ -232,14 +232,14 @@
                     app:chipMinHeight="44dp"
                     app:chipStrokeColor="@color/contour_puce"
                     app:chipStrokeWidth="1dp"
-                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
-                    android:text="@string/category_history" />
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_editeur_langues"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/category_languages"
                     android:textColor="@color/texte_puce"
                     android:textSize="14sp"
                     app:checkedIconVisible="false"
@@ -247,14 +247,14 @@
                     app:chipMinHeight="44dp"
                     app:chipStrokeColor="@color/contour_puce"
                     app:chipStrokeWidth="1dp"
-                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
-                    android:text="@string/category_languages" />
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_editeur_informatique"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/category_informatique"
                     android:textColor="@color/texte_puce"
                     android:textSize="14sp"
                     app:checkedIconVisible="false"
@@ -262,14 +262,14 @@
                     app:chipMinHeight="44dp"
                     app:chipStrokeColor="@color/contour_puce"
                     app:chipStrokeWidth="1dp"
-                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
-                    android:text="@string/category_informatique" />
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_editeur_geographie"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/category_geography"
                     android:textColor="@color/texte_puce"
                     android:textSize="14sp"
                     app:checkedIconVisible="false"
@@ -277,14 +277,14 @@
                     app:chipMinHeight="44dp"
                     app:chipStrokeColor="@color/contour_puce"
                     app:chipStrokeWidth="1dp"
-                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
-                    android:text="@string/category_geography" />
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_editeur_autre"
                     style="@style/Widget.Material3.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/category_autre"
                     android:textColor="@color/texte_puce"
                     android:textSize="14sp"
                     app:checkedIconVisible="false"
@@ -292,8 +292,7 @@
                     app:chipMinHeight="44dp"
                     app:chipStrokeColor="@color/contour_puce"
                     app:chipStrokeWidth="1dp"
-                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
-                    android:text="@string/category_autre" />
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -331,8 +330,8 @@
                         android:layout_weight="1"
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
-                        android:text="@string/editeur_facile"
                         android:stateListAnimator="@animator/elevation_onglet"
+                        android:text="@string/editeur_facile"
                         android:textColor="@color/texte_onglet"
                         android:textStyle="bold"
                         app:backgroundTint="@color/fond_onglet"
@@ -346,8 +345,8 @@
                         android:layout_weight="1"
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
-                        android:text="@string/editeur_moyen"
                         android:stateListAnimator="@animator/elevation_onglet"
+                        android:text="@string/editeur_moyen"
                         android:textColor="@color/texte_onglet"
                         android:textStyle="bold"
                         app:backgroundTint="@color/fond_onglet"
@@ -361,8 +360,8 @@
                         android:layout_weight="1"
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
-                        android:text="@string/editeur_difficile"
                         android:stateListAnimator="@animator/elevation_onglet"
+                        android:text="@string/editeur_difficile"
                         android:textColor="@color/texte_onglet"
                         android:textStyle="bold"
                         app:backgroundTint="@color/fond_onglet"
@@ -405,8 +404,8 @@
                         android:layout_weight="1"
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
-                        android:text="@string/editeur_acces_tous"
                         android:stateListAnimator="@animator/elevation_onglet"
+                        android:text="@string/editeur_acces_tous"
                         android:textColor="@color/texte_onglet"
                         android:textStyle="bold"
                         app:backgroundTint="@color/fond_onglet"
@@ -420,8 +419,8 @@
                         android:layout_weight="1"
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
-                        android:text="@string/editeur_acces_code"
                         android:stateListAnimator="@animator/elevation_onglet"
+                        android:text="@string/editeur_acces_code"
                         android:textColor="@color/texte_onglet"
                         android:textStyle="bold"
                         app:backgroundTint="@color/fond_onglet"
@@ -487,10 +486,10 @@
             android:id="@+id/case_publier"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="@string/editeur_case_publier"
             android:textColor="@color/text_primary"
             android:textSize="16sp"
-            android:layout_marginBottom="4dp"
             app:buttonTint="@color/primary_green" />
 
         <!-- Un seul bouton : « Enregistrer le brouillon » ou « Publier » selon la case -->

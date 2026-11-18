@@ -9,19 +9,19 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IPresentateurCreate
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueCreate
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.OngletCreer
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.IPrésentateurCreate
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.IVueCreate
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.OngletCreer
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 
-class CreateFragment : Fragment(R.layout.fragment_create), IVueCreate {
+class FragmentCreate : Fragment(R.layout.fragment_create), IVueCreate {
 
-    private val presentateur: IPresentateurCreate = PresentateurCreate()
+    private val présentateur: IPrésentateurCreate = PrésentateurCreate()
 
     private lateinit var groupeOnglets: MaterialButtonToggleGroup
     private lateinit var ongletBrouillons: MaterialButton
-    private lateinit var ongletPublies: MaterialButton
+    private lateinit var ongletPubliés: MaterialButton
     private lateinit var listeQuiz: LinearLayout
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,19 +29,19 @@ class CreateFragment : Fragment(R.layout.fragment_create), IVueCreate {
 
         groupeOnglets = view.findViewById(R.id.groupe_onglets_creer)
         ongletBrouillons = view.findViewById(R.id.button_onglet_brouillons)
-        ongletPublies = view.findViewById(R.id.button_onglet_publies)
+        ongletPubliés = view.findViewById(R.id.button_onglet_publies)
         listeQuiz = view.findViewById(R.id.liste_quiz)
 
         view.findViewById<View>(R.id.button_nouveau_quiz)
-            .setOnClickListener { presentateur.surNouveauQuizClique() }
-        ongletBrouillons.setOnClickListener { presentateur.surOngletClique(OngletCreer.BROUILLONS) }
-        ongletPublies.setOnClickListener { presentateur.surOngletClique(OngletCreer.PUBLIES) }
+            .setOnClickListener { présentateur.surNouveauQuizClique() }
+        ongletBrouillons.setOnClickListener { présentateur.surOngletClique(OngletCreer.BROUILLONS) }
+        ongletPubliés.setOnClickListener { présentateur.surOngletClique(OngletCreer.PUBLIES) }
 
-        presentateur.attacherVue(this)
+        présentateur.attacherVue(this)
     }
 
     override fun onDestroyView() {
-        presentateur.detacherVue()
+        présentateur.detacherVue()
         super.onDestroyView()
     }
 
@@ -49,7 +49,7 @@ class CreateFragment : Fragment(R.layout.fragment_create), IVueCreate {
 
     override fun afficherCompteurs(nbBrouillons: Int, nbPublies: Int) {
         ongletBrouillons.text = getString(R.string.creer_onglet_brouillons, nbBrouillons)
-        ongletPublies.text = getString(R.string.creer_onglet_publies, nbPublies)
+        ongletPubliés.text = getString(R.string.creer_onglet_publies, nbPublies)
     }
 
     override fun afficherOngletChoisi(onglet: OngletCreer) {
@@ -65,14 +65,18 @@ class CreateFragment : Fragment(R.layout.fragment_create), IVueCreate {
         listeQuiz.removeAllViews()
     }
 
-    override fun ajouterCarteQuiz(id: Int, titre: String, nbQuestions: Int, estPublie: Boolean) {
+    override fun ajouterCarteQuiz(id: Int, titre: String, nbQuestions: Int, estPublié: Boolean) {
         val carte = layoutInflater.inflate(R.layout.item_quiz_creer, listeQuiz, false)
         carte.findViewById<TextView>(R.id.text_titre_quiz).text = titre
         carte.findViewById<TextView>(R.id.text_details_quiz).text =
-            resources.getQuantityString(R.plurals.editeur_nombre_questions, nbQuestions, nbQuestions)
+            resources.getQuantityString(
+                R.plurals.editeur_nombre_questions,
+                nbQuestions,
+                nbQuestions
+            )
         carte.findViewById<MaterialButton>(R.id.button_continuer).apply {
-            setText(if (estPublie) R.string.creer_modifier else R.string.creer_continuer)
-            setOnClickListener { presentateur.surQuizClique(id) }
+            setText(if (estPublié) R.string.creer_modifier else R.string.creer_continuer)
+            setOnClickListener { présentateur.surQuizClique(id) }
         }
         listeQuiz.addView(carte)
     }

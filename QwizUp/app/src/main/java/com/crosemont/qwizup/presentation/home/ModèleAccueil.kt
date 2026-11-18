@@ -3,9 +3,9 @@ package com.crosemont.qwizup.presentation.home
 import com.crosemont.qwizup.domaine.entites.Statistiques
 import com.crosemont.qwizup.domaine.service.ServiceStatistiques
 
-class ModeleAccueil (
+class ModèleAccueil(
     private val serviceStatistiques: ServiceStatistiques
-) : ContratAccueil.IModeleAccueil {
+) : ContratAccueil.IModèleAccueil {
 
     override suspend fun obtenirStatistiques(): Statistiques =
         serviceStatistiques.obtenirStatistiques()

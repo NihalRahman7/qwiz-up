@@ -1,8 +1,8 @@
 package com.crosemont.qwizup.domaine.service
 
-import com.crosemont.qwizup.domaine.entites.ResultatPartie
+import com.crosemont.qwizup.domaine.entites.RésultatPartie
 import com.crosemont.qwizup.domaine.entites.Statistiques
-import com.crosemont.qwizup.sourceDeDonnees.SourceResultats
+import com.crosemont.qwizup.accèsAuxDonnées.SourceRésultats
 import java.time.LocalDate
 
 /**
@@ -11,16 +11,16 @@ import java.time.LocalDate
  * La date du jour aussi, pour pouvoir la fixer dans les tests.
  */
 class ServiceStatistiques(
-    private val source: SourceResultats,
+    private val source: SourceRésultats,
     private val aujourdhui: () -> LocalDate = { LocalDate.now() }
 ) {
 
     fun obtenirStatistiques(): Statistiques {
-        val resultats = lireResultats()
+        val résultats = lireRésultats()
         return Statistiques(
-            serie = calculerSerie(resultats),
-            nbQuizCompletes = resultats.map { it.quizId }.distinct().size,
-            tauxReussite = calculerTauxReussite(resultats)
+            série = calculerSérie(résultats),
+            nbQuizComplètes = résultats.map { it.quizId }.distinct().size,
+            tauxRéussite = calculerTauxRéussite(résultats)
         )
     }
 
@@ -30,37 +30,37 @@ class ServiceStatistiques(
         if (score !in 0..total) throw ServiceException("Le score doit être entre 0 et $total")
 
         try {
-            source.ajouterResultat(ResultatPartie(quizId, score, total, aujourdhui()))
+            source.ajouterRésultat(RésultatPartie(quizId, score, total, aujourdhui()))
         } catch (e: Exception) {
             throw ServiceException("Impossible de sauvegarder le résultat")
         }
     }
 
-    private fun lireResultats(): List<ResultatPartie> =
+    private fun lireRésultats(): List<RésultatPartie> =
         try {
-            source.lireResultats()
+            source.lireRésultats()
         } catch (e: Exception) {
             throw ServiceException("Impossible de lire les résultats")
         }
 
     // Compte les jours consécutifs joués, en reculant à partir d'aujourd'hui
-    private fun calculerSerie(resultats: List<ResultatPartie>): Int {
-        val joursJoues = resultats.map { it.date }.toSet()
+    private fun calculerSérie(résultats: List<RésultatPartie>): Int {
+        val joursJoues = résultats.map { it.date }.toSet()
 
         var jour = aujourdhui()
         // Pas encore joué aujourd'hui : la série d'hier compte encore
         if (jour !in joursJoues) jour = jour.minusDays(1)
 
-        var serie = 0
+        var série = 0
         while (jour in joursJoues) {
-            serie++
+            série++
             jour = jour.minusDays(1)
         }
-        return serie
+        return série
     }
 
     // Bonnes réponses sur le total des questions, en pourcentage
-    private fun calculerTauxReussite(resultats: List<ResultatPartie>): Int {
+    private fun calculerTauxRéussite(resultats: List<RésultatPartie>): Int {
         val totalQuestions = resultats.sumOf { it.total }
         if (totalQuestions == 0) return 0
         return resultats.sumOf { it.score } * 100 / totalQuestions

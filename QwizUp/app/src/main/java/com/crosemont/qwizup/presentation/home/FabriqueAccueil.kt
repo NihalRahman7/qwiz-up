@@ -1,7 +1,7 @@
 package com.crosemont.qwizup.presentation.home
 
 import com.crosemont.qwizup.domaine.service.ServiceStatistiques
-import com.crosemont.qwizup.sourceDeDonnees.SourceResultatsLocale
+import com.crosemont.qwizup.accèsAuxDonnées.SourceRésultatsLocale
 import java.io.File
 
 /**
@@ -10,10 +10,10 @@ import java.io.File
  */
 object FabriqueAccueil {
 
-    fun creerPresentateur(dossierDeLApp: File): ContratAccueil.IPresentateurAccueil {
-        val source = SourceResultatsLocale(File(dossierDeLApp, SourceResultatsLocale.NOM_FICHIER))
+    fun créerPrésentateur(dossierDeLApp: File): ContratAccueil.IPrésentateurAccueil {
+        val source = SourceRésultatsLocale(File(dossierDeLApp, SourceRésultatsLocale.NOM_FICHIER))
         val service = ServiceStatistiques(source)
-        val modele = ModeleAccueil(service)
-        return PresentateurAccueil(modele)
+        val modèle = ModèleAccueil(service)
+        return PrésentateurAccueil(modèle)
     }
 }

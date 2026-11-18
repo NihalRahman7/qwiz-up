@@ -1,10 +1,9 @@
-
 package com.crosemont.qwizup
 
 import com.crosemont.qwizup.domaine.service.ServiceFavoris
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
 import com.crosemont.qwizup.presentation.discover.ModèleDécouvrir
-import com.crosemont.qwizup.sourceDeDonnees.SourceFavorisBidon
+import com.crosemont.qwizup.accèsAuxDonnées.SourceFavorisBidon
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -16,7 +15,11 @@ class ModèleDécouvrirTest {
     private fun créerModèle(vararg favoris: String) =
         ModèleDécouvrir(ServiceFavoris(SourceFavorisBidon(favoris.toSet())))
 
-    private fun quizDe(modèle: ModèleDécouvrir, catégorie: CategorieQuiz? = null, recherche: String = "") =
+    private fun quizDe(
+        modèle: ModèleDécouvrir,
+        catégorie: CatégorieQuiz? = null,
+        recherche: String = ""
+    ) =
         runBlocking { modèle.obtenirQuiz(catégorie, recherche) }
 
     private fun basculer(modèle: ModèleDécouvrir, titre: String) =
@@ -36,7 +39,7 @@ class ModèleDécouvrirTest {
     fun `Étant donné que la catégorie Histoire est sélectionnée lorsqu'on demande les quiz, on obtient La Révolution tranquille`() {
         val modèle = créerModèle()
 
-        val quiz = quizDe(modèle, catégorie = CategorieQuiz.HISTOIRE)
+        val quiz = quizDe(modèle, catégorie = CatégorieQuiz.HISTOIRE)
 
         assertEquals(listOf("La Révolution tranquille"), quiz.map { it.titre })
     }

@@ -1,12 +1,12 @@
 package com.crosemont.qwizup.presentation.rejoindre
 
-import com.crosemont.qwizup.presentation.ModeleQuiz
-import com.crosemont.qwizup.presentation.rejoindre.ContratRejoindre.IPresentateurRejoindre
+import com.crosemont.qwizup.presentation.ModèleQuiz
+import com.crosemont.qwizup.presentation.rejoindre.ContratRejoindre.IPrésentateurRejoindre
 import com.crosemont.qwizup.presentation.rejoindre.ContratRejoindre.IVueRejoindre
 
-class PresentateurRejoindre(
-    private val modele: ModeleQuiz = ModeleQuiz()
-) : IPresentateurRejoindre {
+class PrésentateurRejoindre(
+    private val modele: ModèleQuiz = ModèleQuiz()
+) : IPrésentateurRejoindre {
 
     // La vue est null quand l'écran n'est pas affiché
     private var vue: IVueRejoindre? = null
@@ -33,8 +33,9 @@ class PresentateurRejoindre(
 
     override fun surRejoindreClique(code: String) {
         val codeTrimmer = code.trim()
-        val quizId = if (estFormatValide(codeTrimmer)) modele.trouverQuizParCode(codeTrimmer) else null
-        if (quizId == null){
+        val quizId =
+            if (estFormatValide(codeTrimmer)) modele.trouverQuizParCode(codeTrimmer) else null
+        if (quizId == null) {
             vue?.afficherCodeInvalide()
         } else {
             vue?.ouvrirQuiz(quizId)

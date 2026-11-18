@@ -1,6 +1,6 @@
 package com.crosemont.qwizup.domaine.service
 
-import com.crosemont.qwizup.sourceDeDonnees.SourceFavoris
+import com.crosemont.qwizup.accèsAuxDonnées.SourceFavoris
 
 /**
  * Gère les quiz favoris de l'utilisateur.
