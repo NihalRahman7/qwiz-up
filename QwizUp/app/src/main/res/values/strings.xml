@@ -115,6 +115,7 @@
     <string name="editeur_confirmer_suppression_message">Cette action ne peut pas être annulée.</string>
     <string name="editeur_confirmer_quitter_titre">Quitter sans sauvegarder?</string>
     <string name="editeur_confirmer_quitter_message">Tes modifications vont être perdues. Tu peux les enregistrer avant de quitter.</string>
+    <string name="editeur_confirmer_quitter_message_court">Tes modifications vont être perdues.</string>
     <string name="action_supprimer">Supprimer</string>
     <string name="editeur_case_publier">Publier le quiz</string>
     <string name="editeur_enregistrer">Enregistrer</string>

@@ -66,7 +66,11 @@ interface ContratCréer {
          * et message sous le bouton pour dire ce qui manque (raison = null : aucun message).
          */
         fun afficherBoutonEnregistrer(publier: Boolean, actif: Boolean, raison: ErreurEditeur?, numeroQuestion: Int)
-        fun demanderConfirmationQuitter()
+        /**
+         * Dialogue « Quitter sans sauvegarder? ». Le bouton pour enregistrer apparaît seulement
+         * si le quiz peut être enregistré, et il dit ce qu'il va faire (publier ou brouillon).
+         */
+        fun demanderConfirmationQuitter(peutEnregistrer: Boolean, publier: Boolean)
         fun fermer()
         fun afficherErreurChargement()   // le quiz n'a pas pu être ouvert
         fun afficherErreurSauvegarde()   // le quiz n'a pas pu être enregistré

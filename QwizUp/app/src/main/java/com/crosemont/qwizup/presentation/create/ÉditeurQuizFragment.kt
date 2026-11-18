@@ -357,14 +357,23 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdit
             .show()
     }
 
-    override fun demanderConfirmationQuitter() {
-        MaterialAlertDialogBuilder(requireContext())
+    override fun demanderConfirmationQuitter(peutEnregistrer: Boolean, publier: Boolean) {
+        val dialogue = MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.editeur_confirmer_quitter_titre)
-            .setMessage(R.string.editeur_confirmer_quitter_message)
             .setNegativeButton(R.string.action_annuler, null)
-            .setNeutralButton(R.string.editeur_enregistrer) { _, _ -> presentateur.surEnregistrerClique() }
             .setPositiveButton(R.string.action_quitter) { _, _ -> presentateur.surQuitterConfirme() }
-            .show()
+
+        if (peutEnregistrer) {
+            // Le bouton dit exactement ce qu'il va faire, comme le gros bouton en bas
+            dialogue.setMessage(R.string.editeur_confirmer_quitter_message)
+                .setNeutralButton(if (publier) R.string.editeur_publier else R.string.editeur_enregistrer_brouillon) { _, _ ->
+                    presentateur.surEnregistrerClique()
+                }
+        } else {
+            // Il manque quelque chose : pas de bouton qui ne marcherait pas
+            dialogue.setMessage(R.string.editeur_confirmer_quitter_message_court)
+        }
+        dialogue.show()
     }
 
     override fun fermer() {

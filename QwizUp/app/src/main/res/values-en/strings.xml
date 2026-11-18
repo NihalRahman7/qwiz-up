@@ -108,6 +108,7 @@
     <string name="editeur_confirmer_suppression_message">This action cannot be undone.</string>
     <string name="editeur_confirmer_quitter_titre">Leave without saving?</string>
     <string name="editeur_confirmer_quitter_message">Your changes will be lost. You can save them before leaving.</string>
+    <string name="editeur_confirmer_quitter_message_court">Your changes will be lost.</string>
     <string name="action_supprimer">Delete</string>
     <string name="action_quitter">Leave</string>
     <string name="action_annuler">Cancel</string>

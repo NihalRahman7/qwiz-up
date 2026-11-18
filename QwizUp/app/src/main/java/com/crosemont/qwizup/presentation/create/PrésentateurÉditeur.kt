@@ -226,7 +226,7 @@ class PrésentateurÉditeur(
     // ----- Fermeture -----
 
     override fun surFermerClique() {
-        if (quiz != quizInitial) vue?.demanderConfirmationQuitter()
+        if (quiz != quizInitial) vue?.demanderConfirmationQuitter(peutEnregistrer = true, publier = false)   // pas encore fait (test en rouge)
         else vue?.fermer()
     }
 
