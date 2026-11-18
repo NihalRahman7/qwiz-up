@@ -17,6 +17,9 @@ interface ContratAccueil {
         // Affiche la série, le nombre de quiz complétés et le taux de réussite
         fun afficherStatistiques(serie: Int, nbQuizCompletes: Int, tauxRéussite: Int)
 
+        // Montre seulement les cartes « Continuer » de ces quiz (liste vide : la section disparaît)
+        fun afficherQuizEnCours(quizIds: List<Int>)
+
         // Le modèle n'a pas pu répondre
         fun afficherErreur()
     }
@@ -31,5 +34,8 @@ interface ContratAccueil {
 
     interface IModèleAccueil {
         suspend fun obtenirStatistiques(): Statistiques
+
+        // Les quiz à continuer : un quiz réussi à 100 % n'en fait plus partie
+        suspend fun obtenirQuizEnCours(): List<Int>
     }
 }

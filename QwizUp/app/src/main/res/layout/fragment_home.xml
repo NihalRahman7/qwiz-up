@@ -206,6 +206,7 @@
 
         <!-- Section Continuer -->
         <TextView
+            android:id="@+id/text_titre_continuer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -216,6 +217,7 @@
 
         <!-- Quiz en cours n° 1 -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/carte_en_cours_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -286,6 +288,7 @@
 
         <!-- Quiz en cours n° 2 -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/carte_en_cours_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
