@@ -45,6 +45,11 @@
     <string name="discover_no_quiz">Aucun quiz trouvé. Essaie un autre mot ou une autre catégorie.</string>
     <string name="discover_play_soon">Le quiz « %1$s » arrive bientôt!</string>
     <string name="discover_error">Impossible de charger les quiz. Réessaie plus tard.</string>
+    <string name="discover_ok">OK</string>
+    <string name="category_favorites">Favoris</string>
+    <string name="discover_no_favorite">Aucun favori pour l\'instant. Touche l\'étoile d\'un quiz pour le retrouver ici.</string>
+    <string name="discover_best_score">Meilleur score : %1$d/%2$d</string>
+    <string name="discover_not_played">Pas encore joué</string>
     <string name="category_all">Tous</string>
     <string name="category_sciences">Sciences</string>
     <string name="category_history">Histoire</string>
