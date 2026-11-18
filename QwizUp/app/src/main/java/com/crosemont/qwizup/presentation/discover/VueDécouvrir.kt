@@ -15,7 +15,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
 
@@ -35,7 +35,7 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
     private lateinit var boutonsJouer: List<View>
 
     // Les puces de catégorie (null = « Tous »)
-    private lateinit var puces: Map<CategorieQuiz?, Chip>
+    private lateinit var puces: Map<CatégorieQuiz?, Chip>
 
     private val quizIds = IntArray(NB_CARTES)
     private var prochaineCarte = 0
@@ -69,11 +69,11 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
 
         puces = mapOf(
             null to view.findViewById<Chip>(R.id.chip_all),
-            CategorieQuiz.SCIENCES to view.findViewById<Chip>(R.id.chip_sciences),
-            CategorieQuiz.HISTOIRE to view.findViewById<Chip>(R.id.chip_history),
-            CategorieQuiz.LANGUES to view.findViewById<Chip>(R.id.chip_languages),
-            CategorieQuiz.INFORMATIQUE to view.findViewById<Chip>(R.id.chip_informatique),
-            CategorieQuiz.GEOGRAPHIE to view.findViewById<Chip>(R.id.chip_geography)
+            CatégorieQuiz.SCIENCES to view.findViewById<Chip>(R.id.chip_sciences),
+            CatégorieQuiz.HISTOIRE to view.findViewById<Chip>(R.id.chip_history),
+            CatégorieQuiz.LANGUES to view.findViewById<Chip>(R.id.chip_languages),
+            CatégorieQuiz.INFORMATIQUE to view.findViewById<Chip>(R.id.chip_informatique),
+            CatégorieQuiz.GÉOGRAPHIE to view.findViewById<Chip>(R.id.chip_geography)
 
         )
 
@@ -108,7 +108,7 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
 
     override fun ajouterQuiz(
         id: Int,
-        catégorie: CategorieQuiz,
+        catégorie: CatégorieQuiz,
         titre: String,
         description: String,
         nbQuestions: Int,
@@ -140,7 +140,7 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
         messageVide.visibility = View.VISIBLE
     }
 
-    override fun afficherCatégorieChoisie(catégorie: CategorieQuiz?) {
+    override fun afficherCatégorieChoisie(catégorie: CatégorieQuiz?) {
         val contexte = requireContext()
         puces.forEach { (catégoriePuce, puce) ->
             val choisie = catégoriePuce == catégorie
@@ -179,13 +179,13 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
     }
 
     @StringRes
-    private fun nomCatégorie(catégorie: CategorieQuiz): Int = when (catégorie) {
-        CategorieQuiz.SCIENCES -> R.string.category_sciences
-        CategorieQuiz.HISTOIRE -> R.string.category_history
-        CategorieQuiz.LANGUES -> R.string.category_languages
-        CategorieQuiz.GEOGRAPHIE -> R.string.category_geography
-        CategorieQuiz.INFORMATIQUE -> R.string.category_informatique
-        CategorieQuiz.AUTRE -> R.string.category_autre
+    private fun nomCatégorie(catégorie: CatégorieQuiz): Int = when (catégorie) {
+        CatégorieQuiz.SCIENCES -> R.string.category_sciences
+        CatégorieQuiz.HISTOIRE -> R.string.category_history
+        CatégorieQuiz.LANGUES -> R.string.category_languages
+        CatégorieQuiz.GÉOGRAPHIE -> R.string.category_geography
+        CatégorieQuiz.INFORMATIQUE -> R.string.category_informatique
+        CatégorieQuiz.AUTRE -> R.string.category_autre
     }
 
     companion object {

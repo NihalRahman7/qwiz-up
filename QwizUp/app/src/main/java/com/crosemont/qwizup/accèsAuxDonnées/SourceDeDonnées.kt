@@ -1,8 +1,8 @@
-package com.crosemont.qwizup.sourceDeDonnees
+package com.crosemont.qwizup.accèsAuxDonnées
 
 import com.crosemont.qwizup.domaine.entites.Quiz
 
-interface SourceDeDonnees {
+interface SourceDeDonnées {
     suspend fun obtenirQuiz(
         limite: Int = 10,
         decalage: Int = 0

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".presentation.create.EditeurQuizFragment">
+    tools:context=".presentation.create.ÉditeurQuizFragment">
 
     <!-- En-tête : fermer, titre de l'écran, nombre de questions -->
     <LinearLayout

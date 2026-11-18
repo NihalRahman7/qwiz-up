@@ -1,4 +1,4 @@
-package com.crosemont.qwizup.sourceDeDonnees
+package com.crosemont.qwizup.accèsAuxDonnées
 
 /**
  * Source de données des quiz favoris de l'utilisateur.

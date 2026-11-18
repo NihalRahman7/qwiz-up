@@ -1,22 +1,22 @@
 package com.crosemont.qwizup.presentation.library
 
 import com.crosemont.qwizup.domaine.service.ServiceFavoris
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
-import com.crosemont.qwizup.presentation.ModeleQuiz
-import com.crosemont.qwizup.presentation.ModeleQuiz.CarteLibrary
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
+import com.crosemont.qwizup.presentation.ModèleQuiz
+import com.crosemont.qwizup.presentation.ModèleQuiz.CarteLibrary
 import com.crosemont.qwizup.presentation.library.ContratLibrairie.OngletLibrairie
 
 
-class ModeleLibrairie(
+class ModèleLibrairie(
     private val serviceFavoris: ServiceFavoris,
-    private val catalogue: ModeleQuiz = ModeleQuiz(),
-) : ContratLibrairie.IModeleLibrairie {
+    private val catalogue: ModèleQuiz = ModèleQuiz(),
+) : ContratLibrairie.IModèleLibrairie {
 
     override suspend fun obtenirQuiz(onglet: OngletLibrairie): List<CarteLibrary> =
         when (onglet) {
             OngletLibrairie.FAVORIS -> obtenirFavoris()
-            OngletLibrairie.COMPLETES -> catalogue.obternirCompletes()
-            OngletLibrairie.CREES -> catalogue.obternirCrees()
+            OngletLibrairie.COMPLÉTÉS -> catalogue.obternirCompletes()
+            OngletLibrairie.CRÉES -> catalogue.obternirCrees()
         }
 
     private suspend fun obtenirFavoris(): List<CarteLibrary> {
@@ -28,19 +28,19 @@ class ModeleLibrairie(
                 CarteLibrary(
                     quiz.id,
                     quiz.titre,
-                    "${nomCatégorie(quiz.categorie)} · ${quiz.nbQuestions} questions",
+                    "${nomCatégorie(quiz.catégorie)} · ${quiz.nbQuestions} questions",
                     badge = null,   // pas de badge pour un favori
                     typeBadge = ContratLibrairie.TypeBadge.NOUVEAU
                 )
             }
     }
 
-    private fun nomCatégorie(catégorie: CategorieQuiz): String = when (catégorie) {
-        CategorieQuiz.SCIENCES -> "Sciences"
-        CategorieQuiz.HISTOIRE -> "Histoire"
-        CategorieQuiz.LANGUES -> "Langues"
-        CategorieQuiz.GEOGRAPHIE -> "Géographie"
-        CategorieQuiz.INFORMATIQUE -> "Informatique"
-        CategorieQuiz.AUTRE -> "Autre"
+    private fun nomCatégorie(catégorie: CatégorieQuiz): String = when (catégorie) {
+        CatégorieQuiz.SCIENCES -> "Sciences"
+        CatégorieQuiz.HISTOIRE -> "Histoire"
+        CatégorieQuiz.LANGUES -> "Langues"
+        CatégorieQuiz.GÉOGRAPHIE -> "Géographie"
+        CatégorieQuiz.INFORMATIQUE -> "Informatique"
+        CatégorieQuiz.AUTRE -> "Autre"
     }
 }

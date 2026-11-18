@@ -1,9 +1,9 @@
 package com.crosemont.qwizup.presentation.discover
 
 import com.crosemont.qwizup.domaine.service.ServiceFavoris
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
-import com.crosemont.qwizup.presentation.ModeleQuiz
-import com.crosemont.qwizup.presentation.ModeleQuiz.CarteDiscover
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
+import com.crosemont.qwizup.presentation.ModèleQuiz
+import com.crosemont.qwizup.presentation.ModèleQuiz.CarteDiscover
 
 /**
  * Modèle de l'écran Découvrir.
@@ -11,14 +11,14 @@ import com.crosemont.qwizup.presentation.ModeleQuiz.CarteDiscover
  */
 class ModèleDécouvrir(
     private val serviceFavoris: ServiceFavoris,
-    private val catalogue: ModeleQuiz = ModeleQuiz(),
+    private val catalogue: ModèleQuiz = ModèleQuiz(),
 ) : ContratDécouvrir.IModèleDécouvrir {
 
     @Volatile
     private var catalogueChargé = false
 
     override suspend fun obtenirQuiz(
-        catégorie: CategorieQuiz?,
+        catégorie: CatégorieQuiz?,
         recherche: String
     ): List<CarteDiscover> {
         // Les quiz viennent du service, chargés une seule fois
@@ -36,5 +36,5 @@ class ModèleDécouvrir(
     }
 
     override suspend fun estJouable(quizId: Int): Boolean =
-        catalogue.obtenirQuizAJouer(quizId) != null
+        catalogue.obtenirQuizÀJouer(quizId) != null
 }

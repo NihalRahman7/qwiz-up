@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.crosemont.qwizup.presentation.home.AccueilFragment"
+        android:name="com.crosemont.qwizup.presentation.home.FragmentAccueil"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/createFragment"
-        android:name="com.crosemont.qwizup.presentation.create.CreateFragment"
+        android:name="com.crosemont.qwizup.presentation.create.FragmentCreate"
         android:label="fragment_create"
         tools:layout="@layout/fragment_create">
         <action
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/editeurQuizFragment"
-        android:name="com.crosemont.qwizup.presentation.create.EditeurQuizFragment"
+        android:name="com.crosemont.qwizup.presentation.create.ÉditeurQuizFragment"
         android:label="fragment_editeur_quiz"
         tools:layout="@layout/fragment_editeur_quiz">
         <argument
@@ -51,13 +51,13 @@
 
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="com.crosemont.qwizup.presentation.library.LibrairieFragment"
+        android:name="com.crosemont.qwizup.presentation.library.FragmentLibrairie"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" />
 
     <fragment
         android:id="@+id/questionFragment"
-        android:name="com.crosemont.qwizup.presentation.question.QuestionFragment"
+        android:name="com.crosemont.qwizup.presentation.question.FragmentQuestion"
         android:label="fragment_question"
         tools:layout="@layout/fragment_question">
         <argument

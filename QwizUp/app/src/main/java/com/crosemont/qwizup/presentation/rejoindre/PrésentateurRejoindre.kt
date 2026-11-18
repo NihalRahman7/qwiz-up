@@ -1,12 +1,12 @@
 package com.crosemont.qwizup.presentation.rejoindre
 
-import com.crosemont.qwizup.presentation.ModeleQuiz
-import com.crosemont.qwizup.presentation.rejoindre.ContratRejoindre.IPresentateurRejoindre
+import com.crosemont.qwizup.presentation.ModèleQuiz
+import com.crosemont.qwizup.presentation.rejoindre.ContratRejoindre.IPrésentateurRejoindre
 import com.crosemont.qwizup.presentation.rejoindre.ContratRejoindre.IVueRejoindre
 
-class PresentateurRejoindre(
-    private val modele: ModeleQuiz = ModeleQuiz()
-) : IPresentateurRejoindre {
+class PrésentateurRejoindre(
+    private val modele: ModèleQuiz = ModèleQuiz()
+) : IPrésentateurRejoindre {
 
     // La vue est null quand l'écran n'est pas affiché
     private var vue: IVueRejoindre? = null

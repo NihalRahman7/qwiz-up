@@ -12,10 +12,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeQuestion
-import com.crosemont.qwizup.presentation.question.ContratQuestion.IPresentateurQuestion
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.TypeQuestion
+import com.crosemont.qwizup.presentation.question.ContratQuestion.IPrésentateurQuestion
 import com.crosemont.qwizup.presentation.question.ContratQuestion.IVueQuestion
-import com.crosemont.qwizup.presentation.question.ContratQuestion.NiveauResultat
+import com.crosemont.qwizup.presentation.question.ContratQuestion.NiveauRésultat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -24,79 +24,79 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
  * Vue de l'écran de jeu.
  * Elle affiche ce que le présentateur lui demande et lui transmet chaque clic.
  */
-class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
+class FragmentQuestion : Fragment(R.layout.fragment_question), IVueQuestion {
 
     // Le présentateur qui gère la partie (créé dans onViewCreated, quand le contexte existe)
-    private lateinit var presentateur: IPresentateurQuestion
+    private lateinit var présentateur: IPrésentateurQuestion
 
     // Les éléments du layout
     private lateinit var groupeJeu: View
-    private lateinit var groupeResultat: View
+    private lateinit var groupeRésultat: View
     private lateinit var texteTitreQuiz: TextView
     private lateinit var texteCompteur: TextView
     private lateinit var progression: LinearProgressIndicator
-    private lateinit var texteNumero: TextView
-    private lateinit var texteEnonce: TextView
-    private lateinit var boutonsReponses: List<MaterialButton>
-    private lateinit var texteRetroaction: TextView
+    private lateinit var texteNuméro: TextView
+    private lateinit var texteÉnonce: TextView
+    private lateinit var boutonsRéponses: List<MaterialButton>
+    private lateinit var texteRétroaction: TextView
     private lateinit var boutonSuivant: MaterialButton
     private lateinit var texteScore: TextView
-    private lateinit var texteResultatTitre: TextView
-    private lateinit var texteResultatDetail: TextView
+    private lateinit var texteRésultatTitre: TextView
+    private lateinit var texteRésultatDetail: TextView
 
     // Les textes des réponses affichées, pour écrire la bonne réponse dans le message
-    private var reponsesAffichees: List<String> = emptyList()
+    private var réponsesAffichées: List<String> = emptyList()
 
     private val lettres = listOf("A", "B", "C", "D")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        presentateur = FabriqueQuestion.creerPresentateur(requireContext().filesDir)
+        présentateur = FabriqueQuestion.créerPresentateur(requireContext().filesDir)
         super.onViewCreated(view, savedInstanceState)
 
         // Récupère les éléments du layout
         groupeJeu = view.findViewById(R.id.groupe_jeu)
-        groupeResultat = view.findViewById(R.id.groupe_resultat)
+        groupeRésultat = view.findViewById(R.id.groupe_resultat)
         texteTitreQuiz = view.findViewById(R.id.text_titre_quiz)
         texteCompteur = view.findViewById(R.id.text_compteur)
         progression = view.findViewById(R.id.progression)
-        texteNumero = view.findViewById(R.id.text_numero_question)
-        texteEnonce = view.findViewById(R.id.text_enonce)
-        boutonsReponses = listOf(
+        texteNuméro = view.findViewById(R.id.text_numero_question)
+        texteÉnonce = view.findViewById(R.id.text_enonce)
+        boutonsRéponses = listOf(
             view.findViewById(R.id.button_reponse_a),
             view.findViewById(R.id.button_reponse_b),
             view.findViewById(R.id.button_reponse_c),
             view.findViewById(R.id.button_reponse_d)
         )
-        texteRetroaction = view.findViewById(R.id.text_retroaction)
+        texteRétroaction = view.findViewById(R.id.text_retroaction)
         boutonSuivant = view.findViewById(R.id.button_suivant)
         texteScore = view.findViewById(R.id.text_score)
-        texteResultatTitre = view.findViewById(R.id.text_resultat_titre)
-        texteResultatDetail = view.findViewById(R.id.text_resultat_detail)
+        texteRésultatTitre = view.findViewById(R.id.text_resultat_titre)
+        texteRésultatDetail = view.findViewById(R.id.text_resultat_detail)
 
         // Chaque clic est transmis au présentateur
         view.findViewById<MaterialButton>(R.id.button_quitter)
-            .setOnClickListener { presentateur.surQuitterClique() }
-        boutonsReponses.forEachIndexed { indice, bouton ->
-            bouton.setOnClickListener { presentateur.surReponseChoisie(indice) }
+            .setOnClickListener { présentateur.surQuitterClique() }
+        boutonsRéponses.forEachIndexed { indice, bouton ->
+            bouton.setOnClickListener { présentateur.surRéponseChoisie(indice) }
         }
-        boutonSuivant.setOnClickListener { presentateur.surSuivantClique() }
+        boutonSuivant.setOnClickListener { présentateur.surSuivantClique() }
         view.findViewById<MaterialButton>(R.id.button_rejouer)
-            .setOnClickListener { presentateur.surRejouerClique() }
+            .setOnClickListener { présentateur.surRejouerClique() }
         view.findViewById<MaterialButton>(R.id.button_retour_accueil)
-            .setOnClickListener { presentateur.surQuitterClique() }
+            .setOnClickListener { présentateur.surQuitterClique() }
 
         // Le bouton retour du téléphone passe aussi par le présentateur (confirmation si partie en cours)
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            presentateur.surQuitterClique()
+            présentateur.surQuitterClique()
         }
 
         // Démarre la partie avec le quiz reçu de l'Accueil
-        presentateur.attacherVue(this)
-        presentateur.surDemarrer(arguments?.getInt("quizId", 1) ?: 1)
+        présentateur.attacherVue(this)
+        présentateur.surDémarrer(arguments?.getInt("quizId", 1) ?: 1)
     }
 
     override fun onDestroyView() {
-        presentateur.detacherVue()
+        présentateur.detacherVue()
         super.onDestroyView()
     }
 
@@ -110,15 +110,15 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
 
     /** Affiche le message sous les réponses, avec ses couleurs. */
     private fun afficherMessage(message: String, @ColorRes fond: Int, @ColorRes texte: Int) {
-        texteRetroaction.text = message
-        texteRetroaction.setBackgroundColor(ContextCompat.getColor(requireContext(), fond))
-        texteRetroaction.setTextColor(ContextCompat.getColor(requireContext(), texte))
-        texteRetroaction.isVisible = true
+        texteRétroaction.text = message
+        texteRétroaction.setBackgroundColor(ContextCompat.getColor(requireContext(), fond))
+        texteRétroaction.setTextColor(ContextCompat.getColor(requireContext(), texte))
+        texteRétroaction.isVisible = true
     }
 
     /** Empêche de toucher les réponses après avoir répondu. */
-    private fun bloquerReponses() {
-        boutonsReponses.forEach { it.isClickable = false }
+    private fun bloquerRéponses() {
+        boutonsRéponses.forEach { it.isClickable = false }
     }
 
     // ----- IVueQuestion -----
@@ -127,33 +127,33 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
         titreQuiz: String,
         numero: Int,
         total: Int,
-        enonce: String,
+        énoncé: String,
         type: TypeQuestion,
-        reponses: List<String>,
-        plusieursReponses: Boolean
+        réponses: List<String>,
+        plusieursRéponses: Boolean
     ) {
         groupeJeu.isVisible = true
-        groupeResultat.isVisible = false
+        groupeRésultat.isVisible = false
 
         texteTitreQuiz.text = titreQuiz
         texteCompteur.text = getString(R.string.question_compteur, numero, total)
-        texteNumero.text = getString(R.string.question_numero, numero)
-        texteEnonce.text = enonce
+        texteNuméro.text = getString(R.string.question_numero, numero)
+        texteÉnonce.text = énoncé
 
         // Vrai ou faux : 2 boutons ; choix multiple : les réponses reçues
-        reponsesAffichees =
+        réponsesAffichées =
             if (type == TypeQuestion.VRAI_FAUX) listOf(
                 getString(R.string.question_vrai),
                 getString(R.string.question_faux)
             )
-            else reponses
+            else réponses
 
-        boutonsReponses.forEachIndexed { indice, bouton ->
-            if (indice < reponsesAffichees.size) {
+        boutonsRéponses.forEachIndexed { indice, bouton ->
+            if (indice < réponsesAffichées.size) {
                 bouton.isVisible = true
                 bouton.isClickable = true
                 bouton.text =
-                    getString(R.string.question_reponse, lettres[indice], reponsesAffichees[indice])
+                    getString(R.string.question_reponse, lettres[indice], réponsesAffichées[indice])
                 colorer(bouton, R.color.surface, R.color.border)
             } else {
                 bouton.isVisible = false
@@ -161,10 +161,10 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
         }
 
         // Nouvelle question : pas de message, bouton Suivant désactivé
-        texteRetroaction.isVisible = false
+        texteRétroaction.isVisible = false
         boutonSuivant.isEnabled = false
         boutonSuivant.text = getString(
-            if (plusieursReponses) R.string.question_choisir_plusieurs else R.string.question_choisir
+            if (plusieursRéponses) R.string.question_choisir_plusieurs else R.string.question_choisir
         )
     }
 
@@ -172,11 +172,11 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
         progression.setProgressCompat(pourcentage, true)
     }
 
-    override fun afficherSelection(indices: Set<Int>) {
+    override fun afficherSélection(indices: Set<Int>) {
         // Réponses cochées en bleu (pas en vert, pour ne pas donner la réponse)
-        reponsesAffichees.indices.forEach { i ->
-            if (i in indices) colorer(boutonsReponses[i], R.color.light_blue, R.color.blue_text)
-            else colorer(boutonsReponses[i], R.color.surface, R.color.border)
+        réponsesAffichées.indices.forEach { i ->
+            if (i in indices) colorer(boutonsRéponses[i], R.color.light_blue, R.color.blue_text)
+            else colorer(boutonsRéponses[i], R.color.surface, R.color.border)
         }
     }
 
@@ -187,17 +187,17 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
     }
 
     override fun afficherCorrection(choisies: Set<Int>, bonnes: Set<Int>, estBonne: Boolean) {
-        bloquerReponses()
-        reponsesAffichees.indices.forEach { i ->
+        bloquerRéponses()
+        réponsesAffichées.indices.forEach { i ->
             when (i) {
-                in bonnes -> colorer(boutonsReponses[i], R.color.light_green, R.color.primary_green)
+                in bonnes -> colorer(boutonsRéponses[i], R.color.light_green, R.color.primary_green)
                 in choisies -> colorer(
-                    boutonsReponses[i],
+                    boutonsRéponses[i],
                     R.color.light_orange,
                     R.color.accent_orange
                 )
 
-                else -> colorer(boutonsReponses[i], R.color.surface, R.color.border)
+                else -> colorer(boutonsRéponses[i], R.color.surface, R.color.border)
             }
         }
 
@@ -209,11 +209,11 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
             )
         } else {
             val message = if (bonnes.size == 1) {
-                getString(R.string.question_mauvaise, reponsesAffichees[bonnes.first()])
+                getString(R.string.question_mauvaise, réponsesAffichées[bonnes.first()])
             } else {
                 getString(
                     R.string.question_mauvaise_plusieurs,
-                    bonnes.sorted().joinToString { "« ${reponsesAffichees[it]} »" })
+                    bonnes.sorted().joinToString { "« ${réponsesAffichées[it]} »" })
             }
             afficherMessage(message, R.color.light_orange, R.color.red_text)
         }
@@ -226,25 +226,25 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
         )
     }
 
-    override fun afficherResultat(
+    override fun afficherRésultat(
         titreQuiz: String,
         score: Int,
         total: Int,
-        niveau: NiveauResultat
+        niveau: NiveauRésultat
     ) {
         // Cache la partie jeu et montre la partie résultat
         groupeJeu.isVisible = false
-        groupeResultat.isVisible = true
+        groupeRésultat.isVisible = true
 
         texteScore.text = getString(R.string.question_compteur, score, total)
-        texteResultatTitre.text = getString(
+        texteRésultatTitre.text = getString(
             when (niveau) {
-                NiveauResultat.EXCELLENT -> R.string.resultat_excellent
-                NiveauResultat.BIEN -> R.string.resultat_bien
-                NiveauResultat.A_PRATIQUER -> R.string.resultat_a_pratiquer
+                NiveauRésultat.EXCELLENT -> R.string.resultat_excellent
+                NiveauRésultat.BIEN -> R.string.resultat_bien
+                NiveauRésultat.A_PRATIQUER -> R.string.resultat_a_pratiquer
             }
         )
-        texteResultatDetail.text = getString(R.string.resultat_detail, titreQuiz)
+        texteRésultatDetail.text = getString(R.string.resultat_detail, titreQuiz)
     }
 
     override fun demanderConfirmationQuitter() {
@@ -252,7 +252,7 @@ class QuestionFragment : Fragment(R.layout.fragment_question), IVueQuestion {
             .setTitle(R.string.question_confirmer_quitter_titre)
             .setMessage(R.string.question_confirmer_quitter_message)
             .setNegativeButton(R.string.action_annuler, null)
-            .setPositiveButton(R.string.action_quitter) { _, _ -> presentateur.surQuitterConfirme() }
+            .setPositiveButton(R.string.action_quitter) { _, _ -> présentateur.surQuitterConfirme() }
             .show()
     }
 

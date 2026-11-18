@@ -1,6 +1,6 @@
 package com.crosemont.qwizup
 
-import com.crosemont.qwizup.sourceDeDonnees.SourceFavorisLocale
+import com.crosemont.qwizup.accèsAuxDonnées.SourceFavorisLocale
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

@@ -3,7 +3,7 @@ package com.crosemont.qwizup
 import com.crosemont.qwizup.domaine.entites.Quiz
 import com.crosemont.qwizup.domaine.service.ServiceException
 import com.crosemont.qwizup.domaine.service.ServiceQuiz
-import com.crosemont.qwizup.sourceDeDonnees.SourceDeDonnees
+import com.crosemont.qwizup.accèsAuxDonnées.SourceDeDonnées
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -12,11 +12,11 @@ import org.junit.Test
 import java.io.IOException
 
 class ServiceQuizTest {
-    private class SourceFixe(private val quiz: List<Quiz>) : SourceDeDonnees {
+    private class SourceFixe(private val quiz: List<Quiz>) : SourceDeDonnées {
         override suspend fun obtenirQuiz(limite: Int, decalage: Int) = quiz
     }
 
-    private class SourceEnPanne : SourceDeDonnees {
+    private class SourceEnPanne : SourceDeDonnées {
         override suspend fun obtenirQuiz(limite: Int, decalage: Int): List<Quiz> =
             throw IOException("Pas de réseau")
     }

@@ -1,10 +1,10 @@
-package com.crosemont.qwizup.sourceDeDonnees
+package com.crosemont.qwizup.accèsAuxDonnées
 
 import com.crosemont.qwizup.domaine.entites.Quiz
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
-class SourceBiddon : SourceDeDonnees {
+class SourceBidon : SourceDeDonnées {
     private val quiz = listOf(
         Quiz(
             1, "bidon-1", "Le système solaire", "Sciences", 10,

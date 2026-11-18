@@ -4,12 +4,12 @@ import com.crosemont.qwizup.domaine.service.ServiceQuiz
 import com.crosemont.qwizup.presentation.library.ContratLibrairie
 import java.text.Normalizer
 
-class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
+class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
 
     // Discover
     data class CarteDiscover(
         val id: Int,
-        val categorie: ContratVuePresentateur.CategorieQuiz,
+        val catégorie: ContratVuePrésentateur.CatégorieQuiz,
         val titre: String,
         val description: String,
         val nbQuestions: Int,
@@ -19,12 +19,12 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
     )
 
     /**
-     * Favoris de Découvrir (par identifiant de l'API). Le quiz bidon 1 est favori au départ
+     * Favoris de Découvrir (par identifiant de l'API)
      */
     private val favorisDiscover = mutableSetOf("bidon-1")
 
     /**
-     * Liste remplie par le service. Elle commence vide
+     * Liste remplie par le service
      */
     @Volatile
     private var quizDiscover: List<CarteDiscover> = emptyList()
@@ -36,7 +36,7 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         quizDiscover = service.obtenirQuiz().map { quiz ->
             CarteDiscover(
                 id = quiz.id,
-                categorie = versCategorie(quiz.categorie),
+                catégorie = versCatégorie(quiz.catégorie),
                 titre = quiz.titre,
                 description = quiz.description,
                 nbQuestions = quiz.nbQuestions,
@@ -52,12 +52,12 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
      * contient le texte recherché. On ignore les majuscules et les accents.
      */
     fun obtenirQuizDiscover(
-        categorie: ContratVuePresentateur.CategorieQuiz?,
+        catégorie: ContratVuePrésentateur.CatégorieQuiz?,
         recherche: String
     ): List<CarteDiscover> {
         val texte = simplifier(recherche.trim())
         return quizDiscover.filter { quiz ->
-            val bonneCategorie = categorie == null || quiz.categorie == categorie
+            val bonneCategorie = catégorie == null || quiz.catégorie == catégorie
             val contientTexte = texte.isEmpty() ||
                     simplifier(quiz.titre).contains(texte) ||
                     simplifier(quiz.description).contains(texte)
@@ -65,28 +65,14 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         }
     }
 
-    fun obtenirQuizDiscoverParId(quizId: Int): CarteDiscover? =
-        quizDiscover.find { it.id == quizId }
-
-    /** Ajoute le quiz aux favoris s'il n'y est pas, sinon le retire. */
-    fun basculerFavoriDiscover(quizId: Int) {
-        val quiz = quizDiscover.find { it.id == quizId } ?: return
-        if (!favorisDiscover.remove(quiz.quizIdApi)) {
-            favorisDiscover.add(quiz.quizIdApi)
-        }
-        quizDiscover = quizDiscover.map {
-            if (it.id == quizId) it.copy(estFavori = quiz.quizIdApi in favorisDiscover) else it
-        }
-    }
-
-    private fun versCategorie(texte: String): ContratVuePresentateur.CategorieQuiz =
+    private fun versCatégorie(texte: String): ContratVuePrésentateur.CatégorieQuiz =
         when (simplifier(texte)) {
-            "sciences", "science" -> ContratVuePresentateur.CategorieQuiz.SCIENCES
-            "histoire" -> ContratVuePresentateur.CategorieQuiz.HISTOIRE
-            "langues" -> ContratVuePresentateur.CategorieQuiz.LANGUES
-            "geographie" -> ContratVuePresentateur.CategorieQuiz.GEOGRAPHIE
-            "informatique" -> ContratVuePresentateur.CategorieQuiz.INFORMATIQUE
-            else -> ContratVuePresentateur.CategorieQuiz.AUTRE
+            "sciences", "science" -> ContratVuePrésentateur.CatégorieQuiz.SCIENCES
+            "histoire" -> ContratVuePrésentateur.CatégorieQuiz.HISTOIRE
+            "langues" -> ContratVuePrésentateur.CatégorieQuiz.LANGUES
+            "geographie" -> ContratVuePrésentateur.CatégorieQuiz.GÉOGRAPHIE
+            "informatique" -> ContratVuePrésentateur.CatégorieQuiz.INFORMATIQUE
+            else -> ContratVuePrésentateur.CatégorieQuiz.AUTRE
         }
 
     /** Met le texte en minuscules et enlève les accents (« Révolution » devient « revolution »). */
@@ -103,58 +89,58 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         val nbQuestions: Int
     )
 
-    data class QuestionCreer(
+    data class QuestionCréer(
         val texte: String,
-        val type: ContratVuePresentateur.TypeQuestion,
-        val reponses: List<String> = listOf("", "", "", ""),   // choix multiple : A, B, C, D
-        val bonnesReponses: Set<Int> = setOf(0),   // choix multiple : une ou plusieurs de 0 à 3 ; vrai ou faux : {0} = vrai, {1} = faux
-        val reponseAttendue: String = ""    // réponse écrite
+        val type: ContratVuePrésentateur.TypeQuestion,
+        val réponses: List<String> = listOf("", "", "", ""),   // choix multiple : A, B, C, D
+        val bonnesRéponses: Set<Int> = setOf(0),   // choix multiple : une ou plusieurs de 0 à 3 ; vrai ou faux : {0} = vrai, {1} = faux
+        val réponseAttendue: String = ""    // réponse écrite
     )
 
-    data class QuizCreer(
+    data class QuizCréer(
         val id: Int,                        // 0 = nouveau quiz pas encore sauvegardé
         val titre: String,
         val description: String,
-        val categorie: ContratVuePresentateur.CategorieQuiz,
-        val difficulte: ContratVuePresentateur.Difficulte,
-        val acces: ContratVuePresentateur.AccesQuiz,
-        val questions: List<QuestionCreer>,
-        val estPublie: Boolean
+        val catégorie: ContratVuePrésentateur.CatégorieQuiz,
+        val difficulté: ContratVuePrésentateur.Difficulté,
+        val accès: ContratVuePrésentateur.AccèsQuiz,
+        val questions: List<QuestionCréer>,
+        val estPublié: Boolean
     )
 
     companion object {
-        private fun choix(texte: String, reponses: List<String>, vararg bonnes: Int) =
-            QuestionCreer(
+        private fun choix(texte: String, réponses: List<String>, vararg bonnes: Int) =
+            QuestionCréer(
                 texte,
-                ContratVuePresentateur.TypeQuestion.CHOIX_MULTIPLE,
-                reponses,
+                ContratVuePrésentateur.TypeQuestion.CHOIX_MULTIPLE,
+                réponses,
                 bonnes.toSet()
             )
 
         private fun vraiFaux(texte: String, vrai: Boolean) =
-            QuestionCreer(
+            QuestionCréer(
                 texte,
-                ContratVuePresentateur.TypeQuestion.VRAI_FAUX,
-                bonnesReponses = setOf(if (vrai) 0 else 1)
+                ContratVuePrésentateur.TypeQuestion.VRAI_FAUX,
+                bonnesRéponses = setOf(if (vrai) 0 else 1)
             )
 
         private fun ecrite(texte: String, attendue: String) =
-            QuestionCreer(
+            QuestionCréer(
                 texte,
-                ContratVuePresentateur.TypeQuestion.REPONSE_ECRITE,
-                reponseAttendue = attendue
+                ContratVuePrésentateur.TypeQuestion.REPONSE_ECRITE,
+                réponseAttendue = attendue
             )
 
         // Données codées en dur, partagées par tous les ModeleQuiz :
         // l'écran Créer et l'éditeur voient donc les mêmes quiz
-        private val quizCreer = mutableListOf(
-            QuizCreer(
+        private val quizCréers = mutableListOf(
+            QuizCréer(
                 1,
                 "Le système solaire",
                 "Planètes, lunes et distances.",
-                ContratVuePresentateur.CategorieQuiz.SCIENCES,
-                ContratVuePresentateur.Difficulte.MOYEN,
-                ContratVuePresentateur.AccesQuiz.AVEC_CODE,
+                ContratVuePrésentateur.CatégorieQuiz.SCIENCES,
+                ContratVuePrésentateur.Difficulté.MOYEN,
+                ContratVuePrésentateur.AccèsQuiz.AVEC_CODE,
                 listOf(
                     choix(
                         "Quelle est la plus grande planète du système solaire?",
@@ -173,15 +159,15 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
                     ),
                     vraiFaux("Mars est surnommée la planète rouge.", vrai = true)
                 ),
-                estPublie = false
+                estPublié = false
             ),
-            QuizCreer(
+            QuizCréer(
                 2,
                 "Bases de Kotlin",
                 "Les notions de base du langage Kotlin.",
-                ContratVuePresentateur.CategorieQuiz.INFORMATIQUE,
-                ContratVuePresentateur.Difficulte.FACILE,
-                ContratVuePresentateur.AccesQuiz.AVEC_CODE,
+                ContratVuePrésentateur.CatégorieQuiz.INFORMATIQUE,
+                ContratVuePrésentateur.Difficulté.FACILE,
+                ContratVuePrésentateur.AccèsQuiz.AVEC_CODE,
                 listOf(
                     choix(
                         "Quel mot-clé déclare une variable qu'on ne peut pas réassigner?",
@@ -207,15 +193,15 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
                     ),
                     vraiFaux("Une variable String peut être null par défaut.", vrai = false)
                 ),
-                estPublie = false
+                estPublié = false
             ),
-            QuizCreer(
+            QuizCréer(
                 3,
                 "Capitales d'Europe",
                 "Associe chaque pays à sa capitale.",
-                ContratVuePresentateur.CategorieQuiz.GEOGRAPHIE,
-                ContratVuePresentateur.Difficulte.FACILE,
-                ContratVuePresentateur.AccesQuiz.TOUT_LE_MONDE,
+                ContratVuePrésentateur.CatégorieQuiz.GÉOGRAPHIE,
+                ContratVuePrésentateur.Difficulté.FACILE,
+                ContratVuePrésentateur.AccèsQuiz.TOUT_LE_MONDE,
                 listOf(
                     choix(
                         "Quelle est la capitale du Portugal?",
@@ -236,33 +222,33 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
                     ),
                     vraiFaux("Genève est la capitale de la Suisse.", vrai = false)
                 ),
-                estPublie = true
+                estPublié = true
             )
         )
         private var prochainIdCreer = 4
     }
 
     fun obtenirBrouillons(): List<CarteCreate> =
-        quizCreer.filter { !it.estPublie }.map { it.enCarte() }
+        quizCréers.filter { !it.estPublié }.map { it.enCarte() }
 
-    fun obtenirPublies(): List<CarteCreate> = quizCreer.filter { it.estPublie }.map { it.enCarte() }
+    fun obtenirPubliés(): List<CarteCreate> = quizCréers.filter { it.estPublié }.map { it.enCarte() }
 
-    fun obtenirQuizCreer(quizId: Int): QuizCreer? = quizCreer.find { it.id == quizId }
+    fun obtenirQuizCréer(quizId: Int): QuizCréer? = quizCréers.find { it.id == quizId }
 
     /** Ajoute le quiz s'il est nouveau (id = 0), sinon remplace l'ancienne version. Retourne son id. */
-    fun sauvegarderQuizCreer(quiz: QuizCreer): Int {
-        val index = quizCreer.indexOfFirst { it.id == quiz.id }
+    fun sauvegarderQuizCrée(quiz: QuizCréer): Int {
+        val index = quizCréers.indexOfFirst { it.id == quiz.id }
         return if (index == -1) {
             val nouveau = quiz.copy(id = prochainIdCreer++)
-            quizCreer.add(nouveau)
+            quizCréers.add(nouveau)
             nouveau.id
         } else {
-            quizCreer[index] = quiz
+            quizCréers[index] = quiz
             quiz.id
         }
     }
 
-    private fun QuizCreer.enCarte() = CarteCreate(id, titre, estPublie, questions.size)
+    private fun QuizCréer.enCarte() = CarteCreate(id, titre, estPublié, questions.size)
 
     // Library
     data class CarteLibrary(
@@ -273,35 +259,8 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         val typeBadge: ContratLibrairie.TypeBadge
     )
 
-    // Données codées en dur
-    private val favoris = listOf(
-        CarteLibrary(
-            1,
-            "Le système solaire",
-            "Science - 10 questions",
-            "4/5",
-            ContratLibrairie.TypeBadge.PROGRESSION
-        ),
-        CarteLibrary(
-            2,
-            "Capitales d'Europe",
-            "Géographie - 12 questions",
-            "Nouveau",
-            ContratLibrairie.TypeBadge.NOUVEAU
-        ),
-        CarteLibrary(
-            3,
-            "Verbe irréguliers anglais",
-            "Langues - 15 questions",
-            "87%",
-            ContratLibrairie.TypeBadge.SCORE
-        )
-    )
-
-    fun obternirFavoris(): List<CarteLibrary> = favoris
     fun obternirCompletes(): List<CarteLibrary> = emptyList()
     fun obternirCrees(): List<CarteLibrary> = emptyList()
-
 
     // Question (écran de jeu)
     /**
@@ -309,15 +268,14 @@ class ModeleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
      * Les réponses écrites sont retirées pour l'instant : le jeu gère seulement
      * le choix multiple et le vrai ou faux.
      */
-    fun obtenirQuizAJouer(quizId: Int): QuizCreer? =
-        obtenirQuizCreer(quizId)?.let { quiz ->
+    fun obtenirQuizÀJouer(quizId: Int): QuizCréer? =
+        obtenirQuizCréer(quizId)?.let { quiz ->
             quiz.copy(
                 questions = quiz.questions.filter {
-                    it.type != ContratVuePresentateur.TypeQuestion.REPONSE_ECRITE
+                    it.type != ContratVuePrésentateur.TypeQuestion.REPONSE_ECRITE
                 }
             )
         }
-
 
     // Rejoindre (code à 6 chiffres donné par l'enseignant·e)
     // Données codées en dur : chaque code ouvre un quiz (même numérotation que Créer)

@@ -2,8 +2,8 @@ package com.crosemont.qwizup
 
 import com.crosemont.qwizup.domaine.service.ServiceException
 import com.crosemont.qwizup.domaine.service.ServiceFavoris
-import com.crosemont.qwizup.sourceDeDonnees.SourceFavoris
-import com.crosemont.qwizup.sourceDeDonnees.SourceFavorisBidon
+import com.crosemont.qwizup.accèsAuxDonnées.SourceFavoris
+import com.crosemont.qwizup.accèsAuxDonnées.SourceFavorisBidon
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test

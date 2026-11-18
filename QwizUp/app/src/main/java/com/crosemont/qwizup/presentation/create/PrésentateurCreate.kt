@@ -1,19 +1,19 @@
 package com.crosemont.qwizup.presentation.create
 
-import com.crosemont.qwizup.presentation.ContratVuePresentateur
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.OngletCreer
-import com.crosemont.qwizup.presentation.ModeleQuiz
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.OngletCreer
+import com.crosemont.qwizup.presentation.ModèleQuiz
 
-class PresentateurCreate(
-    var modeleQuiz: ModeleQuiz = ModeleQuiz(),
-) : ContratVuePresentateur.IPresentateurCreate {
+class PrésentateurCreate(
+    var modèleQuiz: ModèleQuiz = ModèleQuiz(),
+) : ContratVuePrésentateur.IPrésentateurCreate {
 
-    private var vue: ContratVuePresentateur.IVueCreate? = null
+    private var vue: ContratVuePrésentateur.IVueCreate? = null
     private var ongletActif = OngletCreer.BROUILLONS
 
-    override fun attacherVue(vue: ContratVuePresentateur.IVueCreate) {
+    override fun attacherVue(vue: ContratVuePrésentateur.IVueCreate) {
         this.vue = vue
-        vue.afficherCompteurs(modeleQuiz.obtenirBrouillons().size, modeleQuiz.obtenirPublies().size)
+        vue.afficherCompteurs(modèleQuiz.obtenirBrouillons().size, modèleQuiz.obtenirPubliés().size)
         afficherOnglet()
     }
 
@@ -36,8 +36,8 @@ class PresentateurCreate(
 
     private fun afficherOnglet() {
         val (cartes, messageVide) = when (ongletActif) {
-            OngletCreer.BROUILLONS -> modeleQuiz.obtenirBrouillons() to "Aucun brouillon pour l'instant"
-            OngletCreer.PUBLIES -> modeleQuiz.obtenirPublies() to "Aucun quiz publié pour l'instant"
+            OngletCreer.BROUILLONS -> modèleQuiz.obtenirBrouillons() to "Aucun brouillon pour l'instant"
+            OngletCreer.PUBLIES -> modèleQuiz.obtenirPubliés() to "Aucun quiz publié pour l'instant"
         }
 
         vue?.afficherOngletChoisi(ongletActif)

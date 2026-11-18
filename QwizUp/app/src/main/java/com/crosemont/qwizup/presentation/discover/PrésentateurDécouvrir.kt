@@ -1,7 +1,7 @@
 package com.crosemont.qwizup.presentation.discover
 
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.CategorieQuiz
-import com.crosemont.qwizup.presentation.ModeleQuiz.CarteDiscover
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
+import com.crosemont.qwizup.presentation.ModèleQuiz.CarteDiscover
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +24,7 @@ class PrésentateurDécouvrir(
     private var chargement: Job? = null
 
     // Filtres choisis par l'utilisateur
-    private var catégorieChoisie: CategorieQuiz? = null   // null = « Tous »
+    private var catégorieChoisie: CatégorieQuiz? = null   // null = « Tous »
     private var recherche = ""
 
     // Les quiz affichés en ce moment
@@ -48,7 +48,7 @@ class PrésentateurDécouvrir(
         afficherQuiz()
     }
 
-    override fun choisirCatégorie(catégorie: CategorieQuiz?) {
+    override fun choisirCatégorie(catégorie: CatégorieQuiz?) {
         catégorieChoisie = catégorie
         vue?.afficherCatégorieChoisie(catégorie)
         afficherQuiz()
@@ -91,7 +91,7 @@ class PrésentateurDécouvrir(
                 } else {
                     quiz.forEach {
                         vue?.ajouterQuiz(
-                            it.id, it.categorie, it.titre, it.description,
+                            it.id, it.catégorie, it.titre, it.description,
                             it.nbQuestions, it.dureeMinutes, it.estFavori
                         )
                     }
