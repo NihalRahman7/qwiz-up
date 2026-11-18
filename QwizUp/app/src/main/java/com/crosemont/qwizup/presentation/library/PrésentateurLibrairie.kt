@@ -26,7 +26,7 @@ class PrésentateurLibrairie(
         val messageVide = when (onglet) {
             OngletLibrairie.FAVORIS -> "Aucun favori pour l’instant"
             OngletLibrairie.COMPLÉTÉS -> "Aucun quiz complété"
-            OngletLibrairie.CRÉES -> "Vous n'avez crées aucun quiz"
+            OngletLibrairie.CRÉES -> "Vous n'avez créé aucun quiz"
         }
 
         chargement?.cancel()   // un nouvel onglet remplace la demande en cours

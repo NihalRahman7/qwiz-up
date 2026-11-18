@@ -103,7 +103,7 @@
     <string name="editeur_confirmer_suppression_titre">Delete question %1$d?</string>
     <string name="editeur_confirmer_suppression_message">This action cannot be undone.</string>
     <string name="editeur_confirmer_quitter_titre">Leave without saving?</string>
-    <string name="editeur_confirmer_quitter_message">Your changes will be lost. You can keep them as a draft.</string>
+    <string name="editeur_confirmer_quitter_message">Your changes will be lost. You can save them before leaving.</string>
     <string name="action_supprimer">Delete</string>
     <string name="action_quitter">Leave</string>
     <string name="action_annuler">Cancel</string>
@@ -146,4 +146,14 @@
     <string name="rejoindre_label_code">Quiz code</string>
     <string name="rejoindre_bouton">Join</string>
     <string name="rejoindre_code_invalide">This code does not match any quiz.</string>
+
+    <!-- Créer : publication, plusieurs réponses, erreurs -->
+    <string name="editeur_erreur_chargement">Couldn\'t open this quiz.</string>
+    <string name="editeur_erreur_sauvegarde">Couldn\'t save the quiz. Try again.</string>
+    <string name="creer_liste_vide_brouillons">No drafts yet</string>
+    <string name="creer_liste_vide_publies">No published quizzes yet</string>
+    <string name="creer_erreur_chargement">Couldn\'t load your quizzes. Try again later.</string>
+    <string name="editeur_erreur_categorie">Specify your quiz\'s category</string>
+    <string name="editeur_label_categorie_perso">Specify the category</string>
+    <string name="editeur_categorie_perso_placeholder">E.g. Sports, Music, Cooking</string>
 </resources>

@@ -4,24 +4,26 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.ContratVuePrésentateur.IPrésentateurCreate
-import com.crosemont.qwizup.presentation.ContratVuePrésentateur.IVueCreate
-import com.crosemont.qwizup.presentation.ContratVuePrésentateur.OngletCreer
+import com.crosemont.qwizup.presentation.create.ContratCréer.IPrésentateurCréer
+import com.crosemont.qwizup.presentation.create.ContratCréer.IVueCréer
+import com.crosemont.qwizup.presentation.create.ContratCréer.OngletCreer
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 
-class FragmentCreate : Fragment(R.layout.fragment_create), IVueCreate {
+class FragmentCreate : Fragment(R.layout.fragment_create), IVueCréer {
 
-    private val présentateur: IPrésentateurCreate = PrésentateurCreate()
+    // La Fabrique assemble source → service → modèle → présentateur
+    private val presentateur: IPrésentateurCréer = FabriqueCréer.créerPrésentateurCréer()
 
     private lateinit var groupeOnglets: MaterialButtonToggleGroup
     private lateinit var ongletBrouillons: MaterialButton
-    private lateinit var ongletPubliés: MaterialButton
+    private lateinit var ongletPublies: MaterialButton
     private lateinit var listeQuiz: LinearLayout
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,27 +31,27 @@ class FragmentCreate : Fragment(R.layout.fragment_create), IVueCreate {
 
         groupeOnglets = view.findViewById(R.id.groupe_onglets_creer)
         ongletBrouillons = view.findViewById(R.id.button_onglet_brouillons)
-        ongletPubliés = view.findViewById(R.id.button_onglet_publies)
+        ongletPublies = view.findViewById(R.id.button_onglet_publies)
         listeQuiz = view.findViewById(R.id.liste_quiz)
 
         view.findViewById<View>(R.id.button_nouveau_quiz)
-            .setOnClickListener { présentateur.surNouveauQuizClique() }
-        ongletBrouillons.setOnClickListener { présentateur.surOngletClique(OngletCreer.BROUILLONS) }
-        ongletPubliés.setOnClickListener { présentateur.surOngletClique(OngletCreer.PUBLIES) }
+            .setOnClickListener { presentateur.surNouveauQuizClique() }
+        ongletBrouillons.setOnClickListener { presentateur.surOngletClique(OngletCreer.BROUILLONS) }
+        ongletPublies.setOnClickListener { presentateur.surOngletClique(OngletCreer.PUBLIES) }
 
-        présentateur.attacherVue(this)
+        presentateur.attacherVue(this)
     }
 
     override fun onDestroyView() {
-        présentateur.detacherVue()
+        presentateur.detacherVue()
         super.onDestroyView()
     }
 
-    // ----- IVueCreate -----
+    // ----- IVueCréer -----
 
     override fun afficherCompteurs(nbBrouillons: Int, nbPublies: Int) {
         ongletBrouillons.text = getString(R.string.creer_onglet_brouillons, nbBrouillons)
-        ongletPubliés.text = getString(R.string.creer_onglet_publies, nbPublies)
+        ongletPublies.text = getString(R.string.creer_onglet_publies, nbPublies)
     }
 
     override fun afficherOngletChoisi(onglet: OngletCreer) {
@@ -69,21 +71,20 @@ class FragmentCreate : Fragment(R.layout.fragment_create), IVueCreate {
         val carte = layoutInflater.inflate(R.layout.item_quiz_creer, listeQuiz, false)
         carte.findViewById<TextView>(R.id.text_titre_quiz).text = titre
         carte.findViewById<TextView>(R.id.text_details_quiz).text =
-            resources.getQuantityString(
-                R.plurals.editeur_nombre_questions,
-                nbQuestions,
-                nbQuestions
-            )
+            resources.getQuantityString(R.plurals.editeur_nombre_questions, nbQuestions, nbQuestions)
         carte.findViewById<MaterialButton>(R.id.button_continuer).apply {
             setText(if (estPublié) R.string.creer_modifier else R.string.creer_continuer)
-            setOnClickListener { présentateur.surQuizClique(id) }
+            setOnClickListener { presentateur.surQuizClique(id) }
         }
         listeQuiz.addView(carte)
     }
 
-    override fun afficherMessageVide(message: String) {
+    override fun afficherListeVide(onglet: OngletCreer) {
         val texte = TextView(requireContext()).apply {
-            text = message
+            setText(
+                if (onglet == OngletCreer.BROUILLONS) R.string.creer_liste_vide_brouillons
+                else R.string.creer_liste_vide_publies
+            )
             setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary))
             setPadding(0, 32, 0, 8)
         }
@@ -94,5 +95,9 @@ class FragmentCreate : Fragment(R.layout.fragment_create), IVueCreate {
         // -1 = nouveau quiz (un argument de navigation ne peut pas être null)
         val args = bundleOf("quizId" to (quizId ?: -1))
         findNavController().navigate(R.id.action_creer_vers_editeur, args)
+    }
+
+    override fun afficherErreurChargement() {
+        Toast.makeText(requireContext(), R.string.creer_erreur_chargement, Toast.LENGTH_LONG).show()
     }
 }

@@ -1,19 +1,34 @@
 package com.crosemont.qwizup.presentation.create
 
-import com.crosemont.qwizup.presentation.ContratVuePrésentateur
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.AccèsQuiz
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Difficulté
-import com.crosemont.qwizup.presentation.ContratVuePrésentateur.ErreurEditeur
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.TypeQuestion
-import com.crosemont.qwizup.presentation.ModèleQuiz
 import com.crosemont.qwizup.presentation.ModèleQuiz.QuestionCréer
+import com.crosemont.qwizup.presentation.ModèleQuiz.QuizCréer
+import com.crosemont.qwizup.presentation.create.ContratCréer.ErreurEditeur
+import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class PrésentateurEditeur(
-    var modèleQuiz: ModèleQuiz = ModèleQuiz(),
-) : ContratVuePrésentateur.IPrésentateurEditeur {
+class PrésentateurÉditeur(
+    private val modèle: ContratCréer.IModèleCréer,
+    private val filPrincipal: CoroutineContext = Dispatchers.Main,   // pour mettre la vue à jour
+    private val filArrièrePlan: CoroutineContext = Dispatchers.IO,   // pour appeler le modèle
+) : ContratCréer.IPrésentateurÉditeur {
 
-    private var vue: ContratVuePrésentateur.IVueEditeur? = null
+    private var vue: ContratCréer.IVueÉditeur? = null
+
+    // Les coroutines du présentateur vivent tant que la vue est attachée
+    private var coroutines: CoroutineScope? = null
+
+    // Vrai pendant l'enregistrement : évite d'enregistrer deux fois si on touche le bouton deux fois
+    private var enregistrementEnCours = false
 
     // Le quiz en cours de modification (pas encore sauvegardé dans le modèle)
     private var quiz = nouveauQuiz()
@@ -21,22 +36,38 @@ class PrésentateurEditeur(
     // Le quiz tel qu'il était à l'ouverture : sert à savoir s'il y a des changements non sauvegardés
     private var quizInitial = nouveauQuiz()
 
-    override fun attacherVue(vue: ContratVuePrésentateur.IVueEditeur) {
+    override fun attacherVue(vue: ContratCréer.IVueÉditeur) {
         this.vue = vue
+        coroutines = CoroutineScope(filPrincipal + Job())
     }
 
     override fun detacherVue() {
+        coroutines?.cancel()   // arrête le travail en cours : la vue n'existe plus
+        coroutines = null
         vue = null
     }
 
     override fun chargerQuiz(quizId: Int?) {
-        quiz = quizId?.let { modèleQuiz.obtenirQuizCréer(it) } ?: nouveauQuiz()
+        if (quizId == null) {
+            afficherQuiz(nouveauQuiz())
+            return
+        }
+        // Quiz existant : on le demande au modèle en arrière-plan
+        lancer(siErreur = { vue?.afficherErreurChargement() }) {
+            val quizCharge = withContext(filArrièrePlan) { modèle.obtenirQuiz(quizId) }
+            afficherQuiz(quizCharge)
+        }
+    }
+
+    private fun afficherQuiz(quizAAfficher: QuizCréer) {
+        quiz = quizAAfficher
         quizInitial = quiz
 
         vue?.afficherEnTete(nouveauQuiz = quiz.id == 0)
         vue?.afficherInfosQuiz(quiz.titre, quiz.description)
         vue?.afficherCategorieChoisie(quiz.catégorie)
         vue?.afficherCouverture(quiz.catégorie)
+        vue?.afficherCategoriePerso(visible = quiz.catégorie == CatégorieQuiz.AUTRE, nom = quiz.categoriePerso)
         vue?.afficherDifficulteChoisie(quiz.difficulté)
         vue?.afficherAccesChoisi(quiz.accès)
         vue?.afficherPublication(quiz.estPublié)
@@ -55,10 +86,18 @@ class PrésentateurEditeur(
         quiz = quiz.copy(description = description)
     }
 
-    override fun surCategorieCliquee(categorie: CatégorieQuiz) {
-        quiz = quiz.copy(catégorie = categorie)
-        vue?.afficherCategorieChoisie(categorie)
-        vue?.afficherCouverture(categorie)
+    override fun surCategorieCliquee(catégorie: CatégorieQuiz) {
+        quiz = quiz.copy(catégorie = catégorie)
+        vue?.afficherCategorieChoisie(catégorie)
+        vue?.afficherCouverture(catégorie)
+        vue?.afficherCategoriePerso(visible = catégorie == CatégorieQuiz.AUTRE, nom = quiz.categoriePerso)
+        mettreAJourBouton()
+    }
+
+    override fun surCategoriePersoModifiee(nom: String) {
+        quiz = quiz.copy(categoriePerso = nom)
+        if (nom.isNotBlank()) vue?.effacerErreurs()
+        mettreAJourBouton()
     }
 
     override fun surDifficulteCliquee(difficulté: Difficulté) {
@@ -66,9 +105,9 @@ class PrésentateurEditeur(
         vue?.afficherDifficulteChoisie(difficulté)
     }
 
-    override fun surAccesClique(acces: AccèsQuiz) {
-        quiz = quiz.copy(accès = acces)
-        vue?.afficherAccesChoisi(acces)
+    override fun surAccesClique(accès: AccèsQuiz) {
+        quiz = quiz.copy(accès = accès)
+        vue?.afficherAccesChoisi(accès)
     }
 
     override fun surPrendrePhotoClique() {
@@ -141,17 +180,26 @@ class PrésentateurEditeur(
         // Normalement le bouton est déjà gris s'il manque quelque chose, mais on vérifie quand même
         val manque = ceQuiManque()
         if (manque != null) {
-            if (manque.erreur == ErreurEditeur.QUESTION_INCOMPLETE) vue?.afficherErreurQuestion(
-                manque.numeroQuestion
-            )
+            if (manque.erreur == ErreurEditeur.QUESTION_INCOMPLETE) vue?.afficherErreurQuestion(manque.numeroQuestion)
             else vue?.afficherErreur(manque.erreur)
             return
         }
+        if (enregistrementEnCours) return
+        enregistrementEnCours = true
+
         val aSauvegarder = quiz.copy(titre = quiz.titre.trim())
-        quiz = aSauvegarder.copy(id = modèleQuiz.sauvegarderQuizCrée(aSauvegarder))
-        quizInitial = quiz
-        if (quiz.estPublié) vue?.confirmerPublication(quiz.titre)
-        else vue?.confirmerSauvegarde()
+        lancer(siErreur = { vue?.afficherErreurSauvegarde() }) {
+            try {
+                // Le service vérifie et enregistre le quiz en arrière-plan, puis retourne son id
+                val id = withContext(filArrièrePlan) { modèle.sauvegarderQuiz(aSauvegarder) }
+                quiz = aSauvegarder.copy(id = id)
+                quizInitial = quiz
+                if (quiz.estPublié) vue?.confirmerPublication(quiz.titre)
+                else vue?.confirmerSauvegarde()
+            } finally {
+                enregistrementEnCours = false
+            }
+        }
     }
 
     /** Ce qui empêche d'enregistrer le quiz (numéro de question à partir de 1). */
@@ -161,8 +209,9 @@ class PrésentateurEditeur(
     private fun ceQuiManque(): Manque? {
         if (quiz.titre.isBlank()) return Manque(ErreurEditeur.TITRE_VIDE)
         if (!quiz.estPublié) return null
+        if (quiz.catégorie == CatégorieQuiz.AUTRE && quiz.categoriePerso.isBlank()) return Manque(ErreurEditeur.CATEGORIE_VIDE)
         if (quiz.questions.isEmpty()) return Manque(ErreurEditeur.AUCUNE_QUESTION)
-        val incomplete = quiz.questions.indexOfFirst { !estComplete(it) }
+        val incomplete = quiz.questions.indexOfFirst { !it.estComplete() }
         if (incomplete != -1) return Manque(ErreurEditeur.QUESTION_INCOMPLETE, incomplete + 1)
         return null
     }
@@ -193,37 +242,16 @@ class PrésentateurEditeur(
         vue?.fermer()
     }
 
-    /** Une question est complète quand elle a un texte et une bonne réponse remplie. */
-    private fun estComplete(question: QuestionCréer): Boolean =
-        question.texte.isNotBlank() && when (question.type) {
-            // Au moins une bonne réponse cochée, et chaque réponse cochée doit être remplie
-            TypeQuestion.CHOIX_MULTIPLE -> question.bonnesRéponses.isNotEmpty() &&
-                    question.bonnesRéponses.all {
-                        question.réponses.getOrElse(it) { "" }.isNotBlank()
-                    }
-
-            TypeQuestion.VRAI_FAUX -> true
-            TypeQuestion.REPONSE_ECRITE -> question.réponseAttendue.isNotBlank()
-        }
-
     private fun modifierQuestion(index: Int, changement: (QuestionCréer) -> QuestionCréer) {
         if (index !in quiz.questions.indices) return
-        quiz =
-            quiz.copy(questions = quiz.questions.mapIndexed { i, q -> if (i == index) changement(q) else q })
+        quiz = quiz.copy(questions = quiz.questions.mapIndexed { i, q -> if (i == index) changement(q) else q })
         mettreAJourBouton()
     }
 
     private fun afficherQuestions() {
         vue?.viderQuestions()
         quiz.questions.forEachIndexed { index, q ->
-            vue?.ajouterQuestion(
-                index,
-                q.texte,
-                q.type,
-                q.réponses,
-                q.bonnesRéponses,
-                q.réponseAttendue
-            )
+            vue?.ajouterQuestion(index, q.texte, q.type, q.réponses, q.bonnesRéponses, q.réponseAttendue)
         }
         vue?.afficherNombreQuestions(quiz.questions.size)
         mettreAJourBouton()
@@ -231,7 +259,7 @@ class PrésentateurEditeur(
 
     private fun questionVide() = QuestionCréer(texte = "", type = TypeQuestion.CHOIX_MULTIPLE)
 
-    private fun nouveauQuiz() = ModèleQuiz.QuizCréer(
+    private fun nouveauQuiz() = QuizCréer(
         id = 0,
         titre = "",
         description = "",
@@ -241,4 +269,16 @@ class PrésentateurEditeur(
         questions = listOf(questionVide()),
         estPublié = false
     )
+
+    // Lance une coroutine sur le fil principal. Si le modèle échoue, on appelle siErreur.
+    private fun lancer(siErreur: () -> Unit, travail: suspend () -> Unit): Job? =
+        coroutines?.launch {
+            try {
+                travail()
+            } catch (e: CancellationException) {
+                throw e   // la coroutine a été annulée : ce n'est pas une erreur
+            } catch (e: Exception) {
+                siErreur()
+            }
+        }
 }

@@ -1,5 +1,6 @@
 package com.crosemont.qwizup.presentation
 
+import com.crosemont.qwizup.accèsAuxDonnées.SourceQuizCréésBidon
 import com.crosemont.qwizup.domaine.service.ServiceQuiz
 import com.crosemont.qwizup.presentation.library.ContratLibrairie
 import java.text.Normalizer
@@ -85,7 +86,7 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
     data class CarteCreate(
         val id: Int,
         val titre: String,
-        val estPublie: Boolean,  // false = brouillon, true = publié
+        val estPublié: Boolean,  // false = brouillon, true = publié
         val nbQuestions: Int
     )
 
@@ -95,7 +96,16 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         val réponses: List<String> = listOf("", "", "", ""),   // choix multiple : A, B, C, D
         val bonnesRéponses: Set<Int> = setOf(0),   // choix multiple : une ou plusieurs de 0 à 3 ; vrai ou faux : {0} = vrai, {1} = faux
         val réponseAttendue: String = ""    // réponse écrite
-    )
+    ) {
+        /** Une question est complète quand elle a un texte et une bonne réponse remplie. */
+        fun estComplete(): Boolean = texte.isNotBlank() && when (type) {
+            // Au moins une bonne réponse cochée, et chaque réponse cochée doit être remplie
+            ContratVuePrésentateur.TypeQuestion.CHOIX_MULTIPLE -> bonnesRéponses.isNotEmpty() &&
+                bonnesRéponses.all { réponses.getOrElse(it) { "" }.isNotBlank() }
+            ContratVuePrésentateur.TypeQuestion.VRAI_FAUX -> true
+            ContratVuePrésentateur.TypeQuestion.REPONSE_ECRITE -> réponseAttendue.isNotBlank()
+        }
+    }
 
     data class QuizCréer(
         val id: Int,                        // 0 = nouveau quiz pas encore sauvegardé
@@ -105,150 +115,16 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         val difficulté: ContratVuePrésentateur.Difficulté,
         val accès: ContratVuePrésentateur.AccèsQuiz,
         val questions: List<QuestionCréer>,
-        val estPublié: Boolean
+        val estPublié: Boolean,
+        val categoriePerso: String = ""     // nom de la catégorie quand catégorie = AUTRE (ex. : Sport)
     )
 
-    companion object {
-        private fun choix(texte: String, réponses: List<String>, vararg bonnes: Int) =
-            QuestionCréer(
-                texte,
-                ContratVuePrésentateur.TypeQuestion.CHOIX_MULTIPLE,
-                réponses,
-                bonnes.toSet()
-            )
-
-        private fun vraiFaux(texte: String, vrai: Boolean) =
-            QuestionCréer(
-                texte,
-                ContratVuePrésentateur.TypeQuestion.VRAI_FAUX,
-                bonnesRéponses = setOf(if (vrai) 0 else 1)
-            )
-
-        private fun ecrite(texte: String, attendue: String) =
-            QuestionCréer(
-                texte,
-                ContratVuePrésentateur.TypeQuestion.REPONSE_ECRITE,
-                réponseAttendue = attendue
-            )
-
-        // Données codées en dur, partagées par tous les ModeleQuiz :
-        // l'écran Créer et l'éditeur voient donc les mêmes quiz
-        private val quizCréers = mutableListOf(
-            QuizCréer(
-                1,
-                "Le système solaire",
-                "Planètes, lunes et distances.",
-                ContratVuePrésentateur.CatégorieQuiz.SCIENCES,
-                ContratVuePrésentateur.Difficulté.MOYEN,
-                ContratVuePrésentateur.AccèsQuiz.AVEC_CODE,
-                listOf(
-                    choix(
-                        "Quelle est la plus grande planète du système solaire?",
-                        listOf("Mars", "Jupiter", "Saturne", "Neptune"), 1
-                    ),
-                    vraiFaux("La Lune produit sa propre lumière.", vrai = false),
-                    choix(
-                        "Quelle planète est la plus proche du Soleil?",
-                        listOf("Vénus", "Mercure", "Mars", "Terre"),
-                        1
-                    ),
-                    choix(
-                        "Combien de planètes compte le système solaire?",
-                        listOf("7", "8", "9", "10"),
-                        1
-                    ),
-                    vraiFaux("Mars est surnommée la planète rouge.", vrai = true)
-                ),
-                estPublié = false
-            ),
-            QuizCréer(
-                2,
-                "Bases de Kotlin",
-                "Les notions de base du langage Kotlin.",
-                ContratVuePrésentateur.CatégorieQuiz.INFORMATIQUE,
-                ContratVuePrésentateur.Difficulté.FACILE,
-                ContratVuePrésentateur.AccèsQuiz.AVEC_CODE,
-                listOf(
-                    choix(
-                        "Quel mot-clé déclare une variable qu'on ne peut pas réassigner?",
-                        listOf("var", "val", "let", "const"), 1
-                    ),
-                    vraiFaux("Kotlin peut utiliser les bibliothèques Java.", vrai = true),
-                    choix(
-                        "Quel type représente du texte?",
-                        listOf("Int", "Char", "String", "Text"),
-                        2
-                    ),
-                    choix(
-                        "Quel mot-clé déclare une fonction?",
-                        listOf("function", "def", "fun", "fn"),
-                        2
-                    ),
-                    choix(
-                        "Lesquels sont des types de base en Kotlin?",
-                        listOf("Int", "String", "Integer", "Boolean"),
-                        0,
-                        1,
-                        3
-                    ),
-                    vraiFaux("Une variable String peut être null par défaut.", vrai = false)
-                ),
-                estPublié = false
-            ),
-            QuizCréer(
-                3,
-                "Capitales d'Europe",
-                "Associe chaque pays à sa capitale.",
-                ContratVuePrésentateur.CatégorieQuiz.GÉOGRAPHIE,
-                ContratVuePrésentateur.Difficulté.FACILE,
-                ContratVuePrésentateur.AccèsQuiz.TOUT_LE_MONDE,
-                listOf(
-                    choix(
-                        "Quelle est la capitale du Portugal?",
-                        listOf("Porto", "Lisbonne", "Madrid", "Faro"),
-                        1
-                    ),
-                    choix(
-                        "Quelle est la capitale de la Finlande?",
-                        listOf("Oslo", "Stockholm", "Helsinki", "Tallinn"),
-                        2
-                    ),
-                    choix(
-                        "Lesquelles de ces villes sont des capitales?",
-                        listOf("Paris", "Barcelone", "Rome", "Berlin"),
-                        0,
-                        2,
-                        3
-                    ),
-                    vraiFaux("Genève est la capitale de la Suisse.", vrai = false)
-                ),
-                estPublié = true
-            )
-        )
-        private var prochainIdCreer = 4
-    }
-
-    fun obtenirBrouillons(): List<CarteCreate> =
-        quizCréers.filter { !it.estPublié }.map { it.enCarte() }
-
-    fun obtenirPubliés(): List<CarteCreate> = quizCréers.filter { it.estPublié }.map { it.enCarte() }
-
-    fun obtenirQuizCréer(quizId: Int): QuizCréer? = quizCréers.find { it.id == quizId }
-
-    /** Ajoute le quiz s'il est nouveau (id = 0), sinon remplace l'ancienne version. Retourne son id. */
-    fun sauvegarderQuizCrée(quiz: QuizCréer): Int {
-        val index = quizCréers.indexOfFirst { it.id == quiz.id }
-        return if (index == -1) {
-            val nouveau = quiz.copy(id = prochainIdCreer++)
-            quizCréers.add(nouveau)
-            nouveau.id
-        } else {
-            quizCréers[index] = quiz
-            quiz.id
-        }
-    }
-
-    private fun QuizCréer.enCarte() = CarteCreate(id, titre, estPublié, questions.size)
+    /**
+     * Les quiz créés sont maintenant gardés par la source de données de Créer (SourceQuizCréésBidon).
+     * Pont temporaire : l'écran de jeu les lit encore ici, en attendant de passer lui aussi par le service.
+     */
+    fun obtenirQuizCréer(quizId: Int): QuizCréer? =
+        SourceQuizCréésBidon.lireMaintenant().find { it.id == quizId }
 
     // Library
     data class CarteLibrary(
@@ -260,7 +136,21 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
     )
 
     fun obternirCompletes(): List<CarteLibrary> = emptyList()
-    fun obternirCrees(): List<CarteLibrary> = emptyList()
+    /**
+     * Les quiz créés par l'utilisateur, lus dans la même source que l'écran Créer.
+     * Pont temporaire (comme pour l'écran de jeu) en attendant que la Librairie passe par un service.
+     */
+    fun obternirCrees(): List<CarteLibrary> =
+        SourceQuizCréésBidon.lireMaintenant().map { quiz ->
+            val nb = quiz.questions.size
+            CarteLibrary(
+                id = quiz.id,
+                titre = quiz.titre,
+                sousTitre = if (nb == 1) "1 question" else "$nb questions",
+                badge = null,
+                typeBadge = ContratLibrairie.TypeBadge.NOUVEAU   // pas affiché quand badge = null
+            )
+        }
 
     // Question (écran de jeu)
     /**

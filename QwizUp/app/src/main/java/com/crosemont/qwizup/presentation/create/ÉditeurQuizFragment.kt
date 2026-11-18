@@ -6,11 +6,11 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
@@ -28,9 +28,9 @@ import com.crosemont.qwizup.R
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.AccèsQuiz
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Difficulté
-import com.crosemont.qwizup.presentation.ContratVuePrésentateur.ErreurEditeur
-import com.crosemont.qwizup.presentation.ContratVuePrésentateur.IPrésentateurEditeur
-import com.crosemont.qwizup.presentation.ContratVuePrésentateur.IVueEditeur
+import com.crosemont.qwizup.presentation.create.ContratCréer.ErreurEditeur
+import com.crosemont.qwizup.presentation.create.ContratCréer.IPrésentateurÉditeur
+import com.crosemont.qwizup.presentation.create.ContratCréer.IVueÉditeur
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.TypeQuestion
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
@@ -41,9 +41,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEditeur {
+class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉditeur {
 
-    private val presentateur: IPrésentateurEditeur = PrésentateurEditeur()
+    // La Fabrique assemble source → service → modèle → présentateur
+    private val presentateur: IPrésentateurÉditeur = FabriqueCréer.créerPrésentateurÉditeur()
 
     private lateinit var texteTitreEcran: TextView
     private lateinit var texteNombreQuestions: TextView
@@ -52,6 +53,8 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
     private lateinit var champTitre: TextInputLayout
     private lateinit var saisieTitre: TextInputEditText
     private lateinit var saisieDescription: TextInputEditText
+    private lateinit var champCategoriePerso: TextInputLayout
+    private lateinit var saisieCategoriePerso: TextInputEditText
     private lateinit var groupeCategories: ChipGroup
     private lateinit var groupeDifficulte: MaterialButtonToggleGroup
     private lateinit var groupeAcces: MaterialButtonToggleGroup
@@ -73,7 +76,7 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
         CatégorieQuiz.GÉOGRAPHIE to R.id.chip_editeur_geographie,
         CatégorieQuiz.AUTRE to R.id.chip_editeur_autre
     )
-    private val boutonsDifficulté = mapOf(
+    private val boutonsDifficulte = mapOf(
         Difficulté.FACILE to R.id.button_facile,
         Difficulté.MOYEN to R.id.button_moyen,
         Difficulté.DIFFICILE to R.id.button_difficile
@@ -87,20 +90,9 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
         TypeQuestion.VRAI_FAUX to R.id.button_type_vrai_faux,
         TypeQuestion.REPONSE_ECRITE to R.id.button_type_ecrite
     )
-    private val lignesReponses = listOf(
-        R.id.ligne_reponse_1,
-        R.id.ligne_reponse_2,
-        R.id.ligne_reponse_3,
-        R.id.ligne_reponse_4
-    )
-    private val casesReponses =
-        listOf(R.id.case_reponse_1, R.id.case_reponse_2, R.id.case_reponse_3, R.id.case_reponse_4)
-    private val saisiesReponses = listOf(
-        R.id.saisie_reponse_1,
-        R.id.saisie_reponse_2,
-        R.id.saisie_reponse_3,
-        R.id.saisie_reponse_4
-    )
+    private val lignesReponses = listOf(R.id.ligne_reponse_1, R.id.ligne_reponse_2, R.id.ligne_reponse_3, R.id.ligne_reponse_4)
+    private val casesReponses = listOf(R.id.case_reponse_1, R.id.case_reponse_2, R.id.case_reponse_3, R.id.case_reponse_4)
+    private val saisiesReponses = listOf(R.id.saisie_reponse_1, R.id.saisie_reponse_2, R.id.saisie_reponse_3, R.id.saisie_reponse_4)
     private val lettres = listOf("A", "B", "C", "D")
 
     // Vrai quand l'utilisateur a choisi sa propre photo : on ne la remplace plus par l'icône de la catégorie
@@ -135,6 +127,8 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
         saisieTitre = view.findViewById(R.id.saisie_titre)
         saisieDescription = view.findViewById(R.id.saisie_description)
         groupeCategories = view.findViewById(R.id.groupe_categories)
+        champCategoriePerso = view.findViewById(R.id.champ_categorie_perso)
+        saisieCategoriePerso = view.findViewById(R.id.saisie_categorie_perso)
         groupeDifficulte = view.findViewById(R.id.groupe_difficulte)
         groupeAcces = view.findViewById(R.id.groupe_acces)
         texteAideAcces = view.findViewById(R.id.text_aide_acces)
@@ -149,23 +143,17 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
         }
 
         saisieTitre.doAfterTextChanged { presentateur.surTitreModifie(it?.toString().orEmpty()) }
-        saisieDescription.doAfterTextChanged {
-            presentateur.surDescriptionModifiee(
-                it?.toString().orEmpty()
-            )
-        }
+        saisieDescription.doAfterTextChanged { presentateur.surDescriptionModifiee(it?.toString().orEmpty()) }
 
-        chipsCategories.forEach { (categorie, id) ->
-            view.findViewById<Chip>(id)
-                .setOnClickListener { presentateur.surCategorieCliquee(categorie) }
+        chipsCategories.forEach { (catégorie, id) ->
+            view.findViewById<Chip>(id).setOnClickListener { presentateur.surCategorieCliquee(catégorie) }
         }
-        boutonsDifficulté.forEach { (difficulte, id) ->
-            view.findViewById<MaterialButton>(id)
-                .setOnClickListener { presentateur.surDifficulteCliquee(difficulte) }
+        saisieCategoriePerso.doAfterTextChanged { presentateur.surCategoriePersoModifiee(it?.toString().orEmpty()) }
+        boutonsDifficulte.forEach { (difficulté, id) ->
+            view.findViewById<MaterialButton>(id).setOnClickListener { presentateur.surDifficulteCliquee(difficulté) }
         }
-        boutonsAcces.forEach { (acces, id) ->
-            view.findViewById<MaterialButton>(id)
-                .setOnClickListener { presentateur.surAccesClique(acces) }
+        boutonsAcces.forEach { (accès, id) ->
+            view.findViewById<MaterialButton>(id).setOnClickListener { presentateur.surAccesClique(accès) }
         }
 
         view.findViewById<MaterialButton>(R.id.button_prendre_photo)
@@ -177,11 +165,7 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
         casePublier = view.findViewById(R.id.case_publier)
         boutonEnregistrer = view.findViewById(R.id.button_enregistrer)
         texteRaisonBouton = view.findViewById(R.id.text_raison_bouton)
-        casePublier.setOnCheckedChangeListener { _, cochee ->
-            presentateur.surPublicationCochee(
-                cochee
-            )
-        }
+        casePublier.setOnCheckedChangeListener { _, cochee -> presentateur.surPublicationCochee(cochee) }
         boutonEnregistrer.setOnClickListener { presentateur.surEnregistrerClique() }
 
         // La barre du bas de l'app est cachée ici : on garde nos boutons au-dessus de la barre système
@@ -206,7 +190,7 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
 
     private fun couleur(id: Int) = ContextCompat.getColor(requireContext(), id)
 
-    // ----- IVueEditeur : infos du quiz -----
+    // ----- IVueÉditeur : infos du quiz -----
 
     override fun afficherEnTete(nouveauQuiz: Boolean) {
         texteTitreEcran.setText(if (nouveauQuiz) R.string.editeur_titre_nouveau else R.string.editeur_titre_modifier)
@@ -217,12 +201,18 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
         saisieDescription.setText(description)
     }
 
-    override fun afficherCategorieChoisie(categorie: CatégorieQuiz) {
-        groupeCategories.check(chipsCategories.getValue(categorie))
+    override fun afficherCategorieChoisie(catégorie: CatégorieQuiz) {
+        groupeCategories.check(chipsCategories.getValue(catégorie))
     }
 
-    override fun afficherCouverture(categorie: CatégorieQuiz) {
-        val (image, fond) = when (categorie) {
+    override fun afficherCategoriePerso(visible: Boolean, nom: String) {
+        champCategoriePerso.isVisible = visible
+        // On remplit seulement si le texte est différent, pour ne pas déplacer le curseur pendant qu'on écrit
+        if (saisieCategoriePerso.text?.toString() != nom) saisieCategoriePerso.setText(nom)
+    }
+
+    override fun afficherCouverture(catégorie: CatégorieQuiz) {
+        val (image, fond) = when (catégorie) {
             CatégorieQuiz.SCIENCES -> R.drawable.ic_couverture_sciences to R.color.light_green
             CatégorieQuiz.HISTOIRE -> R.drawable.ic_couverture_histoire to R.color.light_orange
             CatégorieQuiz.LANGUES -> R.drawable.ic_couverture_langues to R.color.light_blue
@@ -237,17 +227,17 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
     }
 
     override fun afficherDifficulteChoisie(difficulté: Difficulté) {
-        groupeDifficulte.check(boutonsDifficulté.getValue(difficulté))
+        groupeDifficulte.check(boutonsDifficulte.getValue(difficulté))
     }
 
-    override fun afficherAccesChoisi(acces: AccèsQuiz) {
-        groupeAcces.check(boutonsAcces.getValue(acces))
+    override fun afficherAccesChoisi(accès: AccèsQuiz) {
+        groupeAcces.check(boutonsAcces.getValue(accès))
         texteAideAcces.setText(
-            if (acces == AccèsQuiz.AVEC_CODE) R.string.editeur_acces_code_aide else R.string.editeur_acces_tous_aide
+            if (accès == AccèsQuiz.AVEC_CODE) R.string.editeur_acces_code_aide else R.string.editeur_acces_tous_aide
         )
     }
 
-    // ----- IVueEditeur : questions -----
+    // ----- IVueÉditeur : questions -----
 
     override fun viderQuestions() {
         listeQuestions.removeAllViews()
@@ -258,37 +248,29 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
         index: Int,
         texte: String,
         type: TypeQuestion,
-        reponses: List<String>,
-        bonnesReponses: Set<Int>,
-        reponseAttendue: String
+        réponses: List<String>,
+        bonnesRéponses: Set<Int>,
+        réponseAttendue: String
     ) {
         val carte = layoutInflater.inflate(R.layout.item_question_editeur, listeQuestions, false)
         val numero = index + 1
 
-        carte.findViewById<TextView>(R.id.text_numero_question).text =
-            getString(R.string.editeur_question_numero, numero)
+        carte.findViewById<TextView>(R.id.text_numero_question).text = getString(R.string.editeur_question_numero, numero)
         carte.findViewById<ImageButton>(R.id.button_supprimer_question).apply {
             contentDescription = getString(R.string.editeur_supprimer_question, numero)
             setOnClickListener { presentateur.surSupprimerQuestionClique(index) }
         }
 
         // Type de question
-        carte.findViewById<MaterialButtonToggleGroup>(R.id.groupe_type)
-            .check(boutonsType.getValue(type))
+        carte.findViewById<MaterialButtonToggleGroup>(R.id.groupe_type).check(boutonsType.getValue(type))
         boutonsType.forEach { (typeBouton, id) ->
-            carte.findViewById<MaterialButton>(id)
-                .setOnClickListener { presentateur.surTypeQuestionClique(index, typeBouton) }
+            carte.findViewById<MaterialButton>(id).setOnClickListener { presentateur.surTypeQuestionClique(index, typeBouton) }
         }
 
         // Texte de la question (on remplit avant d'écouter, pour ne pas renvoyer la même valeur)
         val saisieQuestion = carte.findViewById<EditText>(R.id.saisie_question)
         saisieQuestion.setText(texte)
-        saisieQuestion.doAfterTextChanged {
-            presentateur.surTexteQuestionModifie(
-                index,
-                it?.toString().orEmpty()
-            )
-        }
+        saisieQuestion.doAfterTextChanged { presentateur.surTexteQuestionModifie(index, it?.toString().orEmpty()) }
 
         val zoneChoix = carte.findViewById<View>(R.id.zone_choix)
         val zoneEcrite = carte.findViewById<View>(R.id.zone_ecrite)
@@ -302,17 +284,10 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
             TypeQuestion.CHOIX_MULTIPLE -> lignesReponses.indices.forEach { i ->
                 val saisie = carte.findViewById<EditText>(saisiesReponses[i])
                 saisie.hint = getString(R.string.editeur_reponse_lettre, lettres[i])
-                saisie.setText(reponses.getOrElse(i) { "" })
-                saisie.doAfterTextChanged {
-                    presentateur.surReponseModifiee(
-                        index,
-                        i,
-                        it?.toString().orEmpty()
-                    )
-                }
+                saisie.setText(réponses.getOrElse(i) { "" })
+                saisie.doAfterTextChanged { presentateur.surReponseModifiee(index, i, it?.toString().orEmpty()) }
                 preparerRadio(carte, index, i)
             }
-
             TypeQuestion.VRAI_FAUX -> lignesReponses.indices.forEach { i ->
                 val visible = i < 2
                 carte.findViewById<View>(lignesReponses[i]).isVisible = visible
@@ -324,22 +299,16 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
                     preparerRadio(carte, index, i)
                 }
             }
-
             TypeQuestion.REPONSE_ECRITE -> {
                 val saisie = carte.findViewById<EditText>(R.id.saisie_reponse_attendue)
-                saisie.setText(reponseAttendue)
-                saisie.doAfterTextChanged {
-                    presentateur.surReponseAttendueModifiee(
-                        index,
-                        it?.toString().orEmpty()
-                    )
-                }
+                saisie.setText(réponseAttendue)
+                saisie.doAfterTextChanged { presentateur.surReponseAttendueModifiee(index, it?.toString().orEmpty()) }
             }
         }
 
         cartesQuestions.add(carte)
         listeQuestions.addView(carte)
-        afficherBonnesReponses(index, bonnesReponses)
+        afficherBonnesReponses(index, bonnesRéponses)
     }
 
     private fun preparerRadio(carte: View, index: Int, numeroReponse: Int) {
@@ -351,13 +320,12 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
             .setOnClickListener { presentateur.surBonneReponseCliquee(index, numeroReponse) }
     }
 
-    override fun afficherBonnesReponses(index: Int, bonnesReponses: Set<Int>) {
+    override fun afficherBonnesReponses(index: Int, bonnesRéponses: Set<Int>) {
         val carte = cartesQuestions.getOrNull(index) ?: return
         lignesReponses.indices.forEach { i ->
-            val choisie = i in bonnesReponses
+            val choisie = i in bonnesRéponses
             carte.findViewById<CompoundButton>(casesReponses[i]).isChecked = choisie
-            val fond =
-                carte.findViewById<View>(lignesReponses[i]).background.mutate() as GradientDrawable
+            val fond = carte.findViewById<View>(lignesReponses[i]).background.mutate() as GradientDrawable
             fond.setColor(couleur(if (choisie) R.color.light_green else R.color.surface))
             fond.setStroke(
                 (2 * resources.displayMetrics.density).toInt(),
@@ -367,11 +335,10 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
     }
 
     override fun afficherNombreQuestions(nombre: Int) {
-        texteNombreQuestions.text =
-            resources.getQuantityString(R.plurals.editeur_nombre_questions, nombre, nombre)
+        texteNombreQuestions.text = resources.getQuantityString(R.plurals.editeur_nombre_questions, nombre, nombre)
     }
 
-    // ----- IVueEditeur : erreurs et actions -----
+    // ----- IVueÉditeur : erreurs et actions -----
 
     override fun afficherErreur(erreur: ErreurEditeur) {
         when (erreur) {
@@ -379,30 +346,24 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
                 champTitre.error = getString(R.string.editeur_erreur_titre)
                 saisieTitre.requestFocus()
             }
-
+            ErreurEditeur.CATEGORIE_VIDE -> {
+                champCategoriePerso.error = getString(R.string.editeur_erreur_categorie)
+                saisieCategoriePerso.requestFocus()
+            }
             ErreurEditeur.AUCUNE_QUESTION ->
-                Toast.makeText(
-                    requireContext(),
-                    R.string.editeur_erreur_questions,
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                Toast.makeText(requireContext(), R.string.editeur_erreur_questions, Toast.LENGTH_SHORT).show()
             ErreurEditeur.QUESTION_INCOMPLETE -> Unit   // géré par afficherErreurQuestion
         }
     }
 
     override fun afficherErreurQuestion(numero: Int) {
-        Toast.makeText(
-            requireContext(),
-            getString(R.string.editeur_erreur_question, numero),
-            Toast.LENGTH_SHORT
-        ).show()
-        cartesQuestions.getOrNull(numero - 1)?.findViewById<EditText>(R.id.saisie_question)
-            ?.requestFocus()
+        Toast.makeText(requireContext(), getString(R.string.editeur_erreur_question, numero), Toast.LENGTH_SHORT).show()
+        cartesQuestions.getOrNull(numero - 1)?.findViewById<EditText>(R.id.saisie_question)?.requestFocus()
     }
 
     override fun effacerErreurs() {
         champTitre.error = null
+        champCategoriePerso.error = null
     }
 
     override fun ouvrirAppareilPhoto() {
@@ -437,11 +398,7 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
     }
 
     override fun confirmerPublication(titre: String) {
-        Toast.makeText(
-            requireContext(),
-            getString(R.string.editeur_publie_ok, titre),
-            Toast.LENGTH_SHORT
-        ).show()
+        Toast.makeText(requireContext(), getString(R.string.editeur_publie_ok, titre), Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()
     }
 
@@ -470,28 +427,29 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueEdite
         findNavController().popBackStack()
     }
 
-    override fun afficherPublication(estPublie: Boolean) {
-        casePublier.isChecked = estPublie
+    override fun afficherPublication(estPublié: Boolean) {
+        casePublier.isChecked = estPublié
     }
 
-    override fun afficherBoutonEnregistrer(
-        publier: Boolean,
-        actif: Boolean,
-        raison: ErreurEditeur?,
-        numeroQuestion: Int
-    ) {
+    override fun afficherBoutonEnregistrer(publier: Boolean, actif: Boolean, raison: ErreurEditeur?, numeroQuestion: Int) {
         boutonEnregistrer.setText(if (publier) R.string.editeur_publier else R.string.editeur_enregistrer_brouillon)
         boutonEnregistrer.isEnabled = actif
         texteRaisonBouton.isVisible = raison != null
         texteRaisonBouton.text = when (raison) {
             ErreurEditeur.TITRE_VIDE -> getString(R.string.editeur_erreur_titre)
+            ErreurEditeur.CATEGORIE_VIDE -> getString(R.string.editeur_erreur_categorie)
             ErreurEditeur.AUCUNE_QUESTION -> getString(R.string.editeur_erreur_questions)
-            ErreurEditeur.QUESTION_INCOMPLETE -> getString(
-                R.string.editeur_erreur_question,
-                numeroQuestion
-            )
-
+            ErreurEditeur.QUESTION_INCOMPLETE -> getString(R.string.editeur_erreur_question, numeroQuestion)
             null -> ""
         }
+    }
+
+    override fun afficherErreurChargement() {
+        Toast.makeText(requireContext(), R.string.editeur_erreur_chargement, Toast.LENGTH_LONG).show()
+        findNavController().popBackStack()
+    }
+
+    override fun afficherErreurSauvegarde() {
+        Toast.makeText(requireContext(), R.string.editeur_erreur_sauvegarde, Toast.LENGTH_LONG).show()
     }
 }
