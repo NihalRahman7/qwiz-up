@@ -66,8 +66,6 @@
     <string name="editeur_titre_modifier">Modifier le quiz</string>
     <string name="editeur_fermer">Fermer</string>
     <string name="editeur_couverture_auto">Image choisie selon la catégorie</string>
-    <string name="editeur_prendre_photo">Prendre une photo</string>
-    <string name="editeur_galerie">Galerie</string>
     <string name="editeur_label_titre">Titre</string>
     <string name="editeur_titre_placeholder">Ex. : Le système solaire</string>
     <string name="editeur_label_description">Description (optionnel)</string>

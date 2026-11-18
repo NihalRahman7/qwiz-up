@@ -110,14 +110,6 @@ class PrésentateurÉditeur(
         vue?.afficherAccesChoisi(accès)
     }
 
-    override fun surPrendrePhotoClique() {
-        vue?.ouvrirAppareilPhoto()
-    }
-
-    override fun surGalerieClique() {
-        vue?.ouvrirGalerie()
-    }
-
     // ----- Questions -----
 
     override fun surAjouterQuestionClique() {

@@ -59,8 +59,6 @@
     <string name="editeur_titre_modifier">Edit quiz</string>
     <string name="editeur_fermer">Close</string>
     <string name="editeur_couverture_auto">Image chosen from the category</string>
-    <string name="editeur_prendre_photo">Take a photo</string>
-    <string name="editeur_galerie">Gallery</string>
     <string name="editeur_label_titre">Title</string>
     <string name="editeur_titre_placeholder">E.g. The Solar System</string>
     <string name="editeur_label_description">Description (optional)</string>
