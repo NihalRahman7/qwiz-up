@@ -73,7 +73,8 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
             CatégorieQuiz.HISTOIRE to view.findViewById<Chip>(R.id.chip_history),
             CatégorieQuiz.LANGUES to view.findViewById<Chip>(R.id.chip_languages),
             CatégorieQuiz.INFORMATIQUE to view.findViewById<Chip>(R.id.chip_informatique),
-            CatégorieQuiz.GÉOGRAPHIE to view.findViewById<Chip>(R.id.chip_geography)
+            CatégorieQuiz.GÉOGRAPHIE to view.findViewById<Chip>(R.id.chip_geography),
+            CatégorieQuiz.AUTRE to view.findViewById<Chip>(R.id.chip_autre)
 
         )
 
