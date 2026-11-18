@@ -226,7 +226,9 @@ class PrésentateurÉditeur(
     // ----- Fermeture -----
 
     override fun surFermerClique() {
-        if (quiz != quizInitial) vue?.demanderConfirmationQuitter(peutEnregistrer = true, publier = false)   // pas encore fait (test en rouge)
+        // Le bouton pour enregistrer est offert seulement si le quiz peut être enregistré,
+        // avec le même mot que le gros bouton en bas (« Publier » ou « Enregistrer le brouillon »)
+        if (quiz != quizInitial) vue?.demanderConfirmationQuitter(peutEnregistrer = ceQuiManque() == null, publier = quiz.estPublié)
         else vue?.fermer()
     }
 
