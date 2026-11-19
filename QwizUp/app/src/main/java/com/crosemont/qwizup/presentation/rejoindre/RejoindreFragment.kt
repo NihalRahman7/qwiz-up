@@ -7,13 +7,12 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IPresentateurRejoindre
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.IVueRejoindre
+import com.crosemont.qwizup.presentation.rejoindre.ContratRejoindre.IPrésentateurRejoindre
+import com.crosemont.qwizup.presentation.rejoindre.ContratRejoindre.IVueRejoindre
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.journeyapps.barcodescanner.ScanContract
-import com.journeyapps.barcodescanner.ScanOptions
+
 
 /**
  * Vue de l'écran Rejoindre.
@@ -22,16 +21,12 @@ import com.journeyapps.barcodescanner.ScanOptions
 class RejoindreFragment : Fragment(R.layout.fragment_rejoindre), IVueRejoindre {
 
     // Le présentateur qui vérifie les codes
-    private val presentateur: IPresentateurRejoindre = PresentateurRejoindre()
+    private val presentateur: IPrésentateurRejoindre = PrésentateurRejoindre()
 
     private lateinit var champCode: TextInputLayout
     private lateinit var editCode: TextInputEditText
     private lateinit var boutonRejoindre: MaterialButton
 
-    // Ouvre la caméra ; quand un code QR est lu, son texte est envoyé au présentateur
-    private val scanneur = registerForActivityResult(ScanContract()) { resultat ->
-        resultat.contents?.let { contenu -> presentateur.surCodeScanne(contenu) }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,8 +49,6 @@ class RejoindreFragment : Fragment(R.layout.fragment_rejoindre), IVueRejoindre {
         }
 
         boutonRejoindre.setOnClickListener { presentateur.surRejoindreClique(editCode.text.toString()) }
-        view.findViewById<MaterialButton>(R.id.button_scanner)
-            .setOnClickListener { presentateur.surScannerClique() }
         view.findViewById<MaterialButton>(R.id.button_retour)
             .setOnClickListener { presentateur.surRetourClique() }
 
@@ -79,15 +72,6 @@ class RejoindreFragment : Fragment(R.layout.fragment_rejoindre), IVueRejoindre {
 
     override fun effacerErreur() {
         champCode.error = null
-    }
-
-    override fun ouvrirScanneur() {
-        val options = ScanOptions()
-            .setDesiredBarcodeFormats(ScanOptions.QR_CODE)   // seulement les codes QR
-            .setPrompt(getString(R.string.rejoindre_scanner_invite))
-            .setBeepEnabled(false)
-            .setOrientationLocked(false)
-        scanneur.launch(options)
     }
 
     override fun ouvrirQuiz(quizId: Int) {

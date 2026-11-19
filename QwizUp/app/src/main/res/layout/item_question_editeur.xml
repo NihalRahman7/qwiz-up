@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Une question dans l'éditeur : type, texte, puis réponses à cocher ou réponse attendue -->
+<?xml version="1.0" encoding="utf-8"?><!-- Une question dans l'éditeur : type, texte, puis réponses à cocher ou réponse attendue -->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -74,12 +73,12 @@
                     android:insetBottom="0dp"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"
-                    android:text="@string/editeur_type_choix_multiple"
                     android:stateListAnimator="@animator/elevation_onglet"
+                    android:text="@string/editeur_type_choix_multiple"
                     android:textColor="@color/texte_onglet"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     app:backgroundTint="@color/fond_onglet"
-                    android:textSize="12sp"
                     app:cornerRadius="12dp" />
 
                 <com.google.android.material.button.MaterialButton
@@ -92,12 +91,12 @@
                     android:insetBottom="0dp"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"
-                    android:text="@string/editeur_type_vrai_faux"
                     android:stateListAnimator="@animator/elevation_onglet"
+                    android:text="@string/editeur_type_vrai_faux"
                     android:textColor="@color/texte_onglet"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     app:backgroundTint="@color/fond_onglet"
-                    android:textSize="12sp"
                     app:cornerRadius="12dp" />
 
                 <com.google.android.material.button.MaterialButton
@@ -110,12 +109,12 @@
                     android:insetBottom="0dp"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"
-                    android:text="@string/editeur_type_ecrite"
                     android:stateListAnimator="@animator/elevation_onglet"
+                    android:text="@string/editeur_type_ecrite"
                     android:textColor="@color/texte_onglet"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     app:backgroundTint="@color/fond_onglet"
-                    android:textSize="12sp"
                     app:cornerRadius="12dp" />
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -144,6 +143,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/text_coche_bonne"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -162,8 +162,8 @@
                 android:paddingStart="4dp"
                 android:paddingEnd="12dp">
 
-                <RadioButton
-                    android:id="@+id/radio_reponse_1"
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/case_reponse_1"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     app:buttonTint="@color/primary_green" />
@@ -193,8 +193,8 @@
                 android:paddingStart="4dp"
                 android:paddingEnd="12dp">
 
-                <RadioButton
-                    android:id="@+id/radio_reponse_2"
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/case_reponse_2"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     app:buttonTint="@color/primary_green" />
@@ -224,8 +224,8 @@
                 android:paddingStart="4dp"
                 android:paddingEnd="12dp">
 
-                <RadioButton
-                    android:id="@+id/radio_reponse_3"
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/case_reponse_3"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     app:buttonTint="@color/primary_green" />
@@ -255,8 +255,8 @@
                 android:paddingStart="4dp"
                 android:paddingEnd="12dp">
 
-                <RadioButton
-                    android:id="@+id/radio_reponse_4"
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/case_reponse_4"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     app:buttonTint="@color/primary_green" />

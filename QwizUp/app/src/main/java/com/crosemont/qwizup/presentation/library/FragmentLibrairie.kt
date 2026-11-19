@@ -1,18 +1,16 @@
 package com.crosemont.qwizup.presentation.library
 
-import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.crosemont.qwizup.R
-import com.crosemont.qwizup.presentation.ContratVuePresentateur
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.OngletLibrairie
-import com.crosemont.qwizup.presentation.ContratVuePresentateur.TypeBadge
+import com.crosemont.qwizup.presentation.library.ContratLibrairie.OngletLibrairie
+import com.crosemont.qwizup.presentation.library.ContratLibrairie.TypeBadge
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.card.MaterialCardView
 
@@ -23,12 +21,12 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [LibraryFragment.newInstance] factory method to
+ * Use the [FragmentLibrairie.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LibraryFragment : Fragment(), ContratVuePresentateur.IVueLibrary {
+class FragmentLibrairie : Fragment(), ContratLibrairie.IVueLibrary {
 
-    private lateinit var presentateur: ContratVuePresentateur.IPresentateurLibrary
+    private lateinit var présentateur: ContratLibrairie.IPrésentateurLibrary
     private lateinit var messageVide: TextView
 
     // Les cartes du XML
@@ -64,35 +62,40 @@ class LibraryFragment : Fragment(), ContratVuePresentateur.IVueLibrary {
         textesBadges = listOf(R.id.txtBadge1, R.id.txtBadge2, R.id.txtBadge3)
             .map { view.findViewById<TextView>(it) }
 
-        presentateur = PresentateurLibrary()
+        présentateur = FabriqueLibrairie.creerPresentateur(requireContext().filesDir)
 
         cartes.forEachIndexed { index, carte ->
-            carte.setOnClickListener { presentateur.surQuizClique(quizIds[index], titres[index].text.toString()) }
+            carte.setOnClickListener {
+                présentateur.surQuizClique(
+                    quizIds[index],
+                    titres[index].text.toString()
+                )
+            }
         }
 
         view.findViewById<MaterialButtonToggleGroup>(R.id.tabs)
             .addOnButtonCheckedListener { _, btnId, estCoche ->
-                if (estCoche){
+                if (estCoche) {
                     when (btnId) {
-                        R.id.btnFavoris -> presentateur.surOngletClique(OngletLibrairie.FAVORIS)
-                        R.id.btnComplets -> presentateur.surOngletClique(OngletLibrairie.COMPLETES)
-                        R.id.btnCrees -> presentateur.surOngletClique(OngletLibrairie.CREES)
+                        R.id.btnFavoris -> présentateur.surOngletClique(OngletLibrairie.FAVORIS)
+                        R.id.btnComplets -> présentateur.surOngletClique(OngletLibrairie.COMPLÉTÉS)
+                        R.id.btnCrees -> présentateur.surOngletClique(OngletLibrairie.CRÉES)
                     }
                 }
             }
 
-        presentateur.attacherVue(this)
+        présentateur.attacherVue(this)
     }
 
     override fun onDestroyView() {
-        presentateur.detacherVue()
+        présentateur.detacherVue()
         super.onDestroyView()
     }
 
     override fun viderCartes() {
         prochaineCarte = 0
         messageVide.visibility = View.GONE
-        cartes.forEach { it.visibility = View.GONE}
+        cartes.forEach { it.visibility = View.GONE }
     }
 
     override fun ajouterCarteQuiz(
@@ -100,7 +103,7 @@ class LibraryFragment : Fragment(), ContratVuePresentateur.IVueLibrary {
         titre: String,
         sousTitre: String,
         badge: String?,
-        typeBadge: ContratVuePresentateur.TypeBadge
+        typeBadge: TypeBadge
     ) {
         if (prochaineCarte >= NB_CARTES) return // Le XML n'a que trois cartes
         val i = prochaineCarte++
@@ -110,7 +113,7 @@ class LibraryFragment : Fragment(), ContratVuePresentateur.IVueLibrary {
         titres[i].text = titre
         sousTitres[i].text = sousTitre
 
-        if (badge == null){
+        if (badge == null) {
             cartesBadges[i].visibility = View.GONE
         } else {
             cartesBadges[i].visibility = View.VISIBLE
@@ -132,8 +135,12 @@ class LibraryFragment : Fragment(), ContratVuePresentateur.IVueLibrary {
         messageVide.visibility = View.VISIBLE
     }
 
-    override fun ouvrirDetails(quizId: Int, titre: String) {
-        Toast.makeText(requireContext(), getString(R.string.librairie_quiz_soon, titre), Toast.LENGTH_SHORT).show()
+    override fun ouvrirDétails(quizId: Int, titre: String) {
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.librairie_quiz_soon, titre),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     companion object {
@@ -147,10 +154,9 @@ class LibraryFragment : Fragment(), ContratVuePresentateur.IVueLibrary {
          * @param param2 Parameter 2.
          * @return A new instance of fragment LibraryFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            LibraryFragment().apply {
+            FragmentLibrairie().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
