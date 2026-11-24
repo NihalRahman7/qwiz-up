@@ -16,15 +16,16 @@
         <item name="colorOnSecondaryContainer">@color/primaire_fonce</item>
 
         <!-- Tertiaire : accent soleil -->
-        <item name="colorTertiary">@color/soleil_texte</item>
-        <item name="colorTertiaryContainer">@color/soleil_clair</item>
-        <item name="colorOnTertiaryContainer">@color/soleil_texte</item>
+<!--        <item name="colorTertiary">@color/soleil_texte</item>-->
+<!--        <item name="colorTertiaryContainer">@color/soleil_clair</item>-->
+<!--        <item name="colorOnTertiaryContainer">@color/soleil_texte</item>-->
 
         <!-- Fonds et surfaces -->
         <item name="android:colorBackground">@color/fond</item>
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/encre</item>
         <item name="colorOnSurfaceVariant">@color/encre_secondaire</item>
+
         <!-- Material 3 colore la barre du bas, les menus et les dialogues avec ces surfaces -->
         <item name="colorSurfaceContainerLowest">@color/white</item>
         <item name="colorSurfaceContainerLow">@color/white</item>
@@ -48,7 +49,7 @@
         <item name="android:statusBarColor">@color/fond</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/white</item>
-        <item name="android:windowLightNavigationBar" tools:targetAPI="27">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
     </style>
 
     <style name="Theme.QwizUp" parent="Base.Theme.QwizUp" />

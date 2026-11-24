@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/fond"
     tools:context=".MainActivity">
 
     <!-- Conteneur où s'affichent les Fragments, selon le NavGraph -->
@@ -21,22 +21,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
 
-    <!-- Ligne grise au-dessus de la barre du bas -->
+    <!-- Ligne violet pâle au-dessus de la barre du bas -->
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="@color/border"
+        android:background="@color/bordure"
         app:layout_constraintBottom_toTopOf="@id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Barre de navigation du bas -->
+    <!-- Barre de navigation du bas : onglet choisi en violet -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:backgroundTint="@color/surface"
+        app:backgroundTint="@color/white"
         app:elevation="0dp"
+        app:itemIconTint="@color/couleur_onglet_bas"
+        app:itemTextColor="@color/couleur_onglet_bas"
         app:itemPaddingTop="12dp"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
