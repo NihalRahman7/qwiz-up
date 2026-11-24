@@ -85,7 +85,7 @@ class FragmentCreate : Fragment(R.layout.fragment_create), IVueCréer {
                 if (onglet == OngletCreer.BROUILLONS) R.string.creer_liste_vide_brouillons
                 else R.string.creer_liste_vide_publies
             )
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary))
+            setTextColor(ContextCompat.getColor(requireContext(), R.color.encre_secondaire))
             setPadding(0, 32, 0, 8)
         }
         listeQuiz.addView(texte)

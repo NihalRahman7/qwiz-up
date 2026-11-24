@@ -183,12 +183,12 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdit
 
     override fun afficherCouverture(catégorie: CatégorieQuiz) {
         val (image, fond) = when (catégorie) {
-            CatégorieQuiz.SCIENCES -> R.drawable.ic_couverture_sciences to R.color.light_green
-            CatégorieQuiz.HISTOIRE -> R.drawable.ic_couverture_histoire to R.color.light_orange
-            CatégorieQuiz.LANGUES -> R.drawable.ic_couverture_langues to R.color.light_blue
-            CatégorieQuiz.INFORMATIQUE -> R.drawable.ic_couverture_informatique to R.color.badge_blue_bg
-            CatégorieQuiz.GÉOGRAPHIE -> R.drawable.ic_globe to R.color.badge_green_bg
-            CatégorieQuiz.AUTRE -> R.drawable.ic_couverture_autre to R.color.badge_gray_bg
+            CatégorieQuiz.SCIENCES -> R.drawable.ic_couverture_sciences to R.color.categorie_sciences_clair
+            CatégorieQuiz.HISTOIRE -> R.drawable.ic_couverture_histoire to R.color.categorie_histoire_clair
+            CatégorieQuiz.LANGUES -> R.drawable.ic_couverture_langues to R.color.categorie_langues_clair
+            CatégorieQuiz.INFORMATIQUE -> R.drawable.ic_couverture_informatique to R.color.categorie_informatique_clair
+            CatégorieQuiz.GÉOGRAPHIE -> R.drawable.ic_globe to R.color.categorie_geographie_clair
+            CatégorieQuiz.AUTRE -> R.drawable.ic_couverture_autre to R.color.categorie_autre_clair
         }
         // L'image de couverture est toujours l'icône de la catégorie
         imageCouverture.setImageResource(image)
@@ -296,10 +296,10 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdit
             val choisie = i in bonnesRéponses
             carte.findViewById<CompoundButton>(casesReponses[i]).isChecked = choisie
             val fond = carte.findViewById<View>(lignesReponses[i]).background.mutate() as GradientDrawable
-            fond.setColor(couleur(if (choisie) R.color.light_green else R.color.surface))
+            fond.setColor(couleur(if (choisie) R.color.primaire_clair else R.color.white))
             fond.setStroke(
                 (2 * resources.displayMetrics.density).toInt(),
-                couleur(if (choisie) R.color.primary_green else R.color.border)
+                couleur(if (choisie) R.color.primaire else R.color.bordure)
             )
         }
     }

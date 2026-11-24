@@ -7,7 +7,7 @@
     <path
         android:pathData="M9,6l6,6l-6,6"
         android:strokeWidth="2"
-        android:strokeColor="@color/text_secondary"
+        android:strokeColor="@color/encre_secondaire"
         android:strokeLineCap="round"
         android:strokeLineJoin="round" />
 </vector>

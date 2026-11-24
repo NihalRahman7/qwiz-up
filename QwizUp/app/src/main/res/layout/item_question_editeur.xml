@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
-    app:cardBackgroundColor="@color/surface"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="20dp"
     app:cardElevation="0dp"
-    app:strokeColor="@color/border"
+    app:strokeColor="@color/bordure"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:letterSpacing="0.06"
-                android:textColor="@color/primary_green"
+                android:textColor="@color/primaire"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 tools:text="QUESTION 1" />
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            app:cardBackgroundColor="@color/border"
+            app:cardBackgroundColor="@color/bordure"
             app:cardCornerRadius="14dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
@@ -132,7 +132,7 @@
             android:inputType="textCapSentences|textMultiLine"
             android:minHeight="48dp"
             android:padding="14dp"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/encre"
             android:textSize="16sp" />
 
         <!-- Choix multiple et vrai ou faux : réponses à cocher -->
@@ -148,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="@string/editeur_coche_bonne"
-                android:textColor="@color/text_secondary"
+                android:textColor="@color/encre_secondaire"
                 android:textSize="13sp" />
 
             <LinearLayout
@@ -166,7 +166,7 @@
                     android:id="@+id/case_reponse_1"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    app:buttonTint="@color/primary_green" />
+                    app:buttonTint="@color/primaire" />
 
                 <EditText
                     android:id="@+id/saisie_reponse_1"
@@ -177,7 +177,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textCapSentences"
                     android:maxLines="1"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="16sp"
                     tools:hint="Réponse A" />
             </LinearLayout>
@@ -197,7 +197,7 @@
                     android:id="@+id/case_reponse_2"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    app:buttonTint="@color/primary_green" />
+                    app:buttonTint="@color/primaire" />
 
                 <EditText
                     android:id="@+id/saisie_reponse_2"
@@ -208,7 +208,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textCapSentences"
                     android:maxLines="1"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="16sp"
                     tools:hint="Réponse A" />
             </LinearLayout>
@@ -228,7 +228,7 @@
                     android:id="@+id/case_reponse_3"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    app:buttonTint="@color/primary_green" />
+                    app:buttonTint="@color/primaire" />
 
                 <EditText
                     android:id="@+id/saisie_reponse_3"
@@ -239,7 +239,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textCapSentences"
                     android:maxLines="1"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="16sp"
                     tools:hint="Réponse A" />
             </LinearLayout>
@@ -259,7 +259,7 @@
                     android:id="@+id/case_reponse_4"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    app:buttonTint="@color/primary_green" />
+                    app:buttonTint="@color/primaire" />
 
                 <EditText
                     android:id="@+id/saisie_reponse_4"
@@ -270,7 +270,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textCapSentences"
                     android:maxLines="1"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="16sp"
                     tools:hint="Réponse A" />
             </LinearLayout>
@@ -290,7 +290,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="@string/editeur_reponse_attendue"
-                android:textColor="@color/text_secondary"
+                android:textColor="@color/encre_secondaire"
                 android:textSize="13sp" />
 
             <EditText
@@ -305,7 +305,7 @@
                 android:inputType="textCapSentences|textMultiLine"
                 android:minLines="3"
                 android:padding="14dp"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/encre"
                 android:textSize="15sp" />
 
             <TextView
@@ -313,7 +313,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/editeur_reponse_attendue_aide"
-                android:textColor="@color/text_secondary"
+                android:textColor="@color/encre_secondaire"
                 android:textSize="13sp" />
         </LinearLayout>
     </LinearLayout>

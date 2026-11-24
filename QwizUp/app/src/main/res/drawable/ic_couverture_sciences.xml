@@ -7,19 +7,19 @@
     <path
         android:pathData="M9,3h6"
         android:strokeWidth="1.6"
-        android:strokeColor="@color/primary_green"
+        android:strokeColor="@color/primaire"
         android:strokeLineCap="round"
         android:strokeLineJoin="round" />
     <path
         android:pathData="M10,3v6l-5,9a2,2 0,0 0,1.7 3h10.6a2,2 0,0 0,1.7 -3l-5,-9V3"
         android:strokeWidth="1.6"
-        android:strokeColor="@color/primary_green"
+        android:strokeColor="@color/primaire"
         android:strokeLineCap="round"
         android:strokeLineJoin="round" />
     <path
         android:pathData="M7.5,15h9"
         android:strokeWidth="1.6"
-        android:strokeColor="@color/primary_green"
+        android:strokeColor="@color/primaire"
         android:strokeLineCap="round"
         android:strokeLineJoin="round" />
 </vector>

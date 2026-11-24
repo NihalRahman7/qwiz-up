@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/fond"
     android:orientation="vertical"
     android:padding="20dp"
     tools:context=".presentation.rejoindre.RejoindreFragment">
@@ -17,15 +17,15 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/rejoindre_retour"
         app:icon="@drawable/ic_fermer"
-        app:iconTint="@color/text_primary"
-        app:strokeColor="@color/border" />
+        app:iconTint="@color/encre"
+        app:strokeColor="@color/bordure" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/rejoindre_titre"
-        android:textColor="@color/text_primary"
+        android:textColor="@color/encre"
         android:textSize="28sp"
         android:textStyle="bold" />
 
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:text="@string/rejoindre_sous_titre"
-        android:textColor="@color/text_secondary"
+        android:textColor="@color/encre_secondaire"
         android:textSize="15sp" />
 
     <TextView
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/rejoindre_label_code"
-        android:textColor="@color/text_primary"
+        android:textColor="@color/encre"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -53,12 +53,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:boxBackgroundColor="@color/surface"
+        app:boxBackgroundColor="@color/white"
         app:boxCornerRadiusBottomEnd="18dp"
         app:boxCornerRadiusBottomStart="18dp"
         app:boxCornerRadiusTopEnd="18dp"
         app:boxCornerRadiusTopStart="18dp"
-        app:boxStrokeColor="@color/primary_green"
+        app:boxStrokeColor="@color/primaire"
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -72,8 +72,8 @@
             android:letterSpacing="0.4"
             android:maxLength="6"
             android:paddingVertical="18dp"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/border"
+            android:textColor="@color/encre"
+            android:textColorHint="@color/bordure"
             android:textSize="30sp"
             android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>

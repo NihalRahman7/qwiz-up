@@ -19,7 +19,7 @@
             android:layout_marginTop="4dp"
             android:fontFamily="@font/figtree_extrabold"
             android:text="@string/nav_create"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/encre"
             android:textSize="26sp" />
 
         <!-- Bouton Nouveau quiz : grande carte verte -->
@@ -30,7 +30,7 @@
             android:layout_marginTop="16dp"
             android:clickable="true"
             android:focusable="true"
-            app:cardBackgroundColor="@color/primary_green"
+            app:cardBackgroundColor="@color/primaire"
             app:cardCornerRadius="18dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
@@ -91,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            app:cardBackgroundColor="@color/border"
+            app:cardBackgroundColor="@color/bordure"
             app:cardCornerRadius="14dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
@@ -145,10 +145,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="@color/surface"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="18dp"
             app:cardElevation="0dp"
-            app:strokeColor="@color/border"
+            app:strokeColor="@color/bordure"
             app:strokeWidth="1dp">
 
             <!-- Liste des quiz de l'onglet choisi (remplie par le présentateur) -->

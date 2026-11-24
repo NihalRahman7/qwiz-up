@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/fond"
     android:orientation="vertical"
     tools:context=".presentation.create.ÉditeurQuizFragment">
 
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_weight="1"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/encre"
             android:textSize="21sp"
             android:textStyle="bold"
             tools:text="@string/editeur_titre_nouveau" />
@@ -40,7 +40,7 @@
             android:id="@+id/text_nombre_questions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/encre_secondaire"
             android:textSize="14sp"
             tools:text="1 question" />
     </LinearLayout>
@@ -48,7 +48,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/border" />
+        android:background="@color/bordure" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/editeur_couverture_auto"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="@color/encre_secondaire"
                     android:textSize="13sp" />
             </LinearLayout>
 
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/editeur_label_titre"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/encre"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -102,12 +102,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:boxBackgroundColor="@color/surface"
+                app:boxBackgroundColor="@color/white"
                 app:boxCornerRadiusBottomEnd="14dp"
                 app:boxCornerRadiusBottomStart="14dp"
                 app:boxCornerRadiusTopEnd="14dp"
                 app:boxCornerRadiusTopStart="14dp"
-                app:boxStrokeColor="@color/primary_green"
+                app:boxStrokeColor="@color/primaire"
                 app:hintEnabled="false"
                 app:placeholderText="@string/editeur_titre_placeholder">
 
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/editeur_label_description"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/encre"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -134,12 +134,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:boxBackgroundColor="@color/surface"
+                app:boxBackgroundColor="@color/white"
                 app:boxCornerRadiusBottomEnd="14dp"
                 app:boxCornerRadiusBottomStart="14dp"
                 app:boxCornerRadiusTopEnd="14dp"
                 app:boxCornerRadiusTopStart="14dp"
-                app:boxStrokeColor="@color/primary_green"
+                app:boxStrokeColor="@color/primaire"
                 app:hintEnabled="false"
                 app:placeholderText="@string/editeur_description_placeholder">
 
@@ -157,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/editeur_label_categorie"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/encre"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -270,12 +270,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:visibility="gone"
-                app:boxBackgroundColor="@color/surface"
+                app:boxBackgroundColor="@color/white"
                 app:boxCornerRadiusBottomEnd="14dp"
                 app:boxCornerRadiusBottomStart="14dp"
                 app:boxCornerRadiusTopEnd="14dp"
                 app:boxCornerRadiusTopStart="14dp"
-                app:boxStrokeColor="@color/primary_green"
+                app:boxStrokeColor="@color/primaire"
                 app:helperText="@string/editeur_label_categorie_perso"
                 app:hintEnabled="false"
                 app:placeholderText="@string/editeur_categorie_perso_placeholder">
@@ -293,7 +293,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/editeur_label_difficulte"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/encre"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -301,7 +301,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:cardBackgroundColor="@color/border"
+                app:cardBackgroundColor="@color/bordure"
                 app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
@@ -367,7 +367,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/editeur_label_acces"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/encre"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -375,7 +375,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:cardBackgroundColor="@color/border"
+                app:cardBackgroundColor="@color/bordure"
                 app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
@@ -426,7 +426,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/text_secondary"
+                android:textColor="@color/encre_secondaire"
                 android:textSize="13sp"
                 tools:text="@string/editeur_acces_code_aide" />
 
@@ -445,13 +445,13 @@
                 android:layout_height="56dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/editeur_ajouter_question"
-                android:textColor="@color/primary_green"
+                android:textColor="@color/primaire"
                 android:textSize="16sp"
                 app:cornerRadius="16dp"
                 app:icon="@drawable/ic_add"
                 app:iconGravity="textStart"
-                app:iconTint="@color/primary_green"
-                app:strokeColor="@color/primary_green"
+                app:iconTint="@color/primaire"
+                app:strokeColor="@color/primaire"
                 app:strokeWidth="2dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
@@ -460,13 +460,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/border" />
+        android:background="@color/bordure" />
 
     <LinearLayout
         android:id="@+id/barre_actions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/surface"
+        android:background="@color/white"
         android:orientation="vertical"
         android:paddingStart="20dp"
         android:paddingTop="8dp"
@@ -480,9 +480,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:text="@string/editeur_case_publier"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/encre"
             android:textSize="16sp"
-            app:buttonTint="@color/primary_green" />
+            app:buttonTint="@color/primaire" />
 
         <!-- Un seul bouton : « Enregistrer le brouillon » ou « Publier » selon la case -->
         <com.google.android.material.button.MaterialButton
@@ -502,7 +502,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:gravity="center"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/encre_secondaire"
             android:textSize="13sp"
             android:visibility="gone" />
     </LinearLayout>
