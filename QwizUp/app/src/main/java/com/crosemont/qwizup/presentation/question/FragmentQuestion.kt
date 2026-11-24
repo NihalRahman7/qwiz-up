@@ -190,7 +190,7 @@ class FragmentQuestion : Fragment(R.layout.fragment_question), IVueQuestion {
         bloquerRéponses()
         réponsesAffichées.indices.forEach { i ->
             when (i) {
-                in bonnes -> colorer(boutonsRéponses[i], R.color.light_green, R.color.primary_green)
+                in bonnes -> colorer(boutonsRéponses[i], R.color.menthe_clair, R.color.menthe)
                 in choisies -> colorer(
                     boutonsRéponses[i],
                     R.color.light_orange,
@@ -204,8 +204,8 @@ class FragmentQuestion : Fragment(R.layout.fragment_question), IVueQuestion {
         if (estBonne) {
             afficherMessage(
                 getString(R.string.question_bonne),
-                R.color.light_green,
-                R.color.primary_green
+                R.color.menthe_clair,
+                R.color.menthe
             )
         } else {
             val message = if (bonnes.size == 1) {

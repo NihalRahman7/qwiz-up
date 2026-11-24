@@ -1,32 +1,54 @@
-<resources>
-    <!-- Base application theme. -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Thème de toute l'app : Material 3 clair, couleurs QwizUp, police Figtree -->
     <style name="Base.Theme.QwizUp" parent="Theme.Material3.Light.NoActionBar">
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <!-- Couleur principale : boutons, éléments actifs -->
-        <item name="colorPrimary">@color/primary_green</item>
+
+        <!-- Couleur principale (boutons, champs actifs, cases cochées) -->
+        <item name="colorPrimary">@color/primaire</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorPrimaryContainer">@color/light_green</item>
-        <item name="colorOnPrimaryContainer">@color/primary_green</item>
+        <item name="colorPrimaryContainer">@color/primaire_clair</item>
+        <item name="colorOnPrimaryContainer">@color/primaire_fonce</item>
 
-        <!-- Barre de navigation du bas : pastille derrière l'onglet actif -->
-        <item name="colorSecondaryContainer">@color/light_green</item>
-        <item name="colorOnSecondaryContainer">@color/primary_green</item>
+        <!-- Secondaire : la pastille de l'onglet actif dans la barre du bas -->
+        <item name="colorSecondary">@color/primaire</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">@color/primaire_clair</item>
+        <item name="colorOnSecondaryContainer">@color/primaire_fonce</item>
 
-        <!-- Fonds et cartes -->
-        <item name="android:colorBackground">@color/background</item>
-        <item name="colorSurface">@color/surface</item>
-        <item name="colorOnSurface">@color/text_primary</item>
-        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
-        <item name="colorOutline">@color/border</item>
+        <!-- Tertiaire : accent soleil -->
+        <item name="colorTertiary">@color/soleil_texte</item>
+        <item name="colorTertiaryContainer">@color/soleil_clair</item>
+        <item name="colorOnTertiaryContainer">@color/soleil_texte</item>
 
-        <!-- Police utilisée dans toute l'application -->
-        <!--        <item name="android:fontFamily">@font/figtree</item>-->
-        <!--        <item name="fontFamily">@font/figtree</item>-->
+        <!-- Fonds et surfaces -->
+        <item name="android:colorBackground">@color/fond</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/encre</item>
+        <item name="colorOnSurfaceVariant">@color/encre_secondaire</item>
+        <!-- Material 3 colore la barre du bas, les menus et les dialogues avec ces surfaces -->
+        <item name="colorSurfaceContainerLowest">@color/white</item>
+        <item name="colorSurfaceContainerLow">@color/white</item>
+        <item name="colorSurfaceContainer">@color/white</item>
+        <item name="colorSurfaceContainerHigh">@color/white</item>
+        <item name="colorSurfaceContainerHighest">@color/fond</item>
 
-        <!-- Icônes foncées dans la barre d'état, car le fond est clair -->
+        <!-- Bordures (champs, boutons à contour, cartes) -->
+        <item name="colorOutline">@color/bordure</item>
+        <item name="colorOutlineVariant">@color/bordure</item>
+
+        <!-- Erreurs : corail foncé, lisible sur blanc -->
+        <item name="colorError">@color/corail_texte</item>
+        <item name="colorErrorContainer">@color/corail_clair</item>
+
+        <!-- Police partout -->
+        <item name="android:fontFamily">@font/figtree</item>
+        <item name="fontFamily">@font/figtree</item>
+
+        <!-- Barres du système : fond clair, icônes foncées -->
+        <item name="android:statusBarColor">@color/fond</item>
         <item name="android:windowLightStatusBar">true</item>
-
-        <!-- Customize your light theme here. -->
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:windowLightNavigationBar" tools:targetAPI="27">true</item>
     </style>
 
     <style name="Theme.QwizUp" parent="Base.Theme.QwizUp" />

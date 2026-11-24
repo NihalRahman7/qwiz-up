@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- Couleurs de la marque -->
-    <color name="primary_green">#1E4D45</color>
-    <color name="light_green">#E4EEEB</color>
+    <color name="primary_green">#5140E0</color>
+    <color name="light_green">#E7E3FF</color>
 
     <!-- Fonds et contours -->
-    <color name="background">#F6F7F5</color>
+    <color name="background">#F3F1FC</color>
     <color name="surface">#FFFFFF</color>
-    <color name="border">#E3E7E4</color>
+    <color name="border">#E3DFF5</color>
 
     <!-- Texte -->
-    <color name="text_primary">#16201E</color>
-    <color name="text_secondary">#5A6662</color>
+    <color name="text_primary">#1B1838</color>
+    <color name="text_secondary">#5B5876</color>
 
     <!-- Accents : série, favoris, mauvaise réponse, badge « Brouillon » -->
-    <color name="accent_orange">#B4501C</color>
-    <color name="light_orange">#FBE9E2</color>
-    <color name="red_text">#8A3214</color>
+    <color name="accent_orange">#FF8A65</color>
+    <color name="light_orange">#FFE6DC</color>
+    <color name="red_text">#9C3A18</color>
 
     <!-- Badge « Nouveau » et pastilles des classes -->
-    <color name="light_blue">#E3E9F7</color>
-    <color name="blue_text">#22397A</color>
+    <color name="light_blue">#E7E3FF</color>
+    <color name="blue_text">#2E2496</color>
 
     <!-- Couleurs par défaut, gardées au cas où le thème les utilise -->
     <color name="black">#FF000000</color>
@@ -31,10 +32,51 @@
     <color name="library_text_secondary">#5F6B66</color>
     <color name="library_card_stroke">#E3E5E1</color>
     <color name="tab_container">#EDEEEA</color>
-    <color name="badge_green_bg">#E1EEE6</color>
+    <color name="badge_green_bg">#DDF5EC</color>
     <color name="badge_green_text">#1F5A3E</color>
-    <color name="badge_blue_bg">#E2E7F8</color>
+    <color name="badge_blue_bg">#E7E3FF</color>
     <color name="badge_blue_text">#2B3A9B</color>
-    <color name="badge_gray_bg">#EDEDED</color>
+    <color name="badge_gray_bg">#ECEAF5</color>
     <color name="badge_gray_text">#2E2E2E</color>
+
+    <!-- Fonds et textes -->
+    <color name="fond">#F3F1FC</color>
+    <color name="encre">#1B1838</color>
+    <color name="encre_secondaire">#5B5876</color>
+    <color name="bordure">#E3DFF5</color>
+
+    <!-- Couleur principale : violet -->
+    <color name="primaire">#5140E0</color>
+    <color name="primaire_fonce">#2E2496</color>
+    <color name="primaire_clair">#E7E3FF</color>
+
+    <!-- Accent corail : série, mauvaise réponse (texte foncé dessus) -->
+    <color name="corail">#FF8A65</color>
+    <color name="corail_clair">#FFE6DC</color>
+    <color name="corail_texte">#9C3A18</color>
+
+    <!-- Accent soleil : série, trophée, brouillon (texte foncé dessus) -->
+    <color name="menthe">#22B07D</color>
+    <color name="menthe_clair">#DDF5EC</color>
+    <color name="menthe_texte">#0B6B49</color>
+
+    <!-- Une couleur par catégorie (forte = couverture, texte blanc dessus ; claire = puce non choisie) -->
+    <color name="categorie_sciences">#0F7C8A</color>
+    <color name="categorie_sciences_clair">#D9F1F3</color>
+
+    <color name="categorie_histoire">#B5651D</color>
+    <color name="categorie_histoire_clair">#F8E7D6</color>
+
+    <color name="categorie_langues">#C23B6B</color>
+    <color name="categorie_langues_clair">#F9DCE6</color>
+
+    <color name="categorie_geographie">#277A4C</color>
+    <color name="categorie_geographie_clair">#DCF0E4</color>
+
+    <color name="categorie_informatique">#2F5FCC</color>
+    <color name="categorie_informatique_clair">#DDE6FA</color>
+
+    <color name="categorie_autre">#5E6280</color>
+    <color name="categorie_autre_clair">#E6E7EF</color>
+
 </resources>
