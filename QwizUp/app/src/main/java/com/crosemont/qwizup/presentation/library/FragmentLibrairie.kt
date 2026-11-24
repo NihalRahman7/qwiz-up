@@ -119,9 +119,9 @@ class FragmentLibrairie : Fragment(), ContratLibrairie.IVueLibrary {
             cartesBadges[i].visibility = View.VISIBLE
             textesBadges[i].text = badge
             val (fond, texte) = when (typeBadge) {
-                TypeBadge.PROGRESSION -> R.color.light_green to R.color.primary_green
-                TypeBadge.NOUVEAU -> R.color.light_blue to R.color.blue_text
-                TypeBadge.SCORE -> R.color.border to R.color.text_primary
+                TypeBadge.PROGRESSION -> R.color.primaire_clair to R.color.primaire_fonce
+                TypeBadge.NOUVEAU -> R.color.soleil_clair to R.color.soleil_texte
+                TypeBadge.SCORE -> R.color.menthe_clair to R.color.menthe_texte
             }
             cartesBadges[i].setCardBackgroundColor(ContextCompat.getColor(contexte, fond))
             textesBadges[i].setTextColor(ContextCompat.getColor(contexte, texte))

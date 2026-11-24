@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/fond"
     tools:context=".presentation.library.FragmentLibrairie">
 
     <LinearLayout
@@ -21,7 +21,7 @@
             android:layout_marginTop="4dp"
             android:fontFamily="@font/figtree_extrabold"
             android:text="@string/librairie_titre"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/encre"
             android:textSize="26sp" />
 
         <!-- Onglets : fond gris clair, l'onglet choisi est une pastille blanche avec une ombre -->
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:cardBackgroundColor="@color/border"
+            app:cardBackgroundColor="@color/primaire_clair"
             app:cardCornerRadius="14dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
@@ -101,10 +101,10 @@
             android:layout_marginTop="16dp"
             android:clickable="true"
             android:focusable="true"
-            app:cardBackgroundColor="@color/surface"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="18dp"
             app:cardElevation="0dp"
-            app:strokeColor="@color/border"
+            app:strokeColor="@color/bordure"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -127,7 +127,7 @@
                         android:id="@+id/titre1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/encre"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         tools:text="Le système solaire" />
@@ -137,7 +137,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="@color/encre_secondaire"
                         android:textSize="13sp"
                         tools:text="Sciences · 10 questions" />
                 </LinearLayout>
@@ -148,7 +148,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    app:cardBackgroundColor="@color/light_green"
+                    app:cardBackgroundColor="@color/primaire_clair"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="0dp"
                     app:strokeWidth="0dp">
@@ -159,7 +159,7 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="5dp"
-                        android:textColor="@color/primary_green"
+                        android:textColor="@color/primaire"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         tools:text="2 / 5" />
@@ -183,10 +183,10 @@
             android:layout_marginTop="10dp"
             android:clickable="true"
             android:focusable="true"
-            app:cardBackgroundColor="@color/surface"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="18dp"
             app:cardElevation="0dp"
-            app:strokeColor="@color/border"
+            app:strokeColor="@color/bordure"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -209,7 +209,7 @@
                         android:id="@+id/titre2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/encre"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         tools:text="Capitales d'Europe" />
@@ -219,7 +219,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="@color/encre_secondaire"
                         android:textSize="13sp"
                         tools:text="Géographie · 12 questions" />
                 </LinearLayout>
@@ -230,7 +230,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    app:cardBackgroundColor="@color/light_blue"
+                    app:cardBackgroundColor="@color/soleil_clair"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="0dp"
                     app:strokeWidth="0dp">
@@ -241,7 +241,7 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="5dp"
-                        android:textColor="@color/blue_text"
+                        android:textColor="@color/soleil_texte"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         tools:text="Nouveau" />
@@ -265,10 +265,10 @@
             android:layout_marginTop="10dp"
             android:clickable="true"
             android:focusable="true"
-            app:cardBackgroundColor="@color/surface"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="18dp"
             app:cardElevation="0dp"
-            app:strokeColor="@color/border"
+            app:strokeColor="@color/bordure"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -291,7 +291,7 @@
                         android:id="@+id/titre3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/encre"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         tools:text="Verbes irréguliers anglais" />
@@ -301,7 +301,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="@color/encre_secondaire"
                         android:textSize="13sp"
                         tools:text="Langues · 15 questions" />
                 </LinearLayout>
@@ -312,7 +312,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    app:cardBackgroundColor="@color/border"
+                    app:cardBackgroundColor="@color/bordure"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="0dp"
                     app:strokeWidth="0dp">
@@ -323,7 +323,7 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="5dp"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/encre"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         tools:text="87 %" />
@@ -346,7 +346,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="32dp"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/encre_secondaire"
             android:textSize="15sp"
             android:visibility="gone" />
 
