@@ -21,7 +21,7 @@
             android:layout_marginEnd="20dp"
             android:fontFamily="@font/figtree_extrabold"
             android:text="@string/nav_discover"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/encre"
             android:textSize="26sp" />
 
         <!-- Barre de recherche -->
@@ -31,10 +31,10 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="20dp"
-            app:cardBackgroundColor="@color/surface"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="14dp"
             app:cardElevation="0dp"
-            app:strokeColor="@color/border"
+            app:strokeColor="@color/bordure"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -63,8 +63,8 @@
                     android:importantForAutofill="no"
                     android:inputType="text"
                     android:maxLines="1"
-                    android:textColor="@color/text_primary"
-                    android:textColorHint="@color/text_secondary"
+                    android:textColor="@color/encre"
+                    android:textColorHint="@color/encre_secondaire"
                     android:textSize="15sp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -95,9 +95,9 @@
                     android:text="@string/category_all"
                     android:textColor="@color/white"
                     android:textSize="14sp"
-                    app:chipBackgroundColor="@color/text_primary"
+                    app:chipBackgroundColor="@color/primaire"
                     app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/text_primary"
+                    app:chipStrokeColor="@color/primaire"
                     app:chipStrokeWidth="1dp"
                     app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
@@ -108,14 +108,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/category_favorites"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="14sp"
-                    app:chipBackgroundColor="@color/surface"
+                    app:chipBackgroundColor="@color/white"
                     app:chipIcon="@drawable/ic_star_filled"
                     app:chipIconSize="18dp"
                     app:chipIconVisible="true"
                     app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/border"
+                    app:chipStrokeColor="@color/bordure"
                     app:chipStrokeWidth="1dp"
                     app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
@@ -126,11 +126,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/category_sciences"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="14sp"
-                    app:chipBackgroundColor="@color/surface"
+                    app:chipBackgroundColor="@color/white"
                     app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/border"
+                    app:chipStrokeColor="@color/bordure"
                     app:chipStrokeWidth="1dp"
                     app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
@@ -140,11 +140,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/category_history"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="14sp"
-                    app:chipBackgroundColor="@color/surface"
+                    app:chipBackgroundColor="@color/white"
                     app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/border"
+                    app:chipStrokeColor="@color/bordure"
                     app:chipStrokeWidth="1dp"
                     app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
@@ -154,11 +154,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/category_languages"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="14sp"
-                    app:chipBackgroundColor="@color/surface"
+                    app:chipBackgroundColor="@color/white"
                     app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/border"
+                    app:chipStrokeColor="@color/bordure"
                     app:chipStrokeWidth="1dp"
                     app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
@@ -168,11 +168,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/category_informatique"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="14sp"
-                    app:chipBackgroundColor="@color/surface"
+                    app:chipBackgroundColor="@color/white"
                     app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/border"
+                    app:chipStrokeColor="@color/bordure"
                     app:chipStrokeWidth="1dp"
                     app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
@@ -182,11 +182,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/category_geography"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="14sp"
-                    app:chipBackgroundColor="@color/surface"
+                    app:chipBackgroundColor="@color/white"
                     app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/border"
+                    app:chipStrokeColor="@color/bordure"
                     app:chipStrokeWidth="1dp"
                     app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
@@ -196,11 +196,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/category_autre"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="14sp"
-                    app:chipBackgroundColor="@color/surface"
+                    app:chipBackgroundColor="@color/white"
                     app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/border"
+                    app:chipStrokeColor="@color/bordure"
                     app:chipStrokeWidth="1dp"
                     app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
             </com.google.android.material.chip.ChipGroup>
@@ -222,7 +222,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="24dp"
-                android:indeterminateTint="@color/primary_green"
+                android:indeterminateTint="@color/primaire"
                 android:visibility="gone" />
 
             <!-- Carte n° 1 (remplie par le Fragment avec les données du modèle) -->
@@ -231,10 +231,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="@color/surface"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
-                app:strokeColor="@color/border"
+                app:strokeColor="@color/bordure"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -265,7 +265,7 @@
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="0.05"
                                 android:textAllCaps="true"
-                                android:textColor="@color/primary_green"
+                                android:textColor="@color/primaire"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 tools:text="@string/category_geography" />
@@ -275,7 +275,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/encre"
                                 android:textSize="17sp"
                                 android:textStyle="bold"
                                 tools:text="Capitales d’Europe" />
@@ -298,7 +298,7 @@
                         android:layout_marginTop="4dp"
                         android:lineSpacingExtra="2sp"
                         android:paddingEnd="10dp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="@color/encre_secondaire"
                         android:textSize="14sp"
                         tools:text="Associe chaque pays à sa capitale, de Lisbonne à Helsinki." />
 
@@ -308,7 +308,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:textColor="@color/primary_green"
+                        android:textColor="@color/primaire"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         tools:text="Meilleur score : 4/5" />
@@ -327,7 +327,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="@color/encre_secondaire"
                             android:textSize="13sp"
                             tools:text="12 questions · 6 min" />
 
@@ -353,10 +353,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="@color/surface"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
-                app:strokeColor="@color/border"
+                app:strokeColor="@color/bordure"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -387,7 +387,7 @@
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="0.05"
                                 android:textAllCaps="true"
-                                android:textColor="@color/primary_green"
+                                android:textColor="@color/primaire"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 tools:text="@string/category_sciences" />
@@ -397,7 +397,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/encre"
                                 android:textSize="17sp"
                                 android:textStyle="bold"
                                 tools:text="Le système solaire" />
@@ -420,7 +420,7 @@
                         android:layout_marginTop="4dp"
                         android:lineSpacingExtra="2sp"
                         android:paddingEnd="10dp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="@color/encre_secondaire"
                         android:textSize="14sp"
                         tools:text="Planètes, lunes et distances : teste tes connaissances." />
 
@@ -430,7 +430,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:textColor="@color/primary_green"
+                        android:textColor="@color/primaire"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         tools:text="Meilleur score : 4/5" />
@@ -449,7 +449,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="@color/encre_secondaire"
                             android:textSize="13sp"
                             tools:text="10 questions · 5 min" />
 
@@ -475,10 +475,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="@color/surface"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
-                app:strokeColor="@color/border"
+                app:strokeColor="@color/bordure"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -509,7 +509,7 @@
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="0.05"
                                 android:textAllCaps="true"
-                                android:textColor="@color/primary_green"
+                                android:textColor="@color/primaire"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 tools:text="@string/category_history" />
@@ -519,7 +519,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/encre"
                                 android:textSize="17sp"
                                 android:textStyle="bold"
                                 tools:text="La Révolution tranquille" />
@@ -542,7 +542,7 @@
                         android:layout_marginTop="4dp"
                         android:lineSpacingExtra="2sp"
                         android:paddingEnd="10dp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="@color/encre_secondaire"
                         android:textSize="14sp"
                         tools:text="Les grands changements du Québec des années 1960." />
 
@@ -552,7 +552,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:textColor="@color/primary_green"
+                        android:textColor="@color/primaire"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         tools:text="Meilleur score : 4/5" />
@@ -571,7 +571,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="@color/encre_secondaire"
                             android:textSize="13sp"
                             tools:text="8 questions · 4 min" />
 
@@ -596,10 +596,10 @@
                 android:id="@+id/carte4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/surface"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
-                app:strokeColor="@color/border"
+                app:strokeColor="@color/bordure"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -630,7 +630,7 @@
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="0.05"
                                 android:textAllCaps="true"
-                                android:textColor="@color/primary_green"
+                                android:textColor="@color/primaire"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 tools:text="@string/category_languages" />
@@ -640,7 +640,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/encre"
                                 android:textSize="17sp"
                                 android:textStyle="bold"
                                 tools:text="Verbes irréguliers anglais" />
@@ -663,7 +663,7 @@
                         android:layout_marginTop="4dp"
                         android:lineSpacingExtra="2sp"
                         android:paddingEnd="10dp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="@color/encre_secondaire"
                         android:textSize="14sp"
                         tools:text="Be, go, take… retrouve le passé des verbes les plus utilisés." />
 
@@ -673,7 +673,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:textColor="@color/primary_green"
+                        android:textColor="@color/primaire"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         tools:text="Meilleur score : 4/5" />
@@ -692,7 +692,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="@color/encre_secondaire"
                             android:textSize="13sp"
                             tools:text="15 questions · 7 min" />
 
@@ -720,7 +720,7 @@
                 android:gravity="center"
                 android:padding="32dp"
                 android:text="@string/discover_no_quiz"
-                android:textColor="@color/text_secondary"
+                android:textColor="@color/encre_secondaire"
                 android:textSize="16sp"
                 android:visibility="gone" />
         </LinearLayout>

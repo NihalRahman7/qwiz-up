@@ -148,10 +148,10 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
         // Meilleur score si le quiz a déjà été joué
         if (meilleurScore != null) {
             scores[i].text = getString(R.string.discover_best_score, meilleurScore.score, meilleurScore.total)
-            scores[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.primary_green))
+            scores[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.primaire))
         } else {
             scores[i].setText(R.string.discover_not_played)
-            scores[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary))
+            scores[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.encre_secondaire))
         }
 
         cartes[i].visibility = View.VISIBLE
@@ -180,9 +180,9 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
     // Puce choisie : fond foncé et texte blanc. Les autres : fond blanc.
     private fun colorer(puce: Chip, choisie: Boolean) {
         val contexte = requireContext()
-        val fond = if (choisie) R.color.text_primary else R.color.surface
-        val texte = if (choisie) R.color.white else R.color.text_primary
-        val contour = if (choisie) R.color.text_primary else R.color.border
+        val fond = if (choisie) R.color.primaire else R.color.white
+        val texte = if (choisie) R.color.white else R.color.encre
+        val contour = if (choisie) R.color.primaire else R.color.bordure
 
         puce.chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(contexte, fond))
         puce.chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(contexte, contour))
