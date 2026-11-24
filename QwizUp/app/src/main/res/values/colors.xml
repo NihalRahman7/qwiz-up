@@ -56,6 +56,11 @@
     <color name="corail_texte">#9C3A18</color>
 
     <!-- Accent soleil : série, trophée, brouillon (texte foncé dessus) -->
+    <color name="soleil">#FFC94D</color>
+    <color name="soleil_clair">#FFF3D1</color>
+    <color name="soleil_texte">#7A5300</color>
+
+    <!-- Accent menthe : bonne réponse, terminé -->
     <color name="menthe">#22B07D</color>
     <color name="menthe_clair">#DDF5EC</color>
     <color name="menthe_texte">#0B6B49</color>

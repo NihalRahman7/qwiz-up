@@ -16,9 +16,9 @@
         <item name="colorOnSecondaryContainer">@color/primaire_fonce</item>
 
         <!-- Tertiaire : accent soleil -->
-<!--        <item name="colorTertiary">@color/soleil_texte</item>-->
-<!--        <item name="colorTertiaryContainer">@color/soleil_clair</item>-->
-<!--        <item name="colorOnTertiaryContainer">@color/soleil_texte</item>-->
+        <item name="colorTertiary">@color/soleil_texte</item>
+        <item name="colorTertiaryContainer">@color/soleil_clair</item>
+        <item name="colorOnTertiaryContainer">@color/soleil_texte</item>
 
         <!-- Fonds et surfaces -->
         <item name="android:colorBackground">@color/fond</item>
