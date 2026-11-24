@@ -154,7 +154,7 @@ class FragmentQuestion : Fragment(R.layout.fragment_question), IVueQuestion {
                 bouton.isClickable = true
                 bouton.text =
                     getString(R.string.question_reponse, lettres[indice], réponsesAffichées[indice])
-                colorer(bouton, R.color.surface, R.color.border)
+                colorer(bouton, R.color.white, R.color.bordure)
             } else {
                 bouton.isVisible = false
             }
@@ -173,10 +173,10 @@ class FragmentQuestion : Fragment(R.layout.fragment_question), IVueQuestion {
     }
 
     override fun afficherSélection(indices: Set<Int>) {
-        // Réponses cochées en bleu (pas en vert, pour ne pas donner la réponse)
+        // Réponses cochées en violet (pas en vert, pour ne pas donner la réponse)
         réponsesAffichées.indices.forEach { i ->
-            if (i in indices) colorer(boutonsRéponses[i], R.color.light_blue, R.color.blue_text)
-            else colorer(boutonsRéponses[i], R.color.surface, R.color.border)
+            if (i in indices) colorer(boutonsRéponses[i], R.color.primaire_clair, R.color.primaire)
+            else colorer(boutonsRéponses[i], R.color.white, R.color.bordure)
         }
     }
 
@@ -193,11 +193,11 @@ class FragmentQuestion : Fragment(R.layout.fragment_question), IVueQuestion {
                 in bonnes -> colorer(boutonsRéponses[i], R.color.menthe_clair, R.color.menthe)
                 in choisies -> colorer(
                     boutonsRéponses[i],
-                    R.color.light_orange,
-                    R.color.accent_orange
+                    R.color.corail_clair,
+                    R.color.corail
                 )
 
-                else -> colorer(boutonsRéponses[i], R.color.surface, R.color.border)
+                else -> colorer(boutonsRéponses[i], R.color.white, R.color.bordure)
             }
         }
 
@@ -205,7 +205,7 @@ class FragmentQuestion : Fragment(R.layout.fragment_question), IVueQuestion {
             afficherMessage(
                 getString(R.string.question_bonne),
                 R.color.menthe_clair,
-                R.color.menthe
+                R.color.menthe_texte
             )
         } else {
             val message = if (bonnes.size == 1) {
@@ -215,7 +215,7 @@ class FragmentQuestion : Fragment(R.layout.fragment_question), IVueQuestion {
                     R.string.question_mauvaise_plusieurs,
                     bonnes.sorted().joinToString { "« ${réponsesAffichées[it]} »" })
             }
-            afficherMessage(message, R.color.light_orange, R.color.red_text)
+            afficherMessage(message, R.color.corail_clair, R.color.corail_texte)
         }
     }
 

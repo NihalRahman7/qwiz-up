@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/fond"
     tools:context=".presentation.question.FragmentQuestion">
 
     <!-- ===== Partie jeu ===== -->
@@ -29,8 +29,8 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/question_quitter"
                 app:icon="@drawable/ic_fermer"
-                app:iconTint="@color/text_primary"
-                app:strokeColor="@color/border" />
+                app:iconTint="@color/encre"
+                app:strokeColor="@color/bordure" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -51,7 +51,7 @@
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:textColor="@color/text_primary"
+                        android:textColor="@color/encre"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         tools:text="Le système solaire" />
@@ -60,7 +60,7 @@
                         android:id="@+id/text_compteur"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="@color/encre_secondaire"
                         android:textSize="13sp"
                         tools:text="1 / 5" />
                 </LinearLayout>
@@ -70,8 +70,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    app:indicatorColor="@color/primary_green"
-                    app:trackColor="@color/border"
+                    app:indicatorColor="@color/primaire"
+                    app:trackColor="@color/bordure"
                     app:trackCornerRadius="3dp"
                     app:trackStopIndicatorSize="0dp"
                     app:trackThickness="6dp"
@@ -98,7 +98,7 @@
                     android:layout_marginTop="32dp"
                     android:letterSpacing="0.05"
                     android:textAllCaps="true"
-                    android:textColor="@color/primary_green"
+                    android:textColor="@color/primaire"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     tools:text="Question 1" />
@@ -108,7 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     tools:text="Quelle planète est la plus proche du Soleil ?" />
@@ -123,11 +123,11 @@
                     android:gravity="start|center_vertical"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="17sp"
-                    app:backgroundTint="@color/surface"
+                    app:backgroundTint="@color/white"
                     app:cornerRadius="16dp"
-                    app:strokeColor="@color/border"
+                    app:strokeColor="@color/bordure"
                     app:strokeWidth="2dp"
                     tools:text="A · Vénus" />
 
@@ -140,11 +140,11 @@
                     android:gravity="start|center_vertical"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="17sp"
-                    app:backgroundTint="@color/surface"
+                    app:backgroundTint="@color/white"
                     app:cornerRadius="16dp"
-                    app:strokeColor="@color/border"
+                    app:strokeColor="@color/bordure"
                     app:strokeWidth="2dp"
                     tools:text="B · Mercure" />
 
@@ -157,11 +157,11 @@
                     android:gravity="start|center_vertical"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="17sp"
-                    app:backgroundTint="@color/surface"
+                    app:backgroundTint="@color/white"
                     app:cornerRadius="16dp"
-                    app:strokeColor="@color/border"
+                    app:strokeColor="@color/bordure"
                     app:strokeWidth="2dp"
                     tools:text="C · Mars" />
 
@@ -174,11 +174,11 @@
                     android:gravity="start|center_vertical"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/encre"
                     android:textSize="17sp"
-                    app:backgroundTint="@color/surface"
+                    app:backgroundTint="@color/white"
                     app:cornerRadius="16dp"
-                    app:strokeColor="@color/border"
+                    app:strokeColor="@color/bordure"
                     app:strokeWidth="2dp"
                     tools:text="D · Terre" />
 
@@ -192,9 +192,9 @@
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:visibility="gone"
-                    tools:background="@color/light_green"
+                    tools:background="@color/primaire_clair"
                     tools:text="Bonne réponse !"
-                    tools:textColor="@color/primary_green"
+                    tools:textColor="@color/primaire"
                     tools:visibility="visible" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
@@ -226,7 +226,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="140dp"
             android:layout_height="140dp"
-            app:cardBackgroundColor="@color/light_green"
+            app:cardBackgroundColor="@color/primaire_clair"
             app:cardCornerRadius="70dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
@@ -236,7 +236,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@color/primary_green"
+                android:textColor="@color/primaire"
                 android:textSize="40sp"
                 android:textStyle="bold"
                 tools:text="4 / 5" />
@@ -247,7 +247,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/encre"
             android:textSize="26sp"
             android:textStyle="bold"
             tools:text="Excellent travail !" />
@@ -258,7 +258,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/encre_secondaire"
             android:textSize="15sp"
             tools:text="Tu as terminé « Le système solaire »." />
 
@@ -279,11 +279,11 @@
             android:layout_height="54dp"
             android:layout_marginTop="10dp"
             android:text="@string/resultat_retour"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/encre"
             android:textSize="16sp"
             android:textStyle="bold"
             app:cornerRadius="16dp"
-            app:strokeColor="@color/border" />
+            app:strokeColor="@color/bordure" />
     </LinearLayout>
 
 </FrameLayout>
