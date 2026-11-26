@@ -15,11 +15,14 @@ class RécupérationIP: IOException() {
 
         return try {
             client.newCall(requête).execute().use { réponse ->
+                if (!réponse.isSuccessful) {
+                    throw IOException("Erreur HTTP: ${réponse.code}")
+                }
                 réponse.body.string()
             }
         } catch (e: IOException){
             println("La requête réseau a échoué ${e.message}")
-            throw e
+            null
         }
     }
 }
