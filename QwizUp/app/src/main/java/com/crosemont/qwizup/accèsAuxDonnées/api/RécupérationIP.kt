@@ -7,18 +7,19 @@ import okhttp3.Response
 import java.io.IOException
 
 class RécupérationIP: IOException() {
-    val client = OkHttpClient()
+    private val client = OkHttpClient()
     fun getRéponse(apiUrl: HttpUrl): String?{
-        val requêtte = Request.Builder()
+        val requête = Request.Builder()
             .url(apiUrl)
             .build()
 
         return try {
-            val réponse: Response = client.newCall(requêtte).execute()
-            réponse.body.string()
+            client.newCall(requête).execute().use { réponse ->
+                réponse.body.string()
+            }
         } catch (e: IOException){
             println("La requête réseau a échoué ${e.message}")
-            null
+            throw e
         }
     }
 }
