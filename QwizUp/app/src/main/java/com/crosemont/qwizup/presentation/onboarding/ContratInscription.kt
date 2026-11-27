@@ -20,6 +20,9 @@ interface ContratInscription {
 
         // Ferme l'ecran
         fun fermer()
+
+        // Le profil n'a pas pu être créé
+        fun afficherErreur()
     }
 
     interface IPrésentateurInscription : Présentateur<IVueInscription> {
@@ -34,5 +37,9 @@ interface ContratInscription {
 
         // L'utilisateur a toucher la fleche retour
         fun surRetourClique()
+    }
+
+    interface IModèleInscription {
+        suspend fun créerProfil(nomUtilisateur: String, courriel: String)
     }
 }

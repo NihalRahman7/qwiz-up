@@ -11,6 +11,7 @@ import com.crosemont.qwizup.presentation.onboarding.ContratInscription.IVueInscr
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import android.widget.Toast
 
 /**
  * Vue de l'écran Inscription.
@@ -18,8 +19,7 @@ import com.google.android.material.textfield.TextInputLayout
  */
 class FragmentInscription : Fragment(R.layout.fragment_inscription), IVueInscription {
 
-    private val présentateur: IPrésentateurInscription = PrésentateurInscription()
-
+    private lateinit var présentateur: IPrésentateurInscription
     private lateinit var editNom: TextInputEditText
     private lateinit var editCourriel: TextInputEditText
     private lateinit var editMotDePasse: TextInputEditText
@@ -28,6 +28,7 @@ class FragmentInscription : Fragment(R.layout.fragment_inscription), IVueInscrip
     private lateinit var boutonCréer: MaterialButton
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        présentateur = FabriqueInscription.créerPrésentateur(requireContext().filesDir)
         super.onViewCreated(view, savedInstanceState)
 
         editNom = view.findViewById(R.id.edit_nom)
@@ -94,5 +95,9 @@ class FragmentInscription : Fragment(R.layout.fragment_inscription), IVueInscrip
 
     override fun fermer() {
         findNavController().popBackStack()
+    }
+
+    override fun afficherErreur() {
+        Toast.makeText(requireContext(), R.string.inscription_erreur, Toast.LENGTH_SHORT).show()
     }
 }

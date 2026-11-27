@@ -1,8 +1,10 @@
-package com.crosemont.qwizup
-
+import com.crosemont.qwizup.domaine.service.ServiceException
+import com.crosemont.qwizup.presentation.onboarding.ContratInscription.IModèleInscription
 import com.crosemont.qwizup.presentation.onboarding.ContratInscription.IVueInscription
 import com.crosemont.qwizup.presentation.onboarding.PrésentateurInscription
+import kotlinx.coroutines.Dispatchers
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -10,7 +12,7 @@ import org.junit.Test
 /**
  * Écran Inscription : le bouton s'active seulement quand tout est valide,
  * le ✓ vert apparaît quand les mots de passe sont identiques,
- * et chaque bouton ouvre le bon écran.
+ * le profil est créé, et chaque bouton ouvre le bon écran.
  */
 class PrésentateurInscriptionTest {
 
@@ -21,6 +23,7 @@ class PrésentateurInscriptionTest {
         var accueilOuvert = false
         var connexionOuverte = false
         var fermée = false
+        var erreur = false
 
         override fun activerCréation(actif: Boolean) {
             boutonActif = actif
@@ -41,15 +44,31 @@ class PrésentateurInscriptionTest {
         override fun fermer() {
             fermée = true
         }
+
+        override fun afficherErreur() {
+            erreur = true
+        }
+    }
+
+    // Faux modèle : retient le profil créé, peut être « en panne »
+    private class FauxModèle(private val enPanne: Boolean = false) : IModèleInscription {
+        var profilCréé: Pair<String, String>? = null
+
+        override suspend fun créerProfil(nomUtilisateur: String, courriel: String) {
+            if (enPanne) throw ServiceException("Impossible de sauvegarder le profil")
+            profilCréé = nomUtilisateur to courriel
+        }
     }
 
     private lateinit var vue: FausseVue
+    private lateinit var modèle: FauxModèle
     private lateinit var présentateur: PrésentateurInscription
 
     @Before
     fun préparer() {
         vue = FausseVue()
-        présentateur = PrésentateurInscription()
+        modèle = FauxModèle()
+        présentateur = PrésentateurInscription(modèle, Dispatchers.Unconfined, Dispatchers.Unconfined)
         présentateur.attacherVue(vue)
     }
 
@@ -100,6 +119,26 @@ class PrésentateurInscriptionTest {
         présentateur.surCréerCompteClique("maya_t", "maya@exemple.ca", "motdepasse1")
 
         assertTrue(vue.accueilOuvert)
+    }
+
+    @Test
+    fun `Étant donné des champs valides lorsqu'on touche Créer mon compte, on obtient le profil créé avec le nom et le courriel`() {
+        présentateur.surCréerCompteClique("maya_t", "maya@exemple.ca", "motdepasse1")
+
+        assertEquals("maya_t" to "maya@exemple.ca", modèle.profilCréé)
+    }
+
+    @Test
+    fun `Étant donné une sauvegarde impossible lorsqu'on touche Créer mon compte, on obtient une erreur et on reste sur l'écran`() {
+        val vueEnPanne = FausseVue()
+        val présentateurEnPanne =
+            PrésentateurInscription(FauxModèle(enPanne = true), Dispatchers.Unconfined, Dispatchers.Unconfined)
+        présentateurEnPanne.attacherVue(vueEnPanne)
+
+        présentateurEnPanne.surCréerCompteClique("maya_t", "maya@exemple.ca", "motdepasse1")
+
+        assertTrue(vueEnPanne.erreur)
+        assertFalse(vueEnPanne.accueilOuvert)
     }
 
     @Test

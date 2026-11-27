@@ -49,6 +49,7 @@ class PrésentateurAccueil(
 
     // L'avatar a été touché : on ouvre le Profil
     override fun surProfilClique() {
+        vue?.ouvrirProfil()
     }
 
     private fun chargerStatistiques() {

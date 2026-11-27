@@ -199,6 +199,7 @@
     <string name="inscription_bouton">Create my account</string>
     <string name="inscription_deja_compte">Already have an account?</string>
     <string name="inscription_me_connecter">Log in</string>
+    <string name="inscription_erreur">Could not create your account. Try again.</string>
 
     <!-- Profil -->
     <string name="profil_retour">Back</string>

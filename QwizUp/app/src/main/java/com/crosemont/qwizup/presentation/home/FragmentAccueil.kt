@@ -56,6 +56,8 @@ class FragmentAccueil : Fragment(R.layout.fragment_home), IVueAccueil {
             .setOnClickListener { présentateur.surQuizClique(103) }
         view.findViewById<View>(R.id.button_join_code)
             .setOnClickListener { présentateur.surCodeClique() }
+        view.findViewById<View>(R.id.text_avatar)
+            .setOnClickListener { présentateur.surProfilClique() }
         view.findViewById<View>(R.id.text_tout_voir).setOnClickListener {
             requireActivity()
                 .findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_nav)

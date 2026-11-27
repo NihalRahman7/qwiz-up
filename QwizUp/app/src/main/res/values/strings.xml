@@ -206,6 +206,7 @@
     <string name="inscription_bouton">Créer mon compte</string>
     <string name="inscription_deja_compte">Déjà un compte?</string>
     <string name="inscription_me_connecter">Me connecter</string>
+    <string name="inscription_erreur">Impossible de créer ton compte. Réessaie.</string>
 
     <!-- Profil -->
     <string name="profil_retour">Retour</string>
