@@ -1,3 +1,5 @@
+package com.crosemont.qwizup.presentation.onboarding
+
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
@@ -6,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
 import com.crosemont.qwizup.presentation.onboarding.ContratConnexion.IPrésentateurConnexion
 import com.crosemont.qwizup.presentation.onboarding.ContratConnexion.IVueConnexion
-import com.crosemont.qwizup.presentation.onboarding.PrésentateurConnexion
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 

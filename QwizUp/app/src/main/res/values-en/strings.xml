@@ -186,5 +186,19 @@
     <string name="connexion_pas_de_compte">No account yet?</string>
     <string name="connexion_creer_compte">Create an account</string>
 
+    <!-- Inscription -->
+    <string name="inscription_retour">Back</string>
+    <string name="inscription_titre">Create your account.</string>
+    <string name="inscription_label_nom">Username</string>
+    <string name="inscription_aide_nom">This is the name your class will see.</string>
+    <string name="inscription_label_courriel">Email</string>
+    <string name="inscription_label_mot_de_passe">Password</string>
+    <string name="inscription_aide_mot_de_passe">8 characters minimum, with at least one number.</string>
+    <string name="inscription_label_confirmation">Confirm your password</string>
+    <string name="inscription_identiques">Both passwords match.</string>
+    <string name="inscription_bouton">Create my account</string>
+    <string name="inscription_deja_compte">Already have an account?</string>
+    <string name="inscription_me_connecter">Log in</string>
+
 
 </resources>

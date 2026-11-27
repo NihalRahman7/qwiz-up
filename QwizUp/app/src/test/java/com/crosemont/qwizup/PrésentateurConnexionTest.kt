@@ -1,3 +1,5 @@
+package com.crosemont.qwizup
+
 import com.crosemont.qwizup.presentation.onboarding.ContratConnexion.IVueConnexion
 import com.crosemont.qwizup.presentation.onboarding.PrésentateurConnexion
 import org.junit.Assert.assertEquals

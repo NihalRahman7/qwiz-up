@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Écran Inscription : nom, courriel, mot de passe, confirmation, puis Créer mon compte en bas -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fond"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="24dp"
+    android:paddingBottom="24dp"
+    tools:context=".presentation.onboarding.FragmentInscription">
+
+    <!-- Bouton retour (flèche) -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_retour"
+        style="@style/Widget.Material3.Button.IconButton.Outlined"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/inscription_retour"
+        app:icon="@drawable/ic_retour"
+        app:iconTint="@color/encre"
+        app:strokeColor="@color/bordure" />
+
+    <!-- Les champs défilent si l'écran est petit ou si le clavier est ouvert -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/figtree_extrabold"
+                android:text="@string/inscription_titre"
+                android:textColor="@color/encre"
+                android:textSize="28sp" />
+
+            <!-- Nom d'utilisateur -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:fontFamily="@font/figtree_extrabold"
+                android:text="@string/inscription_label_nom"
+                android:textColor="@color/encre"
+                android:textSize="14sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/champ_nom"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxStrokeColor="@color/primaire"
+                app:helperText="@string/inscription_aide_nom"
+                app:helperTextTextColor="@color/encre_secondaire"
+                app:hintEnabled="false"
+                app:startIconDrawable="@drawable/ic_personne"
+                app:startIconTint="@color/encre_secondaire">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_nom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:textColor="@color/encre"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Courriel -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/figtree_extrabold"
+                android:text="@string/inscription_label_courriel"
+                android:textColor="@color/encre"
+                android:textSize="14sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/champ_courriel"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxStrokeColor="@color/primaire"
+                app:hintEnabled="false"
+                app:startIconDrawable="@drawable/ic_courriel"
+                app:startIconTint="@color/encre_secondaire">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_courriel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/encre"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Mot de passe : l'œil à droite affiche ou cache le texte -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/figtree_extrabold"
+                android:text="@string/inscription_label_mot_de_passe"
+                android:textColor="@color/encre"
+                android:textSize="14sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/champ_mot_de_passe"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxStrokeColor="@color/primaire"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/encre_secondaire"
+                app:helperText="@string/inscription_aide_mot_de_passe"
+                app:helperTextTextColor="@color/encre_secondaire"
+                app:hintEnabled="false"
+                app:startIconDrawable="@drawable/ic_cadenas"
+                app:startIconTint="@color/encre_secondaire">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_mot_de_passe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword"
+                    android:textColor="@color/encre"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Confirmation : le ✓ vert et le message apparaissent quand c'est identique -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/figtree_extrabold"
+                android:text="@string/inscription_label_confirmation"
+                android:textColor="@color/encre"
+                android:textSize="14sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/champ_confirmation"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxStrokeColor="@color/primaire"
+                app:endIconDrawable="@drawable/ic_completed"
+                app:endIconMode="custom"
+                app:endIconTint="@color/menthe_texte"
+                app:helperTextTextColor="@color/menthe_texte"
+                app:hintEnabled="false"
+                app:startIconDrawable="@drawable/ic_cadenas"
+                app:startIconTint="@color/encre_secondaire">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_confirmation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:textColor="@color/encre"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bouton Créer mon compte : actif seulement quand tout est valide -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_creer_compte"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="12dp"
+        android:enabled="false"
+        android:fontFamily="@font/figtree_extrabold"
+        android:text="@string/inscription_bouton"
+        android:textColor="@color/texte_bouton_principal"
+        android:textSize="16sp"
+        app:backgroundTint="@color/fond_bouton_principal"
+        app:cornerRadius="16dp" />
+
+    <!-- Déjà un compte? Me connecter -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/figtree_semibold"
+            android:text="@string/inscription_deja_compte"
+            android:textColor="@color/encre_secondaire"
+            android:textSize="14sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_me_connecter"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/figtree_extrabold"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            android:text="@string/inscription_me_connecter"
+            android:textColor="@color/primaire"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

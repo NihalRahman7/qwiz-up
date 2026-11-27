@@ -1,3 +1,5 @@
+package com.crosemont.qwizup
+
 import com.crosemont.qwizup.presentation.onboarding.ContratBienvenue.IVueBienvenue
 import com.crosemont.qwizup.presentation.onboarding.PrésentateurBienvenue
 import org.junit.Assert.assertFalse

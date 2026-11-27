@@ -192,4 +192,18 @@
     <string name="connexion_bouton">Me connecter</string>
     <string name="connexion_pas_de_compte">Pas encore de compte?</string>
     <string name="connexion_creer_compte">Créer un compte</string>
+
+    <!-- Inscription -->
+    <string name="inscription_retour">Retour</string>
+    <string name="inscription_titre">Crée ton compte.</string>
+    <string name="inscription_label_nom">Nom d\'utilisateur</string>
+    <string name="inscription_aide_nom">C\'est le nom que ta classe verra.</string>
+    <string name="inscription_label_courriel">Courriel</string>
+    <string name="inscription_label_mot_de_passe">Mot de passe</string>
+    <string name="inscription_aide_mot_de_passe">8 caractères minimum, avec au moins un chiffre.</string>
+    <string name="inscription_label_confirmation">Confirme le mot de passe</string>
+    <string name="inscription_identiques">Les deux mots de passe sont identiques.</string>
+    <string name="inscription_bouton">Créer mon compte</string>
+    <string name="inscription_deja_compte">Déjà un compte?</string>
+    <string name="inscription_me_connecter">Me connecter</string>
 </resources>
