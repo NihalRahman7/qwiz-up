@@ -32,11 +32,16 @@ class ServiceCréation(private val source: SourceQuizCréés,
         val estNouveau = quiz.id == 0
         if (!estNouveau && tous.none { it.id == quiz.id }) throw ServiceException("Le quiz ${quiz.id} n'existe pas")
 
+        // L'éditeur ne connaît pas le code : on reprend celui déjà enregistré
+        val ancienCode = quiz.code.ifBlank { tous.find { it.id == quiz.id }?.code.orEmpty() }
+
         val àEnregistrer = quiz.copy(
             id = if (estNouveau) (tous.maxOfOrNull { it.id } ?: 0) + 1 else quiz.id,
             titre = quiz.titre.trim(),
             // Le nom de catégorie sert seulement avec « Autre »
-            categoriePerso = if (quiz.catégorie == CatégorieQuiz.AUTRE) quiz.categoriePerso.trim() else ""
+            categoriePerso = if (quiz.catégorie == CatégorieQuiz.AUTRE) quiz.categoriePerso.trim() else "",
+            // Un quiz publié reçoit un code (gardé ensuite). Un brouillon garde le sien s'il en avait un.
+            code = if (quiz.estPublié && ancienCode.isBlank()) nouveauCode(tous) else ancienCode
         )
         val nouvelleListe =
             if (estNouveau) tous + àEnregistrer
@@ -58,6 +63,16 @@ class ServiceCréation(private val source: SourceQuizCréés,
         if (quiz.questions.isEmpty()) throw ServiceException("Un quiz publié doit avoir au moins une question")
         val incomplète = quiz.questions.indexOfFirst { !it.estComplete() }
         if (incomplète != -1) throw ServiceException("La question ${incomplète + 1} n'est pas complète")
+    }
+
+    /** Un code au hasard qu'aucun autre quiz n'utilise. */
+    private fun nouveauCode(tous: List<QuizCréer>): String {
+        val pris = tous.map { it.code }.toSet()
+        repeat(100) {
+            val code = générerCode()
+            if (code !in pris) return code
+        }
+        throw ServiceException("Impossible de trouver un code libre")
     }
 
     private suspend fun lire(): List<QuizCréer> =
