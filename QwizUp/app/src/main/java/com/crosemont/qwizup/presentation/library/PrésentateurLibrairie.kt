@@ -71,5 +71,6 @@ class PrésentateurLibrairie(
     }
 
     override fun surModifierClique(quizId: Int) {
+        vue?.ouvrirÉditeur(quizId)
     }
 }
