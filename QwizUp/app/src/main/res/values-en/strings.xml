@@ -171,7 +171,7 @@
 
     <!-- Bienvenue -->
     <string name="bienvenue_titre">Welcome to QwizUp</string>
-    <string name="bienvenue_texte">Create quizzes, share them with a code and play with your class.</string>
+    <string name="bienvenue_texte">Short, colorful quizzes to learn by playing, alone or with your class.</string>
     <string name="bienvenue_creer_compte">Create an account</string>
     <string name="bienvenue_deja_compte">I already have an account</string>
     <string name="logo_description">QwizUp logo</string>

@@ -34,9 +34,9 @@ class FragmentBienvenue : Fragment(R.layout.fragment_bienvenue), ContratBienvenu
 
     // ------- IVueBienvenue -------
 
-    // Ouvrir l'ecran Inscription(TODO)
+    // Ouvrir l'ecran Inscription(DONE)
     override fun ouvrirInscription() {
-        findNavController().navigate(R.id.action_bienvenue_vers_accueil)
+        findNavController().navigate(R.id.action_bienvenue_vers_inscription)
     }
 
     // Ouvrir l'ecran Connexion(DONE)

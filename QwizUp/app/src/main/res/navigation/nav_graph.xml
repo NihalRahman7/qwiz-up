@@ -28,10 +28,12 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/bienvenueFragment"
             app:popUpToInclusive="true" />
-
         <action
             android:id="@+id/action_bienvenue_vers_connexion"
             app:destination="@id/connexionFragment" />
+        <action
+            android:id="@+id/action_bienvenue_vers_inscription"
+            app:destination="@id/inscriptionFragment" />
     </fragment>
 
     <fragment
@@ -43,6 +45,23 @@
             android:id="@+id/action_connexion_vers_accueil"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/bienvenueFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/inscriptionFragment"
+        android:name="com.crosemont.qwizup.presentation.onboarding.FragmentInscription"
+        android:label="fragment_inscription"
+        tools:layout="@layout/fragment_inscription">
+        <action
+            android:id="@+id/action_inscription_vers_accueil"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/bienvenueFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_inscription_vers_connexion"
+            app:destination="@id/connexionFragment"
+            app:popUpTo="@id/inscriptionFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
