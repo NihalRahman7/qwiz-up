@@ -39,8 +39,8 @@ class FragmentBienvenue : Fragment(R.layout.fragment_bienvenue), ContratBienvenu
         findNavController().navigate(R.id.action_bienvenue_vers_accueil)
     }
 
-    // Ouvrir l'ecran Connexion(TODO)
+    // Ouvrir l'ecran Connexion(DONE)
     override fun ouvrirConnexion() {
-        findNavController().navigate(R.id.action_bienvenue_vers_accueil)
+        findNavController().navigate(R.id.action_bienvenue_vers_connexion)
     }
 }

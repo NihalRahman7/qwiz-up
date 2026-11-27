@@ -23,9 +23,24 @@
         android:name="com.crosemont.qwizup.presentation.onboarding.FragmentBienvenue"
         android:label="fragment_bienvenue"
         tools:layout="@layout/fragment_bienvenue">
-        <!-- On retire Bienvenue de la pile : le bouton Retour ne revient pas ici -->
         <action
             android:id="@+id/action_bienvenue_vers_accueil"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/bienvenueFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_bienvenue_vers_connexion"
+            app:destination="@id/connexionFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/connexionFragment"
+        android:name="com.crosemont.qwizup.presentation.onboarding.FragmentBienvenue"
+        android:label="fragment_connexion"
+        tools:layout="@layout/fragment_connexion">
+        <action
+            android:id="@+id/action_connexion_vers_accueil"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/bienvenueFragment"
             app:popUpToInclusive="true" />
