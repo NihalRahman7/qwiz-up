@@ -1,13 +1,14 @@
 package com.crosemont.qwizup.presentation.create
 
+import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
@@ -16,6 +17,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import androidx.core.widget.NestedScrollView
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -23,10 +25,10 @@ import com.crosemont.qwizup.R
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.AccèsQuiz
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Difficulté
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.TypeQuestion
 import com.crosemont.qwizup.presentation.create.ContratCréer.ErreurEditeur
 import com.crosemont.qwizup.presentation.create.ContratCréer.IPrésentateurÉditeur
 import com.crosemont.qwizup.presentation.create.ContratCréer.IVueÉditeur
-import com.crosemont.qwizup.presentation.ContratVuePrésentateur.TypeQuestion
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.checkbox.MaterialCheckBox
@@ -61,6 +63,41 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdit
 
     // Une carte par question, dans l'ordre
     private val cartesQuestions = mutableListOf<View>()
+
+    // ----- Les 4 étapes (seulement dans la vue : le présentateur ne change pas) -----
+
+    // L'étape affichée, de 1 à 4
+    private var étape = 1
+
+    private lateinit var blocsÉtapes: List<View>
+    private lateinit var barresÉtapes: List<View>
+    private lateinit var libellésÉtapes: List<TextView>
+    private lateinit var texteÉtape: TextView
+    private lateinit var texteTitreÉtape: TextView
+    private lateinit var boutonÉtapePrécédente: MaterialButton
+    private lateinit var boutonÉtapeSuivante: MaterialButton
+    private lateinit var zonePublier: View
+    private lateinit var défilement: NestedScrollView
+    private lateinit var texteRésuméTitre: TextView
+    private lateinit var texteRésuméDétails: TextView
+    private lateinit var texteRésuméQuestions: TextView
+
+    private val titresÉtapes = listOf(
+        R.string.creer_etape_infos,
+        R.string.creer_etape_questions,
+        R.string.creer_etape_options,
+        R.string.creer_etape_publier
+    )
+
+    // Couleur forte, couleur pâle et icône de chaque puce de catégorie
+    private val styleCatégories = mapOf(
+        CatégorieQuiz.SCIENCES to Triple(R.color.categorie_sciences, R.color.categorie_sciences_clair, R.drawable.ic_couverture_sciences),
+        CatégorieQuiz.HISTOIRE to Triple(R.color.categorie_histoire, R.color.categorie_histoire_clair, R.drawable.ic_couverture_histoire),
+        CatégorieQuiz.LANGUES to Triple(R.color.categorie_langues, R.color.categorie_langues_clair, R.drawable.ic_couverture_langues),
+        CatégorieQuiz.GÉOGRAPHIE to Triple(R.color.categorie_geographie, R.color.categorie_geographie_clair, R.drawable.ic_globe),
+        CatégorieQuiz.INFORMATIQUE to Triple(R.color.categorie_informatique, R.color.categorie_informatique_clair, R.drawable.ic_couverture_informatique),
+        CatégorieQuiz.AUTRE to Triple(R.color.categorie_autre, R.color.categorie_autre_clair, R.drawable.ic_couverture_autre)
+    )
 
     // Quel élément du XML correspond à quelle valeur
     private val chipsCategories = mapOf(
@@ -111,9 +148,10 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdit
         view.findViewById<ImageButton>(R.id.button_fermer)
             .setOnClickListener { presentateur.surFermerClique() }
 
-        // Le bouton retour du téléphone demande aussi une confirmation
+        // Le bouton retour du téléphone revient à l'étape d'avant ;
+        // à l'étape 1, il demande une confirmation pour quitter (comme le ✕)
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            presentateur.surFermerClique()
+            if (étape > 1) afficherÉtape(étape - 1) else presentateur.surFermerClique()
         }
 
         saisieTitre.doAfterTextChanged { presentateur.surTitreModifie(it?.toString().orEmpty()) }
@@ -146,6 +184,28 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdit
             insets
         }
 
+        // Les 4 étapes
+        blocsÉtapes = listOf(R.id.etape_infos, R.id.etape_questions, R.id.etape_options, R.id.etape_publier)
+            .map { view.findViewById<View>(it) }
+        barresÉtapes = listOf(R.id.barre_etape_1, R.id.barre_etape_2, R.id.barre_etape_3, R.id.barre_etape_4)
+            .map { view.findViewById<View>(it) }
+        libellésÉtapes = listOf(R.id.libelle_etape_1, R.id.libelle_etape_2, R.id.libelle_etape_3, R.id.libelle_etape_4)
+            .map { view.findViewById<TextView>(it) }
+        texteÉtape = view.findViewById(R.id.text_etape)
+        texteTitreÉtape = view.findViewById(R.id.text_titre_etape)
+        boutonÉtapePrécédente = view.findViewById(R.id.button_etape_precedente)
+        boutonÉtapeSuivante = view.findViewById(R.id.button_etape_suivante)
+        zonePublier = view.findViewById(R.id.zone_publier)
+        défilement = view.findViewById(R.id.defilement_editeur)
+        texteRésuméTitre = view.findViewById(R.id.text_resume_titre)
+        texteRésuméDétails = view.findViewById(R.id.text_resume_details)
+        texteRésuméQuestions = view.findViewById(R.id.text_resume_questions)
+
+        boutonÉtapePrécédente.setOnClickListener { afficherÉtape(étape - 1) }
+        boutonÉtapeSuivante.setOnClickListener { afficherÉtape(étape + 1) }
+        colorerPucesCatégories(view)
+        afficherÉtape(1)
+
         presentateur.attacherVue(this)
 
         // -1 = nouveau quiz (voir nav_graph.xml)
@@ -160,10 +220,84 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdit
 
     private fun couleur(id: Int) = ContextCompat.getColor(requireContext(), id)
 
+    // ----- Les 4 étapes -----
+
+    /** Montre seulement le bloc de l'étape demandée, et met à jour l'en-tête et les boutons. */
+    private fun afficherÉtape(numéro: Int) {
+        étape = numéro.coerceIn(1, NB_ÉTAPES)
+
+        blocsÉtapes.forEachIndexed { i, bloc -> bloc.isVisible = i == étape - 1 }
+        barresÉtapes.forEachIndexed { i, barre ->
+            barre.backgroundTintList =
+                ColorStateList.valueOf(couleur(if (i < étape) R.color.primaire else R.color.bordure))
+        }
+        libellésÉtapes.forEachIndexed { i, libellé ->
+            libellé.setTextColor(couleur(if (i == étape - 1) R.color.primaire else R.color.encre_secondaire))
+        }
+        mettreÀJourEnTête()
+
+        // Retour pâle à l'étape 1 ; Suivant caché à l'étape 4, où on publie
+        boutonÉtapePrécédente.isEnabled = étape > 1
+        boutonÉtapePrécédente.alpha = if (étape > 1) 1f else 0.5f
+        boutonÉtapeSuivante.isVisible = étape < NB_ÉTAPES
+        zonePublier.isVisible = étape == NB_ÉTAPES
+        if (étape == NB_ÉTAPES) remplirRésumé()
+
+        défilement.scrollTo(0, 0)
+    }
+
+    /** « Nouveau quiz · Étape 1 sur 4 » et le titre de l'étape. */
+    private fun mettreÀJourEnTête() {
+        texteÉtape.text = getString(R.string.creer_etape_entete, texteTitreEcran.text, étape)
+        texteTitreÉtape.setText(titresÉtapes[étape - 1])
+    }
+
+    /** Le résumé de l'étape 4, lu dans les champs des étapes 1 à 3. */
+    private fun remplirRésumé() {
+        val vue = requireView()
+        texteRésuméTitre.text = saisieTitre.text?.toString()?.trim()
+            .takeUnless { it.isNullOrEmpty() } ?: getString(R.string.creer_resume_sans_titre)
+
+        // Catégorie (le nom précisé si c'est « Autre »), difficulté et accès choisis
+        val catégorie = vue.findViewById<Chip?>(groupeCategories.checkedChipId)?.text?.toString().orEmpty()
+        val nomCatégorie = if (groupeCategories.checkedChipId == R.id.chip_editeur_autre)
+            saisieCategoriePerso.text?.toString()?.trim().takeUnless { it.isNullOrEmpty() } ?: catégorie
+        else catégorie
+        val difficulté = vue.findViewById<MaterialButton?>(groupeDifficulte.checkedButtonId)?.text?.toString().orEmpty()
+        val accès = vue.findViewById<MaterialButton?>(groupeAcces.checkedButtonId)?.text?.toString().orEmpty()
+        texteRésuméDétails.text = listOf(nomCatégorie, difficulté, accès)
+            .filter { it.isNotBlank() }
+            .joinToString(" · ")
+
+        texteRésuméQuestions.text = texteNombreQuestions.text
+    }
+
+    /** Chaque puce prend la couleur de sa catégorie : pâle avec icône de couleur, forte et blanche une fois choisie. */
+    private fun colorerPucesCatégories(vue: View) {
+        val choisie = intArrayOf(android.R.attr.state_checked)
+        val autre = intArrayOf()
+        chipsCategories.forEach { (catégorie, id) ->
+            val (forte, pâle, icône) = styleCatégories.getValue(catégorie)
+            vue.findViewById<Chip>(id).apply {
+                chipBackgroundColor = ColorStateList(arrayOf(choisie, autre), intArrayOf(couleur(forte), couleur(pâle)))
+                setTextColor(ColorStateList(arrayOf(choisie, autre), intArrayOf(couleur(R.color.white), couleur(R.color.encre))))
+                setChipIconResource(icône)
+                isChipIconVisible = true
+                chipIconTint = ColorStateList(arrayOf(choisie, autre), intArrayOf(couleur(R.color.white), couleur(forte)))
+                isCheckedIconVisible = false
+                setCloseIconResource(R.drawable.ic_coche)
+                closeIconTint = ColorStateList.valueOf(couleur(R.color.white))
+                isCloseIconVisible = isChecked
+                setOnCheckedChangeListener { puce, cochée -> (puce as Chip).isCloseIconVisible = cochée }
+            }
+        }
+    }
+
     // ----- IVueÉditeur : infos du quiz -----
 
     override fun afficherEnTete(nouveauQuiz: Boolean) {
         texteTitreEcran.setText(if (nouveauQuiz) R.string.editeur_titre_nouveau else R.string.editeur_titre_modifier)
+        mettreÀJourEnTête()
     }
 
     override fun afficherInfosQuiz(titre: String, description: String) {
@@ -404,5 +538,9 @@ class ÉditeurQuizFragment : Fragment(R.layout.fragment_editeur_quiz), IVueÉdit
 
     override fun afficherErreurSauvegarde() {
         Toast.makeText(requireContext(), R.string.editeur_erreur_sauvegarde, Toast.LENGTH_LONG).show()
+    }
+
+    companion object {
+        private const val NB_ÉTAPES = 4
     }
 }

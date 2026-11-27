@@ -5,17 +5,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- Couleurs pour la page librairie
-         (badge_green_bg = menthe_clair et badge_blue_bg = primaire_clair, plus bas) -->
-    <color name="library_bg">#F8F8F5</color>
-    <color name="library_text_secondary">#5F6B66</color>
-    <color name="library_card_stroke">#E3E5E1</color>
-    <color name="tab_container">#EDEEEA</color>
-    <color name="badge_green_text">#1F5A3E</color>
-    <color name="badge_blue_text">#2B3A9B</color>
-    <color name="badge_gray_bg">#ECEAF5</color>
-    <color name="badge_gray_text">#2E2E2E</color>
-
     <!-- Fonds et textes -->
     <color name="fond">#F3F1FC</color>
     <color name="encre">#1B1838</color>

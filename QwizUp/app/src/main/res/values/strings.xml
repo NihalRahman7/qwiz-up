@@ -1,13 +1,11 @@
 <resources>
     <string name="app_name">QwizUp</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="nav_home">Accueil</string>
     <string name="nav_discover">Découvrir</string>
     <string name="nav_create">Créer</string>
     <string name="nav_library">Librairie</string>
 
     <!--  Les String de la Navigation de la page d'Accueil   -->
-    <string name="home_greeting">Bonjour</string>
     <string name="home_join_code">Jouer</string>
     <string name="home_streak">Série</string>
     <string name="home_completed">Complétés</string>
@@ -32,7 +30,6 @@
     <string name="home_correct_value">%1$d %%</string>
     <string name="home_error">Impossible de charger tes statistiques.</string>
     <string name="home_avatar_initiale" translatable="false">J</string>
-    <string name="home_nom_utilisateur" translatable="false">John</string>
 
     <!-- Exemples temporaires, remplacés plus tard par les données du Modèle -->
     <string name="sample_quiz_1_title">Le système solaire</string>
@@ -51,7 +48,6 @@
 
     <!--  Les String de la Navigation de la page Découvrir   -->
     <string name="discover_search_hint">Rechercher un quiz</string>
-    <string name="discover_play">Jouer</string>
     <string name="discover_add_favorite">Ajouter aux favoris</string>
     <string name="discover_remove_favorite">Retirer des favoris</string>
     <string name="discover_quiz_details">%1$d questions · %2$d min</string>
@@ -59,7 +55,6 @@
     <string name="discover_play_soon">Le quiz « %1$s » arrive bientôt!</string>
     <string name="discover_error">Impossible de charger les quiz. Réessaie plus tard.</string>
     <string name="discover_ok">OK</string>
-    <string name="category_favorites">Favoris</string>
     <string name="discover_no_favorite">Aucun favori pour l\'instant. Touche l\'étoile d\'un quiz pour le retrouver ici.</string>
     <string name="discover_best_score">Meilleur - %1$d %%</string>
     <string name="discover_not_played">Pas encore joué</string>
@@ -91,7 +86,6 @@
     <string name="editeur_titre_nouveau">Nouveau quiz</string>
     <string name="editeur_titre_modifier">Modifier le quiz</string>
     <string name="editeur_fermer">Fermer</string>
-    <string name="editeur_couverture_auto">Image choisie selon la catégorie</string>
     <string name="editeur_label_titre">Titre</string>
     <string name="editeur_titre_placeholder">Ex. : Le système solaire</string>
     <string name="editeur_label_description">Description (optionnel)</string>
@@ -102,10 +96,10 @@
     <string name="editeur_moyen">Moyen</string>
     <string name="editeur_difficile">Difficile</string>
     <string name="editeur_label_acces">Qui peut jouer?</string>
-    <string name="editeur_acces_tous">Tout le monde</string>
-    <string name="editeur_acces_code">Avec un code</string>
-    <string name="editeur_acces_tous_aide">Ton quiz sera visible par tout le monde dans Découvrir.</string>
-    <string name="editeur_acces_code_aide">Un code à 6 chiffres sera créé pour ta classe à la publication.</string>
+    <string name="editeur_acces_tous">Public</string>
+    <string name="editeur_acces_code">Privé</string>
+    <string name="editeur_acces_tous_aide">Visible par tout le monde dans Découvrir. On peut aussi le rejoindre avec son code.</string>
+    <string name="editeur_acces_code_aide">Caché de Découvrir. Seules les personnes qui ont le code peuvent jouer.</string>
     <plurals name="editeur_nombre_questions">
         <item quantity="one">%d question</item>
         <item quantity="other">%d questions</item>
@@ -126,7 +120,6 @@
     <string name="editeur_reponse_attendue_placeholder">Ex. : L\'eau s\'évapore, se condense en nuages, puis retombe en pluie.</string>
     <string name="editeur_reponse_attendue_aide">Le joueur écrit sa réponse en mots. Tu pourras la comparer avec celle-ci.</string>
     <string name="editeur_ajouter_question">Ajouter une question</string>
-    <string name="editeur_brouillon">Brouillon</string>
     <string name="editeur_publier">Publier</string>
     <string name="editeur_erreur_titre">Donne un titre à ton quiz</string>
     <string name="editeur_erreur_categorie">Précise la catégorie de ton quiz</string>
@@ -136,7 +129,6 @@
     <string name="editeur_erreur_question">La question %1$d n\'est pas complète</string>
     <string name="editeur_sauvegarde_ok">Brouillon sauvegardé</string>
     <string name="editeur_publie_ok">« %1$s » est publié!</string>
-    <string name="editeur_photo_bientot">L\'ajout d\'image arrive bientôt</string>
     <string name="editeur_confirmer_suppression_titre">Supprimer la question %1$d?</string>
     <string name="editeur_confirmer_suppression_message">Cette action ne peut pas être annulée.</string>
     <string name="editeur_confirmer_quitter_titre">Quitter sans sauvegarder?</string>
@@ -144,7 +136,6 @@
     <string name="editeur_confirmer_quitter_message_court">Tes modifications vont être perdues.</string>
     <string name="action_supprimer">Supprimer</string>
     <string name="editeur_case_publier">Publier le quiz</string>
-    <string name="editeur_enregistrer">Enregistrer</string>
     <string name="editeur_enregistrer_brouillon">Enregistrer le brouillon</string>
     <string name="editeur_erreur_chargement">Impossible d\'ouvrir ce quiz.</string>
     <string name="editeur_erreur_sauvegarde">Impossible d\'enregistrer le quiz. Réessaie.</string>
@@ -153,13 +144,12 @@
     <string name="creer_erreur_chargement">Impossible de charger tes quiz. Réessaie plus tard.</string>
     <string name="action_quitter">Quitter</string>
     <string name="action_annuler">Annuler</string>
+
     <!--  Les String de la Navigation de la page Librairie   -->
-    <string name="librairie_titre">Librairie</string>
     <string name="librairie_btn_favoris">Favoris</string>
     <string name="librairie_btn_completes">Complétés</string>
     <string name="librairie_btn_crees">Mes Quiz</string>
     <string name="librairie_quiz_soon">Le quiz « %1$s » arrive bientôt!</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="librairie_modifier">Modifier</string>
     <string name="librairie_code_a_venir">Le code apparaît à la publication</string>
 
@@ -188,14 +178,6 @@
     <string name="resultat_retour">Retour à l\'accueil</string>
     <string name="resultat_reussite">Réussite</string>
     <string name="resultat_erreurs">Erreurs</string>
-
-    <!--  Les String de l'écran Rejoindre avec un code   -->
-    <string name="rejoindre_retour">Retour</string>
-    <string name="rejoindre_titre">Rejoindre un quiz</string>
-    <string name="rejoindre_sous_titre">Entre le code à 6 chiffres donné par ton enseignant·e.</string>
-    <string name="rejoindre_label_code">Code du quiz</string>
-    <string name="rejoindre_bouton">Rejoindre</string>
-    <string name="rejoindre_code_invalide">Ce code ne correspond à aucun quiz.</string>
 
     <!-- Bienvenue -->
     <string name="bienvenue_titre">Bienvenue sur QwizUp</string>
@@ -261,5 +243,21 @@
     <string name="modifier_annuler">Annuler</string>
     <string name="modifier_enregistrer">Enregistrer</string>
     <string name="modifier_permission_refusee">QwizUp a besoin de la caméra pour prendre ta photo.</string>
+
+    <!-- Créer en 4 étapes -->
+    <string name="creer_etape_entete">%1$s · Étape %2$d sur 4</string>
+    <string name="creer_etape_infos">Les bases</string>
+    <string name="creer_etape_questions">Les questions</string>
+    <string name="creer_etape_options">Les options</string>
+    <string name="creer_etape_publier">Vérifie et publie</string>
+    <string name="creer_onglet_infos">Infos</string>
+    <string name="creer_onglet_questions">Questions</string>
+    <string name="creer_onglet_options">Options</string>
+    <string name="creer_onglet_publier">Publier</string>
+    <string name="creer_retour">Retour</string>
+    <string name="creer_suivant">Suivant</string>
+    <string name="creer_resume_sans_titre">Quiz sans titre</string>
+    <string name="creer_aide_autre">Avec « Autre », un champ apparaît pour préciser la catégorie.</string>
+    <string name="editeur_code_aide">Chaque quiz reçoit un code de 5 caractères (lettres et chiffres) quand tu le publies. Tu le retrouves dans Librairie → Mes quiz.</string>
 
 </resources>
