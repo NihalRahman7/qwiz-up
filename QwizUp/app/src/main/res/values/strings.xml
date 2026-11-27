@@ -182,6 +182,8 @@
     <string name="resultat_detail">Tu as terminé « %1$s ».</string>
     <string name="resultat_rejouer">Rejouer</string>
     <string name="resultat_retour">Retour à l\'accueil</string>
+    <string name="resultat_reussite">Réussite</string>
+    <string name="resultat_erreurs">Erreurs</string>
 
     <!--  Les String de l'écran Rejoindre avec un code   -->
     <string name="rejoindre_retour">Retour</string>

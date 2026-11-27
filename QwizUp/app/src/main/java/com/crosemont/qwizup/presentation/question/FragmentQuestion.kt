@@ -44,6 +44,10 @@ class FragmentQuestion : Fragment(R.layout.fragment_question), IVueQuestion {
     private lateinit var texteRésultatTitre: TextView
     private lateinit var texteRésultatDetail: TextView
 
+    private lateinit var texteRéussiteRésultat: TextView
+
+    private lateinit var texteErreursRésultat: TextView
+
     // Les textes des réponses affichées, pour écrire la bonne réponse dans le message
     private var réponsesAffichées: List<String> = emptyList()
 
@@ -72,6 +76,8 @@ class FragmentQuestion : Fragment(R.layout.fragment_question), IVueQuestion {
         texteScore = view.findViewById(R.id.text_score)
         texteRésultatTitre = view.findViewById(R.id.text_resultat_titre)
         texteRésultatDetail = view.findViewById(R.id.text_resultat_detail)
+        texteRéussiteRésultat = view.findViewById(R.id.text_reussite_resultat)
+        texteErreursRésultat = view.findViewById(R.id.text_erreurs_resultat)
 
         // Chaque clic est transmis au présentateur
         view.findViewById<MaterialButton>(R.id.button_quitter)
@@ -111,7 +117,8 @@ class FragmentQuestion : Fragment(R.layout.fragment_question), IVueQuestion {
     /** Affiche le message sous les réponses, avec ses couleurs. */
     private fun afficherMessage(message: String, @ColorRes fond: Int, @ColorRes texte: Int) {
         texteRétroaction.text = message
-        texteRétroaction.setBackgroundColor(ContextCompat.getColor(requireContext(), fond))
+        texteRétroaction.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), fond))
         texteRétroaction.setTextColor(ContextCompat.getColor(requireContext(), texte))
         texteRétroaction.isVisible = true
     }
@@ -245,6 +252,10 @@ class FragmentQuestion : Fragment(R.layout.fragment_question), IVueQuestion {
             }
         )
         texteRésultatDetail.text = getString(R.string.resultat_detail, titreQuiz)
+        // Tuiles : pourcentage de réussite et nombre d'erreurs
+        val pourcentage = if (total > 0) score * 100 / total else 0
+        texteRéussiteRésultat.text = getString(R.string.home_correct_value, pourcentage)
+        texteErreursRésultat.text = (total - score).toString()
     }
 
     override fun demanderConfirmationQuitter() {
