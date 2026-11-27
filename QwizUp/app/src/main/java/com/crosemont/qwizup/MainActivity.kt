@@ -34,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             barreDuBas.isVisible = destination.id != R.id.editeurQuizFragment &&
                     destination.id != R.id.questionFragment &&
-                    destination.id != R.id.rejoindreFragment
+                    destination.id != R.id.rejoindreFragment &&
+                    destination.id != R.id.bienvenueFragment
         }
     }
 }

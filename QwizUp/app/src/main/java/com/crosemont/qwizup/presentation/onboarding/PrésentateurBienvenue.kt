@@ -6,11 +6,23 @@ import com.crosemont.qwizup.presentation.onboarding.ContratBienvenue.IVueBienven
 
 
 class PrésentateurBienvenue : IPrésentateurBienvenue {
-    override fun attacherVue(vue: IVueBienvenue) { }
 
-    override fun detacherVue() { }
+    // La vue est null quand l'écran n'est pas affiché
+    private var vue: IVueBienvenue? = null
 
-    override fun surCréerCompteClique() { }
+    override fun attacherVue(vue: IVueBienvenue) {
+        this.vue = vue
+    }
 
-    override fun surDéjàCompteClique() { }
+    override fun detacherVue() {
+        vue = null
+    }
+
+    override fun surCréerCompteClique() {
+        vue?.ouvrirInscription()
+    }
+
+    override fun surDéjàCompteClique() {
+        vue?.ouvrirConnexion()
+    }
 }

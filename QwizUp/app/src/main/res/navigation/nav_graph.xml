@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/bienvenueFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -16,6 +16,19 @@
         <action
             android:id="@+id/action_accueil_vers_rejoindre"
             app:destination="@id/rejoindreFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bienvenueFragment"
+        android:name="com.crosemont.qwizup.presentation.onboarding.FragmentBienvenue"
+        android:label="fragment_bienvenue"
+        tools:layout="@layout/fragment_bienvenue">
+        <!-- On retire Bienvenue de la pile : le bouton Retour ne revient pas ici -->
+        <action
+            android:id="@+id/action_bienvenue_vers_accueil"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/bienvenueFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
