@@ -206,4 +206,20 @@
     <string name="inscription_bouton">Créer mon compte</string>
     <string name="inscription_deja_compte">Déjà un compte?</string>
     <string name="inscription_me_connecter">Me connecter</string>
+
+    <!-- Profil -->
+    <string name="profil_retour">Retour</string>
+    <string name="profil_modifier">Modifier</string>
+    <string name="profil_changer_photo">Changer la photo</string>
+    <string name="profil_photo_description">Photo de profil</string>
+    <string name="profil_invite">Invité</string>
+    <string name="profil_identifiant">\@%1$s\n%2$s</string>
+    <string name="profil_mes_quiz">Mes quiz créés</string>
+    <string name="profil_langue">Langue</string>
+    <string name="profil_langue_valeur">Selon le téléphone</string>
+    <string name="profil_a_propos">À propos de QwizUp</string>
+    <string name="profil_a_propos_texte">Des quiz courts et colorés pour apprendre en jouant. Projet du cours 420-G55, Collège de Rosemont.</string>
+    <string name="profil_ok">OK</string>
+    <string name="profil_deconnexion">Me déconnecter</string>
+    <string name="profil_erreur">Impossible de charger ton profil.</string>
 </resources>

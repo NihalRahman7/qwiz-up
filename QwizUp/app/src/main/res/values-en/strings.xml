@@ -200,5 +200,19 @@
     <string name="inscription_deja_compte">Already have an account?</string>
     <string name="inscription_me_connecter">Log in</string>
 
-
+    <!-- Profil -->
+    <string name="profil_retour">Back</string>
+    <string name="profil_modifier">Edit</string>
+    <string name="profil_changer_photo">Change photo</string>
+    <string name="profil_photo_description">Profile photo</string>
+    <string name="profil_invite">Guest</string>
+    <string name="profil_identifiant">\@%1$s\n%2$s</string>
+    <string name="profil_mes_quiz">My quizzes</string>
+    <string name="profil_langue">Language</string>
+    <string name="profil_langue_valeur">Same as phone</string>
+    <string name="profil_a_propos">About QwizUp</string>
+    <string name="profil_a_propos_texte">Short, colorful quizzes to learn by playing. Project for course 420-G55, Collège de Rosemont.</string>
+    <string name="profil_ok">OK</string>
+    <string name="profil_deconnexion">Log out</string>
+    <string name="profil_erreur">Could not load your profile.</string>
 </resources>
