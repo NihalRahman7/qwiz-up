@@ -63,6 +63,14 @@
     <string name="category_informatique">Computer science</string>
     <string name="category_autre">Other</string>
 
+    <!-- Détail du quiz -->
+    <string name="detail_retour">Back</string>
+    <string name="detail_nb_questions">%1$d questions</string>
+    <string name="detail_duree">%1$d min</string>
+    <string name="detail_meilleur_score">Your best score: %1$d / %2$d</string>
+    <string name="detail_jouer">Play</string>
+    <string name="detail_erreur">Could not open this quiz.</string>
+
     <string name="creer_nouveau_quiz">New quiz</string>
     <string name="creer_continuer">Continue</string>
     <string name="creer_modifier">Edit</string>

@@ -69,6 +69,14 @@
     <string name="category_informatique">Informatique</string>
     <string name="category_autre">Autre</string>
 
+    <!-- Détail du quiz -->
+    <string name="detail_retour">Retour</string>
+    <string name="detail_nb_questions">%1$d questions</string>
+    <string name="detail_duree">%1$d min</string>
+    <string name="detail_meilleur_score">Ton meilleur score : %1$d / %2$d</string>
+    <string name="detail_jouer">Jouer</string>
+    <string name="detail_erreur">Impossible d\'ouvrir ce quiz.</string>
+
     <!--  Les String de la Navigation de la page Créer   -->
     <string name="creer_nouveau_quiz">Nouveau quiz</string>
     <string name="creer_continuer">Continuer</string>
