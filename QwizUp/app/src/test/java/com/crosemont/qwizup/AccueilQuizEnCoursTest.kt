@@ -59,6 +59,7 @@ class AccueilQuizEnCoursTest {
         var quizEnCoursAffichés: List<Int>? = null
         override fun ouvrirQuiz(quizId: Int) {}
         override fun ouvrirRejoindre() {}
+        override fun ouvrirProfil() {}
         override fun afficherStatistiques(serie: Int, nbQuizCompletes: Int, tauxRéussite: Int) {}
         override fun afficherQuizEnCours(quizIds: List<Int>) { quizEnCoursAffichés = quizIds }
         override fun afficherErreur() {}

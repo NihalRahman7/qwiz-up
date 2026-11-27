@@ -47,6 +47,10 @@ class PrésentateurAccueil(
         vue?.ouvrirRejoindre()
     }
 
+    // L'avatar a été touché : on ouvre le Profil
+    override fun surProfilClique() {
+    }
+
     private fun chargerStatistiques() {
         corountines?.launch {
             try {

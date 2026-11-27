@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Icône image (Choisir dans la galerie) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:pathData="M5,4 h14 a2,2 0 0,1 2,2 v12 a2,2 0 0,1 -2,2 h-14 a2,2 0 0,1 -2,-2 v-12 a2,2 0 0,1 2,-2 z"
+        android:strokeLineJoin="round"
+        android:strokeWidth="2"
+        android:strokeColor="@color/primaire" />
+    <path
+        android:pathData="M3,16 l5,-5 4,4 3,-3 6,6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="2"
+        android:strokeColor="@color/primaire" />
+    <path
+        android:pathData="M14,8.5 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0"
+        android:fillColor="@color/primaire" />
+</vector>

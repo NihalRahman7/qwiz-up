@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Feuille « Modifier mon profil » : photo (caméra, galerie, retirer) et nom affiché -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingBottom="24dp">
+
+    <!-- Petite barre grise en haut : on peut glisser la feuille vers le bas -->
+    <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Titre et ✕ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/figtree_extrabold"
+            android:text="@string/modifier_titre"
+            android:textColor="@color/encre"
+            android:textSize="20sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_fermer_feuille"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/modifier_fermer"
+            app:icon="@drawable/ic_fermer"
+            app:iconTint="@color/encre" />
+    </LinearLayout>
+
+    <!-- Aperçu de l'avatar à gauche, boutons photo à droite -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:cardBackgroundColor="@color/primaire"
+            app:cardCornerRadius="40dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+
+            <TextView
+                android:id="@+id/text_initiale_feuille"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/figtree_extrabold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                tools:text="M" />
+
+            <ImageView
+                android:id="@+id/image_photo_feuille"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/profil_photo_description"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_prendre_photo"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:fontFamily="@font/figtree_bold"
+                android:text="@string/modifier_prendre_photo"
+                app:backgroundTint="@color/primaire"
+                app:cornerRadius="14dp"
+                app:icon="@drawable/ic_camera"
+                app:iconTint="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_galerie"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/figtree_bold"
+                android:text="@string/modifier_galerie"
+                android:textColor="@color/primaire"
+                app:cornerRadius="14dp"
+                app:icon="@drawable/ic_galerie"
+                app:iconTint="@color/primaire"
+                app:strokeColor="@color/bordure" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Retirer la photo : visible seulement quand il y a une photo -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_retirer_photo"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/figtree_bold"
+        android:text="@string/modifier_retirer_photo"
+        android:textColor="@color/corail_texte"
+        app:icon="@drawable/ic_supprimer"
+        app:iconTint="@color/corail_texte" />
+
+    <!-- Nom affiché -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/figtree_extrabold"
+        android:text="@string/modifier_label_nom"
+        android:textColor="@color/encre"
+        android:textSize="14sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/champ_nom_affiche"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        app:boxBackgroundColor="@color/white"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxStrokeColor="@color/primaire"
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
+        app:helperText="@string/modifier_aide_nom"
+        app:helperTextTextColor="@color/encre_secondaire"
+        app:hintEnabled="false"
+        app:startIconDrawable="@drawable/ic_personne"
+        app:startIconTint="@color/encre_secondaire">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_nom_affiche"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName"
+            android:textColor="@color/encre"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Annuler / Enregistrer -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_annuler"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/figtree_bold"
+            android:text="@string/modifier_annuler"
+            android:textColor="@color/encre"
+            app:cornerRadius="16dp"
+            app:strokeColor="@color/bordure" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_enregistrer"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/figtree_extrabold"
+            android:text="@string/modifier_enregistrer"
+            app:backgroundTint="@color/primaire"
+            app:cornerRadius="16dp" />
+    </LinearLayout>
+
+</LinearLayout>

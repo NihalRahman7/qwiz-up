@@ -14,6 +14,9 @@ interface ContratAccueil {
         // Ouvre l'écran pour entrer un code de quiz
         fun ouvrirRejoindre()
 
+        // Ouvre l'écran Profil
+        fun ouvrirProfil()
+
         // Affiche la série, le nombre de quiz complétés et le taux de réussite
         fun afficherStatistiques(serie: Int, nbQuizCompletes: Int, tauxRéussite: Int)
 
@@ -30,6 +33,9 @@ interface ContratAccueil {
 
         // L'utilisateur a cliqué sur le bouton « Code »
         fun surCodeClique()
+
+        // L'utilisateur a touché son avatar
+        fun surProfilClique()
     }
 
     interface IModèleAccueil {

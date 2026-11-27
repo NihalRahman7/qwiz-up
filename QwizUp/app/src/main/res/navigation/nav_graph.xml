@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_accueil_vers_rejoindre"
             app:destination="@id/rejoindreFragment" />
+        <action
+            android:id="@+id/action_accueil_vers_profil"
+            app:destination="@id/profilFragment" />
     </fragment>
 
     <fragment

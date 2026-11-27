@@ -104,4 +104,9 @@ class FragmentAccueil : Fragment(R.layout.fragment_home), IVueAccueil {
     override fun ouvrirRejoindre() {
         findNavController().navigate(R.id.action_accueil_vers_rejoindre)
     }
+
+    // Ouvre l'écran Profil
+    override fun ouvrirProfil() {
+        findNavController().navigate(R.id.action_accueil_vers_profil)
+    }
 }

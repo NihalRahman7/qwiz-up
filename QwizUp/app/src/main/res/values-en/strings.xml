@@ -215,4 +215,19 @@
     <string name="profil_ok">OK</string>
     <string name="profil_deconnexion">Log out</string>
     <string name="profil_erreur">Could not load your profile.</string>
+
+    <!-- Modifier mon profil -->
+    <string name="modifier_titre">Edit my profile</string>
+    <string name="modifier_fermer">Close</string>
+    <string name="modifier_prendre_photo">Take a photo</string>
+    <string name="modifier_galerie">Choose from gallery</string>
+    <string name="modifier_retirer_photo">Remove photo</string>
+    <string name="modifier_label_nom">Display name</string>
+    <string name="modifier_aide_nom">Shown on your profile and in your class results.</string>
+    <string name="modifier_nom_invalide">Enter a name from 1 to 30 characters.</string>
+    <string name="modifier_annuler">Cancel</string>
+    <string name="modifier_enregistrer">Save</string>
+    <string name="modifier_permission_refusee">QwizUp needs the camera to take your photo.</string>
+
+
 </resources>

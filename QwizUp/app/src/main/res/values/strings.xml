@@ -222,4 +222,18 @@
     <string name="profil_ok">OK</string>
     <string name="profil_deconnexion">Me déconnecter</string>
     <string name="profil_erreur">Impossible de charger ton profil.</string>
+
+    <!-- Modifier mon profil -->
+    <string name="modifier_titre">Modifier mon profil</string>
+    <string name="modifier_fermer">Fermer</string>
+    <string name="modifier_prendre_photo">Prendre une photo</string>
+    <string name="modifier_galerie">Choisir dans la galerie</string>
+    <string name="modifier_retirer_photo">Retirer la photo</string>
+    <string name="modifier_label_nom">Nom affiché</string>
+    <string name="modifier_aide_nom">Visible sur ton profil et dans les résultats de ta classe.</string>
+    <string name="modifier_nom_invalide">Entre un nom de 1 à 30 caractères.</string>
+    <string name="modifier_annuler">Annuler</string>
+    <string name="modifier_enregistrer">Enregistrer</string>
+    <string name="modifier_permission_refusee">QwizUp a besoin de la caméra pour prendre ta photo.</string>
+
 </resources>
