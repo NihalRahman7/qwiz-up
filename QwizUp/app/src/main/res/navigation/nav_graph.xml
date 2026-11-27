@@ -46,6 +46,11 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/bienvenueFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_connexion_vers_inscription"
+            app:destination="@id/inscriptionFragment"
+            app:popUpTo="@id/connexionFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

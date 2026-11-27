@@ -64,7 +64,7 @@ class FragmentConnexion : Fragment(R.layout.fragment_connexion), IVueConnexion {
 
     // Ouvrir l'ecran insription (DONE)
     override fun ouvrirInscription() {
-        findNavController().navigate(R.id.action_bienvenue_vers_inscription)
+        findNavController().navigate(R.id.action_connexion_vers_inscription)
     }
 
     override fun fermer() {
