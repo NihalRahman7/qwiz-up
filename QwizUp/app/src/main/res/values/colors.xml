@@ -28,6 +28,9 @@
     <color name="primaire_clair">#E7E3FF</color>
     <color name="primaire_moyen">#6A5BF0</color>
 
+    <!-- Voile noir transparent (étiquette sur une couverture de couleur) -->
+    <color name="voile_sombre">#38000000</color>
+
     <!-- Accent corail : série, mauvaise réponse (texte foncé dessus) -->
     <color name="corail">#FF8A65</color>
     <color name="corail_clair">#FFE6DC</color>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Écran Découvrir : titre, barre de recherche, catégories et cartes de quiz -->
+<?xml version="1.0" encoding="utf-8"?><!-- Écran Découvrir : barre de recherche, catégories et grille de cartes de quiz -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,27 +12,15 @@
         android:orientation="vertical"
         android:paddingBottom="20dp">
 
-        <!-- Titre -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/figtree_extrabold"
-            android:text="@string/nav_discover"
-            android:textColor="@color/encre"
-            android:textSize="26sp" />
-
         <!-- Barre de recherche -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="20dp"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="14dp"
+            app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:strokeColor="@color/bordure"
             app:strokeWidth="1dp">
@@ -42,8 +30,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp">
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -54,7 +42,7 @@
                 <EditText
                     android:id="@+id/edit_search"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="52dp"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:background="@null"
@@ -65,148 +53,132 @@
                     android:maxLines="1"
                     android:textColor="@color/encre"
                     android:textColorHint="@color/encre_secondaire"
-                    android:textSize="15sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Catégories : on fait défiler de gauche à droite -->
-        <HorizontalScrollView
+        <!-- Catégories : elles passent à la ligne quand il n'y a plus de place -->
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_categories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:clipToPadding="false"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:scrollbars="none">
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="20dp"
+            app:chipSpacingHorizontal="8dp"
+            app:chipSpacingVertical="8dp"
+            app:singleLine="false">
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group_categories"
+            <!-- Catégorie choisie : fond foncé -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_all"
+                style="@style/Widget.Material3.Chip.Assist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:chipSpacingHorizontal="8dp"
-                app:singleLine="true">
+                android:fontFamily="@font/figtree_bold"
+                android:text="@string/category_all"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:chipBackgroundColor="@color/encre"
+                app:chipMinHeight="40dp"
+                app:chipStrokeColor="@color/encre"
+                app:chipStrokeWidth="1.5dp"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
-                <!-- Catégorie choisie : fond foncé -->
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_all"
-                    style="@style/Widget.Material3.Chip.Assist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/category_all"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/primaire"
-                    app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/primaire"
-                    app:chipStrokeWidth="1dp"
-                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
-                <!-- Favoris : seulement les quiz avec l'étoile -->
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_favoris"
-                    style="@style/Widget.Material3.Chip.Assist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/category_favorites"
-                    android:textColor="@color/encre"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
-                    app:chipIcon="@drawable/ic_star_filled"
-                    app:chipIconSize="18dp"
-                    app:chipIconVisible="true"
-                    app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/bordure"
-                    app:chipStrokeWidth="1dp"
-                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+            <!-- Autres catégories : fond blanc -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_sciences"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/figtree_bold"
+                android:text="@string/category_sciences"
+                android:textColor="@color/encre"
+                android:textSize="14sp"
+                app:chipBackgroundColor="@color/white"
+                app:chipMinHeight="40dp"
+                app:chipStrokeColor="@color/bordure"
+                app:chipStrokeWidth="1.5dp"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
-                <!-- Autres catégories : fond blanc -->
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_sciences"
-                    style="@style/Widget.Material3.Chip.Assist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/category_sciences"
-                    android:textColor="@color/encre"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
-                    app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/bordure"
-                    app:chipStrokeWidth="1dp"
-                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_history"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/figtree_bold"
+                android:text="@string/category_history"
+                android:textColor="@color/encre"
+                android:textSize="14sp"
+                app:chipBackgroundColor="@color/white"
+                app:chipMinHeight="40dp"
+                app:chipStrokeColor="@color/bordure"
+                app:chipStrokeWidth="1.5dp"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_history"
-                    style="@style/Widget.Material3.Chip.Assist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/category_history"
-                    android:textColor="@color/encre"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
-                    app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/bordure"
-                    app:chipStrokeWidth="1dp"
-                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_languages"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/figtree_bold"
+                android:text="@string/category_languages"
+                android:textColor="@color/encre"
+                android:textSize="14sp"
+                app:chipBackgroundColor="@color/white"
+                app:chipMinHeight="40dp"
+                app:chipStrokeColor="@color/bordure"
+                app:chipStrokeWidth="1.5dp"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_languages"
-                    style="@style/Widget.Material3.Chip.Assist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/category_languages"
-                    android:textColor="@color/encre"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
-                    app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/bordure"
-                    app:chipStrokeWidth="1dp"
-                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_geography"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/figtree_bold"
+                android:text="@string/category_geography"
+                android:textColor="@color/encre"
+                android:textSize="14sp"
+                app:chipBackgroundColor="@color/white"
+                app:chipMinHeight="40dp"
+                app:chipStrokeColor="@color/bordure"
+                app:chipStrokeWidth="1.5dp"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_informatique"
-                    style="@style/Widget.Material3.Chip.Assist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/category_informatique"
-                    android:textColor="@color/encre"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
-                    app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/bordure"
-                    app:chipStrokeWidth="1dp"
-                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_informatique"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/figtree_bold"
+                android:text="@string/category_informatique"
+                android:textColor="@color/encre"
+                android:textSize="14sp"
+                app:chipBackgroundColor="@color/white"
+                app:chipMinHeight="40dp"
+                app:chipStrokeColor="@color/bordure"
+                app:chipStrokeWidth="1.5dp"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_geography"
-                    style="@style/Widget.Material3.Chip.Assist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/category_geography"
-                    android:textColor="@color/encre"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
-                    app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/bordure"
-                    app:chipStrokeWidth="1dp"
-                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_autre"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/figtree_bold"
+                android:text="@string/category_autre"
+                android:textColor="@color/encre"
+                android:textSize="14sp"
+                app:chipBackgroundColor="@color/white"
+                app:chipMinHeight="40dp"
+                app:chipStrokeColor="@color/bordure"
+                app:chipStrokeWidth="1.5dp"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
+        </com.google.android.material.chip.ChipGroup>
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_autre"
-                    style="@style/Widget.Material3.Chip.Assist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/category_autre"
-                    android:textColor="@color/encre"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
-                    app:chipMinHeight="44dp"
-                    app:chipStrokeColor="@color/bordure"
-                    app:chipStrokeWidth="1dp"
-                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
-            </com.google.android.material.chip.ChipGroup>
-        </HorizontalScrollView>
-
-        <!-- Cartes de quiz -->
+        <!-- Cartes de quiz : grille de 2 colonnes. Toucher une carte ouvre le jeu. -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -225,492 +197,478 @@
                 android:indeterminateTint="@color/primaire"
                 android:visibility="gone" />
 
-            <!-- Carte n° 1 (remplie par le Fragment avec les données du modèle) -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/carte1"
+            <!-- Rangée 1 : cartes 1 et 2 -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/bordure"
-                app:strokeWidth="1dp">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- Carte n° 1 (remplie par le Fragment avec les données du modèle) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/carte1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingStart="16dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="6dp"
-                    android:paddingBottom="16dp">
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
 
-                    <!-- Catégorie et titre, avec l'étoile des favoris à droite -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:paddingTop="6dp">
+                        <!-- Couverture : couleur et icône de la catégorie (choisies par le Fragment) -->
+                        <FrameLayout
+                            android:id="@+id/couverture1"
+                            android:layout_width="match_parent"
+                            android:layout_height="92dp"
+                            android:background="@color/categorie_autre">
+
+                            <ImageView
+                                android:id="@+id/icone1"
+                                android:layout_width="110dp"
+                                android:layout_height="110dp"
+                                android:layout_gravity="bottom|end"
+                                android:layout_marginEnd="-22dp"
+                                android:layout_marginBottom="-30dp"
+                                android:alpha="0.25"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_couverture_autre"
+                                app:tint="@color/white" />
 
                             <TextView
                                 android:id="@+id/categorie1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:letterSpacing="0.05"
-                                android:textAllCaps="true"
-                                android:textColor="@color/primaire"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
+                                android:layout_gravity="bottom|start"
+                                android:layout_margin="12dp"
+                                android:background="@drawable/bg_pastille"
+                                android:backgroundTint="@color/voile_sombre"
+                                android:fontFamily="@font/figtree_extrabold"
+                                android:paddingStart="8dp"
+                                android:paddingTop="4dp"
+                                android:paddingEnd="8dp"
+                                android:paddingBottom="4dp"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
                                 tools:text="@string/category_geography" />
+
+                            <ImageButton
+                                android:id="@+id/favori1"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:layout_gravity="top|end"
+                                android:layout_margin="4dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/discover_add_favorite"
+                                android:scaleType="center"
+                                android:src="@drawable/ic_star_outline"
+                                app:tint="@color/white" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingStart="12dp"
+                            android:paddingTop="12dp"
+                            android:paddingEnd="12dp"
+                            android:paddingBottom="14dp">
 
                             <TextView
                                 android:id="@+id/titre1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/figtree_extrabold"
+                                android:maxLines="2"
+                                android:minLines="2"
+                                android:textColor="@color/encre"
+                                android:textSize="15sp"
+                                tools:text="Capitales d’Europe" />
+
+                            <!-- La description n'est pas montrée dans la grille (gardée pour le Fragment) -->
+                            <TextView
+                                android:id="@+id/description1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/details1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:textColor="@color/encre"
-                                android:textSize="17sp"
-                                android:textStyle="bold"
-                                tools:text="Capitales d’Europe" />
+                                android:fontFamily="@font/figtree_semibold"
+                                android:textColor="@color/encre_secondaire"
+                                android:textSize="12sp"
+                                tools:text="4 questions · 2 min" />
+
+                            <!-- Meilleur score, ou « Pas encore joué » -->
+                            <TextView
+                                android:id="@+id/score1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:fontFamily="@font/figtree_extrabold"
+                                android:textSize="12sp"
+                                tools:text="Meilleur 80 %" />
                         </LinearLayout>
-
-                        <ImageButton
-                            android:id="@+id/favori1"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            android:contentDescription="@string/discover_add_favorite"
-                            android:scaleType="center"
-                            android:src="@drawable/ic_star_outline" />
                     </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:id="@+id/description1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:lineSpacingExtra="2sp"
-                        android:paddingEnd="10dp"
-                        android:textColor="@color/encre_secondaire"
-                        android:textSize="14sp"
-                        tools:text="Associe chaque pays à sa capitale, de Lisbonne à Helsinki." />
-
-                    <!-- Meilleur score, ou « Pas encore joué » -->
-                    <TextView
-                        android:id="@+id/score1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/primaire"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        tools:text="Meilleur score : 4/5" />
-
-                    <!-- Nombre de questions, durée et bouton Jouer -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingEnd="10dp">
-
-                        <TextView
-                            android:id="@+id/details1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/encre_secondaire"
-                            android:textSize="13sp"
-                            tools:text="12 questions · 6 min" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/jouer1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:insetTop="0dp"
-                            android:insetBottom="0dp"
-                            android:paddingStart="18dp"
-                            android:paddingEnd="18dp"
-                            android:text="@string/discover_play"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            app:cornerRadius="20dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Carte n° 2 (remplie par le Fragment avec les données du modèle) -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/carte2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/bordure"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- Carte n° 2 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/carte2"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingStart="16dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="6dp"
-                    android:paddingBottom="16dp">
+                    android:layout_marginStart="6dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
 
-                    <!-- Catégorie et titre, avec l'étoile des favoris à droite -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:paddingTop="6dp">
+                        <FrameLayout
+                            android:id="@+id/couverture2"
+                            android:layout_width="match_parent"
+                            android:layout_height="92dp"
+                            android:background="@color/categorie_autre">
+
+                            <ImageView
+                                android:id="@+id/icone2"
+                                android:layout_width="110dp"
+                                android:layout_height="110dp"
+                                android:layout_gravity="bottom|end"
+                                android:layout_marginEnd="-22dp"
+                                android:layout_marginBottom="-30dp"
+                                android:alpha="0.25"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_couverture_autre"
+                                app:tint="@color/white" />
 
                             <TextView
                                 android:id="@+id/categorie2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:letterSpacing="0.05"
-                                android:textAllCaps="true"
-                                android:textColor="@color/primaire"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                tools:text="@string/category_sciences" />
+                                android:layout_gravity="bottom|start"
+                                android:layout_margin="12dp"
+                                android:background="@drawable/bg_pastille"
+                                android:backgroundTint="@color/voile_sombre"
+                                android:fontFamily="@font/figtree_extrabold"
+                                android:paddingStart="8dp"
+                                android:paddingTop="4dp"
+                                android:paddingEnd="8dp"
+                                android:paddingBottom="4dp"
+                                android:textColor="@color/white"
+                                android:textSize="11sp" />
+
+                            <ImageButton
+                                android:id="@+id/favori2"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:layout_gravity="top|end"
+                                android:layout_margin="4dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/discover_add_favorite"
+                                android:scaleType="center"
+                                android:src="@drawable/ic_star_outline"
+                                app:tint="@color/white" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingStart="12dp"
+                            android:paddingTop="12dp"
+                            android:paddingEnd="12dp"
+                            android:paddingBottom="14dp">
 
                             <TextView
                                 android:id="@+id/titre2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/figtree_extrabold"
+                                android:maxLines="2"
+                                android:minLines="2"
+                                android:textColor="@color/encre"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/description2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/details2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:textColor="@color/encre"
-                                android:textSize="17sp"
-                                android:textStyle="bold"
-                                tools:text="Le système solaire" />
+                                android:fontFamily="@font/figtree_semibold"
+                                android:textColor="@color/encre_secondaire"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/score2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:fontFamily="@font/figtree_extrabold"
+                                android:textSize="12sp" />
                         </LinearLayout>
-
-                        <ImageButton
-                            android:id="@+id/favori2"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            android:contentDescription="@string/discover_add_favorite"
-                            android:scaleType="center"
-                            android:src="@drawable/ic_star_outline" />
                     </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/description2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:lineSpacingExtra="2sp"
-                        android:paddingEnd="10dp"
-                        android:textColor="@color/encre_secondaire"
-                        android:textSize="14sp"
-                        tools:text="Planètes, lunes et distances : teste tes connaissances." />
-
-                    <!-- Meilleur score, ou « Pas encore joué » -->
-                    <TextView
-                        android:id="@+id/score2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/primaire"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        tools:text="Meilleur score : 4/5" />
-
-                    <!-- Nombre de questions, durée et bouton Jouer -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingEnd="10dp">
-
-                        <TextView
-                            android:id="@+id/details2"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/encre_secondaire"
-                            android:textSize="13sp"
-                            tools:text="10 questions · 5 min" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/jouer2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:insetTop="0dp"
-                            android:insetBottom="0dp"
-                            android:paddingStart="18dp"
-                            android:paddingEnd="18dp"
-                            android:text="@string/discover_play"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            app:cornerRadius="20dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Carte n° 3 (remplie par le Fragment avec les données du modèle) -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/carte3"
+            <!-- Rangée 2 : cartes 3 et 4 -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/bordure"
-                app:strokeWidth="1dp">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- Carte n° 3 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/carte3"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingStart="16dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="6dp"
-                    android:paddingBottom="16dp">
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
 
-                    <!-- Catégorie et titre, avec l'étoile des favoris à droite -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:paddingTop="6dp">
+                        <FrameLayout
+                            android:id="@+id/couverture3"
+                            android:layout_width="match_parent"
+                            android:layout_height="92dp"
+                            android:background="@color/categorie_autre">
+
+                            <ImageView
+                                android:id="@+id/icone3"
+                                android:layout_width="110dp"
+                                android:layout_height="110dp"
+                                android:layout_gravity="bottom|end"
+                                android:layout_marginEnd="-22dp"
+                                android:layout_marginBottom="-30dp"
+                                android:alpha="0.25"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_couverture_autre"
+                                app:tint="@color/white" />
 
                             <TextView
                                 android:id="@+id/categorie3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:letterSpacing="0.05"
-                                android:textAllCaps="true"
-                                android:textColor="@color/primaire"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                tools:text="@string/category_history" />
+                                android:layout_gravity="bottom|start"
+                                android:layout_margin="12dp"
+                                android:background="@drawable/bg_pastille"
+                                android:backgroundTint="@color/voile_sombre"
+                                android:fontFamily="@font/figtree_extrabold"
+                                android:paddingStart="8dp"
+                                android:paddingTop="4dp"
+                                android:paddingEnd="8dp"
+                                android:paddingBottom="4dp"
+                                android:textColor="@color/white"
+                                android:textSize="11sp" />
+
+                            <ImageButton
+                                android:id="@+id/favori3"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:layout_gravity="top|end"
+                                android:layout_margin="4dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/discover_add_favorite"
+                                android:scaleType="center"
+                                android:src="@drawable/ic_star_outline"
+                                app:tint="@color/white" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingStart="12dp"
+                            android:paddingTop="12dp"
+                            android:paddingEnd="12dp"
+                            android:paddingBottom="14dp">
 
                             <TextView
                                 android:id="@+id/titre3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/figtree_extrabold"
+                                android:maxLines="2"
+                                android:minLines="2"
+                                android:textColor="@color/encre"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/description3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/details3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:textColor="@color/encre"
-                                android:textSize="17sp"
-                                android:textStyle="bold"
-                                tools:text="La Révolution tranquille" />
+                                android:fontFamily="@font/figtree_semibold"
+                                android:textColor="@color/encre_secondaire"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/score3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:fontFamily="@font/figtree_extrabold"
+                                android:textSize="12sp" />
                         </LinearLayout>
-
-                        <ImageButton
-                            android:id="@+id/favori3"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            android:contentDescription="@string/discover_add_favorite"
-                            android:scaleType="center"
-                            android:src="@drawable/ic_star_outline" />
                     </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:id="@+id/description3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:lineSpacingExtra="2sp"
-                        android:paddingEnd="10dp"
-                        android:textColor="@color/encre_secondaire"
-                        android:textSize="14sp"
-                        tools:text="Les grands changements du Québec des années 1960." />
-
-                    <!-- Meilleur score, ou « Pas encore joué » -->
-                    <TextView
-                        android:id="@+id/score3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/primaire"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        tools:text="Meilleur score : 4/5" />
-
-                    <!-- Nombre de questions, durée et bouton Jouer -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingEnd="10dp">
-
-                        <TextView
-                            android:id="@+id/details3"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/encre_secondaire"
-                            android:textSize="13sp"
-                            tools:text="8 questions · 4 min" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/jouer3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:insetTop="0dp"
-                            android:insetBottom="0dp"
-                            android:paddingStart="18dp"
-                            android:paddingEnd="18dp"
-                            android:text="@string/discover_play"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            app:cornerRadius="20dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Carte n° 4 (remplie par le Fragment avec les données du modèle) -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/carte4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/bordure"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- Carte n° 4 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/carte4"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingStart="16dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="6dp"
-                    android:paddingBottom="16dp">
+                    android:layout_marginStart="6dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
 
-                    <!-- Catégorie et titre, avec l'étoile des favoris à droite -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:paddingTop="6dp">
+                        <FrameLayout
+                            android:id="@+id/couverture4"
+                            android:layout_width="match_parent"
+                            android:layout_height="92dp"
+                            android:background="@color/categorie_autre">
+
+                            <ImageView
+                                android:id="@+id/icone4"
+                                android:layout_width="110dp"
+                                android:layout_height="110dp"
+                                android:layout_gravity="bottom|end"
+                                android:layout_marginEnd="-22dp"
+                                android:layout_marginBottom="-30dp"
+                                android:alpha="0.25"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_couverture_autre"
+                                app:tint="@color/white" />
 
                             <TextView
                                 android:id="@+id/categorie4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:letterSpacing="0.05"
-                                android:textAllCaps="true"
-                                android:textColor="@color/primaire"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                tools:text="@string/category_languages" />
+                                android:layout_gravity="bottom|start"
+                                android:layout_margin="12dp"
+                                android:background="@drawable/bg_pastille"
+                                android:backgroundTint="@color/voile_sombre"
+                                android:fontFamily="@font/figtree_extrabold"
+                                android:paddingStart="8dp"
+                                android:paddingTop="4dp"
+                                android:paddingEnd="8dp"
+                                android:paddingBottom="4dp"
+                                android:textColor="@color/white"
+                                android:textSize="11sp" />
+
+                            <ImageButton
+                                android:id="@+id/favori4"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:layout_gravity="top|end"
+                                android:layout_margin="4dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/discover_add_favorite"
+                                android:scaleType="center"
+                                android:src="@drawable/ic_star_outline"
+                                app:tint="@color/white" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingStart="12dp"
+                            android:paddingTop="12dp"
+                            android:paddingEnd="12dp"
+                            android:paddingBottom="14dp">
 
                             <TextView
                                 android:id="@+id/titre4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/figtree_extrabold"
+                                android:maxLines="2"
+                                android:minLines="2"
+                                android:textColor="@color/encre"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/description4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/details4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
-                                android:textColor="@color/encre"
-                                android:textSize="17sp"
-                                android:textStyle="bold"
-                                tools:text="Verbes irréguliers anglais" />
+                                android:fontFamily="@font/figtree_semibold"
+                                android:textColor="@color/encre_secondaire"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/score4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:fontFamily="@font/figtree_extrabold"
+                                android:textSize="12sp" />
                         </LinearLayout>
-
-                        <ImageButton
-                            android:id="@+id/favori4"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            android:contentDescription="@string/discover_add_favorite"
-                            android:scaleType="center"
-                            android:src="@drawable/ic_star_outline" />
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/description4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:lineSpacingExtra="2sp"
-                        android:paddingEnd="10dp"
-                        android:textColor="@color/encre_secondaire"
-                        android:textSize="14sp"
-                        tools:text="Be, go, take… retrouve le passé des verbes les plus utilisés." />
-
-                    <!-- Meilleur score, ou « Pas encore joué » -->
-                    <TextView
-                        android:id="@+id/score4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/primaire"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        tools:text="Meilleur score : 4/5" />
-
-                    <!-- Nombre de questions, durée et bouton Jouer -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingEnd="10dp">
-
-                        <TextView
-                            android:id="@+id/details4"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/encre_secondaire"
-                            android:textSize="13sp"
-                            tools:text="15 questions · 7 min" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/jouer4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:insetTop="0dp"
-                            android:insetBottom="0dp"
-                            android:paddingStart="18dp"
-                            android:paddingEnd="18dp"
-                            android:text="@string/discover_play"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            app:cornerRadius="20dp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
 
             <!-- Message affiché quand aucun quiz ne correspond à la recherche -->
             <TextView

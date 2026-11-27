@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
- import android.widget.Toast
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
@@ -16,18 +18,17 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.crosemont.qwizup.R
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
-import com.google.android.material.card.MaterialCardView
 import com.crosemont.qwizup.presentation.discover.ContratDécouvrir.MeilleurScore
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
 
-
     private lateinit var présentateur: ContratDécouvrir.IPrésentateurDécouvrir
     private lateinit var messageVide: TextView
 
-    // Les cartes du XML
+    // Les cartes du XML (toucher une carte ouvre le jeu)
     private lateinit var cartes: List<MaterialCardView>
     private lateinit var catégories: List<TextView>
     private lateinit var titres: List<TextView>
@@ -35,11 +36,13 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
     private lateinit var détails: List<TextView>
     private lateinit var scores: List<TextView>
     private lateinit var boutonsFavori: List<ImageButton>
-    private lateinit var boutonsJouer: List<View>
+
+    // La couverture de chaque carte : couleur et grande icône de la catégorie
+    private lateinit var couvertures: List<View>
+    private lateinit var icônes: List<ImageView>
 
     // Les puces de catégorie (null = « Tous »)
     private lateinit var puces: Map<CatégorieQuiz?, Chip>
-    private lateinit var puceFavoris: Chip
 
     private val quizIds = IntArray(NB_CARTES)
     private var prochaineCarte = 0
@@ -69,8 +72,10 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
             .map { view.findViewById<TextView>(it) }
         boutonsFavori = listOf(R.id.favori1, R.id.favori2, R.id.favori3, R.id.favori4)
             .map { view.findViewById<ImageButton>(it) }
-        boutonsJouer = listOf(R.id.jouer1, R.id.jouer2, R.id.jouer3, R.id.jouer4)
+        couvertures = listOf(R.id.couverture1, R.id.couverture2, R.id.couverture3, R.id.couverture4)
             .map { view.findViewById<View>(it) }
+        icônes = listOf(R.id.icone1, R.id.icone2, R.id.icone3, R.id.icone4)
+            .map { view.findViewById<ImageView>(it) }
 
         puces = mapOf(
             null to view.findViewById<Chip>(R.id.chip_all),
@@ -80,22 +85,20 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
             CatégorieQuiz.INFORMATIQUE to view.findViewById<Chip>(R.id.chip_informatique),
             CatégorieQuiz.GÉOGRAPHIE to view.findViewById<Chip>(R.id.chip_geography),
             CatégorieQuiz.AUTRE to view.findViewById<Chip>(R.id.chip_autre)
-
         )
-        puceFavoris = view.findViewById(R.id.chip_favoris)
 
         présentateur = FabriqueDécouvrir.créerPrésentateur(requireContext().filesDir)
 
         boutonsFavori.forEachIndexed { index, bouton ->
             bouton.setOnClickListener { présentateur.basculerFavori(quizIds[index]) }
         }
-        boutonsJouer.forEachIndexed { index, bouton ->
-            bouton.setOnClickListener { présentateur.jouer(quizIds[index]) }
+        // Toucher une carte ouvre le jeu de ce quiz
+        cartes.forEachIndexed { index, carte ->
+            carte.setOnClickListener { présentateur.jouer(quizIds[index]) }
         }
         puces.forEach { (catégorie, puce) ->
             puce.setOnClickListener { présentateur.choisirCatégorie(catégorie) }
         }
-        puceFavoris.setOnClickListener { présentateur.choisirFavoris() }
         view.findViewById<EditText>(R.id.edit_search).doAfterTextChanged { texte ->
             présentateur.rechercher(texte?.toString().orEmpty())
         }
@@ -129,6 +132,7 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
     ) {
         if (prochaineCarte >= NB_CARTES) return // Le XML n'a que quatre cartes
         val i = prochaineCarte++
+        val contexte = requireContext()
 
         quizIds[i] = id
         catégories[i].setText(nomCatégorie(catégorie))
@@ -136,22 +140,30 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
         descriptions[i].text = description
         détails[i].text = getString(R.string.discover_quiz_details, nbQuestions, duréeMinutes)
 
-        // Étoile pleine (orange) si le quiz est dans les favoris, sinon étoile vide
+        // Couverture de la couleur de la catégorie, avec sa grande icône pâle
+        couvertures[i].setBackgroundColor(ContextCompat.getColor(contexte, couleurCatégorie(catégorie)))
+        icônes[i].setImageResource(icôneCatégorie(catégorie))
+
+        // Étoile pleine (jaune) si le quiz est dans les favoris, sinon étoile vide (blanche)
         if (estFavori) {
             boutonsFavori[i].setImageResource(R.drawable.ic_star_filled)
+            boutonsFavori[i].imageTintList = null
             boutonsFavori[i].contentDescription = getString(R.string.discover_remove_favorite)
         } else {
             boutonsFavori[i].setImageResource(R.drawable.ic_star_outline)
+            boutonsFavori[i].imageTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(contexte, R.color.white))
             boutonsFavori[i].contentDescription = getString(R.string.discover_add_favorite)
         }
 
-        // Meilleur score si le quiz a déjà été joué
-        if (meilleurScore != null) {
-            scores[i].text = getString(R.string.discover_best_score, meilleurScore.score, meilleurScore.total)
-            scores[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.primaire))
+        // Meilleur score en pourcentage (en vert) si le quiz a déjà été joué
+        if (meilleurScore != null && meilleurScore.total > 0) {
+            val pourcentage = meilleurScore.score * 100 / meilleurScore.total
+            scores[i].text = getString(R.string.discover_best_score, pourcentage)
+            scores[i].setTextColor(ContextCompat.getColor(contexte, R.color.menthe_texte))
         } else {
             scores[i].setText(R.string.discover_not_played)
-            scores[i].setTextColor(ContextCompat.getColor(requireContext(), R.color.encre_secondaire))
+            scores[i].setTextColor(ContextCompat.getColor(contexte, R.color.encre_secondaire))
         }
 
         cartes[i].visibility = View.VISIBLE
@@ -169,24 +181,25 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
 
     override fun afficherCatégorieChoisie(catégorie: CatégorieQuiz?) {
         puces.forEach { (catégoriePuce, puce) -> colorer(puce, choisie = catégoriePuce == catégorie) }
-        colorer(puceFavoris, choisie = false)
     }
 
+    // Il n'y a plus de puce Favoris dans Découvrir (les favoris sont dans la Librairie)
     override fun afficherFavorisChoisis() {
         puces.values.forEach { colorer(it, choisie = false) }
-        colorer(puceFavoris, choisie = true)
     }
 
     // Puce choisie : fond foncé et texte blanc. Les autres : fond blanc.
     private fun colorer(puce: Chip, choisie: Boolean) {
         val contexte = requireContext()
-        val fond = if (choisie) R.color.primaire else R.color.white
+        val fond = if (choisie) R.color.encre else R.color.white
         val texte = if (choisie) R.color.white else R.color.encre
-        val contour = if (choisie) R.color.primaire else R.color.bordure
+        val contour = if (choisie) R.color.encre else R.color.bordure
 
         puce.chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(contexte, fond))
         puce.chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(contexte, contour))
         puce.setTextColor(ContextCompat.getColor(contexte, texte))
+        // L'étoile de la puce Favoris suit la couleur du texte
+        puce.chipIconTint = ColorStateList.valueOf(ContextCompat.getColor(contexte, texte))
     }
 
     override fun ouvrirQuiz(quizId: Int, titre: String) {
@@ -224,6 +237,28 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
         CatégorieQuiz.GÉOGRAPHIE -> R.string.category_geography
         CatégorieQuiz.INFORMATIQUE -> R.string.category_informatique
         CatégorieQuiz.AUTRE -> R.string.category_autre
+    }
+
+    // Couleur forte de la couverture, une par catégorie
+    @ColorRes
+    private fun couleurCatégorie(catégorie: CatégorieQuiz): Int = when (catégorie) {
+        CatégorieQuiz.SCIENCES -> R.color.categorie_sciences
+        CatégorieQuiz.HISTOIRE -> R.color.categorie_histoire
+        CatégorieQuiz.LANGUES -> R.color.categorie_langues
+        CatégorieQuiz.GÉOGRAPHIE -> R.color.categorie_geographie
+        CatégorieQuiz.INFORMATIQUE -> R.color.categorie_informatique
+        CatégorieQuiz.AUTRE -> R.color.categorie_autre
+    }
+
+    // Grande icône pâle de la couverture, une par catégorie
+    @DrawableRes
+    private fun icôneCatégorie(catégorie: CatégorieQuiz): Int = when (catégorie) {
+        CatégorieQuiz.SCIENCES -> R.drawable.ic_couverture_sciences
+        CatégorieQuiz.HISTOIRE -> R.drawable.ic_couverture_histoire
+        CatégorieQuiz.LANGUES -> R.drawable.ic_couverture_langues
+        CatégorieQuiz.GÉOGRAPHIE -> R.drawable.ic_globe
+        CatégorieQuiz.INFORMATIQUE -> R.drawable.ic_couverture_informatique
+        CatégorieQuiz.AUTRE -> R.drawable.ic_couverture_autre
     }
 
     companion object {
