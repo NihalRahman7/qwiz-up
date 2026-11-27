@@ -82,7 +82,8 @@ class SourceQuizCréésBidon(
                         choix("Lesquelles de ces villes sont des capitales?", listOf("Paris", "Barcelone", "Rome", "Berlin"), 0, 2, 3),
                         vraiFaux("Genève est la capitale de la Suisse.", vrai = false)
                     ),
-                    estPublié = true
+                    estPublié = true,
+                    code = "K7M4Q"
                 )
             )
         )

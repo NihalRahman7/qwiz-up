@@ -17,7 +17,7 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         val nbQuestions: Int,
         val dureeMinutes: Int,
         val estFavori: Boolean = false,
-        val quizIdApi: String = ""
+        val quizIdApi: String = "",
     )
 
     /**
@@ -117,7 +117,8 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         val accès: ContratVuePrésentateur.AccèsQuiz,
         val questions: List<QuestionCréer>,
         val estPublié: Boolean,
-        val categoriePerso: String = ""     // nom de la catégorie quand catégorie = AUTRE (ex. : Sport)
+        val categoriePerso: String = "",    // nom de la catégorie quand catégorie = AUTRE (ex. : Sport)
+        val code: String = ""
     )
 
     /**

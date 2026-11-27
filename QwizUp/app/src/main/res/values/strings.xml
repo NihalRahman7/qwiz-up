@@ -155,7 +155,7 @@
     <string name="librairie_titre">Librairie</string>
     <string name="librairie_btn_favoris">Favoris</string>
     <string name="librairie_btn_completes">Complétés</string>
-    <string name="librairie_btn_crees">Créés</string>
+    <string name="librairie_btn_crees">Mes Quiz</string>
     <string name="librairie_quiz_soon">Le quiz « %1$s » arrive bientôt!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

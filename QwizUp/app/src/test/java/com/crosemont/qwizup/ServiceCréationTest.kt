@@ -243,6 +243,41 @@ class ServiceCréationTest {
         assertEquals("", enregistré.categoriePerso)   // le nom ne sert qu'avec Autre
     }
 
+    @Test
+    fun `Étant donné un nouveau quiz publié lorsqu'on le sauvegarde, on obtient un code de 5 lettres et chiffres`() = runBlocking {
+        val enregistré = service.sauvegarder(quiz(0, "Nouveau quiz", true))
+
+        assertTrue(enregistré.code.matches(Regex("[A-HJ-NP-Z2-9]{5}")))
+    }
+
+    @Test
+    fun `Étant donné un nouveau brouillon lorsqu'on le sauvegarde, on obtient aucun code`() = runBlocking {
+        val enregistré = service.sauvegarder(quiz(0, "Nouveau brouillon", false))
+
+        assertEquals("", enregistré.code)
+    }
+
+    @Test
+    fun `Étant donné un quiz publié avec un code lorsqu'on le sauvegarde de nouveau, on obtient le même code`() = runBlocking {
+        val premier = service.sauvegarder(quiz(0, "Quiz à modifier", true))
+
+        // L'éditeur renvoie le quiz sans son code : le service doit garder l'ancien
+        val modifié = service.sauvegarder(quiz(premier.id, "Quiz modifié", true))
+
+        assertEquals(premier.code, modifié.code)
+    }
+
+    @Test
+    fun `Étant donné un code déjà pris lorsqu'on publie un quiz, on obtient un autre code`() = runBlocking {
+        val codes = mutableListOf("AAAAA", "AAAAA", "BBBBB")
+        val serviceAvecCodes = ServiceCréation(source) { codes.removeAt(0) }
+        serviceAvecCodes.sauvegarder(quiz(0, "Premier", true))   // reçoit AAAAA
+
+        val deuxième = serviceAvecCodes.sauvegarder(quiz(0, "Deuxième", true))
+
+        assertEquals("BBBBB", deuxième.code)
+    }
+
     /** Fausse source qui échoue toujours, comme un fichier illisible. */
     private class SourceEnPanne : SourceQuizCréés {
         override suspend fun lireQuiz(): List<QuizCréer> = throw IOException("Lecture impossible")

@@ -9,7 +9,10 @@ import kotlinx.coroutines.CancellationException
  * Gère les quiz créés par l'utilisateur : les lister, en ouvrir un et les enregistrer.
  * La source de données est fournie de l'extérieur, par son interface.
  */
-class ServiceCréation(private val source: SourceQuizCréés) {
+class ServiceCréation(private val source: SourceQuizCréés,
+    // Fabrique un code au hasard (remplacé dans les tests pour choisir les codes)
+                      private val générerCode: () -> String = { codeAuHasard() }
+) {
 
     suspend fun obtenirBrouillons(): List<QuizCréer> = lire().filter { !it.estPublié }
 
@@ -74,5 +77,14 @@ class ServiceCréation(private val source: SourceQuizCréés) {
         } catch (e: Exception) {
             throw ServiceException("Impossible d'enregistrer le quiz", e)
         }
+    }
+
+    companion object {
+        const val LONGUEUR_CODE = 5
+
+        // Lettres et chiffres, sans I, O, 0 et 1 (faciles à confondre)
+        private const val CARACTÈRES = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+
+        fun codeAuHasard(): String = (1..LONGUEUR_CODE).map { CARACTÈRES.random() }.joinToString("")
     }
 }
