@@ -185,6 +185,7 @@
     <string name="connexion_bouton">Log in</string>
     <string name="connexion_pas_de_compte">No account yet?</string>
     <string name="connexion_creer_compte">Create an account</string>
+    <string name="connexion_erreur">Could not log you in. Try again.</string>
 
     <!-- Inscription -->
     <string name="inscription_retour">Back</string>
@@ -216,6 +217,7 @@
     <string name="profil_ok">OK</string>
     <string name="profil_deconnexion">Log out</string>
     <string name="profil_erreur">Could not load your profile.</string>
+    <string name="profil_identifiant_sans_courriel">\@%1$s</string>
 
     <!-- Modifier mon profil -->
     <string name="modifier_titre">Edit my profile</string>

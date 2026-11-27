@@ -23,6 +23,14 @@ class ServiceProfil(private val source: SourceProfil) {
         enregistrer(profil)
     }
 
+    /** À la connexion : garde le profil s'il est déjà à ce nom, sinon en crée un (sans courriel). */
+    fun connecter(nomUtilisateur: String) {
+        if (nomUtilisateur.isBlank()) throw ServiceException("Le nom d'utilisateur est vide")
+        if (obtenirProfil()?.nomUtilisateur == nomUtilisateur.trim()) return
+        // Le courriel viendra de l'API (TODO)
+        créerProfil(nomUtilisateur, "")
+    }
+
     fun changerNomAffiché(nom: String) {
         val nomPropre = nom.trim()
         if (nomPropre.isEmpty()) throw ServiceException("Le nom affiché est vide")

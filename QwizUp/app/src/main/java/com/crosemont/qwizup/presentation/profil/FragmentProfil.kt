@@ -135,8 +135,11 @@ class FragmentProfil : Fragment(R.layout.fragment_profil), IVueProfil {
         texteNom.text = nomAffiché
         texteIdentifiant.text = getString(R.string.profil_identifiant, nomUtilisateur, courriel)
         texteIdentifiant.isVisible = true
-        texteInitiale.text = nomAffiché.take(1).uppercase()
-    }
+        texteIdentifiant.text = if (courriel.isBlank()) {
+            getString(R.string.profil_identifiant_sans_courriel, nomUtilisateur)
+        } else {
+            getString(R.string.profil_identifiant, nomUtilisateur, courriel)
+        }    }
 
     override fun afficherInvité() {
         val invité = getString(R.string.profil_invite)

@@ -2,6 +2,7 @@ package com.crosemont.qwizup.presentation.onboarding
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -17,13 +18,13 @@ import com.google.android.material.textfield.TextInputEditText
  */
 class FragmentConnexion : Fragment(R.layout.fragment_connexion), IVueConnexion {
 
-    private val présentateur: IPrésentateurConnexion = PrésentateurConnexion()
-
+    private lateinit var présentateur: IPrésentateurConnexion
     private lateinit var editNom: TextInputEditText
     private lateinit var editMotDePasse: TextInputEditText
     private lateinit var boutonConnexion: MaterialButton
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        présentateur = FabriqueConnexion.créerPrésentateur(requireContext().filesDir)
         super.onViewCreated(view, savedInstanceState)
 
         editNom = view.findViewById(R.id.edit_nom)
@@ -69,5 +70,9 @@ class FragmentConnexion : Fragment(R.layout.fragment_connexion), IVueConnexion {
 
     override fun fermer() {
         findNavController().popBackStack()
+    }
+
+    override fun afficherErreur() {
+        Toast.makeText(requireContext(), R.string.connexion_erreur, Toast.LENGTH_SHORT).show()
     }
 }

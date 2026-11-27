@@ -17,6 +17,9 @@ interface ContratConnexion {
 
         // Ferme l'ecran
         fun fermer()
+
+        // La connexion n'a pas pu être faite
+        fun afficherErreur()
     }
 
     interface IPrésentateurConnexion : Présentateur<IVueConnexion>{
@@ -31,5 +34,9 @@ interface ContratConnexion {
 
         // L'utilisateur a touche le x
         fun surRetourClique()
+    }
+
+    interface IModèleConnexion {
+        suspend fun connecter(nomUtilisateur: String)
     }
 }

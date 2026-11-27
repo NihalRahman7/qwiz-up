@@ -7,8 +7,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
 import androidx.navigation.ui.setupWithNavController
+import com.crosemont.qwizup.accèsAuxDonnées.SourceProfilLocale
+import com.crosemont.qwizup.domaine.service.ServiceException
+import com.crosemont.qwizup.domaine.service.ServiceProfil
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +35,8 @@ class MainActivity : AppCompatActivity() {
         val barreDuBas = findViewById<BottomNavigationView>(R.id.bottom_nav)
         barreDuBas.setupWithNavController(navController)
 
-        // Cache la barre du bas dans l'éditeur de quiz, qui a ses propres boutons en bas
+        // Cache la barre du bas dans les écrans qui ont leurs propres boutons
+        // (éditeur, jeu, rejoindre) et dans les écrans de compte et de profil
         navController.addOnDestinationChangedListener { _, destination, _ ->
             barreDuBas.isVisible = destination.id != R.id.editeurQuizFragment &&
                     destination.id != R.id.questionFragment &&
@@ -39,6 +45,29 @@ class MainActivity : AppCompatActivity() {
                     destination.id != R.id.connexionFragment &&
                     destination.id != R.id.inscriptionFragment &&
                     destination.id != R.id.profilFragment
+        }
+
+        // Pas encore de profil sur l'appareil : on commence par Bienvenue.
+        // L'Accueil est retiré de la pile, donc Retour ferme l'app au lieu d'y revenir.
+        if (savedInstanceState == null && !profilExiste()) {
+            navController.navigate(
+                R.id.bienvenueFragment,
+                null,
+                navOptions { popUpTo(R.id.homeFragment) { inclusive = true } }
+            )
+        }
+    }
+
+    // Vrai si un profil est sauvegardé sur l'appareil (inscription ou connexion déjà faite)
+    private fun profilExiste(): Boolean {
+        val source = SourceProfilLocale(
+            File(filesDir, SourceProfilLocale.NOM_FICHIER_PROFIL),
+            File(filesDir, SourceProfilLocale.NOM_FICHIER_PHOTO)
+        )
+        return try {
+            ServiceProfil(source).obtenirProfil() != null
+        } catch (e: ServiceException) {
+            false
         }
     }
 }

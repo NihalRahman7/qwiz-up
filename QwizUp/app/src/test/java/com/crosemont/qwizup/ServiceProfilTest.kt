@@ -109,4 +109,30 @@ class ServiceProfilTest {
     fun `Étant donné une source protégée lorsqu'on change la photo, on obtient une ServiceException`() {
         ServiceProfil(SourceEnPanne()).changerPhoto(byteArrayOf(1))
     }
+
+    @Test
+    fun `Étant donné aucun profil lorsqu'on se connecte, on obtient un profil à ce nom sans courriel`() {
+        service.connecter("maya_t")
+
+        assertEquals(Profil("maya_t", "maya_t", ""), service.obtenirProfil())
+    }
+
+    @Test
+    fun `Étant donné le profil de maya_t lorsqu'elle se reconnecte, on obtient son profil gardé tel quel`() {
+        source.écrireProfil(maya)
+
+        service.connecter("maya_t")
+
+        assertEquals(maya, service.obtenirProfil())
+    }
+
+    @Test
+    fun `Étant donné un nom vide lorsqu'on se connecte, on obtient une ServiceException et aucun profil`() {
+        try {
+            service.connecter("  ")
+            fail("Une ServiceException était attendue")
+        } catch (e: ServiceException) {
+            assertNull(source.lireProfil())
+        }
+    }
 }
