@@ -129,4 +129,19 @@
             app:popUpTo="@id/rejoindreFragment"
             app:popUpToInclusive="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/profilFragment"
+        android:name="com.crosemont.qwizup.presentation.profil.FragmentProfil"
+        android:label="fragment_profil"
+        tools:layout="@layout/fragment_profil">
+        <action
+            android:id="@+id/action_profil_vers_creer"
+            app:destination="@id/createFragment" />
+        <action
+            android:id="@+id/action_profil_vers_bienvenue"
+            app:destination="@id/bienvenueFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

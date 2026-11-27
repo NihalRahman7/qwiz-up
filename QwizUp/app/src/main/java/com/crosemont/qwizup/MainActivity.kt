@@ -37,7 +37,8 @@ class MainActivity : AppCompatActivity() {
                     destination.id != R.id.rejoindreFragment &&
                     destination.id != R.id.bienvenueFragment &&
                     destination.id != R.id.connexionFragment &&
-                    destination.id != R.id.inscriptionFragment
+                    destination.id != R.id.inscriptionFragment &&
+                    destination.id != R.id.profilFragment
         }
     }
 }
