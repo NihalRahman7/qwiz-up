@@ -217,7 +217,7 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         )
     )
 
-    // Rejoindre : le code de 5 caractères que le quiz reçoit à sa publication (voir ServiceCréation)
+    // Accueil : le code de 5 caractères que le quiz reçoit à sa publication (voir ServiceCréation)
     /** Retourne l'id du quiz publié qui a ce code (majuscules ou minuscules), ou null s'il n'existe pas. */
     fun trouverQuizParCode(code: String): Int? =
         SourceQuizCréésBidon.lireMaintenant()
