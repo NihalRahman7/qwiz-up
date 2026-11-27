@@ -85,37 +85,47 @@
 
 * Semaine 12
 
-- Date:
-- Heure de début:
-- Heure de fin:
+- Date: 18 novembre 2026
+- Heure de début: 12h00
+- Heure de fin: À 13h00
 - Présences :
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Montel Hountondji
+  2. Nihal Rahman
+  3. Aratus Thamidson
+  4. Joseph Allan Lupez
 
 - Avancements de la semaine :
-  -
-    
+  - Découvrir : meilleur score sur chaque carte, filtre Favoris, indicateur de chargement, quiz « La Révolution tranquille » et « Verbes irréguliers anglais » jouables 
+  - Discussion sur l'amélioration du design des pages de l'application
+
 - Problèmes envisagés
-  - 
+  - Page Créer trop chargée : on veut la simplifier
+  - Retirer la section Favoris de la Librairie
 
 * Semaine 13
 
-- Date:
-- Heure de début:
-- Heure de fin:
+- Date: 25 novembre 2026
+- Heure de début: 12h00
+- Heure de fin: 13h00
 - Présences :
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Montel Hountondji
+  2. Nihal Rahman
+  3. Aratus Thamidson
+  4. Joseph Allan Lupez
 
 - Avancements de la semaine :
-  -
-    
+  - Simplification de la page Créer : moins de champs affichés à la fois
+  - Retrait de la section Favoris dans la Librairie
+  - Uniformisation du design entre les écrans : mêmes couleurs, mêmes marges et mêmes styles de boutons
+  - Choix d'une approche pour le code QR : générer le code à partir du code à 6 chiffres déjà utilisé dans Rejoindre
+  - Début de la source de données API pour remplacer la source bidon
+
 - Problèmes envisagés
-  - 
+  - Choisir l'API à utiliser et vérifier le format de ses réponses 
+  - Ajouter la permission Internet dans le manifeste
+  - Garder la source bidon pour les tests unitaires
+  - Trouver une bibliothèque pour générer et lire les codes QR, et vérifier qu'elle fonctionne avec la caméra de l'émulateur
+  - Garder les tests à jour après les changements de design 
 
 * Semaine 14
 
