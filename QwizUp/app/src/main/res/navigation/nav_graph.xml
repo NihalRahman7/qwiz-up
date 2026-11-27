@@ -102,6 +102,9 @@
         <action
             android:id="@+id/action_decouvrir_vers_question"
             app:destination="@id/questionFragment" />
+        <action
+            android:id="@+id/action_decouvrir_vers_detail"
+            app:destination="@id/detailQuizFragment" />
     </fragment>
 
     <fragment
@@ -146,5 +149,19 @@
             app:destination="@id/bienvenueFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailQuizFragment"
+        android:name="com.crosemont.qwizup.presentation.discover.FragmentDétailQuiz"
+        android:label="fragment_detail_quiz"
+        tools:layout="@layout/fragment_detail_quiz">
+        <argument
+            android:name="quizId"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_detail_vers_question"
+            app:destination="@id/questionFragment" />
     </fragment>
 </navigation>

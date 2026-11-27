@@ -14,7 +14,11 @@ import java.io.File
  * Chaque morceau reçoit le suivant de l'extérieur (injection de dépendance).
  */
 object FabriqueDécouvrir {
-    fun créerPrésentateur(dossierDeLApp: File): ContratDécouvrir.IPrésentateurDécouvrir {
+    fun créerPrésentateur(dossierDeLApp: File): ContratDécouvrir.IPrésentateurDécouvrir =
+        PrésentateurDécouvrir(créerModèle(dossierDeLApp))
+
+    // Le modèle de Découvrir : aussi utilisé par l'écran Détail du quiz
+    fun créerModèle(dossierDeLApp: File): ContratDécouvrir.IModèleDécouvrir {
         // Quiz: source bidon pour l'instant, SourceQuizApi() plus tard
         val serviceQuiz = ServiceQuiz(SourceBidon())
         val catalogue = ModèleQuiz(serviceQuiz)
@@ -27,7 +31,6 @@ object FabriqueDécouvrir {
         val sourceResultats = SourceRésultatsLocale(File(dossierDeLApp, SourceRésultatsLocale.NOM_FICHIER))
         val serviceStatistiques = ServiceStatistiques(sourceResultats)
 
-        val modèle = ModèleDécouvrir(service, catalogue, serviceStatistiques)
-        return PrésentateurDécouvrir(modèle)
+        return ModèleDécouvrir(service, catalogue, serviceStatistiques)
     }
 }

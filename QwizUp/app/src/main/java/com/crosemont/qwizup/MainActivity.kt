@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
                     destination.id != R.id.bienvenueFragment &&
                     destination.id != R.id.connexionFragment &&
                     destination.id != R.id.inscriptionFragment &&
-                    destination.id != R.id.profilFragment
+                    destination.id != R.id.profilFragment &&
+                    destination.id != R.id.detailQuizFragment
         }
 
         // Pas encore de profil sur l'appareil : on commence par Bienvenue.

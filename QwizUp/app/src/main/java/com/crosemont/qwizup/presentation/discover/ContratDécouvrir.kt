@@ -27,9 +27,11 @@ interface ContratDécouvrir {
         fun afficherCatégorieChoisie(catégorie: CatégorieQuiz?)   // null = « Tous »
         fun afficherFavorisChoisis()
         fun ouvrirQuiz(quizId: Int, titre: String)
+        fun ouvrirDétail(quizId: Int)   // ouvre l'écran Détail du quiz
         fun afficherQuizBientôt(titre: String)   // le quiz n'a pas encore de questions
         fun afficherErreur()   // le modèle n'a pas pu répondre
         fun afficherChargement(visible: Boolean)
+
     }
 
     interface IPrésentateurDécouvrir : Présentateur<IVueDécouvrir> {
@@ -38,6 +40,7 @@ interface ContratDécouvrir {
         fun choisirFavoris()   // seulement les quiz avec l'étoile
         fun basculerFavori(quizId: Int)
         fun jouer(quizId: Int)
+        fun ouvrirDétail(quizId: Int)   // une carte a été touchée
     }
 
     // Les fonctions sont « suspend » : elles peuvent prendre du temps (fichier, réseau),

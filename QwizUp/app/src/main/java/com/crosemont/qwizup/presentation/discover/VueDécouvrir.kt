@@ -28,7 +28,7 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
     private lateinit var présentateur: ContratDécouvrir.IPrésentateurDécouvrir
     private lateinit var messageVide: TextView
 
-    // Les cartes du XML (toucher une carte ouvre le jeu)
+    // Les cartes du XML (toucher une carte ouvre le détail du quiz)
     private lateinit var cartes: List<MaterialCardView>
     private lateinit var catégories: List<TextView>
     private lateinit var titres: List<TextView>
@@ -92,9 +92,9 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
         boutonsFavori.forEachIndexed { index, bouton ->
             bouton.setOnClickListener { présentateur.basculerFavori(quizIds[index]) }
         }
-        // Toucher une carte ouvre le jeu de ce quiz
+        // Toucher une carte ouvre le détail de ce quiz
         cartes.forEachIndexed { index, carte ->
-            carte.setOnClickListener { présentateur.jouer(quizIds[index]) }
+            carte.setOnClickListener { présentateur.ouvrirDétail(quizIds[index]) }
         }
         puces.forEach { (catégorie, puce) ->
             puce.setOnClickListener { présentateur.choisirCatégorie(catégorie) }
@@ -198,14 +198,18 @@ class VueDécouvrir : Fragment(), ContratDécouvrir.IVueDécouvrir {
         puce.chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(contexte, fond))
         puce.chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(contexte, contour))
         puce.setTextColor(ContextCompat.getColor(contexte, texte))
-        // L'étoile de la puce Favoris suit la couleur du texte
-        puce.chipIconTint = ColorStateList.valueOf(ContextCompat.getColor(contexte, texte))
     }
 
     override fun ouvrirQuiz(quizId: Int, titre: String) {
         // Ouvre l'écran de jeu et lui envoie le numéro du quiz
         val arguments = Bundle().apply { putInt("quizId", quizId) }
         findNavController().navigate(R.id.action_decouvrir_vers_question, arguments)
+    }
+
+    // Ouvre l'écran Détail du quiz et lui envoie le numéro du quiz
+    override fun ouvrirDétail(quizId: Int) {
+        val arguments = Bundle().apply { putInt("quizId", quizId) }
+        findNavController().navigate(R.id.action_decouvrir_vers_detail, arguments)
     }
 
     // Les messages restent affichés jusqu'à ce que l'utilisateur appuie sur OK

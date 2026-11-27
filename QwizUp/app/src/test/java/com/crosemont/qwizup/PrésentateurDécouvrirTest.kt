@@ -224,6 +224,15 @@ class PrésentateurDécouvrirTest {
         assertFalse(vue.erreurAffichée)
     }
 
+    @Test
+    fun `Étant donné que deux quiz sont affichés lorsqu'on touche la carte du quiz 2, on obtient son détail`() {
+        présentateur.attacherVue(vue)
+
+        présentateur.ouvrirDétail(2)
+
+        assertEquals(2, vue.détailOuvert)
+    }
+
     private class FauxModèle : ContratDécouvrir.IModèleDécouvrir {
         private val quiz = listOf(
             CarteDiscover(1, CatégorieQuiz.SCIENCES, "Le système solaire", "Planètes et lunes", 10, 5),
@@ -278,6 +287,8 @@ class PrésentateurDécouvrirTest {
         var erreurAffichée = false
         val chargements = mutableListOf<Boolean>()
         var nbAppels = 0
+
+        var détailOuvert: Int? = null
 
         override fun viderQuiz() {
             nbAppels++
@@ -342,6 +353,10 @@ class PrésentateurDécouvrirTest {
         override fun afficherChargement(visible: Boolean) {
             nbAppels++
             chargements.add(visible)
+        }
+
+        override fun ouvrirDétail(quizId: Int) {
+            détailOuvert = quizId
         }
     }
 }

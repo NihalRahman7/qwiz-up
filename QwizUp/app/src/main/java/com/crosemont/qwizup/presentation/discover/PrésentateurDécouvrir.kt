@@ -87,6 +87,11 @@ class PrésentateurDécouvrir(
         }
     }
 
+    // Une carte a été touchée : on ouvre son détail
+    override fun ouvrirDétail(quizId: Int) {
+        vue?.ouvrirDétail(quizId)
+    }
+
     private fun afficherFiltre() {
         if (seulementFavoris) vue?.afficherFavorisChoisis() else vue?.afficherCatégorieChoisie(catégorieChoisie)
     }
