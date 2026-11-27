@@ -40,8 +40,10 @@ class PrésentateurLibrairie(
                     vue?.afficherMessageVide(messageVide)
                 } else {
                     cartes.forEach {
-                        vue?.ajouterCarteQuiz(it.id, it.titre, it.sousTitre, it.badge, it.typeBadge)
-                    }
+                        vue?.ajouterCarteQuiz(
+                            it.id, it.titre, it.sousTitre, it.badge, it.typeBadge,
+                            it.catégorie, it.code, it.estCréé
+                        )                    }
                 }
             } catch (e: CancellationException) {
                 throw e
@@ -66,5 +68,8 @@ class PrésentateurLibrairie(
         coroutines?.cancel()   // arrête le travail en cours : la vue n'existe plus
         coroutines = null
         vue = null
+    }
+
+    override fun surModifierClique(quizId: Int) {
     }
 }

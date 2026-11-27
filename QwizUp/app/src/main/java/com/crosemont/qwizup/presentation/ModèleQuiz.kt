@@ -134,7 +134,10 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         val titre: String,
         val sousTitre: String,
         val badge: String?,
-        val typeBadge: ContratLibrairie.TypeBadge
+        val typeBadge: ContratLibrairie.TypeBadge,
+        val catégorie: ContratVuePrésentateur.CatégorieQuiz? = null,
+        val code: String? = null,
+        val estCréé: Boolean = false
     )
 
     /**
@@ -144,12 +147,18 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
     fun obternirCrees(): List<CarteLibrary> =
         SourceQuizCréésBidon.lireMaintenant().map { quiz ->
             val nb = quiz.questions.size
+            val questions = if (nb == 1) "1 question" else "$nb questions"
+            val accès = if (quiz.accès == ContratVuePrésentateur.AccèsQuiz.TOUT_LE_MONDE) "Public" else "Privé"
             CarteLibrary(
                 id = quiz.id,
                 titre = quiz.titre,
-                sousTitre = if (nb == 1) "1 question" else "$nb questions",
-                badge = null,
-                typeBadge = ContratLibrairie.TypeBadge.NOUVEAU   // pas affiché quand badge = null
+                // Un brouillon n'est encore visible par personne : pas de Public / Privé
+                sousTitre = if (quiz.estPublié) "$questions · $accès" else questions,
+                badge = if (quiz.estPublié) "Publié" else "Brouillon",
+                typeBadge = if (quiz.estPublié) ContratLibrairie.TypeBadge.SCORE else ContratLibrairie.TypeBadge.NOUVEAU,
+                catégorie = quiz.catégorie,
+                code = quiz.code.ifBlank { null },
+                estCréé = true
             )
         }
 

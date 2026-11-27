@@ -33,7 +33,8 @@ class ModèleLibrairie(
                     quiz.titre,
                     "${if (nb == 1) "1 question" else "$nb questions"} · toutes bonnes",
                     badge = "100 %",
-                    typeBadge = ContratLibrairie.TypeBadge.PROGRESSION   // badge vert
+                    typeBadge = ContratLibrairie.TypeBadge.PROGRESSION,   // badge vert
+                    catégorie = quiz.catégorie
                 )
             }
         }
@@ -49,7 +50,8 @@ class ModèleLibrairie(
                     quiz.titre,
                     "${nomCatégorie(quiz.catégorie)} · ${quiz.nbQuestions} questions",
                     badge = null,   // pas de badge pour un favori
-                    typeBadge = ContratLibrairie.TypeBadge.NOUVEAU
+                    typeBadge = ContratLibrairie.TypeBadge.NOUVEAU,
+                    catégorie = quiz.catégorie
                 )
             }
     }

@@ -1,5 +1,6 @@
 package com.crosemont.qwizup
 
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
 import com.crosemont.qwizup.presentation.ModèleQuiz.CarteLibrary
 import com.crosemont.qwizup.presentation.library.ContratLibrairie
 import com.crosemont.qwizup.presentation.library.ContratLibrairie.OngletLibrairie
@@ -76,6 +77,24 @@ class PrésentateurLibrairieTest {
         assertEquals(appelsAvant, vue.nbAppels)
     }
 
+    @Test
+    fun `Étant donné un quiz publié dans Mes quiz lorsqu'on ouvre l'onglet, on obtient son code`() {
+        presentateur.attacherVue(vue)
+
+        presentateur.surOngletClique(OngletLibrairie.CRÉES)
+
+        assertEquals("K7M4Q", vue.codesAffichés[5])
+    }
+
+    @Test
+    fun `Étant donné un quiz dans Mes quiz lorsqu'on touche Modifier, on obtient l'éditeur sur ce quiz`() {
+        presentateur.attacherVue(vue)
+
+        presentateur.surModifierClique(5)
+
+        assertEquals(5, vue.éditeurOuvert)
+    }
+
     private class FauxModèle : ContratLibrairie.IModèleLibrairie {
         var favoris = listOf(
             CarteLibrary(
@@ -93,19 +112,33 @@ class PrésentateurLibrairieTest {
                 TypeBadge.NOUVEAU
             )
         )
+
+        // « Mes quiz » : un quiz publié avec son code
+        var créés = listOf(
+            CarteLibrary(
+                5, "La Révolution tranquille", "4 questions · Public", "Publié", TypeBadge.SCORE,
+                catégorie = CatégorieQuiz.HISTOIRE, code = "K7M4Q", estCréé = true
+            )
+        )
         var enPanne = false
         val filsUtilises = mutableListOf<String?>()
 
         override suspend fun obtenirQuiz(onglet: OngletLibrairie): List<CarteLibrary> {
             filsUtilises.add(currentCoroutineContext()[CoroutineName]?.name)
             if (enPanne) throw IllegalStateException("Le modèle est en panne")
-            return if (onglet == OngletLibrairie.FAVORIS) favoris else emptyList()
+            return when (onglet) {
+                OngletLibrairie.FAVORIS -> favoris
+                OngletLibrairie.CRÉES -> créés
+                else -> emptyList()
+            }
         }
     }
 
     private class FausseVue : ContratLibrairie.IVueLibrary {
         val titresAffiches = mutableListOf<String>()
+        val codesAffichés = mutableMapOf<Int, String?>()
         var messageVide: String? = null
+        var éditeurOuvert: Int? = null
         var nbAppels = 0
 
         override fun viderCartes() {
@@ -119,10 +152,14 @@ class PrésentateurLibrairieTest {
             titre: String,
             sousTitre: String,
             badge: String?,
-            typeBadge: TypeBadge
+            typeBadge: TypeBadge,
+            catégorie: CatégorieQuiz?,
+            code: String?,
+            estCréé: Boolean
         ) {
             nbAppels++
             titresAffiches.add(titre)
+            codesAffichés[id] = code
         }
 
         override fun afficherMessageVide(message: String) {
@@ -132,6 +169,11 @@ class PrésentateurLibrairieTest {
 
         override fun ouvrirDétails(quizId: Int, titre: String) {
             nbAppels++
+        }
+
+        override fun ouvrirÉditeur(quizId: Int) {
+            nbAppels++
+            éditeurOuvert = quizId
         }
     }
 }

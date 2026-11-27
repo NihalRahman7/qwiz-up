@@ -1,5 +1,6 @@
 package com.crosemont.qwizup.presentation.library
 
+import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Présentateur
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Vue
 import com.crosemont.qwizup.presentation.ModèleQuiz
@@ -15,16 +16,23 @@ interface ContratLibrairie {
             titre: String,
             sousTitre: String,
             badge: String?,
-            typeBadge: TypeBadge
+            typeBadge: TypeBadge,
+            catégorie: CatégorieQuiz?,
+            code: String?,
+            estCréé: Boolean
         )
 
         fun afficherMessageVide(message: String)
         fun ouvrirDétails(quizId: Int, titre: String)
+
+        fun ouvrirÉditeur(quizId: Int)
     }
 
     interface IPrésentateurLibrary : Présentateur<IVueLibrary> {
         fun surOngletClique(onglet: OngletLibrairie)
         fun surQuizClique(quizId: Int, titre: String)
+
+        fun surModifierClique(quizId: Int)
     }
 
     interface IModèleLibrairie {
