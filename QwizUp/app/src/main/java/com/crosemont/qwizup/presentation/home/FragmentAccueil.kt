@@ -17,6 +17,8 @@ class FragmentAccueil : Fragment(R.layout.fragment_home), IVueAccueil {
 
     // Les textes des statistiques
     private lateinit var texteSérie: TextView
+
+    private lateinit var texteSériePastille: TextView
     private lateinit var texteComplètes: TextView
     private lateinit var texteRéussite: TextView
 
@@ -56,6 +58,8 @@ class FragmentAccueil : Fragment(R.layout.fragment_home), IVueAccueil {
             .setOnClickListener { présentateur.surQuizClique(103) }
         view.findViewById<View>(R.id.button_join_code)
             .setOnClickListener { présentateur.surCodeClique() }
+        view.findViewById<View>(R.id.carte_champ_code)
+            .setOnClickListener { présentateur.surCodeClique() }
         view.findViewById<View>(R.id.text_avatar)
             .setOnClickListener { présentateur.surProfilClique() }
         view.findViewById<View>(R.id.text_tout_voir).setOnClickListener {
@@ -81,6 +85,7 @@ class FragmentAccueil : Fragment(R.layout.fragment_home), IVueAccueil {
         texteSérie.text = getString(R.string.home_streak_value, serie)
         texteComplètes.text = nbQuizCompletes.toString()
         texteRéussite.text = getString(R.string.home_correct_value, tauxRéussite)
+        texteSériePastille.text = resources.getQuantityString(R.plurals.home_serie_pastille, serie, serie)
     }
 
     // Cache la carte d'un quiz qui n'est plus en cours (ex. réussi à 100 %, il est dans Complétés)

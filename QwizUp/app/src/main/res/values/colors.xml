@@ -26,6 +26,7 @@
     <color name="primaire">#5140E0</color>
     <color name="primaire_fonce">#2E2496</color>
     <color name="primaire_clair">#E7E3FF</color>
+    <color name="primaire_moyen">#6A5BF0</color>
 
     <!-- Accent corail : série, mauvaise réponse (texte foncé dessus) -->
     <color name="corail">#FF8A65</color>
@@ -60,4 +61,6 @@
 
     <color name="categorie_autre">#5E6280</color>
     <color name="categorie_autre_clair">#E6E7EF</color>
+
+
 </resources>

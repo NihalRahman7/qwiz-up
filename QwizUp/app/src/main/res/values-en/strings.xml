@@ -6,12 +6,12 @@
     <string name="nav_library">Library</string>
 
     <string name="home_greeting">Hello</string>
-    <string name="home_join_code">Code</string>
     <string name="home_streak">Streak</string>
-    <string name="home_completed">Quiz completed</string>
     <string name="home_correct">Success rate</string>
     <string name="home_continue">Continue</string>
-    <string name="home_suggestions">Suggestions</string>
+    <string name="home_join_code">Play</string>
+    <string name="home_completed">Completed</string>
+    <string name="home_suggestions">To play</string>
     <string name="home_see_all">See all</string>
     <string name="home_resume_quiz">Resume quiz</string>
     <string name="home_streak_value">%1$d d</string>
@@ -19,6 +19,15 @@
     <string name="home_error">Unable to load your statistics.</string>
     <string name="home_avatar_initiale" translatable="false">J</string>
     <string name="home_nom_utilisateur" translatable="false">John</string>
+    <string name="home_profil">My profile</string>
+    <string name="home_rejoindre_label">Join a quiz</string>
+    <string name="home_rejoindre_titre">Enter the code here !</string>
+    <string name="home_rejoindre_indice">Quiz code</string>
+    <string name="home_nouveau">New</string>
+    <plurals name="home_serie_pastille">
+        <item quantity="one">%d-day streak</item>
+        <item quantity="other">%d-day streak</item>
+    </plurals>
 
     <string name="sample_quiz_1_title">The Solar System</string>
     <string name="sample_quiz_1_meta">2 / 5 questions · Science</string>

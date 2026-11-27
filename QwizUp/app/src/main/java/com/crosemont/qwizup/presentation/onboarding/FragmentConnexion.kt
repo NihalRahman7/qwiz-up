@@ -24,8 +24,8 @@ class FragmentConnexion : Fragment(R.layout.fragment_connexion), IVueConnexion {
     private lateinit var boutonConnexion: MaterialButton
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        présentateur = FabriqueConnexion.créerPrésentateur(requireContext().filesDir)
         super.onViewCreated(view, savedInstanceState)
+        présentateur = FabriqueConnexion.créerPrésentateur(requireContext().filesDir)
 
         editNom = view.findViewById(R.id.edit_nom)
         editMotDePasse = view.findViewById(R.id.edit_mot_de_passe)

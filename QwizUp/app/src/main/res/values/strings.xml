@@ -8,12 +8,21 @@
 
     <!--  Les String de la Navigation de la page d'Accueil   -->
     <string name="home_greeting">Bonjour</string>
-    <string name="home_join_code">Code</string>
+    <string name="home_join_code">Jouer</string>
     <string name="home_streak">Série</string>
-    <string name="home_completed">Quiz complétés</string>
+    <string name="home_completed">Complétés</string>
     <string name="home_correct">Réussite</string>
     <string name="home_continue">Continuer</string>
-    <string name="home_suggestions">Suggestions</string>
+    <string name="home_suggestions">À jouer</string>
+    <string name="home_profil">Mon profil</string>
+    <string name="home_rejoindre_label">Rejoindre un quiz</string>
+    <string name="home_rejoindre_titre">Entrer le code ici !</string>
+    <string name="home_rejoindre_indice">Code du quiz</string>
+    <string name="home_nouveau">Nouveau</string>
+    <plurals name="home_serie_pastille">
+        <item quantity="one">Série de %d jour</item>
+        <item quantity="other">Série de %d jours</item>
+    </plurals>
 
     <string name="home_see_all">Tout voir</string>
     <string name="home_resume_quiz">Continuer le quiz</string>
