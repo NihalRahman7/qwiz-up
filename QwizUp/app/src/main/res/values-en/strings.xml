@@ -168,4 +168,11 @@
     <string name="editeur_erreur_categorie">Specify your quiz\'s category</string>
     <string name="editeur_label_categorie_perso">Specify the category</string>
     <string name="editeur_categorie_perso_placeholder">E.g. Sports, Music, Cooking</string>
+
+    <!-- Bienvenue -->
+    <string name="bienvenue_titre">Welcome to QwizUp</string>
+    <string name="bienvenue_texte">Create quizzes, share them with a code and play with your class.</string>
+    <string name="bienvenue_creer_compte">Create an account</string>
+    <string name="bienvenue_deja_compte">I already have an account</string>
+    <string name="logo_description">QwizUp logo</string>
 </resources>

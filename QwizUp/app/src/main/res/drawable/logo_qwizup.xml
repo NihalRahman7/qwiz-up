@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Logo QwizUp : bulle blanche avec un Q, et un soleil jaune -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Carré arrondi violet -->
+    <path
+        android:fillColor="@color/primaire"
+        android:pathData="M24,0 h52 a24,24 0 0,1 24,24 v52 a24,24 0 0,1 -24,24 h-52 a24,24 0 0,1 -24,-24 v-52 a24,24 0 0,1 24,-24 z" />
+
+    <!-- Bulle de dialogue blanche -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M24,28 a12,12 0 0,1 12,-12 h28 a12,12 0 0,1 12,12 v26 a12,12 0 0,1 -12,12 H48 l-14,13 V66 a12,12 0 0,1 -10,-12 z" />
+
+    <!-- Le Q : un rond -->
+    <path
+        android:pathData="M39,40 a11,11 0 1,0 22,0 a11,11 0 1,0 -22,0"
+        android:strokeWidth="7"
+        android:strokeColor="@color/primaire" />
+
+    <!-- Le Q : sa queue -->
+    <path
+        android:pathData="M56,46 L62,52"
+        android:strokeLineCap="round"
+        android:strokeWidth="7"
+        android:strokeColor="@color/primaire" />
+
+    <!-- Soleil jaune -->
+    <path
+        android:fillColor="@color/soleil"
+        android:pathData="M73,20 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0" />
+</vector>

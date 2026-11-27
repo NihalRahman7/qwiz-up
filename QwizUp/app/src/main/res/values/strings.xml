@@ -173,4 +173,11 @@
     <string name="rejoindre_label_code">Code du quiz</string>
     <string name="rejoindre_bouton">Rejoindre</string>
     <string name="rejoindre_code_invalide">Ce code ne correspond à aucun quiz.</string>
+
+    <!-- Bienvenue -->
+    <string name="bienvenue_titre">Bienvenue sur QwizUp</string>
+    <string name="bienvenue_texte">Crée tes quiz, partage-les avec un code et joue avec ta classe.</string>
+    <string name="bienvenue_creer_compte">Créer un compte</string>
+    <string name="bienvenue_deja_compte">J\'ai déjà un compte</string>
+    <string name="logo_description">Logo QwizUp</string>
 </resources>
