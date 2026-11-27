@@ -217,14 +217,10 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         )
     )
 
-    // Rejoindre (code à 6 chiffres donné par l'enseignant·e)
-    // Données codées en dur : chaque code ouvre un quiz (même numérotation que Créer)
-    private val codesQuiz = mapOf(
-        "111111" to 1,   // Le système solaire
-        "222222" to 2,   // Bases de Kotlin
-        "333333" to 3    // Capitales d'Europe
-    )
-
-    /** Retourne l'id du quiz qui correspond au code, ou null si le code n'existe pas. */
-    fun trouverQuizParCode(code: String): Int? = codesQuiz[code.trim()]
+    // Rejoindre : le code de 5 caractères que le quiz reçoit à sa publication (voir ServiceCréation)
+    /** Retourne l'id du quiz publié qui a ce code (majuscules ou minuscules), ou null s'il n'existe pas. */
+    fun trouverQuizParCode(code: String): Int? =
+        SourceQuizCréésBidon.lireMaintenant()
+            .find { it.estPublié && it.code.equals(code.trim(), ignoreCase = true) }
+            ?.id
 }

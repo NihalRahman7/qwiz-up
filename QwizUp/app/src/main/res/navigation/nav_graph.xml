@@ -14,9 +14,6 @@
             android:id="@+id/action_accueil_vers_question"
             app:destination="@id/questionFragment" />
         <action
-            android:id="@+id/action_accueil_vers_rejoindre"
-            app:destination="@id/rejoindreFragment" />
-        <action
             android:id="@+id/action_accueil_vers_profil"
             app:destination="@id/profilFragment" />
     </fragment>
@@ -126,18 +123,6 @@
             android:name="quizId"
             android:defaultValue="1"
             app:argType="integer" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/rejoindreFragment"
-        android:name="com.crosemont.qwizup.presentation.rejoindre.RejoindreFragment"
-        android:label="fragment_rejoindre"
-        tools:layout="@layout/fragment_rejoindre">
-        <action
-            android:id="@+id/action_rejoindre_vers_question"
-            app:destination="@id/questionFragment"
-            app:popUpTo="@id/rejoindreFragment"
-            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

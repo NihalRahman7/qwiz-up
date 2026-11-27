@@ -23,6 +23,8 @@
         <item quantity="one">Série de %d jour</item>
         <item quantity="other">Série de %d jours</item>
     </plurals>
+    <string name="home_rejoindre_aide">5 caractères · lettres et chiffres</string>
+    <string name="home_code_invalide">Ce code ne correspond à aucun quiz.</string>
 
     <string name="home_see_all">Tout voir</string>
     <string name="home_resume_quiz">Continuer le quiz</string>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Écran Accueil : avatar et série, carte Rejoindre, statistiques, quiz à continuer et à jouer -->
+<?xml version="1.0" encoding="utf-8"?><!-- Écran Accueil : avatar et série, carte Rejoindre (code), statistiques, quiz à continuer et à jouer -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -53,7 +53,7 @@
                 tools:text="Série de 3 jours" />
         </LinearLayout>
 
-        <!-- Carte violette « Rejoindre un quiz » : toucher le champ ou Jouer ouvre l'écran Rejoindre -->
+        <!-- Carte violette « Rejoindre un quiz » : on tape le code, Jouer ouvre le quiz -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -119,31 +119,28 @@
                         android:layout_marginTop="14dp"
                         android:orientation="horizontal">
 
-                        <!-- Champ blanc : ouvre l'écran Rejoindre, où on tape le code -->
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/carte_champ_code"
+                        <!-- Vrai champ : on tape le code ici (5 lettres ou chiffres, en majuscules) -->
+                        <EditText
+                            android:id="@+id/edit_code_accueil"
                             android:layout_width="0dp"
                             android:layout_height="54dp"
                             android:layout_weight="1"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:cardBackgroundColor="@color/white"
-                            app:cardCornerRadius="16dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
+                            android:background="@drawable/bg_carre"
+                            android:fontFamily="@font/figtree_extrabold"
+                            android:hint="@string/home_rejoindre_indice"
+                            android:imeOptions="actionGo"
+                            android:importantForAutofill="no"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:letterSpacing="0.18"
+                            android:maxLength="5"
+                            android:maxLines="1"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:textColor="@color/encre"
+                            android:textColorHint="@color/encre_secondaire"
+                            android:textSize="20sp" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="@font/figtree_bold"
-                                android:gravity="center_vertical"
-                                android:paddingStart="16dp"
-                                android:paddingEnd="16dp"
-                                android:text="@string/home_rejoindre_indice"
-                                android:textColor="@color/encre_secondaire"
-                                android:textSize="17sp" />
-                        </com.google.android.material.card.MaterialCardView>
-
+                        <!-- Bouton Jouer : pâle tant que le code n'a pas 5 caractères -->
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/button_join_code"
                             android:layout_width="wrap_content"
@@ -160,6 +157,17 @@
                             app:backgroundTint="@color/corail"
                             app:cornerRadius="16dp" />
                     </LinearLayout>
+
+                    <!-- Aide sous le champ ; devient le message d'erreur si le code n'existe pas -->
+                    <TextView
+                        android:id="@+id/text_aide_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/figtree_semibold"
+                        android:text="@string/home_rejoindre_aide"
+                        android:textColor="@color/primaire_clair"
+                        android:textSize="12sp" />
                 </LinearLayout>
             </FrameLayout>
         </com.google.android.material.card.MaterialCardView>

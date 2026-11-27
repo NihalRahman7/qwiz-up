@@ -36,11 +36,10 @@ class MainActivity : AppCompatActivity() {
         barreDuBas.setupWithNavController(navController)
 
         // Cache la barre du bas dans les écrans qui ont leurs propres boutons
-        // (éditeur, jeu, rejoindre) et dans les écrans de compte et de profil
+        // (éditeur, jeu, détail) et dans les écrans de compte et de profil
         navController.addOnDestinationChangedListener { _, destination, _ ->
             barreDuBas.isVisible = destination.id != R.id.editeurQuizFragment &&
                     destination.id != R.id.questionFragment &&
-                    destination.id != R.id.rejoindreFragment &&
                     destination.id != R.id.bienvenueFragment &&
                     destination.id != R.id.connexionFragment &&
                     destination.id != R.id.inscriptionFragment &&

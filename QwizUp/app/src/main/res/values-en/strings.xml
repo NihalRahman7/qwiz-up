@@ -28,6 +28,8 @@
         <item quantity="one">%d-day streak</item>
         <item quantity="other">%d-day streak</item>
     </plurals>
+    <string name="home_rejoindre_aide">5 characters · letters and numbers</string>
+    <string name="home_code_invalide">This code does not match any quiz.</string>
 
     <string name="sample_quiz_1_title">The Solar System</string>
     <string name="sample_quiz_1_meta">2 / 5 questions · Science</string>

@@ -58,16 +58,19 @@ class AccueilQuizEnCoursTest {
     private class FausseVue : ContratAccueil.IVueAccueil {
         var quizEnCoursAffichés: List<Int>? = null
         override fun ouvrirQuiz(quizId: Int) {}
-        override fun ouvrirRejoindre() {}
         override fun ouvrirProfil() {}
         override fun afficherStatistiques(serie: Int, nbQuizCompletes: Int, tauxRéussite: Int) {}
         override fun afficherQuizEnCours(quizIds: List<Int>) { quizEnCoursAffichés = quizIds }
+        override fun activerJouerCode(actif: Boolean) {}
+        override fun afficherCodeInvalide() {}
+        override fun effacerErreurCode() {}
         override fun afficherErreur() {}
     }
 
     private class FauxModèle(private val enCours: List<Int>) : ContratAccueil.IModèleAccueil {
         override suspend fun obtenirStatistiques() = Statistiques(0, 0, 0)
         override suspend fun obtenirQuizEnCours() = enCours
+        override suspend fun trouverQuizParCode(code: String): Int? = null
     }
 
     private fun attacher(enCours: List<Int>): FausseVue {

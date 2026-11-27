@@ -8,11 +8,8 @@ import com.crosemont.qwizup.presentation.ContratVuePrésentateur.Vue
 interface ContratAccueil {
 
     interface IVueAccueil : Vue {
-        // Ouvre l'écran de jeu pour le quiz choisi
+        // Ouvre l'écran de jeu pour le quiz choisi (carte ou code)
         fun ouvrirQuiz(quizId: Int)
-
-        // Ouvre l'écran pour entrer un code de quiz
-        fun ouvrirRejoindre()
 
         // Ouvre l'écran Profil
         fun ouvrirProfil()
@@ -23,6 +20,15 @@ interface ContratAccueil {
         // Montre seulement les cartes « Continuer » de ces quiz (liste vide : la section disparaît)
         fun afficherQuizEnCours(quizIds: List<Int>)
 
+        // Active ou désactive le bouton « Jouer » à côté du champ du code
+        fun activerJouerCode(actif: Boolean)
+
+        // Le code ne correspond à aucun quiz
+        fun afficherCodeInvalide()
+
+        // Retire le message « code invalide »
+        fun effacerErreurCode()
+
         // Le modèle n'a pas pu répondre
         fun afficherErreur()
     }
@@ -31,8 +37,11 @@ interface ContratAccueil {
         // L'utilisateur a cliqué sur une carte de quiz
         fun surQuizClique(quizId: Int)
 
-        // L'utilisateur a cliqué sur le bouton « Code »
-        fun surCodeClique()
+        // Le texte du champ du code a changé
+        fun surCodeModifié(code: String)
+
+        // L'utilisateur a touché « Jouer » à côté du champ du code
+        fun surJouerCodeClique(code: String)
 
         // L'utilisateur a touché son avatar
         fun surProfilClique()
@@ -43,5 +52,8 @@ interface ContratAccueil {
 
         // Les quiz à continuer : un quiz réussi à 100 % n'en fait plus partie
         suspend fun obtenirQuizEnCours(): List<Int>
+
+        // L'id du quiz publié qui a ce code, ou null s'il n'existe pas
+        suspend fun trouverQuizParCode(code: String): Int?
     }
 }
