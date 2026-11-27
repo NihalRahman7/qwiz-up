@@ -111,7 +111,11 @@
         android:id="@+id/libraryFragment"
         android:name="com.crosemont.qwizup.presentation.library.FragmentLibrairie"
         android:label="fragment_library"
-        tools:layout="@layout/fragment_library" />
+        tools:layout="@layout/fragment_library">
+        <action
+            android:id="@+id/action_librairie_vers_editeur"
+            app:destination="@id/editeurQuizFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/questionFragment"

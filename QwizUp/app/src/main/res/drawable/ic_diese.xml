@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Icône # (code du quiz) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="18dp"
+    android:height="18dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:pathData="M5,9 h15 M4,15 h15 M10,3 L8,21 M16,3 l-2,18"
+        android:strokeLineCap="round"
+        android:strokeWidth="2"
+        android:strokeColor="@color/primaire_fonce" />
+</vector>

@@ -158,6 +158,8 @@
     <string name="librairie_btn_crees">Mes Quiz</string>
     <string name="librairie_quiz_soon">Le quiz « %1$s » arrive bientôt!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="librairie_modifier">Modifier</string>
+    <string name="librairie_code_a_venir">Le code apparaît à la publication</string>
 
     <!--  Les String de l'écran Question (jeu)   -->
     <string name="question_quitter">Quitter le quiz</string>

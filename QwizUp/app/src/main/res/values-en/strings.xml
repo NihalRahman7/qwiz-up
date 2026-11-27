@@ -144,6 +144,8 @@
     <string name="librairie_btn_crees">My quizzes</string>
     <string name="librairie_quiz_soon">The quiz “%1$s” is coming soon!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="librairie_modifier">Edit</string>
+    <string name="librairie_code_a_venir">The code appears when you publish</string>
 
     <string name="question_quitter">Quit the quiz</string>
     <string name="question_compteur">%1$d / %2$d</string>
