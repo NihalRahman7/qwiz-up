@@ -180,4 +180,16 @@
     <string name="bienvenue_creer_compte">Créer un compte</string>
     <string name="bienvenue_deja_compte">J\'ai déjà un compte</string>
     <string name="logo_description">Logo QwizUp</string>
+
+    <!-- Connexion -->
+    <string name="nom_qwiz" translatable="false">Qwiz</string>
+    <string name="nom_up" translatable="false">Up</string>
+    <string name="connexion_titre">Connecte-toi pour retrouver tes quiz.</string>
+    <string name="connexion_sous_titre">Tes quiz, tes codes et tes statistiques te suivent sur tous tes appareils.</string>
+    <string name="connexion_label_nom">Nom d\'utilisateur</string>
+    <string name="connexion_label_mot_de_passe">Mot de passe</string>
+    <string name="connexion_mot_de_passe_oublie">Mot de passe oublié?</string>
+    <string name="connexion_bouton">Me connecter</string>
+    <string name="connexion_pas_de_compte">Pas encore de compte?</string>
+    <string name="connexion_creer_compte">Créer un compte</string>
 </resources>

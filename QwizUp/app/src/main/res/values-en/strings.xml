@@ -175,4 +175,16 @@
     <string name="bienvenue_creer_compte">Create an account</string>
     <string name="bienvenue_deja_compte">I already have an account</string>
     <string name="logo_description">QwizUp logo</string>
+
+    <!-- Connexion -->
+    <string name="connexion_titre">Log in to find your quizzes.</string>
+    <string name="connexion_sous_titre">Your quizzes, codes and stats follow you on all your devices.</string>
+    <string name="connexion_label_nom">Username</string>
+    <string name="connexion_label_mot_de_passe">Password</string>
+    <string name="connexion_mot_de_passe_oublie">Forgot password?</string>
+    <string name="connexion_bouton">Log in</string>
+    <string name="connexion_pas_de_compte">No account yet?</string>
+    <string name="connexion_creer_compte">Create an account</string>
+
+
 </resources>
