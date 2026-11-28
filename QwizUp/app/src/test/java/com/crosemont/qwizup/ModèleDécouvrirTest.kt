@@ -109,7 +109,7 @@ class ModèleDécouvrirTest {
     @Test
     fun `Étant donné qu'un catalogue est fourni au modèle lorsqu'on demande les quiz, on obtient les quiz de ce catalogue`() {
         val source = object : SourceDeDonnées {
-            override  fun obtenirQuiz(limite: Int, decalage: Int): List<Quiz> =
+            override  fun obtenirQuiz(limite: Int, décalage: Int): List<Quiz> =
                 listOf(Quiz("Quiz de test", "Sciences", 3))
         }
         val modèle = ModèleDécouvrir(

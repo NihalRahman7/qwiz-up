@@ -9,6 +9,7 @@ import com.crosemont.qwizup.presentation.library.ContratLibrairie.OngletLibrairi
 import com.crosemont.qwizup.presentation.library.ModèleLibrairie
 import com.crosemont.qwizup.accèsAuxDonnées.SourceDeDonnées
 import com.crosemont.qwizup.accèsAuxDonnées.SourceFavorisBidon
+import com.crosemont.qwizup.domaine.exceptions.SourceDeDonnéesException
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -18,7 +19,7 @@ import org.junit.Test
 class ModeleLibrairieTest {
 
     private class SourceQuizTest : SourceDeDonnées {
-        override  fun obtenirQuiz(limite: Int, decalage: Int): List<Quiz> = listOf(
+        override  fun obtenirQuiz(limite: Int, décalage: Int): List<Quiz> = listOf(
             Quiz( "Le système solaire", "Sciences", 10),
             Quiz("La Révolution tranquille", "Histoire", 8),
             Quiz("Verbes irréguliers anglais", "Langues", 15)
@@ -61,8 +62,8 @@ class ModeleLibrairieTest {
     @Test(expected = ServiceException::class)
     fun `Étant donné que la source des quiz est en panne lorsqu'on demande les favoris, on obtient une ServiceException`() {
         val sourceEnPanne = object : SourceDeDonnées {
-            override fun obtenirQuiz(limite: Int, decalage: Int): List<Quiz> =
-                throw IllegalStateException("Pas de réseau")
+            override fun obtenirQuiz(limite: Int, décalage: Int): List<Quiz> =
+                throw SourceDeDonnéesException("Pas de réseau")
         }
         val modele = ModèleLibrairie(
             ServiceFavoris(SourceFavorisBidon(setOf("Le système solaire"))),

@@ -15,11 +15,11 @@ import kotlin.time.Duration
 
 class ObtenirQuizTest {
     private class SourceFixe(private val quiz: List<Quiz>) : SourceDeDonnées {
-        override fun obtenirQuiz(limite: Int, decalage: Int) = quiz
+        override fun obtenirQuiz(limite: Int, décalage: Int) = quiz
     }
 
     private class SourceEnPanne : SourceDeDonnées {
-        override fun obtenirQuiz(limite: Int, decalage: Int): List<Quiz> =
+        override fun obtenirQuiz(limite: Int, décalage: Int): List<Quiz> =
             throw SourceDeDonnéesException("Pas de réseau")
     }
 
