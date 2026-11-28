@@ -3,7 +3,7 @@ package com.crosemont.qwizup.domaine.service
 import com.crosemont.qwizup.domaine.entites.Quiz
 import com.crosemont.qwizup.accèsAuxDonnées.SourceBidon
 import com.crosemont.qwizup.accèsAuxDonnées.SourceDeDonnées
-import kotlinx.coroutines.CancellationException
+import com.crosemont.qwizup.domaine.exceptions.SourceDeDonnéesException
 
 class ObtenirQuiz(private val source: SourceDeDonnées = SourceBidon()) {
 
@@ -14,9 +14,7 @@ class ObtenirQuiz(private val source: SourceDeDonnées = SourceBidon()) {
         return try {
             source.obtenirQuiz(limite, décalage)
                 .filter { it.titre.isNotBlank() && it.nbQuestions > 0 }
-        } catch (e: CancellationException) {
-            throw e
-        } catch (e: Exception) {
+        } catch (e: SourceDeDonnéesException) {
             throw ServiceException("Impossible d'obtenir les quiz", e)
         }
     }

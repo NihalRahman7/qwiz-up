@@ -30,13 +30,13 @@ class SourceHttp internal constructor(private val service: QuizApiService): Sour
         val réponse = try {
             service.obtenirQuestions(limite, décalage).execute()
         } catch (e: IOException){
-            throw SourceDeDonnéesException("Impossible de joindre le serveur (code ${e.message})")
+            throw SourceDeDonnéesException("Impossible de joindre le serveur : ${e.message}")
         } catch (e: JsonParseException){
             throw SourceDeDonnéesException("La réponse du serveur est illisible")
         }
 
         if (!réponse.isSuccessful){
-            throw SourceDeDonnéesException("Le serveur a répondu par une erreur (code \${réponse.code()})")
+            throw SourceDeDonnéesException("Le serveur a répondu par une erreur (code ${réponse.code()})")
         }
         return convertir(réponse.body())
     }
@@ -89,7 +89,7 @@ internal interface QuizApiService {
     @GET("questions")
     fun obtenirQuestions(
         @Query("limit") limite: Int,
-        @Query("offset") decalage: Int
+        @Query("offset") décalage: Int
     ): Call<ReponseQuestions>
 }
 

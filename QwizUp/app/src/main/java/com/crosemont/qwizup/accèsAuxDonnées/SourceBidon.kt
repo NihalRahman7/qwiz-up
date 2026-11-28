@@ -1,9 +1,6 @@
 package com.crosemont.qwizup.accèsAuxDonnées
 
 import com.crosemont.qwizup.domaine.entites.Quiz
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -27,8 +24,8 @@ class SourceBidon(private val délai: Duration = 300.milliseconds) : SourceDeDon
         )
     )
 
-    override fun obtenirQuiz(limite: Int, decalage: Int): List<Quiz> {
+    override fun obtenirQuiz(limite: Int, décalage: Int): List<Quiz> {
         Thread.sleep(délai.inWholeMilliseconds) // Simule le temps d'une requête réseau
-        return quiz.drop(decalage).take(limite)
+        return quiz.drop(décalage).take(limite)
     }
 }
