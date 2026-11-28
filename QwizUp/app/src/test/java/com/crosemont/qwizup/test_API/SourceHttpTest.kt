@@ -1,5 +1,6 @@
-package com.crosemont.qwizup.accèsAuxDonnées.http
+package com.crosemont.qwizup.test_API
 
+import com.crosemont.qwizup.accèsAuxDonnées.http.SourceHttp
 import com.crosemont.qwizup.domaine.exceptions.SourceDeDonnéesException
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
