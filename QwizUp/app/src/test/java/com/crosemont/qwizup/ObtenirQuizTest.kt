@@ -1,62 +1,61 @@
 package com.crosemont.qwizup
 
+import com.crosemont.qwizup.accèsAuxDonnées.SourceBidon
 import com.crosemont.qwizup.domaine.entites.Quiz
 import com.crosemont.qwizup.domaine.service.ServiceException
-import com.crosemont.qwizup.domaine.service.ServiceQuiz
+import com.crosemont.qwizup.domaine.service.ObtenirQuiz
 import com.crosemont.qwizup.accèsAuxDonnées.SourceDeDonnées
+import com.crosemont.qwizup.domaine.exceptions.SourceDeDonnéesException
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
+import org.junit.Assert.assertThrows
 import org.junit.Test
-import java.io.IOException
+import kotlin.time.Duration
 
-class ServiceQuizTest {
+class ObtenirQuizTest {
     private class SourceFixe(private val quiz: List<Quiz>) : SourceDeDonnées {
-        override suspend fun obtenirQuiz(limite: Int, decalage: Int) = quiz
+        override fun obtenirQuiz(limite: Int, decalage: Int) = quiz
     }
 
     private class SourceEnPanne : SourceDeDonnées {
-        override suspend fun obtenirQuiz(limite: Int, decalage: Int): List<Quiz> =
-            throw IOException("Pas de réseau")
+        override fun obtenirQuiz(limite: Int, decalage: Int): List<Quiz> =
+            throw SourceDeDonnéesException("Pas de réseau")
     }
 
-    private suspend inline fun <reified T : Throwable> assertLance(bloc: suspend () -> Unit) {
-        try {
-            bloc()
-        } catch (e: Throwable) {
-            if (e is T) return
-            throw e
-        }
-        fail("${T::class.simpleName} attendue")
-    }
+    // Source bidon sans délai, pour que les tests soient rapides
+    private fun sourceBidon() = SourceBidon(Duration.ZERO)
 
     @Test
     fun `Étant donné une source avec un quiz lorsqu'on demande les quiz, on obtient ce quiz`() =
         runTest {
-            val quiz = listOf(Quiz(1, "a", "Kotlin", "Programmation", 10))
-            val service = ServiceQuiz(SourceFixe(quiz))
-            val resultat = service.obtenirQuiz()
+            val quiz = listOf(Quiz("Kotlin", "Programmation", 10))
+            val service = ObtenirQuiz(SourceFixe(quiz))
 
-            assertEquals(quiz, resultat)
+            val résultat = service.exécuter()
+
+            assertEquals(quiz, résultat)
         }
 
     @Test
     fun `Étant donné aucune source fournie lorsque on demande les quiz, on obtient ceux de la source bidon`() =
         runTest {
-            val service = ServiceQuiz()
-            val resultat = service.obtenirQuiz()
+            val service = ObtenirQuiz()
+            val résultat = service.exécuter()
 
-            assertTrue(resultat.isNotEmpty())
+            assertTrue(résultat.isNotEmpty())
         }
 
     @Test
     fun `Étant donné une limite de 2 et un décalage de 2 lorsque on demande les quiz, on obtient les quiz 3 et 4`() =
         runTest {
-            val service = ServiceQuiz()
-            val resultat = service.obtenirQuiz(limite = 2, decalage = 2)
+            val service = ObtenirQuiz(SourceBidon())
+            val résultat = service.exécuter(limite = 2, décalage = 2)
 
-            assertEquals(listOf(4, 5), resultat.map { it.id })
+            assertEquals(
+                listOf("La Révolution tranquille", "Verbes irréguliers anglais"),
+                résultat.map { it.titre }
+            )
         }
 
     @Test
@@ -64,38 +63,38 @@ class ServiceQuizTest {
         runTest {
             val source = SourceFixe(
                 listOf(
-                    Quiz(1, "a", "", "Cat", 5),               // Titre vide
-                    Quiz(2, "b", "Sans question", "Cat", 0),  // Aucune question
-                    Quiz(3, "c", "Valide", "Cat", 4)
+                    Quiz("", "Cat", 5),               // Titre vide
+                    Quiz("Sans question", "Cat", 0),  // Aucune question
+                    Quiz("Valide", "Cat", 4)
                 )
             )
-            val service = ServiceQuiz(source)
-            val resultat = service.obtenirQuiz()
+            val service = ObtenirQuiz(source)
+            val résultat = service.exécuter()
 
-            assertEquals(listOf(3), resultat.map { it.id })
+            assertEquals(listOf("Valide"), résultat.map { it.titre })
         }
 
     @Test
     fun `Étant donné une source en panne lorsque on demande les quiz, on obtient une ServiceException`() =
         runTest {
-            val service = ServiceQuiz(SourceEnPanne())
+            val service = ObtenirQuiz(SourceEnPanne())
 
-            assertLance<ServiceException> { service.obtenirQuiz() }
+            assertThrows(ServiceException::class.java) { service.exécuter() }
         }
 
     @Test
     fun `Étant donné une limite de 0 lorsque on demande les quiz, on obtient une ServiceException`() =
         runTest {
-            val service = ServiceQuiz()
+            val service = ObtenirQuiz(SourceBidon())
 
-            assertLance<ServiceException> { service.obtenirQuiz(limite = 0) }
+            assertThrows(ServiceException::class.java) { service.exécuter(limite = 0) }
         }
 
     @Test
     fun `Étant donné un décalager negatif lorsque on demande les quiz, on obtient une ServiceException`() =
         runTest {
-            val service = ServiceQuiz()
+            val service = ObtenirQuiz(SourceBidon())
 
-            assertLance<ServiceException> { service.obtenirQuiz(decalage = -1) }
+            assertThrows(ServiceException::class.java) { service.exécuter(décalage = -1) }
         }
 }
