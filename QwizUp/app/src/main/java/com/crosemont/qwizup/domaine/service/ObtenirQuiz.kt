@@ -5,13 +5,14 @@ import com.crosemont.qwizup.accèsAuxDonnées.SourceBidon
 import com.crosemont.qwizup.accèsAuxDonnées.SourceDeDonnées
 import kotlinx.coroutines.CancellationException
 
-class ServiceQuiz(private val source: SourceDeDonnées = SourceBidon()) {
-    suspend fun obtenirQuiz(limite: Int = 10, decalage: Int = 0): List<Quiz> {
+class ObtenirQuiz(private val source: SourceDeDonnées = SourceBidon()) {
+
+    fun exécuter(limite: Int = 10, décalage: Int = 0): List<Quiz> {
         if (limite <= 0) throw ServiceException("La limite doit être supérieure à 0")
-        if (decalage < 0) throw ServiceException("Le décalage ne peut pas être négatif")
+        if (décalage < 0) throw ServiceException("Le décalage ne peut pas être négatif")
 
         return try {
-            source.obtenirQuiz(limite, decalage)
+            source.obtenirQuiz(limite, décalage)
                 .filter { it.titre.isNotBlank() && it.nbQuestions > 0 }
         } catch (e: CancellationException) {
             throw e
