@@ -40,7 +40,7 @@ class ModèleLibrairie(
 
     private suspend fun obtenirFavoris(): List<CarteLibrary> {
         val favoris = serviceFavoris.obtenirFavoris()
-        catalogue.chargerQuizDiscover()   // les quiz viennent de ServiceQuiz
+        catalogue.chargerQuizDiscover()   // les quiz viennent de ObtenirQuiz de SourceHttp.kt
         return catalogue.obtenirQuizDiscover(null, "")
             .filter { it.titre in favoris }
             .map { quiz ->

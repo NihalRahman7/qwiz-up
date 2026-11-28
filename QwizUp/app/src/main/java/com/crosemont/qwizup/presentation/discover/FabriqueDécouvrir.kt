@@ -15,7 +15,7 @@ import java.io.File
  */
 object FabriqueDécouvrir {
     fun créerPrésentateur(dossierDeLApp: File): ContratDécouvrir.IPrésentateurDécouvrir {
-        // Quiz: source bidon pour l'instant, SourceQuizApi() plus tard
+        // Quiz: source bidon pour l'instant, SourceHttp() plus tard
         val obtenirQuiz = ObtenirQuiz(SourceBidon())
         val catalogue = ModèleQuiz(obtenirQuiz)
 
