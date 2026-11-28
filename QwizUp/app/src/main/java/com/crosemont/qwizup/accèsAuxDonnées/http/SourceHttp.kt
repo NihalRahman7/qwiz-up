@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
  * Tout ce qui touche au réseau et au JSON reste dans cette classe : à l'extérieur,
  * on ne voit que des Quiz ou une SourceDeDonneesException
  */
-class SourceQuizApi internal constructor(
+class SourceHttp internal constructor(
     private val service: QuizApiService
 ): SourceDeDonnées{
     constructor(
