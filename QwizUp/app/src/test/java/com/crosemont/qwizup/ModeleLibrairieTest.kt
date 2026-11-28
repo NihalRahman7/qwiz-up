@@ -3,12 +3,13 @@ package com.crosemont.qwizup
 import com.crosemont.qwizup.domaine.entites.Quiz
 import com.crosemont.qwizup.domaine.service.ServiceException
 import com.crosemont.qwizup.domaine.service.ServiceFavoris
-import com.crosemont.qwizup.domaine.service.ServiceQuiz
+import com.crosemont.qwizup.domaine.service.ObtenirQuiz
 import com.crosemont.qwizup.presentation.ModèleQuiz
 import com.crosemont.qwizup.presentation.library.ContratLibrairie.OngletLibrairie
 import com.crosemont.qwizup.presentation.library.ModèleLibrairie
 import com.crosemont.qwizup.accèsAuxDonnées.SourceDeDonnées
 import com.crosemont.qwizup.accèsAuxDonnées.SourceFavorisBidon
+import com.crosemont.qwizup.domaine.exceptions.SourceDeDonnéesException
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -18,14 +19,14 @@ import org.junit.Test
 class ModeleLibrairieTest {
 
     private class SourceQuizTest : SourceDeDonnées {
-        override suspend fun obtenirQuiz(limite: Int, decalage: Int): List<Quiz> = listOf(
-            Quiz(1, "test-1", "Le système solaire", "Sciences", 10),
-            Quiz(4, "test-4", "La Révolution tranquille", "Histoire", 8),
-            Quiz(5, "test-5", "Verbes irréguliers anglais", "Langues", 15)
+        override  fun obtenirQuiz(limite: Int, décalage: Int): List<Quiz> = listOf(
+            Quiz( "Le système solaire", "Sciences", 10),
+            Quiz("La Révolution tranquille", "Histoire", 8),
+            Quiz("Verbes irréguliers anglais", "Langues", 15)
         )
     }
 
-    private fun catalogue() = ModèleQuiz(ServiceQuiz(SourceQuizTest()))
+    private fun catalogue() = ModèleQuiz(ObtenirQuiz(SourceQuizTest()))
 
     private fun creerModele(vararg favoris: String) =
         ModèleLibrairie(ServiceFavoris(SourceFavorisBidon(favoris.toSet())), catalogue())
@@ -61,12 +62,12 @@ class ModeleLibrairieTest {
     @Test(expected = ServiceException::class)
     fun `Étant donné que la source des quiz est en panne lorsqu'on demande les favoris, on obtient une ServiceException`() {
         val sourceEnPanne = object : SourceDeDonnées {
-            override suspend fun obtenirQuiz(limite: Int, decalage: Int): List<Quiz> =
-                throw IllegalStateException("Pas de réseau")
+            override fun obtenirQuiz(limite: Int, décalage: Int): List<Quiz> =
+                throw SourceDeDonnéesException("Pas de réseau")
         }
         val modele = ModèleLibrairie(
             ServiceFavoris(SourceFavorisBidon(setOf("Le système solaire"))),
-            ModèleQuiz(ServiceQuiz(sourceEnPanne))
+            ModèleQuiz(ObtenirQuiz(sourceEnPanne))
         )
 
         quizDe(modele)

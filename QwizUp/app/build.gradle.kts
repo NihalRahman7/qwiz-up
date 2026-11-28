@@ -40,6 +40,12 @@ dependencies {
     implementation(libs.material)
     testImplementation(libs.junit)
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0")
+    // Client HTTP : Retrofit et conversion JSON avec Gson
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    // Faux serveur pour les tests : même version qu'OkHttp
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
     implementation(libs.androidx.navigation.fragment)

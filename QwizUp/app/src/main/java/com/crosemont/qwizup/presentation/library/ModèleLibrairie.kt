@@ -16,6 +16,10 @@ class ModèleLibrairie(
     private val serviceStatistiques: ServiceStatistiques = ServiceStatistiques(SourceRésultatsBidon(emptyList())),
 ) : ContratLibrairie.IModèleLibrairie {
 
+    /** Prévient le rechargement des quiz (et une requête à l'API) à chaque ouverture de l'onglet Favoris. */
+    @Volatile
+    private var catalogueChargé = false
+
     override suspend fun obtenirQuiz(onglet: OngletLibrairie): List<CarteLibrary> =
         when (onglet) {
             OngletLibrairie.FAVORIS -> obtenirFavoris()
@@ -38,9 +42,12 @@ class ModèleLibrairie(
             }
         }
 
-    private suspend fun obtenirFavoris(): List<CarteLibrary> {
+    private fun obtenirFavoris(): List<CarteLibrary> {
         val favoris = serviceFavoris.obtenirFavoris()
-        catalogue.chargerQuizDiscover()   // les quiz viennent de ServiceQuiz
+        if (!catalogueChargé) {
+            catalogue.chargerQuizDiscover()   // les quiz viennent de ObtenirQuiz
+            catalogueChargé = true
+        }
         return catalogue.obtenirQuizDiscover(null, "")
             .filter { it.titre in favoris }
             .map { quiz ->

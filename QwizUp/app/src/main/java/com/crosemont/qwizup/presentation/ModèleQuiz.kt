@@ -1,12 +1,13 @@
 package com.crosemont.qwizup.presentation
 
-import com.crosemont.qwizup.accèsAuxDonnées.QuizÀJouerBidon
 import com.crosemont.qwizup.accèsAuxDonnées.SourceQuizCréésBidon
-import com.crosemont.qwizup.domaine.service.ServiceQuiz
+import com.crosemont.qwizup.domaine.service.ObtenirQuiz
 import com.crosemont.qwizup.presentation.library.ContratLibrairie
 import java.text.Normalizer
 
-class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
+private const val PREMIER_ID_SANS_QUESTIONS = 1000
+
+class ModèleQuiz(private val service: ObtenirQuiz = ObtenirQuiz()) {
 
     // Discover
     data class CarteDiscover(
@@ -17,34 +18,28 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
         val nbQuestions: Int,
         val dureeMinutes: Int,
         val estFavori: Boolean = false,
-        val quizIdApi: String = ""
     )
 
     /**
-     * Favoris de Découvrir (par identifiant de l'API)
-     */
-    private val favorisDiscover = mutableSetOf("bidon-1")
-
-    /**
-     * Liste remplie par le service
+     * Liste remplie par le cas d'utilisation ObtenirQuiz
      */
     @Volatile
     private var quizDiscover: List<CarteDiscover> = emptyList()
 
+
     /**
-     * Va chercher les quiz via la couche service (À appeler depuis une coroutine)
+     * Va chercher les quiz. L'appel est bloquant : c'est le présentateur qui le lance
+     * sur un fil d'arrière-plan.
      */
-    suspend fun chargerQuizDiscover() {
-        quizDiscover = service.obtenirQuiz().map { quiz ->
+    fun chargerQuizDiscover() {
+        quizDiscover = service.exécuter().mapIndexed { position, quiz ->
             CarteDiscover(
-                id = quiz.id,
+                id = idPourLaCarte(quiz.titre, position),
                 catégorie = versCatégorie(quiz.catégorie),
                 titre = quiz.titre,
                 description = quiz.description,
                 nbQuestions = quiz.nbQuestions,
-                dureeMinutes = (quiz.nbQuestions / 2).coerceAtLeast(1),
-                estFavori = quiz.quizIdApi in favorisDiscover,
-                quizIdApi = quiz.quizIdApi
+                dureeMinutes = (quiz.nbQuestions / 2).coerceAtLeast(1)
             )
         }
     }
@@ -66,6 +61,24 @@ class ModèleQuiz(private val service: ServiceQuiz = ServiceQuiz()) {
             bonneCategorie && contientTexte
         }
     }
+
+    /**
+     * Les entités n'ont plus d'identifiant : la présentation numérote ses cartes elle-même.
+     * Pont temporaire : si le quiz a des questions à jouer (écran Créer ou quiz de Découvrir),
+     * la carte prend son numéro pour que l'écran de jeu trouve le bon quiz.
+     * Sinon, elle reçoit un numéro à part et l'écran de jeu affichera « bientôt disponible ».
+     */
+    private fun idPourLaCarte(titre: String, position: Int): Int {
+        val cléTitre = cléDeTitre(titre)
+        val jouables = SourceQuizCréésBidon.lireMaintenant() + quizDécouvrirÀJouer.values
+        return jouables.find { cléDeTitre(it.titre) == cléTitre }?.id
+            ?: (PREMIER_ID_SANS_QUESTIONS + position)
+    }
+
+    /**
+     * Compare les titres sans tenir compte des majuscules, des accents ni du type d'apostrophe.
+     * */
+    private fun cléDeTitre(titre: String): String = simplifier(titre.replace('’', '\''))
 
     private fun versCatégorie(texte: String): ContratVuePrésentateur.CatégorieQuiz =
         when (simplifier(texte)) {

@@ -1,7 +1,7 @@
 package com.crosemont.qwizup.presentation.discover
 
 import com.crosemont.qwizup.domaine.service.ServiceFavoris
-import com.crosemont.qwizup.domaine.service.ServiceQuiz
+import com.crosemont.qwizup.domaine.service.ObtenirQuiz
 import com.crosemont.qwizup.domaine.service.ServiceStatistiques
 import com.crosemont.qwizup.presentation.ModèleQuiz
 import com.crosemont.qwizup.accèsAuxDonnées.SourceBidon
@@ -15,9 +15,9 @@ import java.io.File
  */
 object FabriqueDécouvrir {
     fun créerPrésentateur(dossierDeLApp: File): ContratDécouvrir.IPrésentateurDécouvrir {
-        // Quiz: source bidon pour l'instant, SourceQuizApi() plus tard
-        val serviceQuiz = ServiceQuiz(SourceBidon())
-        val catalogue = ModèleQuiz(serviceQuiz)
+        // Quiz: source bidon pour l'instant, SourceHttp() plus tard
+        val obtenirQuiz = ObtenirQuiz(SourceBidon())
+        val catalogue = ModèleQuiz(obtenirQuiz)
 
         // Favoris
         val source = SourceFavorisLocale(File(dossierDeLApp, "favoris.txt"))

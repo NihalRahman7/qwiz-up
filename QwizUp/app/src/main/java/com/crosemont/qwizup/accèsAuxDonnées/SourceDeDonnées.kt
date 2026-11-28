@@ -3,8 +3,8 @@ package com.crosemont.qwizup.accèsAuxDonnées
 import com.crosemont.qwizup.domaine.entites.Quiz
 
 interface SourceDeDonnées {
-    suspend fun obtenirQuiz(
+    fun obtenirQuiz(
         limite: Int = 10,
-        decalage: Int = 0
+        décalage: Int = 0
     ): List<Quiz> // Decalage indique combien de quiz sauter au début de la liste
 }

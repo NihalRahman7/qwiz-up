@@ -3,7 +3,7 @@ package com.crosemont.qwizup
 import com.crosemont.qwizup.domaine.entites.Quiz
 import com.crosemont.qwizup.domaine.entites.RésultatPartie
 import com.crosemont.qwizup.domaine.service.ServiceFavoris
-import com.crosemont.qwizup.domaine.service.ServiceQuiz
+import com.crosemont.qwizup.domaine.service.ObtenirQuiz
 import com.crosemont.qwizup.domaine.service.ServiceStatistiques
 import com.crosemont.qwizup.presentation.ContratVuePrésentateur.CatégorieQuiz
 import com.crosemont.qwizup.presentation.ModèleQuiz
@@ -109,12 +109,12 @@ class ModèleDécouvrirTest {
     @Test
     fun `Étant donné qu'un catalogue est fourni au modèle lorsqu'on demande les quiz, on obtient les quiz de ce catalogue`() {
         val source = object : SourceDeDonnées {
-            override suspend fun obtenirQuiz(limite: Int, decalage: Int): List<Quiz> =
-                listOf(Quiz(9, "test-9", "Quiz de test", "Sciences", 3))
+            override  fun obtenirQuiz(limite: Int, décalage: Int): List<Quiz> =
+                listOf(Quiz("Quiz de test", "Sciences", 3))
         }
         val modèle = ModèleDécouvrir(
             ServiceFavoris(SourceFavorisBidon()),
-            ModèleQuiz(ServiceQuiz(source))
+            ModèleQuiz(ObtenirQuiz(source))
         )
 
         assertEquals(listOf("Quiz de test"), quizDe(modèle).map { it.titre })
